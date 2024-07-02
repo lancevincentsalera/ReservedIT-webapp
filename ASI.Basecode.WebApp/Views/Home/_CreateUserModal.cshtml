@@ -1,5 +1,7 @@
-﻿@section styles {
-    <link rel="stylesheet" href="~/css/site.css" />
+﻿
+
+@section styles {
+    <link rel="stylesheet" href="~/css/userModal.css" />
 }
 <!-- CREATE USER -->
 <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
@@ -66,7 +68,27 @@
     </div>
 </div>
 
-<!-- Include the modal partial view -->
-@Html.Partial("_ConfirmationModal")
+<!-- confirm ADD -->
+<div class="modal fade" id="confirmationAddModal" tabindex="-1" aria-labelledby="confirmationAddModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationAddModalLabel">Confirm Action</h5>
+                <button type="button" style="width: 24px; height: 24px;" class="btn-close" data-dismiss="modal" aria-label="Close">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to add this item?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" id="confirmAddBtn">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
