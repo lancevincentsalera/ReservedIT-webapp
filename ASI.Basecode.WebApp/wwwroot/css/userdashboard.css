@@ -9,6 +9,7 @@ h1 {
 }
 
 .create-user-btn {
+    border: none;
     font-size: 87.5%;
     font-weight: bold;
     background-color: #B5838E;
