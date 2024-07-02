@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Home\ConfirmationModal.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="appsettings.json.rej" />
   </ItemGroup>
 

@@ -1,8 +1,31 @@
-﻿@model IEnumerable<ASI.Basecode.Services.ServiceModels.UserViewModel>
-
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewBag.Title = "Home Page"; /// remove later
 }
-<h1>WELCOME</h1>
 
+<div class="text-center">
+    
+    <p>These are just temporary buttons to trigger modals</p>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmationModal">
+        Delete (Temp btn)
+    </button>
 
+    <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#createUserModal">
+        Create User (Temp btn)
+    </button>    
+    
+    <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#editUserModal">
+        Edit User (Temp btn)
+    </button>
+</div>
+
+<!-- Include the modal partial view -->
+@Html.Partial("_ConfirmationModal")
+@Html.Partial("_CreateUserModal")
+@Html.Partial("_EditUserModal")
+
+<style>
+    .btn-custom{
+        background-color: #B5838E;
+        color: white;
+    }
+</style>

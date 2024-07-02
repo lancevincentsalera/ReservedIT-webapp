@@ -1,83 +1,129 @@
-﻿html {
-    font-size: 14px;
-}
-
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-    position: relative;
-    min-height: 100%;
-}
+﻿/* Import Montserrat font */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap");
 
 .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
 }
 
 #footer {
-    height: 160px;
-    margin-left: 0px;
-    transition: margin-left 0.2s;
+  height: 160px;
+  margin-left: 0px;
+  transition: margin-left 0.2s;
 }
 
 .wrapper {
-    min-height: 100vh;
-    position: relative;
-    height: auto
+  min-height: 100vh;
+  position: relative;
+  height: auto;
 }
 
 .hide-navbar {
-    display: none;
+  display: none;
+}
+/* Apply Montserrat font to body */
+body {
+  font-family: "Montserrat", sans-serif;
 }
 
-
-/* Initially hide the dropdown */
-.dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 30px;
-    background-color: #fff;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-    z-index: 1;
+.modal-content {
+  background-color: #ffffff;
+  border-radius: 10px;
+  height: 60vh;
+  color: black;
 }
 
-    /* Style the dropdown list */
+/* Style the dropdown list */
 .dropdown ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .dropdown ul li {
-    padding: 10px;
+  padding: 10px;
 }
 
 /* Style the links in the dropdown */
 .dropdown ul li a {
-    text-decoration: none;
-    color: #333;
+  text-decoration: none;
+  color: #333;
 }
 
 .dropdown-open {
-    display: block;
-    width: 140px
+  display: block;
+  width: 140px;
 }
 
-.mr-20 {
-    margin-right: 20px;
+.modal-header {
+  border-bottom: 2px solid;
+  padding-left: 28px;
+  align-items: center;
+  border-left-width: medium;
 }
 
-.w-1000px {
-    width: 1000px;
+.custom-line {
+  border: 0;
+  height: 4px;
+  background: #007bff;
+  margin: 20px 0;
+}
+
+.modal-title {
+  color: black;
+  font-weight: 600;
+}
+
+.modal-body form .user-details .userName {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.modal-body form .user-details {
+  justify-content: space-between;
+}
+
+/*form .user-details .userName {
+    width: calc(100%/2 - 2px) !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}*/
+form .user-details .input-box input,
+select {
+  width: calc(100% - 2px);
+  height: 35px;
+  border-radius: 10px;
+  border-color: #c5c5c5;
+  border-width: 1px;
+  border-image: none;
+  border-style: groove;
+  margin-bottom: 10px;
+  color: black;
+  padding-left: 12px;
+  font-size: smaller;
+}
+
+.user-details .input-box .details {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.btn-danger,
+.btn-custom {
+  width: 7vw;
+}
+
+.btn-custom {
+  background-color: #b5838e;
+  color: white;
+}
+
+.modal-footer {
+  border-top: none;
+  padding-top: 30px;
 }

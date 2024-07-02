@@ -41,5 +41,21 @@ namespace ASI.Basecode.WebApp.Controllers
             var users = _userService.GetUsers();
             return View(users);
         }
+
+
+
+/*        public ActionResult ConfirmationModal()
+        {
+
+
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult ConfirmationModal()
+        {
+
+            return View();
+        }*/
     }
 }
