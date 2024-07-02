@@ -1,19 +1,14 @@
-﻿using ASI.Basecode.Services.Interfaces;
-using ASI.Basecode.WebApp.Mvc;
+﻿using ASI.Basecode.WebApp.Mvc;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System.Linq;
-using ASI.Basecode.Data.Models;
+using ASI.Basecode.Services.Interfaces;
 
 namespace ASI.Basecode.WebApp.Controllers
 {
-    /// <summary>
-    /// Home Controller
-    /// </summary>
-    public class HomeController : ControllerBase<HomeController>
+    public class AdminController : ControllerBase<AdminController>
     {
         private readonly IUserService _userService;
         /// <summary>
@@ -24,7 +19,7 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <param name="configuration"></param>
         /// <param name="localizer"></param>
         /// <param name="mapper"></param>
-        public HomeController(IUserService userService, IHttpContextAccessor httpContextAccessor,
+        public AdminController(IUserService userService, IHttpContextAccessor httpContextAccessor,
                               ILoggerFactory loggerFactory,
                               IConfiguration configuration,
                               IMapper mapper = null) : base(httpContextAccessor, loggerFactory, configuration, mapper)
@@ -32,14 +27,17 @@ namespace ASI.Basecode.WebApp.Controllers
             this._userService = userService;
         }
 
-        /// <summary>
-        /// Returns Home View.
-        /// </summary>
-        /// <returns> Home View </returns>
         public IActionResult Index()
         {
             var users = _userService.GetUsers();
             return View(users);
+        }
+
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
         }
     }
 }

@@ -6,14 +6,15 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
 }
 
 :root {
     --background-color1: #fafaff;
     --background-color2: #ffffff;
     --background-color3: #ededed;
-    --background-color4: #cad7fda4;
+    --background-color4: #fff2ea;
     --primary-color: #4b49ac;
     --secondary-color: #0c007d;
     --Border-color: #3f0097;
@@ -25,18 +26,13 @@ body {
     background-color: var(--background-color4);
     max-width: 100%;
     overflow-x: hidden;
+    height: 100vh;
 }
 
 header {
-    height: 70px;
-    width: 100vw;
-    padding: 0 30px;
-    background-color: var(--background-color1);
-    z-index: 100;
-    box-shadow: 1px 1px 15px rgba(161, 182, 253, 0.825);
+    padding: 20px 30px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-end;
 }
 
 .logo {
@@ -123,10 +119,21 @@ header {
 
 .main-container {
     display: flex;
-    width: 100vw;
-    position: relative;
-    top: 70px;
-    z-index: 1;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex-grow: 1;
+}
+
+main {
+    height: 100%;
+    padding: 0rem 2rem;
 }
 
 .dpicn {
@@ -159,21 +166,6 @@ header {
     align-items: center;
     flex-wrap: wrap;
     gap: 50px;
-}
-
-.nav {
-    min-height: 91vh;
-    width: 273px;
-    background-color: #1e272e;
-    position: absolute;
-    top: 0px;
-    left: 00;
-    box-shadow: 1px 1px 10px rgba(198, 189, 248, 0.825);
-    display: flex;
-    justify-content: space-between;
-    overflow: hidden;
-    padding: 30px 0 20px 10px;
-    color: whitesmoke !important;
 }
 
 .navcontainer {
@@ -362,3 +354,4 @@ header {
     color: white;
     border-radius: 4px;
 }
+

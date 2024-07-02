@@ -17,10 +17,6 @@ html {
     min-height: 100%;
 }
 
-body {
-    margin-bottom: 60px;
-}
-
 .footer {
     position: absolute;
     bottom: 0;
@@ -57,21 +53,21 @@ body {
 }
 
     /* Style the dropdown list */
-    .dropdown ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
+.dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
-        .dropdown ul li {
-            padding: 10px;
-        }
+.dropdown ul li {
+    padding: 10px;
+}
 
-            /* Style the links in the dropdown */
-            .dropdown ul li a {
-                text-decoration: none;
-                color: #333;
-            }
+/* Style the links in the dropdown */
+.dropdown ul li a {
+    text-decoration: none;
+    color: #333;
+}
 
 .dropdown-open {
     display: block;

@@ -58,7 +58,7 @@ namespace ASI.Basecode.WebApp.Authentication
         public Task<ClaimsIdentity> GetClaimsIdentity(string username, string password)
         {
             ClaimsIdentity claimsIdentity = null;
-            User userData = new User();
+            ASIUser userData = new ASIUser();
 
             user.loginResult = LoginResult.Success;//TODO this._accountService.AuthenticateUser(username, password, ref userData);
 
@@ -77,7 +77,7 @@ namespace ASI.Basecode.WebApp.Authentication
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns>Instance of ClaimsIdentity</returns>
-        public ClaimsIdentity CreateClaimsIdentity(User user)
+        public ClaimsIdentity CreateClaimsIdentity(ASIUser user)
         {
             var token = _configuration.GetTokenAuthentication();
             //TODO
@@ -120,7 +120,7 @@ namespace ASI.Basecode.WebApp.Authentication
         /// </summary>
         /// <param name="user">The user.</param>
         /// <param name="isPersistent">if set to <c>true</c> [is persistent].</param>
-        public async Task SignInAsync(User user, bool isPersistent = false)
+        public async Task SignInAsync(ASIUser user, bool isPersistent = false)
         {
             var claimsIdentity = this.CreateClaimsIdentity(user);
             var principal = this.CreateClaimsPrincipal(claimsIdentity);
