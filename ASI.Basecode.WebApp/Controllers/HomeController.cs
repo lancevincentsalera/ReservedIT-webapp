@@ -36,5 +36,21 @@ namespace ASI.Basecode.WebApp.Controllers
         {
             return View();
         }
+
+
+
+/*        public ActionResult ConfirmationModal()
+        {
+
+
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult ConfirmationModal()
+        {
+
+            return View();
+        }*/
     }
 }
