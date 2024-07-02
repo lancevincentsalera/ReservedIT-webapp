@@ -74,5 +74,16 @@ namespace ASI.Basecode.Services.Services
 
             return users;
         }
+
+        public void ActivateOrRestrictUser(UserViewModel user)
+        {
+            var userToBeUpdated = _repository.GetUsers().Where(u => u.UserId ==  user.UserId).FirstOrDefault();
+            if(userToBeUpdated != null)
+            {
+                userToBeUpdated.AccountStatus = user.AccountStatus;
+
+                _repository.ActivateOrRestrictUser(userToBeUpdated);
+            }
+        }
     }
 }

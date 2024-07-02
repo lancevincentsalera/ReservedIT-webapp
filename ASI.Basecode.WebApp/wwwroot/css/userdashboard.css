@@ -108,11 +108,15 @@ h1 {
 }
 
 .status-active {
+    padding: 5px;
+    border-radius: 10px;
     background-color: #B5838E;
     color: white;
 }
 
 .status-restricted {
+    padding: 5px;
+    border-radius: 10px;
     background-color: #FF4C4C;
     color: white;
 }
@@ -155,5 +159,11 @@ h1 {
     border: 1px solid;
     padding: 4px 12px;
     border-radius: 50%;
+}
+
+.btn-status {
+    font-size: 80%;
+    border: none;
+    background-color: transparent;
 }
 

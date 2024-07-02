@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using ASI.Basecode.Services.Interfaces;
+using System.Linq;
 
 namespace ASI.Basecode.WebApp.Controllers
 {
@@ -34,10 +35,30 @@ namespace ASI.Basecode.WebApp.Controllers
         }
 
 
-        [HttpGet]
-        public IActionResult Create()
+        [HttpPost]
+        public IActionResult ActivateUser(int userId)
         {
-            return View();
+            var user = _userService.GetUsers().Where(u => u.UserId == userId).FirstOrDefault();
+            if (user != null)
+            {
+                user.AccountStatus = "ACTIVE";
+
+                _userService.ActivateOrRestrictUser(user);
+            }
+            return RedirectToAction("Index"); 
+        }
+
+        [HttpPost]
+        public IActionResult RestrictUser(int userId)
+        {
+            var user = _userService.GetUsers().Where(u => u.UserId == userId).FirstOrDefault();
+            if (user != null)
+            {
+                user.AccountStatus = "RESTRICTED";
+
+                _userService.ActivateOrRestrictUser(user);
+            }
+            return RedirectToAction("Index");
         }
     }
 }

@@ -37,5 +37,10 @@ namespace ASI.Basecode.Data.Repositories
         {
             return this.GetDbSet<User>().Any(x => x.Email == email);
         }
+
+        public void ActivateOrRestrictUser(User user) {
+            this.GetDbSet<User>().Update(user);
+            UnitOfWork.SaveChanges();
+        }
     }
 }

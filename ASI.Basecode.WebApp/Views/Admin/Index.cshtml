@@ -36,8 +36,18 @@
                         <span class="ddicon">&#8942;</span>
                         <div class="dropdown-action">
                             <ul>
-                                <li>Activate</li>
-                                <li>Restrict</li>
+                                <li>
+                                    <form asp-action="ActivateUser" method="post">
+                                        <input type="hidden" name="userId" value="@item.UserId" />
+                                        <button type="submit" class="btn-status">Activate</button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form asp-action="RestrictUser" method="post">
+                                        <input type="hidden" name="userId" value="@item.UserId" />
+                                        <button type="submit" class="btn-status">Restrict</button>
+                                    </form>
+                                </li>
                                 <li>Edit</li>
                                 <li>Delete</li>
                             </ul>
@@ -59,8 +69,8 @@
                 case 'active':
                     cell.classList.add('status-active');
                     break;
-                case 'inactive':
-                    cell.classList.add('status-inactive');
+                case 'restricted':
+                    cell.classList.add('status-restricted');
                     break;
                 case 'pending':
                     cell.classList.add('status-pending');
