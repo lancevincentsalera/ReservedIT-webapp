@@ -1,29 +1,22 @@
 ﻿/* Import Montserrat font */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
 
-/* Apply Montserrat font to body */
-body {
-    font-family: 'Montserrat', sans-serif;
-}
-
-
 .modal-content {
     background-color: white;
-    border-radius: 10px;
-    height: 60vh;
+    border-radius: 20px;
+    height: 100%;
     color: black;
-    
-}
-
-.modal-body {
     padding: 28px;
 }
 
 .modal-header {
     border-bottom: 2px solid;
-    padding-left: 28px;
+    padding: 0;
     align-items: center;
-    border-left-width: medium;
+}
+
+.modal-body {
+    padding: 28px 0 0 0;
 }
 
 .custom-line {
@@ -86,6 +79,13 @@ form .user-details .input-box input, select {
 .modal-footer {
     border-top: none;
     padding-top: 30px;
+    padding-bottom: 0;
 }
 
+.modal.modal-second {
+    z-index: 1060;
+}
 
+.modal-backdrop.modal-backdrop-second {
+    z-index: 1055; 
+}
