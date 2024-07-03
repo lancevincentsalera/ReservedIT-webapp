@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace ASI.Basecode.Data.Interfaces
 {
-    public interface IUserRepository
+    public interface IRoomRepository
     {
-        IQueryable<User> GetUsers();
-        bool UserExists(int userId);
-        void AddUser(User user);
+        IQueryable<Room> GetRooms();
+        bool RoomExists(int roomId);
+        void AddRoom(Room room);
+        void UpdateRoom(Room room);
     }
 }

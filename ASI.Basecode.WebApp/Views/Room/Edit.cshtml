@@ -1,0 +1,62 @@
+﻿@model ASI.Basecode.Services.ServiceModels.RoomViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>RoomViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="PostEdit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="RoomId" type="hidden" />
+            <div class="form-group">
+                <label asp-for="RoomName" class="control-label"></label>
+                <input asp-for="RoomName" class="form-control" />
+                <span asp-validation-for="RoomName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomDescription" class="control-label"></label>
+                <input asp-for="RoomDescription" class="form-control" />
+                <span asp-validation-for="RoomDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomLocation" class="control-label"></label>
+                <input asp-for="RoomLocation" class="form-control" />
+                <span asp-validation-for="RoomLocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomCapacity" class="control-label"></label>
+                <input asp-for="RoomCapacity" class="form-control" />
+                <span asp-validation-for="RoomCapacity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomFacility" class="control-label"></label>
+                <input asp-for="RoomFacility" class="form-control" />
+                <span asp-validation-for="RoomFacility" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomThumbnailImg" class="control-label"></label>
+                <div class="custom-file">
+                    <input asp-for="RoomThumbnailImg" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+                <span asp-validation-for="RoomThumbnailImg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="RoomView">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

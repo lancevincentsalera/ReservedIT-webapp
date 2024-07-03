@@ -38,5 +38,13 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\img\" />
+    <Folder Include="wwwroot\room\gallery\" />
+    <Folder Include="wwwroot\room\thumbnail\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Room\Create.cshtml" />
+    <None Include="Views\Room\Edit.cshtml" />
+    <None Include="Views\Room\RoomView.cshtml" />
   </ItemGroup>
 </Project>
