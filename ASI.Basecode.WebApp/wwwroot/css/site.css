@@ -28,6 +28,16 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+/*Specific style for Confirmation Modals*/
+
+#confirmationModal .modal-content,
+#confirmationAddModal .modal-content,
+#confirmationEditModal .modal-content {
+    height: 25vh;
+    background-color: aqua;
+    z-index: 1051;  
+}
+
 /* Initially hide the dropdown */
 .dropdown {
     display: none;
@@ -138,3 +148,28 @@ select {
   border-top: none;
   padding-top: 30px;
 }
+
+.modal-body {
+    padding: 25px;
+    align-content: center;
+}
+
+.modal-footer {
+    padding-top: 0;
+}
+
+.modal-body p {
+    margin-bottom: 0;
+}
+
+/* Custom backdrop for confirmation modals */
+/*.confirmation-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1049;*/ /* Ensure it's behind the confirmation modal */
+    /*display: none;*/ /* Initially hidden */
+/*}*/
