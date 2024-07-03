@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Home\ConfirmationModal.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="appsettings.json.rej" />
   </ItemGroup>
 
@@ -34,9 +38,5 @@
   <ItemGroup>
     <ProjectReference Include="..\ASI.Basecode.Resources\ASI.Basecode.Resources.csproj" />
     <ProjectReference Include="..\ASI.Basecode.Services\ASI.Basecode.Services.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\img\" />
   </ItemGroup>
 </Project>

@@ -85,12 +85,12 @@ namespace ASI.Basecode.WebApp.Controllers
 
             //User user = null;
 
-            User user = new() { Id = 0, UserId = "0", Name = "Name", Password = "Password" };
+            ASIUser user = new() { Id = 0, UserId = "0", Name = "Name", Password = "Password" };
             
             await this._signInManager.SignInAsync(user);
             this._session.SetString("UserName", model.UserId);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Admin");
 
             /*var loginResult = _userService.AuthenticateUser(model.UserId, model.Password, ref user);
             if (loginResult == LoginResult.Success)
@@ -113,13 +113,17 @@ namespace ASI.Basecode.WebApp.Controllers
         [AllowAnonymous]
         public IActionResult Register()
         {
-            return View();
+            var roles = _userService.GetRoles();
+            var model = new UserViewModel { Roles = roles };
+            return View(model);
         }
 
         [HttpPost]
         [AllowAnonymous]
         public IActionResult Register(UserViewModel model)
         {
+            var roles = _userService.GetRoles();
+            model.Roles = roles;
             try
             {
                 _userService.AddUser(model);
@@ -133,7 +137,7 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 TempData["ErrorMessage"] = Resources.Messages.Errors.ServerError;
             }
-            return View();
+            return View(model);
         }
 
         /// <summary>

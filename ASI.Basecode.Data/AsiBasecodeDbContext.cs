@@ -17,10 +17,10 @@ namespace ASI.Basecode.Data
         {
         }
 
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<ASIUser> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>(entity =>
+            modelBuilder.Entity<ASIUser>(entity =>
             {
                 entity.HasIndex(e => e.UserId, "UQ__Users__1788CC4D5F4A160F")
                     .IsUnique();

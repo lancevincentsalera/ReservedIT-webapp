@@ -1,0 +1,170 @@
+﻿.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    font-weight: bold;
+}
+
+.create-user-btn {
+    border: none;
+    font-size: 87.5%;
+    font-weight: bold;
+    background-color: #B5838E;
+    padding: 10px 30px;
+    color: white;
+    border-radius: 25px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.create-user-btn:hover {
+    background-color: #775965;
+    color: white;
+    text-decoration: none;
+}
+
+
+.create-user-btn img {
+    margin-right: 0.5rem;
+}
+
+.table-container {
+    height: 85%;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0px 5px 12px 4px rgba(0, 0, 0, 0.20);
+    overflow: hidden;
+}
+
+.user-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    overflow-y: auto;
+    max-height: 90%;
+}
+
+.user-row {
+    display: flex;
+}
+
+.user-row.header {
+    font-weight: bold;
+}
+
+.user-cell {
+    font-size: 80%;
+    padding: 10px;
+    flex: 1;
+    min-width: 0;
+}
+
+.user-cell.actions {
+    text-align: center;
+}
+
+.user-row:first-child {
+    border-bottom: 1px solid #E9EDF5;
+}
+
+.user-row:nth-child(odd) {
+    background-color: #F9FAFC;
+}
+
+.user-cell:first-child {
+    text-align: center;
+    flex: 0 0 100px;
+}
+
+.user-cell:nth-child(2) {
+    flex: 0 0 250px;
+}
+
+.user-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.user-list::-webkit-scrollbar-track {
+    border: 1px solid #CACACA;
+    border-radius: 16px;
+}
+
+.user-list::-webkit-scrollbar-thumb {
+    background-color: #A6A6A6;
+    border-radius: 16px;
+}
+
+.user-cell .status {
+    font-size: 80%;
+}
+
+.status-pending {
+   padding: 5px;
+   border-radius: 10px;
+    background-color: #E1FCEF;
+    color: #14804A;
+}
+
+.status-active {
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #B5838E;
+    color: white;
+}
+
+.status-restricted {
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #FF4C4C;
+    color: white;
+}
+
+.dropdown-action {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+    .dropdown-action ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .dropdown-action ul li {
+            font-size: 80%;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+            .dropdown-action ul li:hover {
+                background-color: #f0f0f0;
+            }
+
+.dropdown-trigger {
+    position: relative;
+}
+
+.show-dropdown {
+    display: block;
+}
+
+.ddicon {
+    border: 1px solid;
+    padding: 4px 12px;
+    border-radius: 50%;
+}
+
+.btn-status {
+    font-size: 80%;
+    border: none;
+    background-color: transparent;
+}
+

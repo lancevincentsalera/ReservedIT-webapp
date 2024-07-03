@@ -1,8 +1,20 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewBag.Title = "Home Page"; /// remove later
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    
+    <p>These are just temporary buttons to trigger modals</p>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmationModal">
+        Delete (Temp btn)
+    </button>
+
+    <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#createUserModal">
+        Create User (Temp btn)
+    </button>    
+    
+    <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#editUserModal">
+        Edit User (Temp btn)
+    </button>
 </div>
+

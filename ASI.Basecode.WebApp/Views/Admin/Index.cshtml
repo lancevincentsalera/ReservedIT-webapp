@@ -1,0 +1,130 @@
+﻿@model IEnumerable<ASI.Basecode.Services.ServiceModels.UserViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="dashboard-header">
+    <h1>Users</h1>
+    <button type="button" class="create-user-btn" data-toggle="modal" data-target="#createUserModal"> <img src="~/img/add-logo.png" />Create User</button>
+
+</div>
+
+<div class="table-container">
+    <div class="user-row header">
+        <div class="user-cell">USER ID</div>
+        <div class="user-cell">EMAIL</div>
+        <div class="user-cell">FIRST NAME</div>
+        <div class="user-cell">LAST NAME</div>
+        <div class="user-cell">ROLE</div>
+        <div class="user-cell">STATUS</div>
+        <div class="user-cell"></div>
+    </div>
+    <ul class="user-list">
+        @foreach (var item in Model)
+        {
+            <li class="user-row">
+                <div class="user-cell" data-label="USER ID">@Html.DisplayFor(modelItem => item.UserId)</div>
+                <div class="user-cell" data-label="EMAIL">@Html.DisplayFor(modelItem => item.Email)</div>
+                <div class="user-cell" data-label="FIRST NAME">@Html.DisplayFor(modelItem => item.FirstName)</div>
+                <div class="user-cell" data-label="LAST NAME">@Html.DisplayFor(modelItem => item.LastName)</div>
+                <div class="user-cell" data-label="ROLE">@Html.DisplayFor(modelItem => item.RoleName)</div>
+                <div class="user-cell" data-label="STATUS"><span class="status">@Html.DisplayFor(modelItem => item.AccountStatus)</span></div>
+                <div class="user-cell actions">
+                    <div class="mr-20 hover-pointer dropdown-trigger">
+                        <span class="ddicon">&#8942;</span>
+                        <div class="dropdown-action">
+                            <ul>
+                                <li>
+                                    <form asp-action="ActivateUser" method="post">
+                                        <input type="hidden" name="userId" value="@item.UserId" />
+                                        <button type="submit" class="btn-status">Activate</button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form asp-action="RestrictUser" method="post">
+                                        <input type="hidden" name="userId" value="@item.UserId" />
+                                        <button type="submit" class="btn-status">Restrict</button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <button type="button" class="create-user-btn" data-toggle="modal" data-target="#editUserModal">
+                                        Edit User
+                                     </button>
+                                </li>
+                                <li>Delete</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+
+<!-- Include the modal partial view -->
+@Html.Partial("_ConfirmationModal")
+@Html.Partial("_CreateUserModal")
+@Html.Partial("_EditUserModal")
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let statusCells = document.querySelectorAll('.user-cell[data-label="STATUS"] span');
+
+        statusCells.forEach((cell) => {
+            let statusText = cell.textContent.trim().toLowerCase();
+
+            switch (statusText) {
+                case 'active':
+                    cell.classList.add('status-active');
+                    break;
+                case 'restricted':
+                    cell.classList.add('status-restricted');
+                    break;
+                case 'pending':
+                    cell.classList.add('status-pending');
+                    break;
+                default:
+                    // Add a default style or leave it as is
+                    break;
+            }
+        });
+
+
+        let dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
+
+        dropdownTriggers.forEach((trigger) => {
+            let dropdown = trigger.querySelector('.dropdown-action');
+            let editUserBtn = trigger.querySelector('.create-user-btn');
+
+            editUserBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                $('#editUserModal').modal('show'); 
+            });
+
+            trigger.addEventListener('click', (event) => {
+                event.stopPropagation();
+
+                dropdownTriggers.forEach((otherTrigger) => {
+                    if (otherTrigger !== trigger) {
+                        let otherDropdown = otherTrigger.querySelector('.dropdown-action');
+                        otherDropdown.classList.remove("show-dropdown");
+                    }
+                });
+
+                dropdown.classList.toggle('show-dropdown');
+            });
+        });
+
+        document.addEventListener('click', (event) => {
+            dropdownTriggers.forEach((trigger) => {
+                let dropdown = trigger.querySelector('.dropdown-action');
+
+                if (!trigger.contains(event.target)) {
+                    dropdown.classList.remove('show-dropdown');
+                }
+            });
+        });
+    });
+</script>

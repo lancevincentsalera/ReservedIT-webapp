@@ -27,6 +27,6 @@ namespace ASI.Basecode.WebApp.Models
         /// <summary>
         /// User Data
         /// </summary>
-        public User userData { get; set; }
+        public ASIUser userData { get; set; }
     }
 }
