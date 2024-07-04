@@ -242,7 +242,7 @@ namespace ASI.Basecode.Data
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Room)
-                    .WithMany(p => p.RoomGalleries)
+                    .WithMany(p => p.roomGallery)
                     .HasForeignKey(d => d.RoomId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_RoomGallery_Room");

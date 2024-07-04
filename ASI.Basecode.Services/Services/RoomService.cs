@@ -61,6 +61,22 @@ namespace ASI.Basecode.Services.Services
             newModel.RoomId = incID;
             newModel.RoomInsDt = DateTime.Now;
 
+            newModel.roomGallery = new List<RoomGallery>();
+
+            if (model._RoomGallery != null && model._RoomGallery.Any())
+            {
+                var galleryMaxId = this._roomRepository.GetRoomGalleries().Max(x => x.GalleryId);
+                foreach (var file in model._RoomGallery)
+                {
+                    galleryMaxId++;
+                    newModel.roomGallery.Add(new RoomGallery()
+                    {
+                        GalleryId = galleryMaxId,
+                        GalleryName = file.GalleryName,
+                        GalleryPath = file.GalleryUrl,
+                    });
+                }
+            }
             _roomRepository.AddRoom(newModel);
         }
 
@@ -72,6 +88,15 @@ namespace ASI.Basecode.Services.Services
             existingData.RoomThumbnail = model.RoomThumbnail;
 
             _roomRepository.UpdateRoom(existingData);
+        }
+
+        public void UpdateGallery(RoomGalleryViewModel model)
+        {
+            var existingData = _roomRepository.GetRoomGalleries().Where(s => s.RoomId == model.RoomId).FirstOrDefault();
+            existingData.GalleryName = model.GalleryName;
+            existingData.GalleryPath = model.GalleryUrl;
+
+            _roomRepository.UpdateGallery(existingData);
         }
     }
 }

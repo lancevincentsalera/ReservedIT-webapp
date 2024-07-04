@@ -29,7 +29,7 @@ namespace ASI.Basecode.Services.ServiceModels
         [Display(Name = "Thumbnail Photo")]
         public IFormFile RoomThumbnailImg { get; set; }
         public string RoomThumbnail { get; set; }
-        public List<RoomGalleryViewModel> RoomGallery { get; set; }
+        public List<RoomGalleryViewModel> _RoomGallery { get; set; }
     }
     public class RoomViewModelList
     {

@@ -8,6 +8,7 @@ namespace ASI.Basecode.Services.ServiceModels
 {
     public class RoomGalleryViewModel
     {
+        public int RoomId { get; set; }
         public int GalleryId { get; set; }
         public string GalleryName { get; set; }
         public string GalleryUrl { get; set; }

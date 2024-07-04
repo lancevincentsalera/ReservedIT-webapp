@@ -8,7 +8,7 @@ namespace ASI.Basecode.Data.Models
         public Room()
         {
             Bookings = new HashSet<Booking>();
-            RoomGalleries = new HashSet<RoomGallery>();
+            roomGallery = new HashSet<RoomGallery>();
         }
 
         public int RoomId { get; set; }
@@ -25,6 +25,6 @@ namespace ASI.Basecode.Data.Models
         public string RoomThumbnail { get; set; }
 
         public virtual ICollection<Booking> Bookings { get; set; }
-        public virtual ICollection<RoomGallery> RoomGalleries { get; set; }
+        public virtual ICollection<RoomGallery> roomGallery { get; set; }
     }
 }

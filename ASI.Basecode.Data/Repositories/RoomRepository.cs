@@ -19,6 +19,10 @@ namespace ASI.Basecode.Data.Repositories
         {
             return this.GetDbSet<Room>();
         }
+        public IQueryable<RoomGallery> GetRoomGalleries ()
+        {
+            return this.GetDbSet<RoomGallery>();
+        }
         public bool RoomExists(int roomId)
         {
             return this.GetDbSet<Room>().Any(x => x.RoomId == roomId);
@@ -31,6 +35,11 @@ namespace ASI.Basecode.Data.Repositories
         public void UpdateRoom(Room room)
         {
             this.GetDbSet<Room>().Update(room);
+            UnitOfWork.SaveChanges();
+        }
+        public void UpdateGallery(RoomGallery roomGallery) 
+        {
+            this.GetDbSet<RoomGallery>().Update(roomGallery);
             UnitOfWork.SaveChanges();
         }
     }

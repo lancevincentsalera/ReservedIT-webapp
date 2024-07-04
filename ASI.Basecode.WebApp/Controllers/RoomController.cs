@@ -94,22 +94,22 @@ namespace ASI.Basecode.WebApp.Controllers
                         model.RoomThumbnail = await UploadImage(folder, model.RoomThumbnailImg);
                     }
 
-                    /*if (model.RoomThumbnailImg != null)
+                    if (model.RoomGalleryImg != null)
                     {
                         string folder = "room/gallery/";
 
-                        model.RoomGallery = new List<RoomGalleryViewModel>();
+                        model._RoomGallery = new List<RoomGalleryViewModel>();
 
                         foreach (var file in model.RoomGalleryImg)
                         {
-                            var roomGallery = new RoomGalleryViewModel() 
-                            { 
-                               GalleryName = file.FileName,
-                               GalleryUrl = await UploadImage(folder, file)
+                            var roomGallery = new RoomGalleryViewModel()
+                            {
+                                GalleryName = file.FileName,
+                                GalleryUrl = await UploadImage(folder, file)
                             };
-                            model.RoomGallery.Add(roomGallery);
+                            model._RoomGallery.Add(roomGallery);
                         }
-                    }*/
+                    }
                 }
                 _roomService.AddRoom(model);
             }
@@ -171,16 +171,33 @@ namespace ASI.Basecode.WebApp.Controllers
                     model.RoomThumbnail = existingRoom.RoomThumbnail;
                 }
 
-                if (ModelState.IsValid)
+                if (model.RoomGalleryImg != null)
                 {
-                    _roomService.UpdateRoom(model);
-                    TempData["UpdateMessage"] = "Updated Successfully";
-                    _logger.LogInformation("=======PostEdit End=======");
-                }
-                else
-                {
-                    _logger.LogWarning("Model state is invalid.");
-                    TempData["ErrorMessage"] = "Failed to update the room.";
+                    string folder = "room/gallery/";
+
+                    model._RoomGallery = new List<RoomGalleryViewModel>();
+
+                    foreach (var file in model.RoomGalleryImg)
+                    {
+                        var roomGallery = new RoomGalleryViewModel()
+                        {
+                            GalleryName = file.FileName,
+                            GalleryUrl = await UploadImage(folder, file)
+                        };
+                        model._RoomGallery.Add(roomGallery);
+                    }
+
+                    if (ModelState.IsValid)
+                    {
+                        _roomService.UpdateRoom(model);
+                        TempData["UpdateMessage"] = "Updated Successfully";
+                        _logger.LogInformation("=======PostEdit End=======");
+                    }
+                    else
+                    {
+                        _logger.LogWarning("Model state is invalid.");
+                        TempData["ErrorMessage"] = "Failed to update the room.";
+                    }
                 }
             }
             catch (Exception ex)

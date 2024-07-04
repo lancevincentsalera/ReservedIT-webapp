@@ -10,8 +10,10 @@ namespace ASI.Basecode.Data.Interfaces
     public interface IRoomRepository
     {
         IQueryable<Room> GetRooms();
+        IQueryable<RoomGallery> GetRoomGalleries();
         bool RoomExists(int roomId);
         void AddRoom(Room room);
         void UpdateRoom(Room room);
+        void UpdateGallery(RoomGallery roomGallery);
     }
 }
