@@ -1,4 +1,6 @@
-﻿<!-- CREATE USER -->
+﻿
+
+<!-- CREATE USER -->
 <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -10,41 +12,42 @@
                 </button> *@
             </div>
             <div class="modal-body">
-                <form id="createUserForm" action="#">
+                <form id="createUserForm" method="post" action="#">
                     <div class="user-details">
                         <div class="userName">
                             <div class="input-box">
                                 <span class="details"> First Name</span>
-                                <input type="text" placeholder="Enter First Name" required />
+                                <input name="FirstName" type="text" placeholder="Enter First Name" required />
                             </div>
                             <div class="input-box">
                                 <span class="details"> Last Name</span>
-                                <input type="text" placeholder="Enter Last Name" required />
+                                <input name="LastName" type="text" placeholder="Enter Last Name" required />
                             </div>
                         </div>
 
                         <div class="input-box">
                             <span class="details">Email</span>
-                            <input type="email" placeholder="Enter Email Address" required />
+                            <input name="Email" type="email" placeholder="Enter Email Address" required />
                         </div>
 
                          <div class="input-box">
                             <span class="details">Password</span>
-                            <input type="password" placeholder="Enter Password" required />
+                            <input name="Password" type="password" placeholder="Enter Password" required />
                         </div>
 
                         <div class="input-box">
                             <span class="details">Confirm Password</span>
-                            <input type="password" placeholder="Reenter Password" required />
+                            <input name="ConfirmPassword" type="password" placeholder="Reenter Password" required />
                         </div>
 
                         <div class="input-box">
                             <span class="details">Role</span>
-                            <select class="form-select" aria-label="Select Place" required>
-                                <option selected disabled value="">Assign Role</option>
-                                <option value="1">User</option>
-                                <option value="2">Manager</option>
-                                
+                            <select name="RoleId" class="form-select" aria-label="Select Role" required>
+                                <option value="" disabled>Select Role</option>
+                                @foreach (var role in Model.Roles)
+                                {
+                                    <option value="@role.RoleId">@GetRoleDisplayName(role.RoleId)</option>
+                                }
                             </select>
                         </div>
                         <div class="modal-footer">
@@ -60,3 +63,19 @@
 
 @Html.Partial("_ConfirmationModal")
 
+@functions {
+    string GetRoleDisplayName(int roleId)
+    {
+        switch (roleId)
+        {
+            case 1:
+                return "Admin";
+            case 2:
+                return "Regular User";
+            case 3:
+                return "Manager";
+            default:
+                return "";
+        }
+    }
+}

@@ -68,6 +68,7 @@ namespace ASI.Basecode.Services.Services
                 Email = u.Email,
                 FirstName = u.FirstName,
                 LastName = u.LastName,
+                RoleId = u.RoleId,
                 RoleName = u.Role.RoleName,
                 AccountStatus = u.AccountStatus,
             });
@@ -75,14 +76,17 @@ namespace ASI.Basecode.Services.Services
             return users;
         }
 
-        public void ActivateOrRestrictUser(UserViewModel user)
+        public void UpdateUser(UserViewModel user)
         {
             var userToBeUpdated = _repository.GetUsers().Where(u => u.UserId ==  user.UserId).FirstOrDefault();
             if(userToBeUpdated != null)
             {
-                userToBeUpdated.AccountStatus = user.AccountStatus;
+                _mapper.Map(user, userToBeUpdated);
+                userToBeUpdated.Password = PasswordManager.EncryptPassword(user.Password);
+                userToBeUpdated.UpdatedDt = DateTime.Now;
+                userToBeUpdated.UpdatedBy = System.Environment.UserName;
 
-                _repository.ActivateOrRestrictUser(userToBeUpdated);
+                _repository.UpdateUser(userToBeUpdated);
             }
         }
     }

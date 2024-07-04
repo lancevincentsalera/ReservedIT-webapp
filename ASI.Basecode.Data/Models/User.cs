@@ -5,6 +5,12 @@ namespace ASI.Basecode.Data.Models
 {
     public partial class User
     {
+        public User()
+        {
+            Bookings = new HashSet<Booking>();
+            Settings = new HashSet<Setting>();
+        }
+
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -18,5 +24,7 @@ namespace ASI.Basecode.Data.Models
         public int? RoleId { get; set; }
 
         public virtual Role Role { get; set; }
+        public virtual ICollection<Booking> Bookings { get; set; }
+        public virtual ICollection<Setting> Settings { get; set; }
     }
 }

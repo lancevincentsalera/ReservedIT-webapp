@@ -28,7 +28,7 @@ namespace ASI.Basecode.Services.ServiceModels
         public string ConfirmPassword { get; set; }
 
         [Required]
-        public int RoleId { get; set; }
+        public int? RoleId { get; set; }
 
         public IEnumerable<Role> Roles { get; set; }
 

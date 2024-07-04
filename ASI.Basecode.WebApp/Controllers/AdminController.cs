@@ -33,8 +33,13 @@ namespace ASI.Basecode.WebApp.Controllers
 
         public IActionResult Index()
         {
-            var users = _userService.GetUsers();
-            return View(users);
+            var roles = _userService.GetRoles();
+            var userViewModel = new UserViewModel()
+            {
+                Roles = roles
+            };
+            ViewData["users"] = _userService.GetUsers();
+            return View(userViewModel);
         }
 
 
@@ -46,7 +51,7 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 user.AccountStatus = "ACTIVE";
 
-                _userService.ActivateOrRestrictUser(user);
+                _userService.UpdateUser(user);
             }
             return RedirectToAction("Index"); 
         }
@@ -59,28 +64,18 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 user.AccountStatus = "RESTRICTED";
 
-                _userService.ActivateOrRestrictUser(user);
+                _userService.UpdateUser(user);
             }
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public IActionResult _CreateUserModal()
-        {
-            var roles = _userService.GetRoles();
-            var model = new UserViewModel { Roles = roles };
-            return PartialView("_CreateUserModal", model);
-        }
-
         [HttpPost]
-        public IActionResult CreateUser(UserViewModel model)
+        public IActionResult CreateUserPost([FromForm] UserViewModel model)
         {
-            var roles = _userService.GetRoles();
-            model.Roles = roles;
             try
             {
                 _userService.AddUser(model);
-                return RedirectToAction("Index", "Login");
+                return RedirectToAction("Index");
             }
             catch (InvalidDataException ex)
             {
@@ -90,7 +85,38 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 TempData["ErrorMessage"] = Resources.Messages.Errors.ServerError;
             }
-            return View(model);
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult GetUserDetails(int userId)
+        {
+            var user = _userService.GetUsers().Where(u => u.UserId == userId).FirstOrDefault();
+            if (user != null) {
+                return Json(user);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult UpdateUserPost(UserViewModel model)
+        {
+
+            try
+            {
+                _userService.UpdateUser(model);
+                return RedirectToAction("Index");
+            }
+            catch (InvalidDataException ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = Resources.Messages.Errors.ServerError;
+            }
+            return View();
         }
     }
 }
