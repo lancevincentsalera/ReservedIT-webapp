@@ -38,7 +38,6 @@ namespace ASI.Basecode.WebApp
           
 
             // Repositories
-            this._services.AddScoped<IASIUserRepository, ASIUserRepository>();
             this._services.AddScoped<IUserRepository, UserRepository>();
 
             // Manager Class
