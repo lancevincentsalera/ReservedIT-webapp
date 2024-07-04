@@ -1,5 +1,5 @@
 ﻿<!-- confirm DELETE -->
-<div class="modal fade modal-second" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -20,7 +20,7 @@
 </div>
 
 <!-- confirm ADD -->
-<div class="modal fade modal-second" id="confirmationAddModal" tabindex="-1" aria-labelledby="confirmationAddModalLabel" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="confirmationAddModal" tabindex="-1" aria-labelledby="confirmationAddModalLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -33,8 +33,8 @@
                 <p>Are you sure you want to add this item?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" id="confirmAddBtn">Add</button>
+                <button type="button" class="btn btn-secondary" onclick="hideConfirmationModal('#confirmationAddModal', '#createUserModal' )">Close</button>
+                <button type="button" class="btn btn-danger" id="confirmAddBtn" onclick="submitForm('#confirmAddBtn', "CreateUser", "Admin")">Add</button>
             </div>
         </div>
     </div>
@@ -54,7 +54,7 @@
                 <p>Are you sure you want to edit this item?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" onclick="hideConfirmationModal('#confirmationEditModal', '#editUserModal')">Close</button>
                 <button type="button" class="btn btn-danger" id="confirmEditBtn">Edit</button>
             </div>
         </div>

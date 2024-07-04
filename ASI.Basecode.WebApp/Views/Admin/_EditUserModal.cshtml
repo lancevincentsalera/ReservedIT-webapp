@@ -10,7 +10,7 @@
                 </button> *@
             </div>
             <div class="modal-body">
-                <form action="#">
+                <form id="editUserForm" action="#">
                     <div class="user-details">
                         <div class="userName">
                             <div class="input-box">
@@ -50,7 +50,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-custom" id="editUserBtn" data-toggle="modal" data-target="#confirmationEditModal">Edit</button>
+                            <button type="submit" class="btn btn-custom" id="editUserBtn" onclick="displayConfirmationModal('#editUserModal', '#confirmationEditModal')">Edit</button>
                         </div>
 
                     </div>

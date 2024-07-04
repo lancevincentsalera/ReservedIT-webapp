@@ -6,8 +6,7 @@
 
 <div class="dashboard-header">
     <h1>Users</h1>
-    <button type="button" class="create-user-btn" data-toggle="modal" data-target="#createUserModal"> <img src="~/img/add-logo.png" />Create User</button>
-
+    <button type="button" class="create-user-btn" onclick="displayModal()"> <img src="~/img/add-logo.png" />Create User</button>
 </div>
 
 <div class="table-container">
@@ -48,7 +47,7 @@
                                     </form>
                                 </li>
                                 <li>
-                                    <button type="button" class="create-user-btn" data-toggle="modal" data-target="#editUserModal">
+                                    <button type="button" class="create-user-btn">
                                         Edit User
                                      </button>
                                 </li>
@@ -62,34 +61,38 @@
     </ul>
 </div>
 
+@Html.Partial("_ConfirmationModal")
 @Html.Partial("_CreateUserModal")
 @Html.Partial("_EditUserModal")
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        let statusCells = document.querySelectorAll('.user-cell[data-label="STATUS"] span');
+@section scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let statusCells = document.querySelectorAll('.user-cell[data-label="STATUS"] span');
 
-        statusCells.forEach((cell) => {
-            let statusText = cell.textContent.trim().toLowerCase();
+            statusCells.forEach((cell) => {
+                let statusText = cell.textContent.trim().toLowerCase();
 
-            switch (statusText) {
-                case 'active':
-                    cell.classList.add('status-active');
-                    break;
-                case 'restricted':
-                    cell.classList.add('status-restricted');
-                    break;
-                case 'pending':
-                    cell.classList.add('status-pending');
-                    break;
-                default:
-                    // Add a default style or leave it as is
-                    break;
-            }
+                switch (statusText) {
+                    case 'active':
+                        cell.classList.add('status-active');
+                        break;
+                    case 'restricted':
+                        cell.classList.add('status-restricted');
+                        break;
+                    case 'pending':
+                        cell.classList.add('status-pending');
+                        break;
+                    default:
+                        // Add a default style or leave it as is
+                        break;
+                }
+            });
+
+
+
         });
+    </script>
+}
 
-
-        
-    });
-</script>

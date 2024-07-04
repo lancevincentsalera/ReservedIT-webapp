@@ -6,6 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using ASI.Basecode.Services.Interfaces;
 using System.Linq;
+using ASI.Basecode.Services.ServiceModels;
+using System.IO;
+using System;
 
 namespace ASI.Basecode.WebApp.Controllers
 {
@@ -59,6 +62,35 @@ namespace ASI.Basecode.WebApp.Controllers
                 _userService.ActivateOrRestrictUser(user);
             }
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult _CreateUserModal()
+        {
+            var roles = _userService.GetRoles();
+            var model = new UserViewModel { Roles = roles };
+            return PartialView("_CreateUserModal", model);
+        }
+
+        [HttpPost]
+        public IActionResult CreateUser(UserViewModel model)
+        {
+            var roles = _userService.GetRoles();
+            model.Roles = roles;
+            try
+            {
+                _userService.AddUser(model);
+                return RedirectToAction("Index", "Login");
+            }
+            catch (InvalidDataException ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = Resources.Messages.Errors.ServerError;
+            }
+            return View(model);
         }
     }
 }
