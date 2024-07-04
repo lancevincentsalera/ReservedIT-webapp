@@ -1,7 +1,8 @@
-﻿@model IEnumerable<ASI.Basecode.Services.ServiceModels.UserViewModel>
+﻿@model ASI.Basecode.Services.ServiceModels.UserViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "User Dashboard";
+    IEnumerable<ASI.Basecode.Services.ServiceModels.UserViewModel> users = ViewData["users"] as IEnumerable<ASI.Basecode.Services.ServiceModels.UserViewModel>;
 }
 
 <div class="dashboard-header">
@@ -20,7 +21,7 @@
         <div class="user-cell"></div>
     </div>
     <ul class="user-list">
-        @foreach (var item in Model)
+        @foreach (var item in users)
         {
             <li class="user-row">
                 <div class="user-cell" data-label="USER ID">@Html.DisplayFor(modelItem => item.UserId)</div>

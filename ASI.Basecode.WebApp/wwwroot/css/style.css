@@ -25,7 +25,6 @@
 body {
     background-color: var(--background-color4);
     max-width: 100%;
-    overflow-x: hidden;
     height: 100vh;
 }
 
@@ -121,31 +120,22 @@ header {
     display: flex;
     height: 100%;
     width: 100%;
-    overflow: hidden;
 }
 
 .content-container {
     display: flex;
     flex-direction: column;
+    width: 100%;
     height: 100%;
-    flex-grow: 1;
 }
 
 main {
-    height: 100%;
+    height: 85%;
     padding: 0rem 2rem;
 }
 
 .dpicn {
     height: 42px;
-}
-
-.main {
-    height: calc(100vh - 70px);
-    width: 100%;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    padding: 40px 30px 30px 30px;
 }
 
     .main::-webkit-scrollbar-thumb {

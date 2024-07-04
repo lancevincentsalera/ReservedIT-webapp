@@ -33,8 +33,13 @@ namespace ASI.Basecode.WebApp.Controllers
 
         public IActionResult Index()
         {
-            var users = _userService.GetUsers();
-            return View(users);
+            var roles = _userService.GetRoles();
+            var userViewModel = new UserViewModel()
+            {
+                Roles = roles
+            };
+            ViewData["users"] = _userService.GetUsers();
+            return View(userViewModel);
         }
 
 
@@ -64,23 +69,13 @@ namespace ASI.Basecode.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public IActionResult _CreateUserModal()
-        {
-            var roles = _userService.GetRoles();
-            var model = new UserViewModel { Roles = roles };
-            return PartialView("_CreateUserModal", model);
-        }
-
         [HttpPost]
-        public IActionResult CreateUser(UserViewModel model)
+        public IActionResult CreateUserPost([FromForm] UserViewModel model)
         {
-            var roles = _userService.GetRoles();
-            model.Roles = roles;
             try
             {
                 _userService.AddUser(model);
-                return RedirectToAction("Index", "Login");
+                return RedirectToAction("Index");
             }
             catch (InvalidDataException ex)
             {
@@ -90,7 +85,7 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 TempData["ErrorMessage"] = Resources.Messages.Errors.ServerError;
             }
-            return View(model);
+            return View();
         }
     }
 }

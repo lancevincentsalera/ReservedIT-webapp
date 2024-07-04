@@ -51,6 +51,7 @@ h1 {
 }
 
 .user-row.header {
+    background-color: #F9FAFC;
     font-weight: bold;
 }
 
@@ -69,7 +70,7 @@ h1 {
     border-bottom: 1px solid #E9EDF5;
 }
 
-.user-row:nth-child(odd) {
+.user-row:nth-child(even) {
     background-color: #F9FAFC;
 }
 
