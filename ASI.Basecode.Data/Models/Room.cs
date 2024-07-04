@@ -8,23 +8,23 @@ namespace ASI.Basecode.Data.Models
         public Room()
         {
             Bookings = new HashSet<Booking>();
-            roomGallery = new HashSet<RoomGallery>();
+            ImageGalleries = new HashSet<ImageGallery>();
+            RoomEquipments = new HashSet<RoomEquipment>();
         }
 
         public int RoomId { get; set; }
         public string RoomName { get; set; }
-        public string RoomDescription { get; set; }
-        public string RoomLocation { get; set; }
-        public int? RoomCapacity { get; set; }
-        public string RoomFacility { get; set; }
-        public string RoomImage { get; set; }
-        public DateTime? RoomInsDt { get; set; }
-        public string RoomInsBy { get; set; }
-        public DateTime? RoomUpdDt { get; set; }
-        public string RoomUpdBy { get; set; }
-        public string RoomThumbnail { get; set; }
+        public string Thumbnail { get; set; }
+        public int? Capacity { get; set; }
+        public string Description { get; set; }
+        public string Location { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? CreatedDt { get; set; }
+        public string UpdatedBy { get; set; }
+        public DateTime? UpdatedDt { get; set; }
 
         public virtual ICollection<Booking> Bookings { get; set; }
-        public virtual ICollection<RoomGallery> roomGallery { get; set; }
+        public virtual ICollection<ImageGallery> ImageGalleries { get; set; }
+        public virtual ICollection<RoomEquipment> RoomEquipments { get; set; }
     }
 }

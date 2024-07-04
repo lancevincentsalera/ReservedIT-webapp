@@ -16,19 +16,21 @@ namespace ASI.Basecode.Services.ServiceModels
         [Display(Name = "Room Name")]
         public string RoomName { get; set; }
         [Display(Name = "Description")]
-        public string RoomDescription { get; set; }
+        public string Description { get; set; }
         [Display(Name = "Room Location")]
-        public string RoomLocation { get; set; }
+        public string Location { get; set; }
         [Display(Name = "Capacity")]
-        public int RoomCapacity { get; set; }
+        public int Capacity { get; set; }
         [Display(Name = "Available Equipments")]
-        public string RoomFacility { get; set; }
-        [Display(Name = "Room Photos")]
+
+        /*public string RoomFacility { get; set; }
+        [Display(Name = "Room Photos")]*/
+
         public IFormFileCollection RoomGalleryImg { get; set; }
-        public string RoomImage { get; set; }
+
         [Display(Name = "Thumbnail Photo")]
         public IFormFile RoomThumbnailImg { get; set; }
-        public string RoomThumbnail { get; set; }
+        public string Thumbnail { get; set; }
         public List<RoomGalleryViewModel> _RoomGallery { get; set; }
     }
     public class RoomViewModelList

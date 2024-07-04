@@ -8,13 +8,14 @@ namespace ASI.Basecode.Data.Models
         public User()
         {
             Bookings = new HashSet<Booking>();
+            Settings = new HashSet<Setting>();
         }
 
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string UserEmail { get; set; }
-        public string UserPassword { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? CreatedDt { get; set; }
         public string UpdatedBy { get; set; }
@@ -24,5 +25,6 @@ namespace ASI.Basecode.Data.Models
 
         public virtual Role Role { get; set; }
         public virtual ICollection<Booking> Bookings { get; set; }
+        public virtual ICollection<Setting> Settings { get; set; }
     }
 }

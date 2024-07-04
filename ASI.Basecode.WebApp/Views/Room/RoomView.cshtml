@@ -19,16 +19,16 @@
                 @Html.DisplayNameFor(model => model.roomList.FirstOrDefault().RoomName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.roomList.FirstOrDefault().RoomDescription)
+                @Html.DisplayNameFor(model => model.roomList.FirstOrDefault().Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.roomList.FirstOrDefault().RoomLocation)
+                @Html.DisplayNameFor(model => model.roomList.FirstOrDefault().Location)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.roomList.FirstOrDefault().RoomCapacity)
+                @Html.DisplayNameFor(model => model.roomList.FirstOrDefault().Capacity)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.roomList.FirstOrDefault().RoomFacility)
+                @* @Html.DisplayNameFor(model => model.roomList.FirstOrDefault().RoomFacility) *@
             </th>
             <th></th>
         </tr>
@@ -43,17 +43,17 @@
                 @Html.DisplayFor(modelItem => item.RoomName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RoomDescription)
+                @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RoomLocation)
+                @Html.DisplayFor(modelItem => item.Location)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RoomCapacity)
+                @Html.DisplayFor(modelItem => item.Capacity)
             </td>
-            <td>
+            @* <td>
                 @Html.DisplayFor(modelItem => item.RoomFacility)
-            </td>
+            </td> *@
             <td>
                     @Html.ActionLink("Edit", "Edit", new { Id = item.RoomId }) |
                     @Html.ActionLink("Details", "Details", new { Id = item.RoomId }) |

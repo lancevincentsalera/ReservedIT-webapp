@@ -29,10 +29,10 @@ namespace ASI.Basecode.Services.Services
                 {
                     RoomId = s.RoomId,  
                     RoomName = s.RoomName,
-                    RoomDescription = s.RoomDescription,
-                    RoomLocation = s.RoomLocation,
-                    RoomFacility = s.RoomFacility,
-                    RoomCapacity = s.RoomCapacity.Value,
+                    Description = s.Description,
+                    Location = s.Location,
+
+                    Capacity = s.Capacity.Value,
                 });
             return data;
         }
@@ -44,11 +44,11 @@ namespace ASI.Basecode.Services.Services
             {
                 RoomId = roomId,
                 RoomName = data.RoomName,
-                RoomDescription = data.RoomDescription,
-                RoomLocation = data.RoomLocation,
-                RoomFacility = data.RoomFacility,
-                RoomCapacity = data.RoomCapacity.Value,
-                RoomThumbnail = data.RoomThumbnail,
+                Description = data.Description,
+                Location = data.Location,
+                
+                Capacity = data.Capacity.Value,
+                Thumbnail = data.Thumbnail,
             };
             return model;
         }
@@ -57,23 +57,18 @@ namespace ASI.Basecode.Services.Services
         {
             var newModel = new Room();
             _mapper.Map(model, newModel);
-            var incID = this._roomRepository.GetRooms().Max(x => x.RoomId) + 1;
-            newModel.RoomId = incID;
-            newModel.RoomInsDt = DateTime.Now;
+            newModel.CreatedDt = DateTime.Now;
 
-            newModel.roomGallery = new List<RoomGallery>();
+            newModel.ImageGalleries = new List<ImageGallery>();
 
             if (model._RoomGallery != null && model._RoomGallery.Any())
             {
-                var galleryMaxId = this._roomRepository.GetRoomGalleries().Max(x => x.GalleryId);
                 foreach (var file in model._RoomGallery)
                 {
-                    galleryMaxId++;
-                    newModel.roomGallery.Add(new RoomGallery()
+                    newModel.ImageGalleries.Add(new ImageGallery()
                     {
-                        GalleryId = galleryMaxId,
-                        GalleryName = file.GalleryName,
-                        GalleryPath = file.GalleryUrl,
+                        ImageName = file.GalleryName,
+                        Path = file.GalleryUrl,
                     });
                 }
             }
@@ -84,8 +79,8 @@ namespace ASI.Basecode.Services.Services
         {
             var existingData = _roomRepository.GetRooms().Where(s => s.RoomId == model.RoomId).FirstOrDefault();
             _mapper.Map(model, existingData);
-            existingData.RoomUpdDt = DateTime.Now;
-            existingData.RoomThumbnail = model.RoomThumbnail;
+            existingData.UpdatedDt = DateTime.Now;
+            existingData.Thumbnail = model.Thumbnail;
 
             _roomRepository.UpdateRoom(existingData);
         }
@@ -93,8 +88,8 @@ namespace ASI.Basecode.Services.Services
         public void UpdateGallery(RoomGalleryViewModel model)
         {
             var existingData = _roomRepository.GetRoomGalleries().Where(s => s.RoomId == model.RoomId).FirstOrDefault();
-            existingData.GalleryName = model.GalleryName;
-            existingData.GalleryPath = model.GalleryUrl;
+            existingData.ImageName = model.GalleryName;
+            existingData.Path = model.GalleryUrl;
 
             _roomRepository.UpdateGallery(existingData);
         }

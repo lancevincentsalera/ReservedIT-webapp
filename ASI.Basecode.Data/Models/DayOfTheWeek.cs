@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace ASI.Basecode.Data.Models
 {
-    public partial class DayOfWeek
+    public partial class DayOfTheWeek
     {
-        public int? DayOfWeek1 { get; set; }
+        public int DayOfWeekId { get; set; }
         public string DayName { get; set; }
         public int? RecurrenceId { get; set; }
 

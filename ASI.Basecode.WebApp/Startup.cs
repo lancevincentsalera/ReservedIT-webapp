@@ -83,7 +83,7 @@ namespace ASI.Basecode.WebApp
             services.AddMemoryCache();
 
             // Register SQL database configuration context as services.
-            services.AddDbContext<AsiBasecodeDbContext>(options =>
+            services.AddDbContext<ReservedITContext>(options =>
             {
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"),

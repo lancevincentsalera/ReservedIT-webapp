@@ -91,7 +91,7 @@ namespace ASI.Basecode.WebApp.Controllers
                     if (model.RoomThumbnailImg != null)
                     {
                         string folder = "room/thumbnail/";
-                        model.RoomThumbnail = await UploadImage(folder, model.RoomThumbnailImg);
+                        model.Thumbnail = await UploadImage(folder, model.RoomThumbnailImg);
                     }
 
                     if (model.RoomGalleryImg != null)
@@ -158,17 +158,17 @@ namespace ASI.Basecode.WebApp.Controllers
                     string folder = "room/thumbnail/";
                     string newThumbnailPath = await UploadImage(folder, model.RoomThumbnailImg);
 
-                    if (!string.IsNullOrEmpty(existingRoom.RoomThumbnail))
+                    if (!string.IsNullOrEmpty(existingRoom.Thumbnail))
                     {
-                        string oldThumbnailPath = Path.Combine(_webHostEnvironment.WebRootPath, existingRoom.RoomThumbnail.TrimStart('/'));
+                        string oldThumbnailPath = Path.Combine(_webHostEnvironment.WebRootPath, existingRoom.Thumbnail.TrimStart('/'));
                         DeleteFileWithRetry(oldThumbnailPath, 3, 1000);
                     }
 
-                    model.RoomThumbnail = newThumbnailPath;
+                    model.Thumbnail = newThumbnailPath;
                 }
                 else
                 {
-                    model.RoomThumbnail = existingRoom.RoomThumbnail;
+                    model.Thumbnail = existingRoom.Thumbnail;
                 }
 
                 if (model.RoomGalleryImg != null)

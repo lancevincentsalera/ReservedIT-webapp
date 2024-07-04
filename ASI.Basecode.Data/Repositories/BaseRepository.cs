@@ -9,7 +9,7 @@ namespace Basecode.Data.Repositories
     {
         protected IUnitOfWork UnitOfWork { get; set; }
 
-        protected AsiBasecodeDbContext Context => (AsiBasecodeDbContext)UnitOfWork.Database;
+        protected ReservedITContext Context => (ReservedITContext)UnitOfWork.Database;
 
         public BaseRepository(IUnitOfWork unitOfWork)
         {
