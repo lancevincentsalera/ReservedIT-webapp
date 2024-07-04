@@ -2,11 +2,7 @@
     ViewData["Title"] = "Test";
 }
 
-@{
-    ViewData["onclickFunction"] = "filterTable()";
-}
-
-<div style="float: right">
+<div style="float: right" onkeyup="filterTable()">
     @{
         await Html.RenderPartialAsync("_SearchBarPartial");
     }

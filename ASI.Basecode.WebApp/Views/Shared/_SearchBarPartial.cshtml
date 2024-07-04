@@ -1,58 +1,25 @@
-﻿@model dynamic
+﻿@*
+1. Adding `onkeyup` Attribute:
+    When using this partial view, add `onkeyup` attribute to the `div` that contains it.
+        Example:
+            <div onkeyup="nameOfFilterFunction()">
+                Search Bar Partial
+            </div>
 
-@*
-Set table id to "table" for this searchbar to work
+2. Setting Table ID:
+    When using the `filterTable()` filter function, set table id to `"table"`.
+        Example:
+            <table id="table">
+            <!-- Table content here -->
+            </table>
 *@
 
-@*
-<div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterTable()" />
-</div>
-*@
-
-@section styles {
-    <link rel="stylesheet" href="~/css/searchbar.css" />
-}
-
-<div class="input-group mb-3">
-    <span class="input-group-text" id="basic-addon1" style="background-color:#ffffff;">
+<div class="custom-input-group">
+    <span class="custom-input-group-text">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
              viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
         </svg>
     </span>
-    <input type="text" class="form-control" placeholder="Search..." aria-label="Search"
-           aria-describedby="basic-addon1" id="searchInput" onkeyup="filterTable()" />
+    <input type="text" class="custom-form-control" placeholder="Search..." aria-label="Search" id="searchInput" />
 </div>
-
-<script>
-    function filterTable() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("searchInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("table");
-        tr = table.getElementsByTagName("tr");
-
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 1; i < tr.length; i++) {
-            var shouldShow = false;
-            td = tr[i].getElementsByTagName("td");  // Replace with the tag used for each cell in your table
-
-            // Check each cell in the current row
-            for (var j = 0; j < td.length; j++) {
-                txtValue = td[j].textContent || td[j].innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    shouldShow = true;
-                    break;
-                }
-            }
-
-            // Toggle row visibility based on search match
-            tr[i].style.display = shouldShow ? "" : "none";
-        }
-    }
-
-    function filterRoom() {
-        console.log("filter room")
-    }
-</script>
