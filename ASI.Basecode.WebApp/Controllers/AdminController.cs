@@ -51,7 +51,7 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 user.AccountStatus = "ACTIVE";
 
-                _userService.ActivateOrRestrictUser(user);
+                _userService.UpdateUser(user);
             }
             return RedirectToAction("Index"); 
         }
@@ -64,7 +64,7 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 user.AccountStatus = "RESTRICTED";
 
-                _userService.ActivateOrRestrictUser(user);
+                _userService.UpdateUser(user);
             }
             return RedirectToAction("Index");
         }
@@ -75,6 +75,37 @@ namespace ASI.Basecode.WebApp.Controllers
             try
             {
                 _userService.AddUser(model);
+                return RedirectToAction("Index");
+            }
+            catch (InvalidDataException ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = Resources.Messages.Errors.ServerError;
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult GetUserDetails(int userId)
+        {
+            var user = _userService.GetUsers().Where(u => u.UserId == userId).FirstOrDefault();
+            if (user != null) {
+                return Json(user);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult UpdateUserPost(UserViewModel model)
+        {
+
+            try
+            {
+                _userService.UpdateUser(model);
                 return RedirectToAction("Index");
             }
             catch (InvalidDataException ex)

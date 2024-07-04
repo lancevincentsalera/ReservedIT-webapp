@@ -13,6 +13,6 @@ namespace ASI.Basecode.Data.Interfaces
         bool UserExists(string email);
         void AddUser(User user);
         IEnumerable<Role> GetRoles();
-        void ActivateOrRestrictUser(User user);
+        void UpdateUser(User user);
     }
 }

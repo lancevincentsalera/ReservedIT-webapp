@@ -13,6 +13,6 @@ namespace ASI.Basecode.Services.Interfaces
         void AddUser(UserViewModel model);
         List<Role> GetRoles();
         IEnumerable<UserViewModel> GetUsers();
-        void ActivateOrRestrictUser(UserViewModel user);
+        void UpdateUser(UserViewModel user);
     }
 }

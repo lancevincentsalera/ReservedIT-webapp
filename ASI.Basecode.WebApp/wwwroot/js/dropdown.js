@@ -2,12 +2,6 @@
 
 dropdownTriggers.forEach((trigger) => {
     let dropdown = trigger.querySelector('.dropdown-action');
-    let editUserBtn = trigger.querySelector('.create-user-btn');
-
-    editUserBtn.addEventListener('click', (event) => {
-        event.stopPropagation();
-        $('#editUserModal').modal('show');
-    });
 
     trigger.addEventListener('click', (event) => {
         event.stopPropagation();
