@@ -47,6 +47,17 @@
 
 @section scripts {
     <script>
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const eyeButton = document.querySelector('.toggle-password img');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeButton.src = '@Url.Content("~/img/crossed-eye.svg")' // Ensure this path is correct
+            } else {
+                passwordInput.type = 'password';
+                eyeButton.src = '@Url.Content("~/img/eye.svg")';
+            }
+        }
         // Check for error message and display Toastr notification
         var errorMessage = '@TempData["ErrorMessage"]';
         if (errorMessage) {
