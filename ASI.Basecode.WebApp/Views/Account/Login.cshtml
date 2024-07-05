@@ -22,7 +22,7 @@
                 <h2>Welcome Back!</h2>
                 <p>Please enter your details</p>
             </div>
-            <form action="/login" method="post">
+            <form form method="post" action="/Account/Login" id="loginForm">
                 @Html.AntiForgeryToken()
                 <label for="username">Email</label>
                 <input type="text" id="username" name="username" required>
