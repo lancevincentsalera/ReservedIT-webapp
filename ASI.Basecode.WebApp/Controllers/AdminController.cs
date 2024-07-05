@@ -9,9 +9,11 @@ using System.Linq;
 using ASI.Basecode.Services.ServiceModels;
 using System.IO;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ASI.Basecode.WebApp.Controllers
 {
+    [Authorize(Policy = "AdminOnly")]
     public class AdminController : ControllerBase<AdminController>
     {
         private readonly IUserService _userService;

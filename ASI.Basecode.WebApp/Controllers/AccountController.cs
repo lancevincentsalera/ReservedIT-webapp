@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using static ASI.Basecode.Resources.Constants.Enums;
 
@@ -65,6 +67,24 @@ namespace ASI.Basecode.WebApp.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var roleClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+                var nameClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
+                this._session.SetString("UserName", nameClaim);
+                if (roleClaim != null)
+                {
+                    if (roleClaim.Value == "ROLE_ADMIN")
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+                    else if (roleClaim.Value == "ROLE_MANAGER")
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                return RedirectToAction("Index", "Home");
+            }
             TempData["returnUrl"] = System.Net.WebUtility.UrlDecode(HttpContext.Request.Query["ReturnUrl"]);
             this._sessionManager.Clear();
             this._session.SetString("SessionId", System.Guid.NewGuid().ToString());
@@ -83,30 +103,39 @@ namespace ASI.Basecode.WebApp.Controllers
         {
             this._session.SetString("HasSession", "Exist");
 
-            //User user = null;
+            User user = null;
 
-            User user = new() { UserId = 0, Email = "0", FirstName = "Name", Password = "Password" };
+            /*User user = new() { UserId = 0, Email = "0", FirstName = "Name", Password = "Password" };
             
             await this._signInManager.SignInAsync(user);
             this._session.SetString("UserName", model.UserId);
 
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Index", "Admin");*/
 
-            /*var loginResult = _userService.AuthenticateUser(model.UserId, model.Password, ref user);
+            var loginResult = _userService.AuthenticateUser(model.Email, model.Password, ref user);
             if (loginResult == LoginResult.Success)
             {
                 // 認証OK
                 await this._signInManager.SignInAsync(user);
-                this._session.SetString("UserName", user.Name);
-                return RedirectToAction("Index", "Home");
+                this._session.SetString("UserName", string.Join(' ', user.FirstName, user.LastName));
+                if(user.RoleId == 1)
+                {
+                    return RedirectToAction("Index", "Admin");
+                } 
+                else if (user.RoleId == 2)
+                {
+                    return RedirectToAction("Index", "Home");
+                } else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             else
             {
                 // 認証NG
                 TempData["ErrorMessage"] = "Incorrect UserId or Password";
-                return View();
             }
-            return View();*/
+            return View();
         }
 
         [HttpGet]

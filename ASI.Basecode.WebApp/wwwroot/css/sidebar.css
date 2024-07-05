@@ -1,4 +1,8 @@
-﻿.sidebar {
+﻿.hide-sidebar {
+    display: none;
+}
+
+.sidebar {
     font-size: 87.5%;
     font-weight: bold;
     height: 100%;
