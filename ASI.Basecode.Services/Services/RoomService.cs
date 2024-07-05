@@ -93,6 +93,11 @@ namespace ASI.Basecode.Services.Services
 
             _roomRepository.UpdateGallery(existingData);
         }
+
+        public void DeleteRoom(int roomId)
+        {
+            _roomRepository.DeleteRoom(roomId);
+        }
     }
 }
     
