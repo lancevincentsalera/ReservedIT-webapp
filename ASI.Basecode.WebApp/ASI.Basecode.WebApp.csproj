@@ -8,10 +8,19 @@
 
   <ItemGroup>
     <Content Remove="Views\Home\ConfirmationModal.cshtml" />
+    <Content Remove="wwwroot\js\toastr.js" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="appsettings.json.rej" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\toastr.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\toastr.js" />
   </ItemGroup>
 
   <ItemGroup>

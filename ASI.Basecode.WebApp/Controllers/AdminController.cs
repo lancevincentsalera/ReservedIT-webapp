@@ -50,8 +50,12 @@ namespace ASI.Basecode.WebApp.Controllers
             if (user != null)
             {
                 user.AccountStatus = "ACTIVE";
-
                 _userService.UpdateUser(user);
+                TempData["SuccessMessage"] = "User activation successful!";
+            } 
+            else
+            {
+                TempData["ErrorMessage"] = "There was an error activating the user";
             }
             return RedirectToAction("Index"); 
         }
@@ -63,8 +67,12 @@ namespace ASI.Basecode.WebApp.Controllers
             if (user != null)
             {
                 user.AccountStatus = "RESTRICTED";
-
                 _userService.UpdateUser(user);
+                TempData["SuccessMessage"] = "User restriction successful!";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "There was an error restricting the user";
             }
             return RedirectToAction("Index");
         }
