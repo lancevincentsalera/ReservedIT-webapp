@@ -57,7 +57,13 @@
                                         Edit User
                                      </button>
                                 </li>
-                                <li>Delete</li>
+                                <li>
+                                    <button type="button" 
+                                            class="btn btn-danger"
+                                            onclick="displayModal('#confirmationDeleteModal'); passUserId(@item.UserId, '#confirmDeleteBtn');">
+                                        Delete User
+                                    </button>
+                                </li>
                             </ul>
                         </div>
                     </div>

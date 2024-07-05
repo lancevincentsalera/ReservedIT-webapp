@@ -14,5 +14,6 @@ namespace ASI.Basecode.Services.Interfaces
         List<Role> GetRoles();
         IEnumerable<UserViewModel> GetUsers();
         void UpdateUser(UserViewModel user);
+        void DeleteUser(UserViewModel user);
     }
 }

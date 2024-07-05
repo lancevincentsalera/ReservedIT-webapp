@@ -1,5 +1,5 @@
 ﻿<!-- confirm DELETE -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmationDeleteModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,7 +13,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn" onclick="deleteModal(this, '#confirmationDeleteModal', 'DeleteUserPost', 'Admin');">Delete</button>
             </div>
         </div>
     </div>

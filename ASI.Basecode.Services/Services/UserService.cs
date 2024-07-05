@@ -89,5 +89,15 @@ namespace ASI.Basecode.Services.Services
                 _repository.UpdateUser(userToBeUpdated);
             }
         }
+
+        public void DeleteUser(UserViewModel user)
+        {
+            var userToBeDeleted = _repository.GetUsers().Where(u => u.UserId == user.UserId).FirstOrDefault();
+            if (userToBeDeleted != null)
+            {
+                _repository.DeleteUser(userToBeDeleted);
+            }
+
+        }
     }
 }

@@ -1,7 +1,9 @@
 ﻿
-const displayModal = (modalId) => {
-    console.log("here");
+const passUserId = (userId, confirmBtn) => {
+    $(confirmBtn).data('user-id', userId);
+}
 
+const displayModal = (modalId) => {
     $(modalId).modal('show');
 }
 
@@ -62,11 +64,16 @@ const submitForm = (modalId, formId, action, controller) => {
             processData: false,
             data: formData,
             success: (response) => { 
-                $(modalId).modal('hide');
-                toastr.success('Successful. Redirecting back to dashboard');
-                setTimeout(() => {
-                    window.location.href = `/${controller}/Index`
-                }, toastr.options.timeOut)
+                if (response.success) {
+                    $(modalId).modal('hide');
+                    toastr.success(response.message);
+                    setTimeout(() => {
+                        window.location.href = `/${controller}/Index`
+                    }, toastr.options.timeOut);
+                } else {
+                    $(modalId).modal('hide');
+                    toastr.error(response.message);
+                }
             },
             error: function (xhr, status, error) {
                 $(modalId).modal('hide');
@@ -74,8 +81,44 @@ const submitForm = (modalId, formId, action, controller) => {
             }
         });
     } catch (err) {
+        $(modalId).modal('hide');
         console.error('Error in submitForm:', err);
         toastr.error('Error submitting form. Please try again.');
-        $(modalId).modal('hide');
     }
 };
+
+const deleteModal = (btnId, modalId, action, controller) => {
+
+    try {
+        let id = $(btnId).data('user-id');
+
+        $.ajax({
+            url: `/${controller}/${action}`,
+            type: 'POST',
+            data: { userId: id },
+            success: (response) => {
+                if (response.success) {
+                    $(modalId).modal('hide');
+                    toastr.success(response.message);
+                    setTimeout(() => {
+                        window.location.href = `/${controller}/Index`
+                    }, toastr.options.timeOut);
+                } else {
+                    $(modalId).modal('hide');
+                    toastr.error(response.message);
+                }
+
+            },
+            error: (xhr, status, error) => {
+                console.error('Error deleting user', error);
+            }
+        });
+    } catch (err) {
+        $(modalId).modal('hide');
+        console.error('Error in submitForm:', err);
+        toastr.error('Error submitting form. Please try again.');
+    }
+}
+
+
+  
