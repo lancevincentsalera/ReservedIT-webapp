@@ -22,20 +22,31 @@
                 <h2>Welcome Back!</h2>
                 <p>Please enter your details</p>
             </div>
-            <form form method="post" action="/Account/Login" id="loginForm">
-                @Html.AntiForgeryToken()
-                <label for="username">Email</label>
-                <input type="text" id="username" name="username" required>
-                <label for="password">Password</label>
-                <div class="password-container">
-                    <input type="password" id="password" name="password" required>
-                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility()">
-                        <img src="~/img/eye.svg" alt="Toggle Password">
-                    </button>
+            <form method="post" action="/Account/Login" id="loginForm">
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="form2Example11">@UserId</label>
+                    <input type="text" id="form2Example11" class="form-control"
+                           asp-for="UserId" placeholder="Enter userid" />
+                    <span asp-validation-for="UserId" class="text-danger"></span>
                 </div>
-                <button class="btn btn-primary btn-block login-btn gradient-custom-2 mb-3" type="submit">
-                    @Login
-                </button>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="form2Example22">@Password</label>
+                    <input type="password" id="form2Example22" class="form-control"
+                           asp-for="Password" placeholder="Enter password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="text-center pt-1 mb-5 pb-1 d-flex flex-column align-items-center">
+                    <button class="btn btn-primary btn-block login-btn gradient-custom-2 mb-3" type="submit">
+                        @Login
+                    </button>
+                    <div>
+                        <a class="text-muted" href="#!">@ForgotPass</a>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center justify-content-center pb-4">
+                    <p class="mb-0 me-2 mr-1">@DontHaveAcc</p>
+                    <a asp-controller="Account" asp-action="Register" class="btn btn-outline-danger">@CreateNew</a>
+                </div>
             </form>
             <div class="contact-info">
                 <p>For inquiries, you can contact <a href="mailto:alliance@asi-dev2.com">alliance@asi-dev2.com</a> for assistance</p>
