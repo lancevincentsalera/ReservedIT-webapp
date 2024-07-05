@@ -4,62 +4,40 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="dashboard-header">
+    <h1>Rooms</h1>
+    <button type="button" class="create-user-btn" onclick=""> <img src="~/img/add-logo.png" />Create Room</button>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.roomList.FirstOrDefault().RoomId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.roomList.FirstOrDefault().RoomName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.roomList.FirstOrDefault().Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.roomList.FirstOrDefault().Location)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.roomList.FirstOrDefault().Capacity)
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.roomList.FirstOrDefault().RoomFacility) *@
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
- @foreach (var item in Model.roomList) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoomId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoomName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Capacity)
-            </td>
-            @* <td>
-                @Html.DisplayFor(modelItem => item.RoomFacility)
-            </td> *@
-            <td>
-                    @Html.ActionLink("Edit", "Edit", new { Id = item.RoomId }) |
-                    @Html.ActionLink("Details", "Details", new { Id = item.RoomId }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+<div class="table-container">
+    <div class="user-row header">
+        <div class="user-cell">ROOM ID</div>
+        <div class="user-cell">ROOM NAME</div>
+        <div class="user-cell">DESCRIPTION</div>
+        <div class="user-cell">CAPACITY</div>
+        <div class="user-cell">LOCATION</div>
+        <div class="user-cell">EQUIPMENT</div>
+        <div class="user-cell"></div>
+    </div>
+    <ul class="user-list">
+        @foreach (var item in Model.roomList)
+        {
+            <li class="user-row">
+                <div class="user-cell" data-label="USER ID">@Html.DisplayFor(modelItem => item.RoomId)</div>
+                <div class="user-cell" data-label="EMAIL">@Html.DisplayFor(modelItem => item.RoomName)</div>
+                <div class="user-cell" data-label="FIRST NAME">@Html.DisplayFor(modelItem => item.Description)</div>
+                <div class="user-cell" data-label="LAST NAME">@Html.DisplayFor(modelItem => item.Capacity)</div>
+                <div class="user-cell" data-label="ROLE">@Html.DisplayFor(modelItem => item.Location)</div>
+            </li>
+        }
+
+    </ul>
+</div>
+
+
+
+@section scripts {
+    <script>
+
+    </script>
 }
-    </tbody>
-</table>
