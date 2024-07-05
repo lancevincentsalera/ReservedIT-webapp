@@ -20,7 +20,10 @@
 </head>
 <body>
     <div class="main-container">
-        @Html.Partial("_Sidebar")
+        @if (User.Identity.IsAuthenticated)
+        {
+            @Html.Partial("_Sidebar")
+        }
         <div class="content-container">
             @Html.Partial("_Header")
             <main>
