@@ -37,13 +37,26 @@
 
                         <div class="input-box">
                             <span class="details">Password</span>
-                            <input asp-for="Password" name="Password" type="password" placeholder="Enter Password" required />
+                            <div class="password-container">
+                                <input name="Password" type="password" id="edit-passwordInput" class="form-control"
+                                       asp-for="Password" placeholder="Enter password" />
+                                <span class="input-group-text toggle-password" onclick="togglePasswordVisibility('edit-confirmPasswordInput', this)">
+                                    <img src="@Url.Content("~/img/eye.svg")" onclick="togglePasswordVisibility('edit-passwordInput')" />
+                                </span>
+                            </div>
                             <span asp-validation-for="Password" class="text-danger"></span>
+
                         </div>
 
                         <div class="input-box">
                             <span class="details">Confirm Password</span>
-                            <input asp-for="ConfirmPassword" name="ConfirmPassword" type="password" placeholder="Reenter Password" required />
+                            <div class="password-container">
+                                <input name="ConfirmPassword" type="password" id="edit-confirmPasswordInput" class="form-control"
+                                       asp-for="ConfirmPassword" placeholder="Reenter password" />
+                                <span class="input-group-text toggle-password" onclick="togglePasswordVisibility('edit-confirmPasswordInput', this)">
+                                    <img src="@Url.Content("~/img/eye.svg")"  />
+                                </span>
+                            </div>
                             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                         </div>
 

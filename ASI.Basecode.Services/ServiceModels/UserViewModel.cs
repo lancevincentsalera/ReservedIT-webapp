@@ -12,7 +12,6 @@ namespace ASI.Basecode.Services.ServiceModels
     {
         public int UserId { get; set; }
         [Required(ErrorMessage = "Email is required.")]
-        [EmailAddress(ErrorMessage = "Invalid email address format")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "First name is required.")]

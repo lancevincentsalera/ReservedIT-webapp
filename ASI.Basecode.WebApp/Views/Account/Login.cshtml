@@ -34,8 +34,8 @@
                     <div class="password-container">
                         <input type="password" id="passwordInput" class="form-control"
                                asp-for="Password" placeholder="Enter password" />
-                        <span class="input-group-text toggle-password">
-                            <img src="@Url.Content("~/img/eye.svg")" onclick="togglePasswordVisibility()" />
+                        <span class="input-group-text toggle-password" onclick="togglePasswordVisibility('passwordInput', this)">
+                            <img src="@Url.Content("~/img/eye.svg")"/>
                         </span>
                     </div>
                     <span asp-validation-for="Password" class="text-danger"></span>
@@ -53,19 +53,3 @@
     </div>
 </body>
 </html>
-
-@section scripts {
-    <script>
-        function togglePasswordVisibility() {
-            const passwordInput = document.getElementById('passwordInput');
-            const eyeButton = document.querySelector('.toggle-password img');
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                eyeButton.src = '@Url.Content("~/img/crossed-eye.svg")' // Ensure this path is correct
-            } else {
-                passwordInput.type = 'password';
-                eyeButton.src = '@Url.Content("~/img/eye.svg")';
-            }
-        }
-    </script>
-}

@@ -79,32 +79,7 @@ label {
 }
 
 
-.password-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
 
-
-    .password-container input {
-        padding-right: 40px; /* Make space for the eye button */
-    }
-
-    .password-container .toggle-password {
-        position: absolute;
-        right: 10px;
-        cursor: pointer;
-        background: none;
-        border: none;
-        outline: none;
-        align-items: center;
-    }
-
-        .password-container .toggle-password img {
-            width: 20px;
-            height: 20px;
-            transition: opacity 0.3s ease-out, top 0.3s step-end;
-        }
 
 .login-btn {
     padding: 10px 10px 7px 10px; /*top, right, bottom, left*/
