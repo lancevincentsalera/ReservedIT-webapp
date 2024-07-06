@@ -12,6 +12,7 @@ namespace ASI.Basecode.Services.ServiceModels
     {
         public int UserId { get; set; }
         [Required(ErrorMessage = "Email is required.")]
+        [EmailAddress(ErrorMessage = "Invalid email address format")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "First name is required.")]
@@ -21,6 +22,9 @@ namespace ASI.Basecode.Services.ServiceModels
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Password is required.")]
+        [DataType(DataType.Password)]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$",
+        ErrorMessage = "Password must contain at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 8 characters long.")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Confirmation Password is required.")]
