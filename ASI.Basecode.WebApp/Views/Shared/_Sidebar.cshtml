@@ -1,0 +1,64 @@
+﻿
+<div class="sidebar">
+    <div class="logo-container">
+        <img src="~/img/reservedit-logo.png" />
+    </div>
+    <ul>
+        <li>
+            <a asp-action="RoomView" asp-controller="Room">
+                <img src="~/img/user-sidebar-logo.png" />
+                Rooms
+            </a>
+
+        </li>
+        <li>
+            <a asp-action="Index" asp-controller="Admin">
+                <img src="~/img/room-sidebar-logo.png" />
+                Users
+            </a>
+        </li>
+    </ul>
+    <div class="list-2">
+        <ul >
+            <li>
+                <img src="~/img/settings-logo.png" />
+                Settings
+            </li>
+            <li>
+                
+                <a asp-action="SignOutUser" asp-controller="Account"> <img src="~/img/logout-sidebar-logo.png" />Logout</a>
+            </li>
+        <ul>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const sidebarItems = document.querySelectorAll('a');
+
+        const setActiveClass = () => {
+            const currPath = window.location.pathname;
+
+            sidebarItems.forEach(item => {
+                if (item.getAttribute('href') === currPath) {
+                    item.parentElement.classList.add('active');
+                } else {
+                    item.parentElement.classList.remove('active');
+                }
+            });
+        };
+
+        setActiveClass();
+
+        sidebarItems.forEach(item => {
+            item.addEventListener('click', function (e) {
+                sidebarItems.forEach(item => {
+                    item.parentElement.classList.remove('active');
+                });
+
+                this.parentElement.classList.add('active');
+            });
+        });
+    });
+
+</script>

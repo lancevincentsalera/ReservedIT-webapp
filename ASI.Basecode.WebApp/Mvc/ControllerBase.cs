@@ -66,13 +66,13 @@ namespace ASI.Basecode.WebApp.Mvc
         /// </summary>
         public string UserName
         {
-            get { return User.Identity.Name; }
+            get { return User.FindFirst(ClaimTypes.Name).Value; }
         }
 
         /// <summary>
         /// Get Role.
         /// </summary>
-        public string Supervisor
+        public string UserRole
         {
             get { return User.FindFirst(ClaimTypes.Role).Value; }
         }
@@ -108,6 +108,7 @@ namespace ASI.Basecode.WebApp.Mvc
         {
             get { return User.FindFirst("ClientUserRole").Value; }
         }
+
 
         /// <summary>
         /// Return filter default if expiration session.

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using System.Security.Claims;
 
 namespace ASI.Basecode.WebApp
 {
@@ -52,6 +53,10 @@ namespace ASI.Basecode.WebApp
                 options.AddPolicy("RequireAuthenticatedUser", policy =>
                 {
                     policy.RequireAuthenticatedUser();
+                });
+                options.AddPolicy("AdminOnly", policy =>
+                {
+                    policy.RequireClaim(ClaimTypes.Role, "ROLE_ADMIN");
                 });
             });
 
