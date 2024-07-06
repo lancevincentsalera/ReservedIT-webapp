@@ -25,14 +25,19 @@
             <form method="post" action="/Account/Login" id="loginForm">
                 <div class="form-outline mb-4">
                     <label class="form-label" for="form2Example11">Email</label>
-                    <input type="text" id="form2Example11" class="form-control"
+                    <input type="text" id="emailInput" class="form-control"
                            asp-for="Email" placeholder="Enter email" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="form-outline mb-4">
                     <label class="form-label" for="form2Example22">@Password</label>
-                    <input type="password" id="form2Example22" class="form-control"
-                           asp-for="Password" placeholder="Enter password" />
+                    <div class="password-container">
+                        <input type="password" id="passwordInput" class="form-control"
+                               asp-for="Password" placeholder="Enter password" />
+                        <span class="input-group-text toggle-password">
+                            <img src="@Url.Content("~/img/eye.svg")" onclick="togglePasswordVisibility()" />
+                        </span>
+                    </div>
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="text-center pt-1 mb-5 pb-1 d-flex flex-column align-items-center">
@@ -52,7 +57,7 @@
 @section scripts {
     <script>
         function togglePasswordVisibility() {
-            const passwordInput = document.getElementById('password');
+            const passwordInput = document.getElementById('passwordInput');
             const eyeButton = document.querySelector('.toggle-password img');
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
