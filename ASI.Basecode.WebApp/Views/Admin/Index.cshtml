@@ -1,5 +1,5 @@
-﻿@model ASI.Basecode.Services.ServiceModels.UserViewModel
-
+﻿@using ASI.Basecode.Services.ServiceModels
+@model UserViewModel 
 @{
     ViewData["Title"] = "User Dashboard";
     IEnumerable<ASI.Basecode.Services.ServiceModels.UserViewModel> users = ViewData["users"] as IEnumerable<ASI.Basecode.Services.ServiceModels.UserViewModel>;

@@ -53,9 +53,15 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 try
                 {
-                    user.AccountStatus = "ACTIVE";
-                    _userService.UpdateUser(user);
-                    TempData["SuccessMessage"] = "User activation successful!";
+                    if(user.AccountStatus != "ACTIVE")
+                    {
+                        user.AccountStatus = "ACTIVE";
+                        _userService.UpdateUser(user);
+                        TempData["SuccessMessage"] = "User activation successful!";
+                    } else
+                    {
+                        TempData["ErrorMessage"] = "User has already been activated!";
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -77,9 +83,16 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 try
                 {
-                    user.AccountStatus = "RESTRICTED";
-                    _userService.UpdateUser(user);
-                    TempData["SuccessMessage"] = "User restriction successful!";
+                    if (user.AccountStatus != "RESTRICTED")
+                    {
+                        user.AccountStatus = "RESTRICTED";
+                        _userService.UpdateUser(user);
+                        TempData["SuccessMessage"] = "User restriction successful!";
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "User has already been restricted!";
+                    }
                 }
                 catch (Exception ex)
                 {

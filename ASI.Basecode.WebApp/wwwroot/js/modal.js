@@ -42,11 +42,25 @@ const getUserDetails = (btnId, modalId, action, controller) => {
     })
 }
 
-const displayConfirmationModal = (hideId, showId) => {
-    event.preventDefault();
-    $(hideId).modal('hide');
-    $(showId).modal('show');
+let count = 0;
+
+const displayConfirmationModal = (formId, hideId, showId) => {
+    $(formId).validate();
+    let formIsValid = false;
+
+    if ($(formId).valid()) {
+        formIsValid = true;
+    }
+    
+    console.log(formIsValid);
+
+    if (formIsValid) {
+        event.preventDefault();
+        $(hideId).modal('hide');
+        $(showId).modal('show');
+    }
 }
+
 const hideConfirmationModal = ( hideId, showId) => {
     $(showId).modal('show');
     $(hideId).modal('hide');

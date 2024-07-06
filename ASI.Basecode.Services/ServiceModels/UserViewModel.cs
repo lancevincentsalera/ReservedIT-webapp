@@ -11,7 +11,7 @@ namespace ASI.Basecode.Services.ServiceModels
     public class UserViewModel
     {
         public int UserId { get; set; }
-        [Required(ErrorMessage = "Username is required.")]
+        [Required(ErrorMessage = "Email is required.")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "First name is required.")]

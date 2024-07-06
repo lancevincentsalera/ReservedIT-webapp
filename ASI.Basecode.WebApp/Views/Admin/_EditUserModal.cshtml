@@ -1,4 +1,6 @@
-﻿<!-- EDIT USER -->
+﻿@model ASI.Basecode.Services.ServiceModels.UserViewModel
+
+<!-- EDIT USER -->
 <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -17,27 +19,32 @@
                         <div class="userName">
                             <div class="input-box">
                                 <span class="details"> First Name</span>
-                                <input name="FirstName" type="text" placeholder="Enter First Name" required />
+                                <input asp-for="FirstName" name="FirstName" type="text" placeholder="Enter First Name" required />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
                             </div>
                             <div class="input-box">
                                 <span class="details"> Last Name</span>
-                                <input name="LastName" type="text" placeholder="Enter Last Name" required />
+                                <input asp-for="LastName" name="LastName" type="text" placeholder="Enter Last Name" required />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
                             </div>
                         </div>
 
                         <div class="input-box">
                             <span class="details">Email</span>
-                            <input name="Email" type="email" placeholder="Enter Email Address" required />
+                            <input asp-for="Email" name="Email" type="email" placeholder="Enter Email Address" required />
+                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
 
                         <div class="input-box">
                             <span class="details">Password</span>
-                            <input name="Password" type="password" placeholder="Enter Password" required />
+                            <input asp-for="Password" name="Password" type="password" placeholder="Enter Password" required />
+                            <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
 
                         <div class="input-box">
                             <span class="details">Confirm Password</span>
-                            <input name="ConfirmPassword" type="password" placeholder="Reenter Password" required />
+                            <input asp-for="ConfirmPassword" name="ConfirmPassword" type="password" placeholder="Reenter Password" required />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                         </div>
 
                         <div class="input-box">
@@ -56,8 +63,8 @@
                             <button 
                                 type="submit" 
                                 class="btn btn-custom" 
-                                id="editUserBtn" 
-                                onclick="displayConfirmationModal('#editUserModal', '#confirmationEditModal')">
+                                id="editUserBtn"
+                                    onclick="displayConfirmationModal('#editUserForm', '#editUserModal', '#confirmationEditModal')">
                                 Edit
                             </button>
                         </div>
