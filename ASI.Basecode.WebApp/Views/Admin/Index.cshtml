@@ -1,5 +1,5 @@
 ﻿@using ASI.Basecode.Services.ServiceModels
-@model UserViewModel 
+@model UserViewModel
 @{
     ViewData["Title"] = "User Dashboard";
     IEnumerable<ASI.Basecode.Services.ServiceModels.UserViewModel> users = ViewData["users"] as IEnumerable<ASI.Basecode.Services.ServiceModels.UserViewModel>;
@@ -7,7 +7,10 @@
 
 <div class="dashboard-header">
     <h1>Users</h1>
-    <button type="button" class="create-user-btn" onclick="displayModal('#createUserModal')"> <img src="~/img/add-logo.png" />Create User</button>
+    <div class="dashboard-header-right">
+        @Html.Partial("_SearchBarPartial")
+        <button type="button" class="create-user-btn" onclick="displayModal('#createUserModal')"> <img src="~/img/add-logo.png" />Create User</button>
+    </div>
 </div>
 
 <div class="table-container">
@@ -51,14 +54,13 @@
                                     <button type="button" class="create-user-btn" onclick="
                                         displayModal('#editUserModal');
                                         getUserDetails(this, '#editUserModal', 'GetUserDetails', 'Admin');
-                                    "
-                                    data-user-id="@item.UserId"
-                                    >
+                                                            "
+                                            data-user-id="@item.UserId">
                                         Edit User
-                                     </button>
+                                    </button>
                                 </li>
                                 <li>
-                                    <button type="button" 
+                                    <button type="button"
                                             class="btn btn-danger"
                                             onclick="displayModal('#confirmationDeleteModal'); passUserId(@item.UserId, '#confirmDeleteBtn');">
                                         Delete User
@@ -70,13 +72,12 @@
                 </div>
             </li>
         }
-       
+
     </ul>
 </div>
 @Html.Partial("_ConfirmationModal")
 @Html.Partial("_CreateUserModal")
 @Html.Partial("_EditUserModal")
-
 
 @section scripts {
     <script>
@@ -105,5 +106,6 @@
 
 
         });
+        document.getElementById("searchInput").addEventListener("keyup", filterList);
     </script>
 }

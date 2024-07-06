@@ -5,6 +5,11 @@
     align-items: center;
 }
 
+.dashboard-header-right {
+    display: flex;
+    align-items: center;
+}
+
 h1 {
     font-weight: bold;
 }
@@ -18,6 +23,7 @@ h1 {
     color: white;
     border-radius: 25px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    white-space: nowrap;
 }
 
 .create-user-btn:hover {
