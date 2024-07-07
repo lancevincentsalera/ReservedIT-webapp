@@ -5,7 +5,7 @@
     </div>
     <ul>
         <li>
-            <a>
+            <a asp-action="RoomView" asp-controller="Room">
                 <img src="~/img/user-sidebar-logo.png" />
                 Rooms
             </a>
@@ -21,12 +21,14 @@
     <div class="list-2">
         <ul >
             <li>
-                <img src="~/img/settings-logo.png" />
-                Settings
+                <a>
+                    <img src="~/img/settings-logo.png" />
+                    Settings
+                </a>
+                
             </li>
             <li>
-                <img src="~/img/logout-sidebar-logo.png" />
-                Logout
+                <a asp-action="SignOutUser" asp-controller="Account"> <img src="~/img/logout-sidebar-logo.png" />Logout</a>
             </li>
         <ul>
     </div>

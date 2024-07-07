@@ -9,9 +9,11 @@ using System.Linq;
 using ASI.Basecode.Services.ServiceModels;
 using System.IO;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ASI.Basecode.WebApp.Controllers
 {
+    [Authorize(Policy = "AdminOnly")]
     public class AdminController : ControllerBase<AdminController>
     {
         private readonly IUserService _userService;
@@ -49,9 +51,26 @@ namespace ASI.Basecode.WebApp.Controllers
             var user = _userService.GetUsers().Where(u => u.UserId == userId).FirstOrDefault();
             if (user != null)
             {
-                user.AccountStatus = "ACTIVE";
-
-                _userService.UpdateUser(user);
+                try
+                {
+                    if(user.AccountStatus != "ACTIVE")
+                    {
+                        user.AccountStatus = "ACTIVE";
+                        _userService.UpdateUser(user);
+                        TempData["SuccessMessage"] = "User activation successful!";
+                    } else
+                    {
+                        TempData["ErrorMessage"] = "User has already been activated!";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    TempData["ErrorMessage"] = $"An error occurred while activating the user: {ex.Message}";
+                }
+            } 
+            else
+            {
+                TempData["ErrorMessage"] = "User not found.";
             }
             return RedirectToAction("Index"); 
         }
@@ -62,9 +81,27 @@ namespace ASI.Basecode.WebApp.Controllers
             var user = _userService.GetUsers().Where(u => u.UserId == userId).FirstOrDefault();
             if (user != null)
             {
-                user.AccountStatus = "RESTRICTED";
-
-                _userService.UpdateUser(user);
+                try
+                {
+                    if (user.AccountStatus != "RESTRICTED")
+                    {
+                        user.AccountStatus = "RESTRICTED";
+                        _userService.UpdateUser(user);
+                        TempData["SuccessMessage"] = "User restriction successful!";
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "User has already been restricted!";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    TempData["ErrorMessage"] = $"An error occurred while restricting the user: {ex.Message}";
+                }
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "User not found.";
             }
             return RedirectToAction("Index");
         }
@@ -75,17 +112,16 @@ namespace ASI.Basecode.WebApp.Controllers
             try
             {
                 _userService.AddUser(model);
-                return RedirectToAction("Index");
+                return Json(new { success = true, message = "User creation successful!" });
             }
             catch (InvalidDataException ex)
             {
-                TempData["ErrorMessage"] = ex.Message;
+                return Json(new { success = false, message = ex.Message });
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = Resources.Messages.Errors.ServerError;
+                return Json(new { success = false, message = Resources.Messages.Errors.ServerError });
             }
-            return View();
         }
 
         [HttpGet]
@@ -95,7 +131,7 @@ namespace ASI.Basecode.WebApp.Controllers
             if (user != null) {
                 return Json(user);
             }
-
+            TempData["ErrorMessage"] = "User not found. Unable to retrieve user details.";
             return RedirectToAction("Index");
         }
 
@@ -106,17 +142,38 @@ namespace ASI.Basecode.WebApp.Controllers
             try
             {
                 _userService.UpdateUser(model);
-                return RedirectToAction("Index");
+                return Json(new { success = true, message = "User updated successfully!" });
             }
             catch (InvalidDataException ex)
             {
-                TempData["ErrorMessage"] = ex.Message;
+                return Json(new { success = false, message = ex.Message });
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = Resources.Messages.Errors.ServerError;
+                return Json(new { success = false, message = Resources.Messages.Errors.ServerError });
             }
-            return View();
+        }
+
+        [HttpPost]
+        public IActionResult DeleteUserPost(int userId)
+        {
+            var userToBeDeleted = _userService.GetUsers().Where(u => u.UserId == userId).FirstOrDefault();
+            if (userToBeDeleted != null)
+            {
+                try
+                {
+                    _userService.DeleteUser(userToBeDeleted);
+                    return Json(new { success = true, message = "User deleted successfully!" });
+                } catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message });
+                }
+            }
+            else
+            {
+                return Json(new { success = false, message = "User not found." });
+
+            }
         }
     }
 }

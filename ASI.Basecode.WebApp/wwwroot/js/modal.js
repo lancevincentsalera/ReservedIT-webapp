@@ -1,7 +1,10 @@
 ﻿
-const displayModal = (modalId) => {
-    console.log("here");
+const passUserId = (btnId, confirmBtn) => {
+    let userId = $(btnId).data('user-id');
+    $(confirmBtn).data('user-id', userId);
+}
 
+const displayModal = (modalId) => {
     $(modalId).modal('show');
 }
 
@@ -40,11 +43,25 @@ const getUserDetails = (btnId, modalId, action, controller) => {
     })
 }
 
-const displayConfirmationModal = (hideId, showId) => {
-    event.preventDefault();
-    $(hideId).modal('hide');
-    $(showId).modal('show');
+let count = 0;
+
+const displayConfirmationModal = (formId, hideId, showId) => {
+    $(formId).validate();
+    let formIsValid = false;
+
+    if ($(formId).valid()) {
+        formIsValid = true;
+    }
+    
+    console.log(formIsValid);
+
+    if (formIsValid) {
+        event.preventDefault();
+        $(hideId).modal('hide');
+        $(showId).modal('show');
+    }
 }
+
 const hideConfirmationModal = ( hideId, showId) => {
     $(showId).modal('show');
     $(hideId).modal('hide');
@@ -62,11 +79,16 @@ const submitForm = (modalId, formId, action, controller) => {
             processData: false,
             data: formData,
             success: (response) => { 
-                $(modalId).modal('hide');
-                toastr.success('Successful. Redirecting back to dashboard');
-                setTimeout(() => {
-                    window.location.href = `/${controller}/Index`
-                }, toastr.options.timeOut)
+                if (response.success) {
+                    $(modalId).modal('hide');
+                    toastr.success(response.message);
+                    setTimeout(() => {
+                        window.location.href = `/${controller}/Index`
+                    }, toastr.options.timeOut);
+                } else {
+                    $(modalId).modal('hide');
+                    toastr.error(response.message);
+                }
             },
             error: function (xhr, status, error) {
                 $(modalId).modal('hide');
@@ -74,8 +96,44 @@ const submitForm = (modalId, formId, action, controller) => {
             }
         });
     } catch (err) {
+        $(modalId).modal('hide');
         console.error('Error in submitForm:', err);
         toastr.error('Error submitting form. Please try again.');
-        $(modalId).modal('hide');
     }
 };
+
+const deleteModal = (btnId, modalId, action, controller) => {
+
+    try {
+        let id = $(btnId).data('user-id');
+
+        $.ajax({
+            url: `/${controller}/${action}`,
+            type: 'POST',
+            data: { userId: id },
+            success: (response) => {
+                if (response.success) {
+                    $(modalId).modal('hide');
+                    toastr.success(response.message);
+                    setTimeout(() => {
+                        window.location.href = `/${controller}/Index`
+                    }, toastr.options.timeOut);
+                } else {
+                    $(modalId).modal('hide');
+                    toastr.error(response.message);
+                }
+
+            },
+            error: (xhr, status, error) => {
+                console.error('Error deleting user', error);
+            }
+        });
+    } catch (err) {
+        $(modalId).modal('hide');
+        console.error('Error in submitForm:', err);
+        toastr.error('Error submitting form. Please try again.');
+    }
+}
+
+
+  
