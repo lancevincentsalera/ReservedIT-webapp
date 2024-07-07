@@ -1,5 +1,6 @@
 ﻿
-const passUserId = (userId, confirmBtn) => {
+const passUserId = (btnId, confirmBtn) => {
+    let userId = $(btnId).data('user-id');
     $(confirmBtn).data('user-id', userId);
 }
 
