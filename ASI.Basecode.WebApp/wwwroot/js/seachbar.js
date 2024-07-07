@@ -27,29 +27,25 @@
 function filterRoom() {
     console.log("filter room")
 }
-
 function filterList() {
-    var input, filter, list, li, divs, i, txtValue;
+    var input, filter, list, li, cells, i, txtValue;
     input = document.getElementById("searchInput");
     filter = input.value.toUpperCase();
     list = document.querySelector(".user-list");
     li = list.getElementsByTagName("li");
 
-    // Loop through all list items, and hide those who don't match the search query
     for (i = 0; i < li.length; i++) {
         var shouldShow = false;
-        divs = li[i].getElementsByClassName("user-cell");  // Adjust to your specific cell class if different
+        cells = li[i].getElementsByClassName("user-cell");
 
-        // Check each cell in the current list item
-        for (var j = 0; j < divs.length; j++) {
-            txtValue = divs[j].textContent || divs[j].innerText;
+        for (var j = 0; j < cells.length - 1; j++) {
+            txtValue = cells[j].textContent || cells[j].innerText;
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
                 shouldShow = true;
                 break;
             }
         }
 
-        // Toggle list item visibility based on search match
         li[i].style.display = shouldShow ? "" : "none";
     }
 }
