@@ -35,7 +35,7 @@
                         <input type="password" id="passwordInput" class="form-control"
                                asp-for="Password" placeholder="Enter password" />
                         <span class="input-group-text toggle-password" onclick="togglePasswordVisibility('passwordInput', this)">
-                            <img src="@Url.Content("~/img/eye.svg")"/>
+                            <img class="toggle-pic" src="@Url.Content("~/img/eye.svg")"/>
                         </span>
                     </div>
                     <span asp-validation-for="Password" class="text-danger"></span>
