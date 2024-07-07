@@ -31,47 +31,45 @@
                 <div class="user-cell" data-label="ROLE">@Html.DisplayFor(modelItem => item.RoleName)</div>
                 <div class="user-cell" data-label="STATUS"><span class="status">@Html.DisplayFor(modelItem => item.AccountStatus)</span></div>
                 <div class="user-cell actions">
-                    <div class="mr-20 hover-pointer dropdown-trigger">
+                    <div class="mr-20 hover-pointer dropdown-trigger" data-user-id="@item.UserId">
                         <span class="ddicon">&#8942;</span>
-                        <div class="dropdown-action">
-                            <ul>
-                                <li>
-                                    <form asp-action="ActivateUser" method="post">
-                                        <input type="hidden" name="userId" value="@item.UserId" />
-                                        <button type="submit" class="btn-status">Activate</button>
-                                    </form>
-                                </li>
-                                <li>
-                                    <form asp-action="RestrictUser" method="post">
-                                        <input type="hidden" name="userId" value="@item.UserId" />
-                                        <button type="submit" class="btn-status">Restrict</button>
-                                    </form>
-                                </li>
-                                <li>
-                                    <button type="button" class="create-user-btn" onclick="
-                                        displayModal('#editUserModal');
-                                        getUserDetails(this, '#editUserModal', 'GetUserDetails', 'Admin');
-                                    "
-                                    data-user-id="@item.UserId"
-                                    >
-                                        Edit User
-                                     </button>
-                                </li>
-                                <li>
-                                    <button type="button" 
-                                            class="btn btn-danger"
-                                            onclick="displayModal('#confirmationDeleteModal'); passUserId(@item.UserId, '#confirmDeleteBtn');">
-                                        Delete User
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </li>
         }
        
     </ul>
+    <div class="dropdown-action">
+        <ul>
+            <li>
+                <form asp-action="ActivateUser" method="post">
+                    <input type="hidden" name="userId" />
+                    <button type="submit" class="btn-status">
+                        <i class="fas fa-circle" style="color: #00FF75; font-size: 10px;"></i> Activate
+                    </button>
+                </form>
+            </li>
+            <li>
+                <form asp-action="RestrictUser" method="post">
+                    <input type="hidden" name="userId" />
+                    <button type="submit" class="btn-status">
+                        <i class="fas fa-circle" style="color: #FF0000; font-size: 10px;"></i> Restrict
+                    </button>
+                </form>
+            </li>
+            <li>
+                <button type="button" class="btn-status" onclick="displayModal('#editUserModal'); getUserDetails(this, '#editUserModal', 'GetUserDetails', 'Admin');">
+                    <i class="fas fa-edit" style=" font-size: 10px;"></i> Edit
+                </button>
+            </li>
+            <li>
+                <button type="button" class="btn-status" onclick="displayModal('#confirmationDeleteModal'); passUserId(this, '#confirmDeleteBtn');">
+                    <i class="fas fa-trash-alt" style="color: #FF0000; font-size: 10px;"></i> Delete
+                </button>
+            </li>
+        </ul>
+    </div>
+
 </div>
 @Html.Partial("_ConfirmationModal")
 @Html.Partial("_CreateUserModal")

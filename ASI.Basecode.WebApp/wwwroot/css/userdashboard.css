@@ -127,11 +127,10 @@ h1 {
 .dropdown-action {
     display: none;
     position: absolute;
-    top: 100%;
-    right: 0;
     background-color: #fff;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
     z-index: 1;
+    border: 1px solid #CACACA;
+    border-radius: 5px;
 }
 
     .dropdown-action ul {
@@ -140,11 +139,18 @@ h1 {
         margin: 0;
     }
 
-        .dropdown-action ul li {
+        .dropdown-action ul button {
+            width: 100%;
             font-size: 80%;
-            padding: 10px;
+            padding: 5px 20px 5px 5px;
             cursor: pointer;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
         }
+            .dropdown-action ul button i {
+                margin-right: 10px
+            }
 
             .dropdown-action ul li:hover {
                 background-color: #f0f0f0;
