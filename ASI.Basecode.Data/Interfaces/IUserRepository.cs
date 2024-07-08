@@ -14,5 +14,6 @@ namespace ASI.Basecode.Data.Interfaces
         void AddUser(User user);
         IEnumerable<Role> GetRoles();
         void UpdateUser(User user);
+        void DeleteUser(User user);
     }
 }

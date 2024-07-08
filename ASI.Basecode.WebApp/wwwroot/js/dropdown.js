@@ -1,4 +1,4 @@
-﻿let dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
+﻿/*let dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
 
 dropdownTriggers.forEach((trigger) => {
     let dropdown = trigger.querySelector('.dropdown-action');
@@ -25,4 +25,63 @@ document.addEventListener('click', (event) => {
             dropdown.classList.remove('show-dropdown');
         }
     });
-});
+});*/
+
+$(document).ready(() => {
+    let dropdownTriggers = $('.dropdown-trigger');
+
+    dropdownTriggers.each((index,trigger) => {
+        let userId = $(trigger).data('user-id');
+
+        trigger.addEventListener('click', (event) => {
+            event.stopPropagation();
+
+            let dropdown = $('.dropdown-action');
+
+            let offset = $(trigger).offset();
+            let dropdownHeight = dropdown.outerHeight();
+            let triggerHeight = $(trigger).outerHeight();
+            let viewportHeight = $(window).height();
+            let spaceBelow = viewportHeight - (offset.top + triggerHeight);
+            let spaceAbove = offset.top;
+            let leftOffset = offset.left - 25;
+
+            console.log(offset.left, leftOffset);
+
+            if (spaceBelow >= dropdownHeight) {
+                dropdown.css({
+                    top: offset.top + triggerHeight,
+                    left: leftOffset,
+                    bottom: 'auto'
+                });
+            } else if (spaceAbove >= dropdownHeight) {
+                dropdown.css({
+                    top: 'auto',
+                    left: leftOffset,
+                    bottom: viewportHeight - offset.top
+                });
+            } else {
+                dropdown.css({
+                    top: offset.top + triggerHeight,
+                    left: leftOffset,
+                    bottom: 'auto'
+                });
+            }
+            
+            console.log(userId);
+            $(`.dropdown-action input`).val(userId);
+            $(`.dropdown-action button`).data('user-id', userId);
+             
+            dropdown.show();
+        })
+    })
+
+    $(document).on('click',() => {
+        $('.dropdown-action').hide();
+    });
+
+    // Prevent dropdown from hiding when clicking inside
+    $('.dropdown-action').on('click',(event) => {
+        event.stopPropagation();
+    });
+})
