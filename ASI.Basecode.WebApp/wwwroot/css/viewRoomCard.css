@@ -1,126 +1,78 @@
-﻿/* Apply a more specific selector or use !important to override Bootstrap defaults */
-#createRoomModal .modal-dialog,
-#editRoomModal .modal-dialog {
-    max-width: 45vw !important;
+﻿/* Adjust modal dialog max-width for specific modals */
+#viewRoomCardModal .modal-dialog {
+    max-width: 1500px !important; /* Adjust as needed */
 }
 
-.modal-content{
-    height:fit-content;
+/* Ensure modal content height adjusts to fit its content */
+.modal-content {
+    height: fit-content;
 }
 
-
-.modal-body form{
-    display: flex;
-    justify-content: space-between;
-    gap:20px;
-}
-
-
+/* Flexbox layout for form elements */
 .modal-body form {
     display: flex;
     justify-content: space-between;
+    gap: 20px;
 }
 
-.modal-body form .firstHalf,
-.modal-body form .secondHalf{
-    flex: 1;
-}
-img
-{
-    width: 10%;
-    height: 100%;
-    border-radius: 0 50px 50px 0;
+/* Image container styling */
+.image-container-view {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Ensure image does not overflow */
+    height: 400px; /* Adjust height as needed */
+    border-radius: 10px; /* Rounded corners */
 }
 
-    .modal-body form .uploadPhoto {
-        display: flex;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-        gap: 20px;
+    /* Image styling */
+    .image-container-view img {
+        width: fit-content; /* Ensure image takes full width of container */
+        height: 100%; /* Ensure image takes full height of container */
+        object-fit: cover; /* Maintain aspect ratio and cover container */
+        border-radius: 10px; /* Rounded corners */
     }
 
-.modal-body .form-group {
-    margin-bottom: 15px;
-}
-
-    .modal-body .form-group label {
-        display: block;
-/*        margin-bottom: 5px;*/
-    }
-
-    .modal-body .form-group input,
-    .modal-body .form-group textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-
-.additional-info .form-group {
-    flex: 1;
-}
-
-/*    .additional-info .form-group input {
-        width: calc(100% - 10px);
-    }
-
-    .additional-info .form-group button {
-        width: 100%;
-    }*/
-
-/*---- Custom File upload styles----*/
+/* Custom file upload container */
 .modal-body .custom-file-upload {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid;
+    border: 1px solid #ccc;
     height: 100px;
-    width: 10vw;
+    width: 10vw; /* Adjust width as needed */
 }
 
-.modal-body .file-upload input {
-    margin-right: 10px;
-}
-
-    .custom-file-upload input[type="file"] {
-        display: none;
-    }
-
-        .custom-file-upload .upload-label {
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background-color: #eee;
-        border: 1px solid #ccc;
-        }
-
+/* Upload icon styling */
 .custom-file-upload .upload-icon {
-    /*    cursor: pointer;
-    padding: 10px;
-    border: 1px solid #ccc;*/
-    border-radius: 20px;
-    /*color: black;
-    display: inline-block;
-    align-items: center;
-    margin-bottom: 0;*/
+    display: flex;
     justify-content: center;
+    align-items: center;
     width: 25px;
     height: 25px;
-    /*  font: 200;*/
-    text-align: center;
     background-color: #f8f8f8;
+    border-radius: 50%;
 }
 
-            .custom-file-upload .upload-icon i.fa {
-                font-size: 15px;
-            }
+/* Button group styling */
+.modal-body .button-group {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+}
 
-/* Styles for the equipment list */
+/* Custom button styles */
+.btn-custom {
+    width: 7vw; /* Adjust width as needed */
+    background-color: #B5838E;
+    color: white;
+    border-radius: 10px;
+    border: 0;
+    font-size: 12px;
+    padding: 8px;
+}
+
+/* Equipment list styles */
 #equipmentList {
     list-style-type: none;
     padding: 0;
@@ -134,27 +86,3 @@ img
         border: 1px solid #ccc;
         border-radius: 5px;
     }
-
-    .add-equipment{
-        border-radius: 10px;
-        border: 0px solid;
-        font-size: 12px;
-        padding:8px;
-        /*background-color: */
-
-    }
-
-.modal-body .button-group{
-   float:inline-end;
-   margin-top: 20px;
-   display:flex;
-   gap: 15px;
-}
-.btn-danger, .btn-custom {
-    width: 7vw;
-}
-
-.btn-custom {
-    background-color: #B5838E;
-    color: white;
-}
