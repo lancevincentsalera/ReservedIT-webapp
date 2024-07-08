@@ -32,6 +32,24 @@
         justify-content: space-between;
         gap: 20px;
     }
+/*thumbnail*/
+    .image-preview{ 
+        display:none;
+        width: 100%;
+        max-width: 200px;
+        height: -webkit-fill-available;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+     
+    }
+
+/* Styles for the image preview container (Upload Image) */
+.image-preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
 
 .modal-body .form-group {
     margin-bottom: 15px;
@@ -55,13 +73,7 @@
     flex: 1;
 }
 
-/*    .additional-info .form-group input {
-        width: calc(100% - 10px);
-    }
 
-    .additional-info .form-group button {
-        width: 100%;
-    }*/
 
 /*---- Custom File upload styles----*/
 .modal-body .custom-file-upload {
@@ -69,6 +81,7 @@
     align-items: center;
     justify-content: center;
     border: 1px solid;
+    border-color: #ccc;
     height: 100px;
     width: 10vw;
 }
