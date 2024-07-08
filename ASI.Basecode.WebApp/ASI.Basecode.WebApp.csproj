@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <Content Remove="Views\Home\ConfirmationModal.cshtml" />
+    <Content Remove="Views\Home\_Create.cshtml" />
+    <Content Remove="wwwroot\css\Index.cshtml" />
+    <Content Remove="wwwroot\roomModal.css" />
   </ItemGroup>
 
   <ItemGroup>
