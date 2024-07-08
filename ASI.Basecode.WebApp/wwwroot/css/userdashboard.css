@@ -62,6 +62,7 @@ h1 {
     padding: 10px;
     flex: 1;
     min-width: 0;
+    word-wrap: break-word;
 }
 
 .user-cell.actions {

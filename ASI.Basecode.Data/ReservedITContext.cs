@@ -255,10 +255,6 @@ namespace ASI.Basecode.Data
 
                 entity.Property(e => e.RoomId).HasColumnName("RoomID");
 
-                entity.Property(e => e.Type)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
                 entity.HasOne(d => d.Equipment)
                     .WithMany(p => p.RoomEquipments)
                     .HasForeignKey(d => d.EquipmentId)
