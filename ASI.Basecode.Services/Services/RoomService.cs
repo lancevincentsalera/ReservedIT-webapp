@@ -37,7 +37,6 @@ namespace ASI.Basecode.Services.Services
                     {
                         RoomEquipmentId = re.RoomEquipmentId,
                         EquipmentId = re.EquipmentId,
-                        Type = re.Type,
                         EquipmentName = re.Equipment.EquipmentName
                     }).ToList()
                 });
@@ -90,7 +89,6 @@ namespace ASI.Basecode.Services.Services
                     {
                         EquipmentId = item.EquipmentId,
                         RoomId = newModel.RoomId,
-                        Type = "SomeType"
                     });
                 }
             }

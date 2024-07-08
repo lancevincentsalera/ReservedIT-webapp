@@ -17,6 +17,7 @@
         <div class="user-cell">CAPACITY</div>
         <div class="user-cell">LOCATION</div>
         <div class="user-cell">EQUIPMENTS</div>
+        <div class="user-cell"></div>
         
     </div>
     <ul class="user-list">
@@ -31,23 +32,25 @@
                 <div class="user-cell" data-label="EQUIPMENTS">
                     @if (item.RoomEquipments != null && item.RoomEquipments.Any())
                     {
-                        <ul>
                             @foreach (var roomEquipment in item.RoomEquipments)
                             {
-                                <li>
-                                    @roomEquipment.EquipmentName
-                                    @if (!string.IsNullOrEmpty(roomEquipment.Type))
+                                    @roomEquipment.EquipmentName <label>, </label>
+                                    @* @if (!string.IsNullOrEmpty(roomEquipment.Type))
                                     {
                                         <span> (@roomEquipment.Type)</span>
-                                    }
-                                </li>
+                                    } *@
                             }
-                        </ul>
                     }
                     else
                     {
                         <span>No equipment</span>
                     }
+                </div>
+                <div class="user-cell actions">
+                    <div class="mr-20 hover-pointer dropdown-trigger" data-user-id="@item.RoomId">
+                        <span class="ddicon">&#8942;</span>
+                    </div>
+                </div>
             </li>
         }
 

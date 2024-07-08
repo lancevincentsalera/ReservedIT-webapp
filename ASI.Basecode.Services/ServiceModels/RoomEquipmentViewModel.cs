@@ -12,6 +12,5 @@ namespace ASI.Basecode.Services.ServiceModels
         public int? RoomId { get; set; }
         public int? EquipmentId { get; set; }
         public string EquipmentName { get; set; }
-        public string Type { get; set; }
     }
 }
