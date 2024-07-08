@@ -42,8 +42,6 @@ namespace ASI.Basecode.WebApp.Controllers
             return View(users);
         }
 
-
-
 /*        public ActionResult ConfirmationModal()
         {
 
@@ -57,5 +55,11 @@ namespace ASI.Basecode.WebApp.Controllers
 
             return View();
         }*/
+
+        public IActionResult Test()
+        { 
+            return View(); 
+        }
+        
     }
 }
