@@ -54,6 +54,7 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 _logger.LogInformation("=======Sample Crud : Retrieve All Start=======");
                 var data = _roomService.RetrieveAll();
+
                 var model = new RoomViewModelList
                 {
                     roomList = data
@@ -111,6 +112,12 @@ namespace ASI.Basecode.WebApp.Controllers
                                 GalleryUrl = await UploadImage(folder, file)
                             };
                             model._RoomGallery.Add(roomGallery);
+                        }
+                    }
+                    if (model.RoomEquipments != null && model.RoomEquipments.Any())
+                    {
+                        foreach (var equipment in model.RoomEquipments)
+                        {
                         }
                     }
                 }

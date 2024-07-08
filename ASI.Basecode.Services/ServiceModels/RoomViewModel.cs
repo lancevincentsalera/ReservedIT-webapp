@@ -25,7 +25,7 @@ namespace ASI.Basecode.Services.ServiceModels
 
         /*public string RoomFacility { get; set; }
         [Display(Name = "Room Photos")]*/
-
+        public ICollection<RoomEquipmentViewModel> RoomEquipments { get; set; }
         public IFormFileCollection RoomGalleryImg { get; set; }
 
         [Display(Name = "Thumbnail Photo")]
