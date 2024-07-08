@@ -1,22 +1,92 @@
-﻿
+﻿@using System.Security.Claims;
+
+@{
+    var claimsIdentity = User.Identity as ClaimsIdentity;
+    var role = "";
+    if (claimsIdentity != null)
+    {
+        role = claimsIdentity.FindFirst(ClaimTypes.Role).Value;
+    }
+}
 <div class="sidebar">
     <div class="logo-container">
         <img src="~/img/reservedit-logo.png" />
     </div>
     <ul>
-        <li>
-            <a asp-action="RoomView" asp-controller="Room">
-                <img src="~/img/user-sidebar-logo.png" />
-                Rooms
-            </a>
+        @if (role == "ROLE_ADMIN")
+        {
+            <li>
+                <a asp-action="RoomView" asp-controller="Room">
+                    <img src="~/img/user-sidebar-logo.png" />
+                    Rooms
+                </a>
 
-        </li>
-        <li>
-            <a asp-action="Index" asp-controller="Admin">
-                <img src="~/img/room-sidebar-logo.png" />
-                Users
-            </a>
-        </li>
+            </li>
+            <li>
+                <a asp-action="Index" asp-controller="Admin">
+                    <img src="~/img/room-sidebar-logo.png" />
+                    Users
+                </a>
+            </li>
+        }
+        else if (role == "ROLE_MANAGER")
+        {
+            <li>
+                <a>
+                    <img src="~/img/dashboard-logo.png" />
+                    Dashboard
+                </a>
+
+            </li>
+            <li>
+                <a asp-action="RoomView" asp-controller="Room">
+                    <img src="~/img/user-sidebar-logo.png" />
+                    Rooms
+                </a>
+
+            </li>
+            <li>
+                <a>
+                    <img src="~/img/bookings-logo.png" />
+                    Bookings
+                </a>
+            </li>
+            <li>
+                <a>
+                    <img src="~/img/calendar-logo.png" />
+                    Calendar
+                </a>
+            </li>
+            <li>
+                <a>
+                    <img src="~/img/reports-logo.png" />
+                    Reports
+                </a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a>
+                    <img src="~/img/dashboard-logo.png" />
+                    Dashboard
+                </a>
+
+            </li>
+            <li>
+                <a asp-action="RoomView" asp-controller="Room">
+                    <img src="~/img/user-sidebar-logo.png" />
+                    Rooms
+                </a>
+
+            </li>
+            <li>
+                <a>
+                    <img src="~/img/calendar-logo.png" />
+                    Calendar
+                </a>
+            </li>
+        }
     </ul>
     <div class="list-2">
         <ul >
