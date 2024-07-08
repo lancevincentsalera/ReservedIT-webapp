@@ -16,5 +16,26 @@
     <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#editUserModal">
         Edit User (Temp btn)
     </button>
+
+    <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#createRoomModal">
+        Add Room (Temp btn)
+    </button>
+
+        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#editRoomModal">
+        Edit Room (Temp btn)
+    </button>
 </div>
 
+<!-- Include the modal partial view -->
+@Html.Partial("_ConfirmationModal")
+@Html.Partial("_CreateUserModal")
+@Html.Partial("_EditUserModal")
+@Html.Partial("_CreateRoomModal")
+@Html.Partial("_EditRoomModal")
+
+<style>
+    .btn-custom{
+        background-color: #B5838E;
+        color: white;
+    }
+</style>

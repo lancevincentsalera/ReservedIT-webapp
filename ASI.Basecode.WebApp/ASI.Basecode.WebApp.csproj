@@ -8,7 +8,9 @@
 
   <ItemGroup>
     <Content Remove="Views\Home\ConfirmationModal.cshtml" />
-    <Content Remove="wwwroot\js\toastr.js" />
+  
+    <Content Remove="wwwroot\css\Index.cshtml" />
+    <Content Remove="wwwroot\roomModal.css" />
   </ItemGroup>
 
   <ItemGroup>
