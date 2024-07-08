@@ -1,0 +1,48 @@
+﻿@section styles {
+    <link rel="stylesheet" href="~/css/viewRoomCard.css" />
+}
+
+<!-- View Room Card Modal -->
+<div class="modal fade" id="viewRoomCardModal" tabindex="-1" role="dialog" aria-labelledby="viewRoomCardModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content ">
+            <div class="modal-body">
+                <form>
+                    <div class="firstHalf">
+                        <img src="~/img/login-image.jpg" alt="Test Image">
+                    </div>
+
+                    <div class="secondHalf">
+                        <div class="additional-info">
+                            
+                            
+                        </div>
+                        <div class="button-group">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                    
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function addEquipment() {
+        const equipmentList = document.getElementById('equipmentList');
+
+        const input = document.getElementById('equipment1');
+        const equipmentValue = input.value;
+        if (equipmentValue) {
+            const li = document.createElement('li');
+            li.textContent = equipmentValue;
+            equipmentList.appendChild(li);
+            input.value = ''; // Clear the input field after adding the item
+        } else {
+            alert('Please enter an equipment name');
+        }
+    }
+</script>

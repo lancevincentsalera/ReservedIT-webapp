@@ -5,7 +5,7 @@
 <div class="text-center">
     
     <p>These are just temporary buttons to trigger modals</p>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmationModal">
+    <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmationModal">
         Delete (Temp btn)
     </button>
 
@@ -23,15 +23,15 @@
 
         <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#editRoomModal">
         Edit Room (Temp btn)
+    </button> -->
+
+    <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#viewRoomCardModal">
+        Edit Room (Temp btn)
     </button>
 </div>
 
 <!-- Include the modal partial view -->
-@Html.Partial("_ConfirmationModal")
-@Html.Partial("_CreateUserModal")
-@Html.Partial("_EditUserModal")
-@Html.Partial("_CreateRoomModal")
-@Html.Partial("_EditRoomModal")
+@Html.Partial("_ViewRoomCardModal")
 
 <style>
     .btn-custom{
