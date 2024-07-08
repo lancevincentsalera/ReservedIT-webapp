@@ -6,8 +6,12 @@
 
 <div class="dashboard-header">
     <h1>Rooms</h1>
-    <button type="button" class="create-user-btn" onclick=""> <img src="~/img/add-logo.png" />Create Room</button>
+    <button type="button" class="create-user-btn" data-toggle="modal" data-target="#createRoomModal">
+        <img src="~/img/add-logo.png" />Create Room
+    </button>
 </div>
+
+@Html.Partial("_CreateRoomModal", new ASI.Basecode.Services.ServiceModels.RoomViewModel())
 
 <div class="table-container">
     <div class="user-row header">
@@ -57,6 +61,18 @@
 
 @section scripts {
     <script>
-
+        function addEquipment() {
+            const equipmentList = document.getElementById('equipmentList');
+            const input = document.getElementById('equipment1');
+            const equipmentValue = input.value;
+            if (equipmentValue) {
+                const li = document.createElement('li');
+                li.textContent = equipmentValue;
+                equipmentList.appendChild(li);
+                input.value = ''; // Clear the input field after adding the item
+            } else {
+                alert('Please enter an equipment name');
+            }
+        }
     </script>
 }

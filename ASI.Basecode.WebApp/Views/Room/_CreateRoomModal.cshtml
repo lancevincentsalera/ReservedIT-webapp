@@ -1,7 +1,8 @@
-﻿@section styles {
+﻿@model ASI.Basecode.Services.ServiceModels.RoomViewModel
+
+@section styles {
     <link rel="stylesheet" href="~/css/roomModal.css" />
 }
-@model ASI.Basecode.Services.ServiceModels.RoomViewModel
 
 <!-- Create Room Modal -->
 <div class="modal fade" id="createRoomModal" tabindex="-1" role="dialog" aria-labelledby="createRoomModalLabel" aria-hidden="true">
@@ -9,18 +10,18 @@
         <div class="modal-content ">
             <div class="modal-header">
                 <h5 class="modal-title" id="createRoomModalLabel">Create Room</h5>
-@*                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button> *@
             </div>
             <div class="modal-body">
-                <form>
+                <form asp-action="PostCreate" enctype="multipart/form-data" method="post">
                     <div class="firstHalf">
                         <div class="uploadPhoto">
                             <div class="form-group file-upload">
                                 <label for="thumbnail">Thumbnail</label>
                                 <div class="custom-file-upload">
-                                    <input type="file" id="thumbnail" />
+                                    <input type="file" id="thumbnail" name="RoomThumbnailImg" />
                                     <label for="thumbnail" class="upload-icon"> <i class="fa fa-plus"></i> </label>
                                 </div>
                                 
@@ -28,7 +29,7 @@
                             <div class="form-group file-upload">
                                 <label for="uploadImage">Upload Image</label>
                                 <div class="custom-file-upload">
-                                    <input type="file" id="uploadImage" />
+                                    <input type="file" id="uploadImage" name="RoomGalleryImg" multiple />
                                     <label for="uploadImage" class="upload-icon"> <i class="fa fa-plus"></i> </label>
                                 </div>
                                 
@@ -38,11 +39,11 @@
 
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" id="name" placeholder="Enter room name" required/>
+                            <input type="text" id="name" name="RoomName" placeholder="Enter room name" required />
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea id="description" rows="4" placeholder="Enter room description" required></textarea>
+                            <textarea id="description" name="Description" rows="4" placeholder="Enter room description" required></textarea>
                         </div>
                     </div>
 
@@ -51,15 +52,15 @@
                             <label style="font-weight: 600; margin-bottom:20px;">Additional Information</label>
                             <div class="form-group">
                                 <label for="location">Location</label>
-                                <input type="text" id="location" placeholder="Enter location" required/>
+                                <input type="text" id="location" name="Location" placeholder="Enter location" required />
                             </div>
                             <div class="form-group">
                                 <label for="capacity">Capacity</label>
-                                <input type="text" id="capacity" placeholder="Enter capacity" required/>
+                                <input type="text" id="capacity" name="Capacity" placeholder="Enter capacity" required />
                             </div>
                             <div class="form-group">
                                 <label for="equipment1">Equipment</label>
-                                <input type="text" id="equipment1" placeholder="Equipment 1" />
+                                <input type="text" id="equipment1" name="RoomEquipments" placeholder="Equipment 1" />
                                 <ul id="equipmentList"></ul>
                                 <button type="button" class="add-equipment" onclick="addEquipment()">+ Add another equipment</button>
                             </div>
