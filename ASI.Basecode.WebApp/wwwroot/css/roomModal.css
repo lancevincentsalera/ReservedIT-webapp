@@ -1,0 +1,154 @@
+﻿/* Apply a more specific selector or use !important to override Bootstrap defaults */
+#createRoomModal .modal-dialog,
+#editRoomModal .modal-dialog {
+    max-width: 45vw !important;
+}
+
+.modal-content{
+    height:fit-content;
+}
+
+
+.modal-body form{
+    display: flex;
+    justify-content: space-between;
+    gap:20px;
+}
+
+
+.modal-body form {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-body form .firstHalf,
+.modal-body form .secondHalf{
+    flex: 1;
+}
+
+    .modal-body form .uploadPhoto {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+.modal-body .form-group {
+    margin-bottom: 15px;
+}
+
+    .modal-body .form-group label {
+        display: block;
+/*        margin-bottom: 5px;*/
+    }
+
+    .modal-body .form-group input,
+    .modal-body .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+
+.additional-info .form-group {
+    flex: 1;
+}
+
+/*    .additional-info .form-group input {
+        width: calc(100% - 10px);
+    }
+
+    .additional-info .form-group button {
+        width: 100%;
+    }*/
+
+/*---- Custom File upload styles----*/
+.modal-body .custom-file-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    height: 100px;
+    width: 10vw;
+}
+
+.modal-body .file-upload input {
+    margin-right: 10px;
+}
+
+    .custom-file-upload input[type="file"] {
+        display: none;
+    }
+
+        .custom-file-upload .upload-label {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #eee;
+        border: 1px solid #ccc;
+        }
+
+.custom-file-upload .upload-icon {
+    /*    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ccc;*/
+    border-radius: 20px;
+    /*color: black;
+    display: inline-block;
+    align-items: center;
+    margin-bottom: 0;*/
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    /*  font: 200;*/
+    text-align: center;
+    background-color: #f8f8f8;
+}
+
+            .custom-file-upload .upload-icon i.fa {
+                font-size: 15px;
+            }
+
+/* Styles for the equipment list */
+#equipmentList {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+    #equipmentList li {
+        background-color: #f8f8f8;
+        margin-bottom: 5px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .add-equipment{
+        border-radius: 10px;
+        border: 0px solid;
+        font-size: 12px;
+        padding:8px;
+        /*background-color: */
+
+    }
+
+.modal-body .button-group{
+   float:inline-end;
+   margin-top: 20px;
+   display:flex;
+   gap: 15px;
+}
+.btn-danger, .btn-custom {
+    width: 7vw;
+}
+
+.btn-custom {
+    background-color: #B5838E;
+    color: white;
+}
