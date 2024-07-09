@@ -1,8 +1,13 @@
 ﻿@using ASI.Basecode.Services.ServiceModels
+
 @model UserViewModel 
 @{
     ViewData["Title"] = "User Dashboard";
     IEnumerable<ASI.Basecode.Services.ServiceModels.UserViewModel> users = ViewData["users"] as IEnumerable<ASI.Basecode.Services.ServiceModels.UserViewModel>;
+}
+
+@section styles {
+    <link rel="stylesheet" href="~/css/admindashboard.css" />
 }
 
 <div class="dashboard-header">
@@ -58,7 +63,7 @@
                 </form>
             </li>
             <li>
-                <button type="button" class="btn-status" onclick="displayModal('#editUserModal'); getUserDetails(this, '#editUserModal', 'GetUserDetails', 'Admin');">
+                <button type="button" class="btn-status" onclick="displayModal('#editUserModal'); getUserDetails(this, '#editUserModal', 'GetUserDetails', 'AAUser');">
                     <i class="fas fa-edit" style=" font-size: 10px;"></i> Edit
                 </button>
             </li>

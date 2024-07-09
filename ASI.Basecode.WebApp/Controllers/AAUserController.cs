@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace ASI.Basecode.WebApp.Controllers
 {
     [Authorize(Policy = "AdminOnly")]
-    public class AdminController : ControllerBase<AdminController>
+    public class AAUserController : ControllerBase<AAUserController>
     {
         private readonly IUserService _userService;
         /// <summary>
@@ -25,7 +25,7 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <param name="configuration"></param>
         /// <param name="localizer"></param>
         /// <param name="mapper"></param>
-        public AdminController(IUserService userService, IHttpContextAccessor httpContextAccessor,
+        public AAUserController(IUserService userService, IHttpContextAccessor httpContextAccessor,
                               ILoggerFactory loggerFactory,
                               IConfiguration configuration,
                               IMapper mapper = null) : base(httpContextAccessor, loggerFactory, configuration, mapper)

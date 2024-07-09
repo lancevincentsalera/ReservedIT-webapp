@@ -9,36 +9,6 @@ h1 {
     font-weight: bold;
 }
 
-.create-user-btn {
-    border: none;
-    font-size: 87.5%;
-    font-weight: bold;
-    background-color: #B5838E;
-    padding: 10px 30px;
-    color: white;
-    border-radius: 25px;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.create-user-btn:hover {
-    background-color: #775965;
-    color: white;
-    text-decoration: none;
-}
-
-.create-user-btn img {
-    margin-right: 0.5rem;
-}
-
-.table-container {
-    height: 85%;
-    margin: 0 2rem;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0px 5px 12px 4px rgba(0, 0, 0, 0.20);
-    overflow: hidden;
-}
-
 .user-list {
     list-style: none;
     padding: 0;
@@ -52,10 +22,11 @@ h1 {
     display: flex;
 }
 
-.user-row.header {
-    background-color: #F9FAFC;
-    font-weight: bold;
-}
+    .user-row.header {
+        background-color: #F9FAFC;
+        font-weight: bold;
+        border-bottom: 1px solid #E9EDF5;
+    }
 
 .user-cell {
     font-size: 80%;
@@ -65,26 +36,13 @@ h1 {
     word-wrap: break-word;
 }
 
-.user-cell.actions {
-    text-align: center;
-}
-
-.user-row:first-child {
-    border-bottom: 1px solid #E9EDF5;
-}
-
+    .user-cell.actions {
+        text-align: center;
+    }
 .user-row:nth-child(even) {
     background-color: #F9FAFC;
 }
 
-.user-cell:first-child {
-    text-align: center;
-    flex: 0 0 100px;
-}
-
-.user-cell:nth-child(2) {
-    flex: 0 0 250px;
-}
 
 .user-list::-webkit-scrollbar {
     width: 6px;
@@ -98,31 +56,6 @@ h1 {
 .user-list::-webkit-scrollbar-thumb {
     background-color: #A6A6A6;
     border-radius: 16px;
-}
-
-.user-cell .status {
-    font-size: 80%;
-}
-
-.status-pending {
-   padding: 5px;
-   border-radius: 10px;
-    background-color: #E1FCEF;
-    color: #14804A;
-}
-
-.status-active {
-    padding: 5px;
-    border-radius: 10px;
-    background-color: #B5838E;
-    color: white;
-}
-
-.status-restricted {
-    padding: 5px;
-    border-radius: 10px;
-    background-color: #FF4C4C;
-    color: white;
 }
 
 .dropdown-action {
@@ -149,13 +82,14 @@ h1 {
             justify-content: flex-start;
             align-items: center;
         }
+
             .dropdown-action ul button i {
                 margin-right: 10px
             }
 
-            .dropdown-action ul li:hover {
-                background-color: #f0f0f0;
-            }
+        .dropdown-action ul li:hover {
+            background-color: #f0f0f0;
+        }
 
 .dropdown-trigger {
     position: relative;
