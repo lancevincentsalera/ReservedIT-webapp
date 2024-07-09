@@ -1,41 +1,64 @@
 ﻿@{
-    ViewBag.Title = "Home Page"; /// remove later
+    ViewBag.Title = "Index";
 }
 
-<div class="text-center">
-    
-    <p>These are just temporary buttons to trigger modals</p>
-    <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmationModal">
-        Delete (Temp btn)
-    </button>
+@section styles {
+    <link rel="stylesheet" href="~/css/Dashboard.css" />
+}
 
-    <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#createUserModal">
-        Create User (Temp btn)
-    </button>    
-    
-    <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#editUserModal">
-        Edit User (Temp btn)
-    </button>
+<div class="dashboard-header">
+    <h1>Dashboard</h1>
+</div>
+<div class="main-content">
+    <div class="bookings upcoming-bookings">
+        <h2>Upcoming Bookings</h2>
+        <div class="booking-header">
+            <div class="booking-cell">Room Name</div>
+            <div class="booking-cell">Date</div>
+            <div class="booking-cell">Time from</div>
+            <div class="booking-cell">Time To</div>
+            <div class="booking-cell">Recurrence</div>
+            <div class="booking-cell"></div>
+        </div>
+        <ul class="booking-list">
+                <li class="booking-row">
+                <div class="booking-cell" data-label="Room Name"></div>
+                    <div class="booking-cell" data-label="Date"></div>
+                <div class="booking-cell" data-label="Time from"></div>
+                <div class="booking-cell" data-label="Time To"></div>
+                <div class="booking-cell" data-label="Recurrence"></div>
+                    <div class="booking-cell actions">
+                        <div class="mr-20 hover-pointer dropdown-trigger" data-user-id="">
+                            <span class="ddicon">&#8942;</span>
+                        </div>
+                    </div>
+                </li>
+            
+        </ul>
+    </div>
 
-    <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#createRoomModal">
-        Add Room (Temp btn)
-    </button>
-
-        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#editRoomModal">
-        Edit Room (Temp btn)
-    </button> -->
-
-    <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#viewRoomCardModal">
-        Edit Room (Temp btn)
-    </button>
+    <div class="bookings recent-bookings">
+        <h2>Recent Bookings</h2>
+        <div class="booking-header">
+            <div class="booking-cell">Room Name</div>
+            <div class="booking-cell">Date</div>
+            <div class="booking-cell">Time from</div>
+            <div class="booking-cell">Time To</div>
+            <div class="booking-cell">Recurrence</div>
+            <div class="booking-cell">Status</div>
+        </div>
+        <ul class="booking-list">
+            <li class="booking-row">
+                <div class="booking-cell" data-label="USER ID"></div>
+                <div class="booking-cell" data-label="EMAIL"></div>
+                <div class="booking-cell" data-label="FIRST NAME"></div>
+                <div class="booking-cell" data-label="LAST NAME"></div>
+                <div class="booking-cell" data-label="ROLE"></div>
+                <div class="booking-cell" data-label="STATUS"><span class="status"></span></div>
+            </li>
+        </ul>
+    </div>
 </div>
 
 <!-- Include the modal partial view -->
 @Html.Partial("_ViewRoomCardModal")
-
-<style>
-    .btn-custom{
-        background-color: #B5838E;
-        color: white;
-    }
-</style>
