@@ -82,13 +82,24 @@
 </div>
 
 <script>
-    document.getElementById('addEquipmentButton').addEventListener('click', function () {
+    document.addEventListener('DOMContentLoaded', function () {
+        var addEquipmentButton = document.getElementById('addEquipmentButton');
         var equipmentList = document.getElementById('equipmentList');
-        var newInput = document.createElement('input');
-        newInput.type = 'text';
-        newInput.name = 'Equipments[]';
-        newInput.className = 'form-control mb-2';
-        newInput.placeholder = 'Enter equipment name';
-        equipmentList.appendChild(newInput);
+
+        addEquipmentButton.addEventListener('click', function () {
+            var lastInput = equipmentList.querySelector('input:last-child');
+
+            // Check if the last input is empty
+            if (lastInput && lastInput.value.trim() === '') {
+                alert('Please enter the current equipment name before adding a new one.');
+            } else {
+                var newInput = document.createElement('input');
+                newInput.type = 'text';
+                newInput.name = 'Equipments[]';
+                newInput.className = 'form-control mb-2';
+                newInput.placeholder = 'Enter equipment name';
+                equipmentList.appendChild(newInput);
+            }
+        });
     });
 </script>
