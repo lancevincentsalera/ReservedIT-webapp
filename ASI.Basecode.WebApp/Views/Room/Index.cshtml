@@ -60,19 +60,4 @@
 
 
 @section scripts {
-    <script>
-        function addEquipment() {
-            const equipmentList = document.getElementById('equipmentList');
-            const input = document.getElementById('equipment1');
-            const equipmentValue = input.value;
-            if (equipmentValue) {
-                const li = document.createElement('li');
-                li.textContent = equipmentValue;
-                equipmentList.appendChild(li);
-                input.value = ''; // Clear the input field after adding the item
-            } else {
-                alert('Please enter an equipment name');
-            }
-        }
-    </script>
 }

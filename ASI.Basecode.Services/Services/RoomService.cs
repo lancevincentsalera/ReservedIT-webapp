@@ -31,7 +31,6 @@ namespace ASI.Basecode.Services.Services
                     RoomName = s.RoomName,
                     Description = s.Description,
                     Location = s.Location,
-
                     Capacity = s.Capacity.Value,
                     RoomEquipments = s.RoomEquipments.Select(re => new RoomEquipmentViewModel
                     {

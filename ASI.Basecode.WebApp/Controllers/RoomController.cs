@@ -48,7 +48,7 @@ namespace ASI.Basecode.WebApp.Controllers
         /// Returns Room View.
         /// </summary>
         /// <returns> Home View </returns>
-        public IActionResult RoomView()
+        public IActionResult Index()
         {
             try
             {
@@ -129,7 +129,7 @@ namespace ASI.Basecode.WebApp.Controllers
             }
 
             TempData["CreateMessage"] = "Added Successfully";
-            return RedirectToAction("RoomView");
+            return RedirectToAction("Index");
         }
         #endregion
 
@@ -154,7 +154,7 @@ namespace ASI.Basecode.WebApp.Controllers
                 {
                     _logger.LogError($"Room with ID {model.RoomId} not found.");
                     TempData["ErrorMessage"] = "Room not found.";
-                    return RedirectToAction("RoomView");
+                    return RedirectToAction("Index");
                 }
 
                 bool isDuplicate = _roomService.RetrieveAll().Any(data => data.RoomName == model.RoomName && data.RoomId != model.RoomId);
@@ -218,7 +218,7 @@ namespace ASI.Basecode.WebApp.Controllers
                 TempData["ErrorMessage"] = "An error occurred while updating the room.";
             }
 
-            return RedirectToAction("RoomView");
+            return RedirectToAction("Index");
         }
         #endregion
 
@@ -239,7 +239,7 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 _logger.LogError($"Room with ID {roomId} not found.");
                 TempData["ErrorMessage"] = "Room not found.";
-                return RedirectToAction("RoomView");
+                return RedirectToAction("Index");
             }
 
             if (!string.IsNullOrEmpty(existingRoom.Thumbnail))
@@ -248,7 +248,7 @@ namespace ASI.Basecode.WebApp.Controllers
                 DeleteFileWithRetry(oldThumbnailPath, 3, 1000);
             }
             _roomService.DeleteRoom(roomId);
-            return RedirectToAction("RoomView");
+            return RedirectToAction("Index");
         }
         #endregion
 
