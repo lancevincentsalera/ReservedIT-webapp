@@ -150,7 +150,7 @@ namespace ASI.Basecode.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostEdit(RoomViewModel model)
+        public async Task<IActionResult> PostEdit(RoomViewModel model, string[] Equipments)
         {
             _logger.LogInformation("=======PostEdit Start=======");
 
@@ -205,6 +205,20 @@ namespace ASI.Basecode.WebApp.Controllers
                             GalleryUrl = await UploadImage(folder, file)
                         };
                         model._RoomGallery.Add(roomGallery);
+                    }
+
+                    model.RoomEquipments = new List<RoomEquipmentViewModel>();
+
+                    foreach (var equipmentName in Equipments)
+                    {
+                        if (!string.IsNullOrEmpty(equipmentName))
+                        {
+                            var equipment = new RoomEquipmentViewModel
+                            {
+                                EquipmentName = equipmentName
+                            };
+                            model.RoomEquipments.Add(equipment);
+                        }
                     }
 
                     if (ModelState.IsValid)

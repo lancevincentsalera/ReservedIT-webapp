@@ -22,7 +22,6 @@
         <div class="user-cell">LOCATION</div>
         <div class="user-cell">EQUIPMENTS</div>
         <div class="user-cell"></div>
-        
     </div>
     <ul class="user-list">
         @foreach (var item in Model.roomList)
@@ -36,10 +35,7 @@
                 <div class="user-cell" data-label="EQUIPMENTS">
                     @if (item.RoomEquipments != null && item.RoomEquipments.Any())
                     {
-                            @foreach (var roomEquipment in item.RoomEquipments)
-                            {
-                                    @roomEquipment.EquipmentName <label>, </label>
-                            }
+                        @string.Join(", ", item.RoomEquipments.Select(e => e.EquipmentName))
                     }
                     else
                     {
@@ -55,9 +51,25 @@
         }
 
     </ul>
+    <div class="dropdown-action">
+        <ul>
+            <li>
+                <button type="button" class="btn-status" onclick="displayModal('#editRoomModal'); getRoomDetails(this, '#editRoomModal', 'GetRoomDetails', 'Admin');">
+                    <i class="fas fa-edit" style=" font-size: 10px;"></i> Edit
+                </button>
+            </li>
+            <li>
+                <button type="button" class="btn-status" onclick="displayModal('#confirmationDeleteModal'); passRoomId(this, '#confirmDeleteBtn');">
+                    <i class="fas fa-trash-alt" style="color: #FF0000; font-size: 10px;"></i> Delete
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    </ul>
 </div>
 
-
+@Html.Partial("_EditRoomModal", new ASI.Basecode.Services.ServiceModels.RoomViewModel())
 
 @section scripts {
 }

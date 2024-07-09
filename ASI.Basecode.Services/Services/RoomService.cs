@@ -103,6 +103,21 @@ namespace ASI.Basecode.Services.Services
             existingData.UpdatedDt = DateTime.Now;
             existingData.Thumbnail = model.Thumbnail;
 
+            existingData.RoomEquipments.Clear();
+
+            if (model.RoomEquipments != null && model.RoomEquipments.Any())
+            {
+                foreach (var item in model.RoomEquipments)
+                {
+                    var equipment = new Equipment { EquipmentName = item.EquipmentName };
+                    existingData.RoomEquipments.Add(new RoomEquipment
+                    {
+                        Equipment = equipment,
+                        RoomId = existingData.RoomId,
+                    });
+                }
+            }
+
             _roomRepository.UpdateRoom(existingData);
         }
 
