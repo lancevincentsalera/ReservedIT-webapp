@@ -5,10 +5,14 @@ namespace ASI.Basecode.Data.Models
 {
     public partial class DayOfTheWeek
     {
+        public DayOfTheWeek()
+        {
+            Recurrences = new HashSet<Recurrence>();
+        }
+
         public int DayOfWeekId { get; set; }
         public string DayName { get; set; }
-        public int? RecurrenceId { get; set; }
 
-        public virtual Recurrence Recurrence { get; set; }
+        public virtual ICollection<Recurrence> Recurrences { get; set; }
     }
 }
