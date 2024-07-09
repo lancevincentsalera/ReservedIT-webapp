@@ -59,10 +59,11 @@
                                 <input type="text" id="capacity" name="Capacity" placeholder="Enter capacity" required />
                             </div>
                             <div class="form-group">
-                                <label for="equipment1">Equipment</label>
-                                <input type="text" id="equipment1" name="RoomEquipments" placeholder="Equipment 1" />
-                                <ul id="equipmentList"></ul>
-                                <button type="button" class="add-equipment" onclick="addEquipment()">+ Add another equipment</button>
+                                <label for="Equipment">Equipments</label>
+                                <div id="equipmentList">
+                                    <input type="text" class="form-control mb-2" name="Equipments[]" placeholder="Enter equipment name">
+                                </div>
+                                <button type="button" class="btn btn-secondary" id="addEquipmentButton">Add Equipment</button>
                             </div>
                             
                         </div>
@@ -81,18 +82,13 @@
 </div>
 
 <script>
-    function addEquipment() {
-        const equipmentList = document.getElementById('equipmentList');
-
-        const input = document.getElementById('equipment1');
-        const equipmentValue = input.value;
-        if (equipmentValue) {
-            const li = document.createElement('li');
-            li.textContent = equipmentValue;
-            equipmentList.appendChild(li);
-            input.value = ''; // Clear the input field after adding the item
-        } else {
-            alert('Please enter an equipment name');
-        }
-    }
+    document.getElementById('addEquipmentButton').addEventListener('click', function () {
+        var equipmentList = document.getElementById('equipmentList');
+        var newInput = document.createElement('input');
+        newInput.type = 'text';
+        newInput.name = 'Equipments[]';
+        newInput.className = 'form-control mb-2';
+        newInput.placeholder = 'Enter equipment name';
+        equipmentList.appendChild(newInput);
+    });
 </script>

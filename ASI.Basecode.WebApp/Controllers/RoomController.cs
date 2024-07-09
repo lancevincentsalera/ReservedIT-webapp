@@ -1,4 +1,5 @@
-﻿using ASI.Basecode.Services.Interfaces;
+﻿using ASI.Basecode.Data.Models;
+using ASI.Basecode.Services.Interfaces;
 using ASI.Basecode.Services.ServiceModels;
 using ASI.Basecode.WebApp.Mvc;
 using AutoMapper;
@@ -78,7 +79,7 @@ namespace ASI.Basecode.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostCreate(RoomViewModel model)
+        public async Task<IActionResult> PostCreate(RoomViewModel model, string[] Equipments)
         {
             _logger.LogInformation("=======Sample Crud : PostCreate Start=======");
             try
@@ -114,10 +115,17 @@ namespace ASI.Basecode.WebApp.Controllers
                             model._RoomGallery.Add(roomGallery);
                         }
                     }
-                    if (model.RoomEquipments != null && model.RoomEquipments.Any())
+                    model.RoomEquipments = new List<RoomEquipmentViewModel>();
+
+                    foreach (var equipmentName in Equipments)
                     {
-                        foreach (var equipment in model.RoomEquipments)
+                        if (!string.IsNullOrEmpty(equipmentName))
                         {
+                            var equipment = new RoomEquipmentViewModel
+                            {
+                                EquipmentName = equipmentName
+                            };
+                            model.RoomEquipments.Add(equipment);
                         }
                     }
                 }

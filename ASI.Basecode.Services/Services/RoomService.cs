@@ -84,9 +84,10 @@ namespace ASI.Basecode.Services.Services
             {
                 foreach (var item in model.RoomEquipments)
                 {
-                    newModel.RoomEquipments.Add(new RoomEquipment() 
+                    var equipment = new Equipment { EquipmentName = item.EquipmentName };
+                    newModel.RoomEquipments.Add(new RoomEquipment
                     {
-                        EquipmentId = item.EquipmentId,
+                        Equipment = equipment,
                         RoomId = newModel.RoomId,
                     });
                 }
