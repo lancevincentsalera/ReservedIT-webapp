@@ -78,7 +78,7 @@ namespace ASI.Basecode.Data
                 entity.HasOne(d => d.Room)
                     .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.RoomId)
-                    .HasConstraintName("FK__Booking__RoomID__52593CB8");
+                    .HasConstraintName("FK__Booking__RoomID__5070F446");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Bookings)
@@ -89,7 +89,7 @@ namespace ASI.Basecode.Data
             modelBuilder.Entity<DayOfTheWeek>(entity =>
             {
                 entity.HasKey(e => e.DayOfWeekId)
-                    .HasName("PK__DayOfThe__01AA8DDFEA153364");
+                    .HasName("PK__DayOfThe__01AA8DDF682023E4");
 
                 entity.ToTable("DayOfTheWeek");
 
@@ -115,7 +115,7 @@ namespace ASI.Basecode.Data
             modelBuilder.Entity<ImageGallery>(entity =>
             {
                 entity.HasKey(e => e.ImageId)
-                    .HasName("PK__ImageGal__7516F4EC91074061");
+                    .HasName("PK__ImageGal__7516F4ECD768C19A");
 
                 entity.ToTable("ImageGallery");
 
@@ -132,14 +132,14 @@ namespace ASI.Basecode.Data
                 entity.HasOne(d => d.Room)
                     .WithMany(p => p.ImageGalleries)
                     .HasForeignKey(d => d.RoomId)
-                    .HasConstraintName("FK__ImageGall__RoomI__5629CD9C");
+                    .HasConstraintName("FK__ImageGall__RoomI__52593CB8");
             });
 
             modelBuilder.Entity<Permission>(entity =>
             {
                 entity.ToTable("Permission");
 
-                entity.HasIndex(e => e.PermissionName, "UQ__Permissi__0FFDA3577276F1A1")
+                entity.HasIndex(e => e.PermissionName, "UQ__Permissi__0FFDA3573AA82B80")
                     .IsUnique();
 
                 entity.Property(e => e.PermissionId).HasColumnName("PermissionID");
@@ -166,7 +166,7 @@ namespace ASI.Basecode.Data
                 entity.HasOne(d => d.Booking)
                     .WithMany(p => p.Recurrences)
                     .HasForeignKey(d => d.BookingId)
-                    .HasConstraintName("FK__Recurrenc__Booki__70DDC3D8");
+                    .HasConstraintName("FK__Recurrenc__Booki__534D60F1");
 
                 entity.HasOne(d => d.DayOfWeek)
                     .WithMany(p => p.Recurrences)
@@ -176,7 +176,7 @@ namespace ASI.Basecode.Data
 
             modelBuilder.Entity<Role>(entity =>
             {
-                entity.HasIndex(e => e.RoleName, "UQ__Roles__8A2B616059096742")
+                entity.HasIndex(e => e.RoleName, "UQ__Roles__8A2B616084272798")
                     .IsUnique();
 
                 entity.Property(e => e.RoleId).HasColumnName("RoleID");
@@ -189,7 +189,7 @@ namespace ASI.Basecode.Data
             modelBuilder.Entity<RolePermission>(entity =>
             {
                 entity.HasKey(e => e.RolePermissionsId)
-                    .HasName("PK__RolePerm__18B281802159A9F3");
+                    .HasName("PK__RolePerm__18B28180031F6F6E");
 
                 entity.Property(e => e.RolePermissionsId).HasColumnName("RolePermissionsID");
 
@@ -201,20 +201,20 @@ namespace ASI.Basecode.Data
                     .WithMany(p => p.RolePermissions)
                     .HasForeignKey(d => d.PermissionId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK__RolePermi__Permi__3E52440B");
+                    .HasConstraintName("FK__RolePermi__Permi__5535A963");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.RolePermissions)
                     .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK__RolePermi__RoleI__3D5E1FD2");
+                    .HasConstraintName("FK__RolePermi__RoleI__5629CD9C");
             });
 
             modelBuilder.Entity<Room>(entity =>
             {
                 entity.ToTable("Room");
 
-                entity.HasIndex(e => e.RoomName, "UQ__Room__6B500B55A8B17C07")
+                entity.HasIndex(e => e.RoomName, "UQ__Room__6B500B55371CFDC0")
                     .IsUnique();
 
                 entity.Property(e => e.RoomId).HasColumnName("RoomID");
@@ -277,19 +277,17 @@ namespace ASI.Basecode.Data
 
                 entity.Property(e => e.SettingId).HasColumnName("SettingID");
 
-                entity.Property(e => e.BookingReminder).HasColumnType("datetime");
-
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Settings)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Setting__UserID__5EBF139D");
+                    .HasConstraintName("FK__Setting__UserID__59063A47");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.HasIndex(e => e.Email, "UQ__Users__A9D105344CD5B135")
+                entity.HasIndex(e => e.Email, "UQ__Users__A9D105345DA7EA0D")
                     .IsUnique();
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");

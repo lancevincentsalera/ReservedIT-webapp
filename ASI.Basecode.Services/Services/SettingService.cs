@@ -56,6 +56,16 @@ namespace ASI.Basecode.Services.Services
             return setting;
         }
 
+        public User GetUser(int userId)
+        {
+            return _settingRepository.GetUsers().ToList().Where(u => u.UserId == userId).FirstOrDefault();
+        }
+
+        public Role GetRole(int roleId)
+        {
+            return _settingRepository.GetRoles().ToList().Where(r => r.RoleId == roleId).FirstOrDefault();
+        }
+
         public void Add(SettingViewModel model)
         {
             var newModel = new Setting();
@@ -74,6 +84,11 @@ namespace ASI.Basecode.Services.Services
         {
             var existingData = _settingRepository.GetSettings().Where(s => s.UserId == userId).FirstOrDefault();
             _settingRepository.DeleteSetting(existingData);
+        }
+
+        public bool SettingExists(int userId)
+        {
+            return _settingRepository.SettingExists(userId);
         }
 
     }

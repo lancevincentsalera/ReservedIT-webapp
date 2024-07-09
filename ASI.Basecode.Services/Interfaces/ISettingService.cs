@@ -11,8 +11,11 @@ namespace ASI.Basecode.Services.Interfaces
     {
         IEnumerable<SettingViewModel> GetSettings();
         SettingViewModel GetSetting(int userId);
+        User GetUser(int userId);
+        Role GetRole(int roleId);
         void Add(SettingViewModel model);
         void Update(SettingViewModel model);
         void Delete(int userId);
+        bool SettingExists(int userId);
     }
 }

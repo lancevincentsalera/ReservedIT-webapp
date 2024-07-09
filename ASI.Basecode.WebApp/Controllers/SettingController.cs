@@ -1,5 +1,7 @@
-﻿using ASI.Basecode.Services.Interfaces;
+﻿using ASI.Basecode.Data.Models;
+using ASI.Basecode.Services.Interfaces;
 using ASI.Basecode.Services.Manager;
+using ASI.Basecode.Services.ServiceModels;
 using ASI.Basecode.Services.Services;
 using ASI.Basecode.WebApp.Mvc;
 using AutoMapper;
@@ -7,6 +9,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Drawing.Printing;
 using System.Security.Claims;
 
 namespace ASI.Basecode.WebApp.Controllers
@@ -40,21 +44,38 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <returns> Setting View </returns>
         public IActionResult Index()
         {
-            /*
             int? userId = _session.GetInt32("UserId");
-            var setting = _settingService.GetSetting(userId);
-            return View(setting);
-            */
 
-            int? userId = _session.GetInt32("UserId");
+            if (!_settingService.SettingExists(userId.GetValueOrDefault()))
+            {
+                var setting = new SettingViewModel
+                {
+                    UserId = userId.GetValueOrDefault(),
+                    BookingSuccess = 1,
+                    BookingStatusChange = 1,
+                    BookingReminder = (int)new TimeSpan(1, 0, 0).TotalSeconds,
+                    BookingDuration = new TimeSpan(1, 0, 0),
+                };
+                _settingService.Add(setting);
+
+                setting.User = _settingService.GetUser(setting.UserId.GetValueOrDefault());
+                setting.User.Role = _settingService.GetRole(setting.User.RoleId.GetValueOrDefault());
+            }
+
+            if (_settingService.SettingExists(userId.GetValueOrDefault()))
+            {
+                var setting = _settingService.GetSetting(userId.Value);
+                setting.User = _settingService.GetUser(setting.UserId.GetValueOrDefault());
+                setting.User.Role = _settingService.GetRole(setting.User.RoleId.GetValueOrDefault());
+                return View(setting);
+            }
 
             if (!userId.HasValue)
             {
                 TempData["ErrorMessage"] = "User ID not found in session!";
-            }
 
-            var setting = _settingService.GetSetting(userId.Value);
-            return View(setting);
+            }
+            return RedirectToAction("Index", "AAUser");
         }
 
     }
