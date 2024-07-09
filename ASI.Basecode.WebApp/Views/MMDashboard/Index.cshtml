@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    IEnumerable<ASI.Basecode.Services.ServiceModels.BookingViewModel> bookings = ViewData["bookings"] as IEnumerable<ASI.Basecode.Services.ServiceModels.Booking>;
+    IEnumerable<ASI.Basecode.Services.ServiceModels.BookingViewModel> bookings = ViewData["bookings"] as IEnumerable<ASI.Basecode.Services.ServiceModels.BookingViewModel>;
 }
 
 @section styles {
@@ -30,10 +30,10 @@
         {
             <li class="user-row">
                 <div class="user-cell" data-label="Room Name">@Html.DisplayFor(modelItem => item.UserId)</div>
-                <div class="user-cell" data-label="Date">@Html.DisplayFor(modelItem => item.Email)</div>
-                <div class="user-cell" data-label="Time From">@Html.DisplayFor(modelItem => item.FirstName)</div>
-                <div class="user-cell" data-label="Time To">@Html.DisplayFor(modelItem => item.LastName)</div>
-                <div class="user-cell" data-label="Recurrence">@Html.DisplayFor(modelItem => item.RoleName)</div>
+                <div class="user-cell" data-label="Date">@Html.DisplayFor(modelItem => item.StartDate)</div>
+                <div class="user-cell" data-label="Time From">@Html.DisplayFor(modelItem => item.TimeFrom)</div>
+                <div class="user-cell" data-label="Time To">@Html.DisplayFor(modelItem => item.TimeTo)</div>
+                <div class="user-cell" data-label="Recurrence">@Html.DisplayFor(modelItem => item.BookingStatus)</div>
                 <div class="user-cell actions">
                     <div class="mr-20 hover-pointer dropdown-trigger" data-user-id="">
                         <span class="ddicon">&#8942;</span>

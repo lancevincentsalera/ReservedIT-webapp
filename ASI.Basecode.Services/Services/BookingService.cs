@@ -49,7 +49,6 @@ namespace ASI.Basecode.Services.Services
                 BookingId = booking.BookingId,
                 UserId = booking.UserId,
                 RoomId = booking.RoomId,
-                RecurrenceId = booking.RecurrenceId,
                 BookingStatus = booking.BookingStatus,
                 StartDate = booking.StartDate,
                 EndDate = booking.EndDate,
