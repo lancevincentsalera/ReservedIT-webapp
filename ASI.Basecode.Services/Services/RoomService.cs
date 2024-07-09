@@ -33,6 +33,12 @@ namespace ASI.Basecode.Services.Services
                     Location = s.Location,
 
                     Capacity = s.Capacity.Value,
+                    RoomEquipments = s.RoomEquipments.Select(re => new RoomEquipmentViewModel
+                    {
+                        RoomEquipmentId = re.RoomEquipmentId,
+                        EquipmentId = re.EquipmentId,
+                        EquipmentName = re.Equipment.EquipmentName
+                    }).ToList()
                 });
             return data;
         }
@@ -72,6 +78,21 @@ namespace ASI.Basecode.Services.Services
                     });
                 }
             }
+
+            newModel.RoomEquipments = new List<RoomEquipment>();
+
+            if (model.RoomEquipments != null && model.RoomEquipments.Any())
+            {
+                foreach (var item in model.RoomEquipments)
+                {
+                    newModel.RoomEquipments.Add(new RoomEquipment() 
+                    {
+                        EquipmentId = item.EquipmentId,
+                        RoomId = newModel.RoomId,
+                    });
+                }
+            }
+
             _roomRepository.AddRoom(newModel);
         }
 
@@ -92,6 +113,11 @@ namespace ASI.Basecode.Services.Services
             existingData.Path = model.GalleryUrl;
 
             _roomRepository.UpdateGallery(existingData);
+        }
+
+        public void DeleteRoom(int roomId)
+        {
+            _roomRepository.DeleteRoom(roomId);
         }
     }
 }

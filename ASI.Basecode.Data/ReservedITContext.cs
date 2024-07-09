@@ -61,8 +61,6 @@ namespace ASI.Basecode.Data
 
                 entity.Property(e => e.EndDate).HasColumnType("date");
 
-                entity.Property(e => e.RecurrenceId).HasColumnName("RecurrenceID");
-
                 entity.Property(e => e.RoomId).HasColumnName("RoomID");
 
                 entity.Property(e => e.StartDate).HasColumnType("date");
@@ -76,11 +74,6 @@ namespace ASI.Basecode.Data
                     .HasColumnName("UpdatedDT");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.Recurrence)
-                    .WithMany(p => p.Bookings)
-                    .HasForeignKey(d => d.RecurrenceId)
-                    .HasConstraintName("FK__Booking__Recurre__534D60F1");
 
                 entity.HasOne(d => d.Room)
                     .WithMany(p => p.Bookings)
@@ -96,22 +89,18 @@ namespace ASI.Basecode.Data
             modelBuilder.Entity<DayOfTheWeek>(entity =>
             {
                 entity.HasKey(e => e.DayOfWeekId)
-                    .HasName("PK__DayOfThe__01AA8DDF7B001B9E");
+                    .HasName("PK__DayOfThe__01AA8DDFEA153364");
 
                 entity.ToTable("DayOfTheWeek");
 
-                entity.Property(e => e.DayOfWeekId).HasColumnName("DayOfWeekID");
+                entity.Property(e => e.DayOfWeekId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("DayOfWeekID");
 
                 entity.Property(e => e.DayName)
-                    .HasMaxLength(255)
+                    .IsRequired()
+                    .HasMaxLength(50)
                     .IsUnicode(false);
-
-                entity.Property(e => e.RecurrenceId).HasColumnName("RecurrenceID");
-
-                entity.HasOne(d => d.Recurrence)
-                    .WithMany(p => p.DayOfTheWeeks)
-                    .HasForeignKey(d => d.RecurrenceId)
-                    .HasConstraintName("FK__DayOfTheW__Recur__4E88ABD4");
             });
 
             modelBuilder.Entity<Equipment>(entity =>
@@ -169,6 +158,20 @@ namespace ASI.Basecode.Data
                 entity.ToTable("Recurrence");
 
                 entity.Property(e => e.RecurrenceId).HasColumnName("RecurrenceID");
+
+                entity.Property(e => e.BookingId).HasColumnName("BookingID");
+
+                entity.Property(e => e.DayOfWeekId).HasColumnName("DayOfWeekID");
+
+                entity.HasOne(d => d.Booking)
+                    .WithMany(p => p.Recurrences)
+                    .HasForeignKey(d => d.BookingId)
+                    .HasConstraintName("FK__Recurrenc__Booki__70DDC3D8");
+
+                entity.HasOne(d => d.DayOfWeek)
+                    .WithMany(p => p.Recurrences)
+                    .HasForeignKey(d => d.DayOfWeekId)
+                    .HasConstraintName("FK_Recurrence_DayOfWeek");
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -255,19 +258,17 @@ namespace ASI.Basecode.Data
 
                 entity.Property(e => e.RoomId).HasColumnName("RoomID");
 
-                entity.Property(e => e.Type)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
                 entity.HasOne(d => d.Equipment)
                     .WithMany(p => p.RoomEquipments)
                     .HasForeignKey(d => d.EquipmentId)
-                    .HasConstraintName("FK__RoomEquip__Equip__5BE2A6F2");
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_RoomEquipment_Equipment");
 
                 entity.HasOne(d => d.Room)
                     .WithMany(p => p.RoomEquipments)
                     .HasForeignKey(d => d.RoomId)
-                    .HasConstraintName("FK__RoomEquip__RoomI__5AEE82B9");
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_RoomEquipment_Room");
             });
 
             modelBuilder.Entity<Setting>(entity =>

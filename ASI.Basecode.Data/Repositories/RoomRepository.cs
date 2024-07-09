@@ -42,5 +42,11 @@ namespace ASI.Basecode.Data.Repositories
             this.GetDbSet<ImageGallery>().Update(imageGallery);
             UnitOfWork.SaveChanges();
         }
+
+        public void DeleteRoom(int roomId) 
+        {
+            var deleteRoom = this.GetDbSet<Room>().FirstOrDefault(x => x.RoomId == roomId);
+            UnitOfWork.SaveChanges();
+        }
     }
 }

@@ -43,6 +43,7 @@ namespace ASI.Basecode.WebApp.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
+        #region View Rooms
         /// <summary>
         /// Returns Room View.
         /// </summary>
@@ -53,6 +54,7 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 _logger.LogInformation("=======Sample Crud : Retrieve All Start=======");
                 var data = _roomService.RetrieveAll();
+
                 var model = new RoomViewModelList
                 {
                     roomList = data
@@ -66,7 +68,9 @@ namespace ASI.Basecode.WebApp.Controllers
                 return View(null);
             }
         }
+        #endregion
 
+        #region Room Create
         [HttpGet]
         public IActionResult Create() 
         {
@@ -110,6 +114,12 @@ namespace ASI.Basecode.WebApp.Controllers
                             model._RoomGallery.Add(roomGallery);
                         }
                     }
+                    if (model.RoomEquipments != null && model.RoomEquipments.Any())
+                    {
+                        foreach (var equipment in model.RoomEquipments)
+                        {
+                        }
+                    }
                 }
                 _roomService.AddRoom(model);
             }
@@ -121,7 +131,9 @@ namespace ASI.Basecode.WebApp.Controllers
             TempData["CreateMessage"] = "Added Successfully";
             return RedirectToAction("RoomView");
         }
+        #endregion
 
+        #region Room Edit
         [HttpGet]
         public IActionResult Edit(int id) 
         {
@@ -208,7 +220,39 @@ namespace ASI.Basecode.WebApp.Controllers
 
             return RedirectToAction("RoomView");
         }
+        #endregion
 
+        #region RoomDelete
+        [HttpGet]
+        public IActionResult DeleteRoom(int roomId) 
+        {
+            var data = _roomService.RetrieveAll().Where(x => x.RoomId.Equals(roomId)).FirstOrDefault();
+            return View(data);
+        }
+
+        [HttpPost]
+        public IActionResult PostDelete(int roomId)
+        {
+            var existingRoom = _roomService.RetrieveRoom(roomId);
+
+            if (existingRoom == null)
+            {
+                _logger.LogError($"Room with ID {roomId} not found.");
+                TempData["ErrorMessage"] = "Room not found.";
+                return RedirectToAction("RoomView");
+            }
+
+            if (!string.IsNullOrEmpty(existingRoom.Thumbnail))
+            {
+                string oldThumbnailPath = Path.Combine(_webHostEnvironment.WebRootPath, existingRoom.Thumbnail.TrimStart('/'));
+                DeleteFileWithRetry(oldThumbnailPath, 3, 1000);
+            }
+            _roomService.DeleteRoom(roomId);
+            return RedirectToAction("RoomView");
+        }
+        #endregion
+
+        #region Methods
         private void DeleteFileWithRetry(string path, int maxRetries, int delayMilliseconds)
         {
             for (int i = 0; i < maxRetries; i++)
@@ -251,5 +295,6 @@ namespace ASI.Basecode.WebApp.Controllers
 
             return "/" + folderPath + uniqueFileName;
         }
+        #endregion
     }
 }
