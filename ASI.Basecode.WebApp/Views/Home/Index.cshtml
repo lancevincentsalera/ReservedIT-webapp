@@ -23,7 +23,7 @@
     <div class="container">
         @foreach (var room in rooms)
         {
-            <div class="card">
+            <div class="card" onclick="displayModal('#viewRoomCardModal')">
                 <div class="card-content">
                     <h3>@room.Name</h3>
                     <img src="~/images/@room.ImageUrl" alt="@room.Name" class="card-image">
@@ -54,6 +54,7 @@
 </div>
 <button class="carousel-button right" onclick="moveRight()">&#10095;</button>
 
+@Html.Partial("_ViewRoomCardModal")
 @section scripts {
     <script>
         let currentPosition = 0;
