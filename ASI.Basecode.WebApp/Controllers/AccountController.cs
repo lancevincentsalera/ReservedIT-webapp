@@ -76,7 +76,7 @@ namespace ASI.Basecode.WebApp.Controllers
                 {
                     if (roleClaim.Value == "ROLE_ADMIN")
                     {
-                        return RedirectToAction("Index", "Admin");
+                        return RedirectToAction("Index", "AAUser");
                     }
                     else if (roleClaim.Value == "ROLE_MANAGER")
                     {
@@ -120,7 +120,7 @@ namespace ASI.Basecode.WebApp.Controllers
                 this._session.SetString("UserName", string.Join(' ', user.FirstName, user.LastName));
                 if(user.RoleId == 1)
                 {
-                    return RedirectToAction("Index", "Admin");
+                    return RedirectToAction("Index", "AAUser");
                 } 
                 else if (user.RoleId == 2)
                 {
