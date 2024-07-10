@@ -1,5 +1,7 @@
-﻿using ASI.Basecode.Services.Interfaces;
+﻿using ASI.Basecode.Data.Models;
+using ASI.Basecode.Services.Interfaces;
 using ASI.Basecode.Services.ServiceModels;
+using ASI.Basecode.Services.Services;
 using ASI.Basecode.WebApp.Mvc;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
@@ -48,7 +50,7 @@ namespace ASI.Basecode.WebApp.Controllers
         /// Returns Room View.
         /// </summary>
         /// <returns> Home View </returns>
-        public IActionResult RoomView()
+        public IActionResult Index()
         {
             try
             {
@@ -78,7 +80,7 @@ namespace ASI.Basecode.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostCreate(RoomViewModel model)
+        public async Task<IActionResult> PostCreate(RoomViewModel model, string[] Equipments)
         {
             _logger.LogInformation("=======Sample Crud : PostCreate Start=======");
             try
@@ -114,10 +116,17 @@ namespace ASI.Basecode.WebApp.Controllers
                             model._RoomGallery.Add(roomGallery);
                         }
                     }
-                    if (model.RoomEquipments != null && model.RoomEquipments.Any())
+                    model.RoomEquipments = new List<RoomEquipmentViewModel>();
+
+                    foreach (var equipmentName in Equipments)
                     {
-                        foreach (var equipment in model.RoomEquipments)
+                        if (!string.IsNullOrEmpty(equipmentName))
                         {
+                            var equipment = new RoomEquipmentViewModel
+                            {
+                                EquipmentName = equipmentName
+                            };
+                            model.RoomEquipments.Add(equipment);
                         }
                     }
                 }
@@ -129,7 +138,7 @@ namespace ASI.Basecode.WebApp.Controllers
             }
 
             TempData["CreateMessage"] = "Added Successfully";
-            return RedirectToAction("RoomView");
+            return RedirectToAction("Index");
         }
         #endregion
 
@@ -142,7 +151,7 @@ namespace ASI.Basecode.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostEdit(RoomViewModel model)
+        public async Task<IActionResult> PostEdit(RoomViewModel model, string[] Equipments)
         {
             _logger.LogInformation("=======PostEdit Start=======");
 
@@ -154,7 +163,7 @@ namespace ASI.Basecode.WebApp.Controllers
                 {
                     _logger.LogError($"Room with ID {model.RoomId} not found.");
                     TempData["ErrorMessage"] = "Room not found.";
-                    return RedirectToAction("RoomView");
+                    return RedirectToAction("Index");
                 }
 
                 bool isDuplicate = _roomService.RetrieveAll().Any(data => data.RoomName == model.RoomName && data.RoomId != model.RoomId);
@@ -199,6 +208,20 @@ namespace ASI.Basecode.WebApp.Controllers
                         model._RoomGallery.Add(roomGallery);
                     }
 
+                    model.RoomEquipments = new List<RoomEquipmentViewModel>();
+
+                    foreach (var equipmentName in Equipments)
+                    {
+                        if (!string.IsNullOrEmpty(equipmentName))
+                        {
+                            var equipment = new RoomEquipmentViewModel
+                            {
+                                EquipmentName = equipmentName
+                            };
+                            model.RoomEquipments.Add(equipment);
+                        }
+                    }
+
                     if (ModelState.IsValid)
                     {
                         _roomService.UpdateRoom(model);
@@ -218,7 +241,7 @@ namespace ASI.Basecode.WebApp.Controllers
                 TempData["ErrorMessage"] = "An error occurred while updating the room.";
             }
 
-            return RedirectToAction("RoomView");
+            return RedirectToAction("Index");
         }
         #endregion
 
@@ -231,24 +254,46 @@ namespace ASI.Basecode.WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostDelete(int roomId)
+        public IActionResult PostDelete(int Id)
         {
-            var existingRoom = _roomService.RetrieveRoom(roomId);
-
-            if (existingRoom == null)
+            var RoomToBeDeleted = _roomService.RetrieveAll().Where(u => u.RoomId == Id).FirstOrDefault();
+            var RoomImages = _roomService.GetRoomGallery().Where(x => x.RoomId == Id).ToList();
+            if (RoomToBeDeleted != null)
             {
-                _logger.LogError($"Room with ID {roomId} not found.");
-                TempData["ErrorMessage"] = "Room not found.";
-                return RedirectToAction("RoomView");
-            }
+                try
+                {
+                    if (!string.IsNullOrEmpty(RoomToBeDeleted.Thumbnail))
+                    {
+                        string oldThumbnailPath = Path.Combine(_webHostEnvironment.WebRootPath, RoomToBeDeleted.Thumbnail.TrimStart('/'));
+                        DeleteFileWithRetry(oldThumbnailPath, 3, 1000);
+                    }
 
-            if (!string.IsNullOrEmpty(existingRoom.Thumbnail))
-            {
-                string oldThumbnailPath = Path.Combine(_webHostEnvironment.WebRootPath, existingRoom.Thumbnail.TrimStart('/'));
-                DeleteFileWithRetry(oldThumbnailPath, 3, 1000);
+          
+                    if (RoomImages != null && RoomImages.Any())
+                    {
+                        foreach (var item in RoomImages)
+                        {
+                            string oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, item.GalleryUrl.TrimStart('/'));
+                            DeleteFileWithRetry(oldImagePath, 3, 1000);
+                        }
+                    }
+                    _roomService.DeleteImage(Id);
+                    _roomService.DeleteRoomEquipmentByRoomId(Id);
+                    _roomService.DeleteUnusedEquipment();
+                    _roomService.DeleteRoom(RoomToBeDeleted);
+
+                    return Json(new { success = true, message = "User deleted successfully!" });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message });
+                }
             }
-            _roomService.DeleteRoom(roomId);
-            return RedirectToAction("RoomView");
+            else
+            {
+                return Json(new { success = false, message = "User not found." });
+
+            }
         }
         #endregion
 

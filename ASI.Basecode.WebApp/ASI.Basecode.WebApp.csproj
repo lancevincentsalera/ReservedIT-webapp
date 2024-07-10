@@ -8,7 +8,9 @@
 
   <ItemGroup>
     <Content Remove="Views\Home\ConfirmationModal.cshtml" />
-    <Content Remove="wwwroot\js\toastr.js" />
+  
+    <Content Remove="wwwroot\css\Index.cshtml" />
+    <Content Remove="wwwroot\roomModal.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,5 +49,10 @@
   <ItemGroup>
     <ProjectReference Include="..\ASI.Basecode.Resources\ASI.Basecode.Resources.csproj" />
     <ProjectReference Include="..\ASI.Basecode.Services\ASI.Basecode.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\room\gallery\" />
+    <Folder Include="wwwroot\room\thumbnail\" />
   </ItemGroup>
 </Project>
