@@ -54,14 +54,13 @@
 </div>
 <button class="carousel-button right" onclick="moveRight()">&#10095;</button>
 
-
 @section scripts {
     <script>
         let currentPosition = 0;
         const container = document.querySelector('.container');
         const totalCards = @rooms.Count();
         const visibleCards = 3;
-        const cardWidth = 400; // 280px card + 20px gap
+        const cardWidth = 310; // 280px card + 30px gap
 
         function moveLeft() {
             if (currentPosition > 0) {

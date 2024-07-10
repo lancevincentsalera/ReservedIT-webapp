@@ -16,11 +16,12 @@ body {
 
 .container-wrapper {
     position: relative;
-    width: 1080px; /* Adjusted width to accommodate gaps */
+    max-width: 930px; /* Adjusted width to accommodate gaps */
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0 auto;
 }
 
 .container {
@@ -28,7 +29,7 @@ body {
     gap: 30px;
     transition: transform 0.3s ease-in-out;
     will-change: transform;
-    margin-left: 400px;
+    position: relative;
 }
 
 .card {
@@ -40,6 +41,7 @@ body {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
+    position: relative;
     transition: transform 0.3s ease-in-out;
 }
 
@@ -148,5 +150,5 @@ body {
     }
 
     .carousel-button.right {
-        right: 60px;
+        right: 50px;
     }
