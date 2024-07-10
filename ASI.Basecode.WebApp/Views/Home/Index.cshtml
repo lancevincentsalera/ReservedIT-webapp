@@ -1,105 +1,84 @@
-﻿@*@model IEnumerable<ASI.Basecode.Services.ServiceModels.BookingViewModel>*@
-
-@{
+﻿@{
     ViewData["Title"] = "Index";
-    @*IEnumerable<ASI.Basecode.Services.ServiceModels.BookingViewModel> bookings = ViewData["bookings"] as IEnumerable<ASI.Basecode.Services.ServiceModels.BookingViewModel>;*@
+    var rooms = new List<dynamic>
+    {
+        new { Name = "Board Room", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt", Location = "14th Lane, Business Center, Sunion Road", Capacity = 7, Equipment = "None", ImageUrl = "board_room.jpg" },
+        new { Name = "Ramen", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt", Location = "11th Floor, Business Center, Sunion Road", Capacity = 15, Equipment = "None", ImageUrl = "ramen.jpg" },
+        new { Name = "Mantawi", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt", Location = "10th Floor, Business Center, Sunion Road", Capacity = 15, Equipment = "Projector", ImageUrl = "mantawi.jpg" },
+        new { Name = "Orchid", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt", Location = "9th Floor, Business Center, Sunion Road", Capacity = 10, Equipment = "Whiteboard", ImageUrl = "orchid.jpg" },
+        new { Name = "Tulip", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt", Location = "8th Floor, Business Center, Sunion Road", Capacity = 8, Equipment = "Teleconferencing", ImageUrl = "tulip.jpg" }
+    };
 }
 
 @section styles {
-    <link rel="stylesheet" href="~/css/managerdashboard.css" />
+    <link rel="stylesheet" href="~/css/roomsCard.css" />
 }
 
-<div class="dashboard-header">
-    <h1>Dashboard</h1>
+<div class="room-header">
+    <h1>Rooms</h1>
+    <p>Find Meeting Rooms for your taste and needs.</p>
 </div>
-
-<div class="table-container">
-    <div class="table-header">
-        Upcoming Bookings
-    </div>
-    <div class="user-row header">
-        <div class="user-cell">Room Name</div>
-        <div class="user-cell">Date</div>
-        <div class="user-cell">Time From</div>
-        <div class="user-cell">Time To</div>
-        <div class="user-cell">Recurrence</div>
-        <div class="user-cell"></div>
-    </div>
-    <ul class="user-list">
-        @*@foreach (var item in bookings)
-        {*@
-            <li class="user-row">
-                <div class="user-cell" data-label="Room Name">@*@Html.DisplayFor(modelItem => item.UserId)*@</div>
-                <div class="user-cell" data-label="Date">@*@Html.DisplayFor(modelItem => item.StartDate)*@</div>
-                <div class="user-cell" data-label="Time From">@*@Html.DisplayFor(modelItem => item.TimeFrom)*@</div>
-                <div class="user-cell" data-label="Time To">@*@Html.DisplayFor(modelItem => item.TimeTo)*@</div>
-                <div class="user-cell" data-label="Recurrence">@*@Html.DisplayFor(modelItem => item.BookingStatus)*@</div>
-                <div class="user-cell actions">
-                    <div class="mr-20 hover-pointer dropdown-trigger" data-user-id="">
-                        <span class="ddicon">&#8942;</span>
+<button class="carousel-button left" onclick="moveLeft()">&#10094;</button>
+<div class="container-wrapper">
+    <div class="container">
+        @foreach (var room in rooms)
+        {
+            <div class="card">
+                <div class="card-content">
+                    <h3>@room.Name</h3>
+                    <img src="~/images/@room.ImageUrl" alt="@room.Name" class="card-image">
+                    <h1>Description</h1>
+                    <p>@room.Description</p>
+                    <div class="details">
+                        <div class="detail-item">
+                            <span>Location</span>
+                            <img src="~/images/location_icon.png" alt="Location">
+                            <span>@room.Location</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Capacity</span>
+                            <img src="~/images/capacity_icon.png" alt="Capacity">
+                            <span>@room.Capacity</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Equipment</span>
+                            <img src="~/images/equipment_icon.png" alt="Equipment">
+                            <span>@room.Equipment</span>
+                        </div>
                     </div>
+                    <button class="book-button">Book Room</button>
                 </div>
-            </li>
-        @*}*@
-
-    </ul>
-</div>
-
-<div class="table-container recent">
-    <div class="table-header">
-        Recent Bookings
+            </div>
+        }
     </div>
-    <div class="user-row header">
-        <div class="user-cell">Room Name</div>
-        <div class="user-cell">Date</div>
-        <div class="user-cell">Time From</div>
-        <div class="user-cell">Time To</div>
-        <div class="user-cell">Recurrence</div>
-        <div class="user-cell">Status</div>
-    </div>
-    <ul class="user-list">
-        @* @foreach (var item in users)
-        { *@
-        <li class="user-row">
-            <div class="user-cell" data-label="Room Name">@* @Html.DisplayFor(modelItem => item.UserId) *@</div>
-            <div class="user-cell" data-label="Date">@* @Html.DisplayFor(modelItem => item.Email) *@</div>
-            <div class="user-cell" data-label="Time From">@* @Html.DisplayFor(modelItem => item.FirstName) *@</div>
-            <div class="user-cell" data-label="Time To">@* @Html.DisplayFor(modelItem => item.LastName) *@</div>
-            <div class="user-cell" data-label="Recurrence">@* @Html.DisplayFor(modelItem => item.RoleName) *@</div>
-            <div class="user-cell" data-label="Status">@* @Html.DisplayFor(modelItem => item.RoleName) *@</div>
-        </li>
-        @* } *@
-
-    </ul>
 </div>
+<button class="carousel-button right" onclick="moveRight()">&#10095;</button>
 
-<div class="dropdown-action">
-    <ul>
-        <li>
-            <form asp-action="ActivateUser" method="post">
-                <input type="hidden" name="userId" />
-                <button type="submit" class="btn-status">
-                    <i class="fas fa-circle" style="color: #00FF75; font-size: 10px;"></i> Activate
-                </button>
-            </form>
-        </li>
-        <li>
-            <form asp-action="RestrictUser" method="post">
-                <input type="hidden" name="userId" />
-                <button type="submit" class="btn-status">
-                    <i class="fas fa-circle" style="color: #FF0000; font-size: 10px;"></i> Restrict
-                </button>
-            </form>
-        </li>
-        <li>
-            <button type="button" class="btn-status" onclick="displayModal('#editUserModal'); getUserDetails(this, '#editUserModal', 'GetUserDetails', 'AAUser');">
-                <i class="fas fa-edit" style=" font-size: 10px;"></i> Edit
-            </button>
-        </li>
-        <li>
-            <button type="button" class="btn-status" onclick="displayModal('#confirmationDeleteModal'); passUserId(this, '#confirmDeleteBtn');">
-                <i class="fas fa-trash-alt" style="color: #FF0000; font-size: 10px;"></i> Delete
-            </button>
-        </li>
-    </ul>
-</div>
+
+@section scripts {
+    <script>
+        let currentPosition = 0;
+        const container = document.querySelector('.container');
+        const totalCards = @rooms.Count();
+        const visibleCards = 3;
+        const cardWidth = 400; // 280px card + 20px gap
+
+        function moveLeft() {
+            if (currentPosition > 0) {
+                currentPosition--;
+                updateCarousel();
+            }
+        }
+
+        function moveRight() {
+            if (currentPosition < totalCards - visibleCards) {
+                currentPosition++;
+                updateCarousel();
+            }
+        }
+
+        function updateCarousel() {
+            container.style.transform = `translateX(-${currentPosition * cardWidth}px)`;
+        }
+    </script>
+}
