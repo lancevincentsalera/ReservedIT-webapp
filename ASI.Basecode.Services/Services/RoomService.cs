@@ -139,6 +139,59 @@ namespace ASI.Basecode.Services.Services
                 _roomRepository.DeleteRoom(RoomToBeDeleted);
             }
         }
+
+        public void DeleteRoomEquipmentByRoomId(int roomId)
+        {
+            var roomEquipments = _roomRepository.GetRoomEquipments().Where(re => re.RoomId == roomId).ToList();
+            if (roomEquipments != null && roomEquipments.Any())
+            {
+                foreach (var item in roomEquipments)
+                {
+                    _roomRepository.DeleteRoomEquipment(item);
+                }
+            }
+        }
+
+        public IEnumerable<RoomGalleryViewModel> GetRoomGallery()
+        {
+            var data = _roomRepository.GetRoomGalleries().Select(s => new RoomGalleryViewModel
+                {
+                    RoomId = (int)s.RoomId,
+                    GalleryId = s.ImageId,
+                    GalleryUrl = s.Path,
+                    GalleryName = s.ImageName,
+                });
+            return data;
+        }
+        public void DeleteImage(int roomId)
+        {
+            var roomImages = _roomRepository.GetRoomGalleries().Where(x => x.RoomId == roomId).ToList();
+            if (roomImages != null && roomImages.Any())
+            {
+                foreach (var item in roomImages)
+                {
+                    _roomRepository.DeleteRoomImage(item);
+                }
+            }
+        }
+
+        public void DeleteUnusedEquipment()
+        {
+            var unusedEquipments = _roomRepository.GetEquipments()
+                .Where(e => !_roomRepository.GetRoomEquipments().Any(re => re.EquipmentId == e.EquipmentId))
+                .ToList();
+
+            if (unusedEquipments != null && unusedEquipments.Any())
+            {
+                foreach (var equipment in unusedEquipments)
+                {
+                    _roomRepository.DeleteEquipment(equipment);
+                }
+            }
+        }
+
+
+
     }
 }
     

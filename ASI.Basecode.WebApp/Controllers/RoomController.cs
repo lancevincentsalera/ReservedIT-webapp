@@ -257,6 +257,7 @@ namespace ASI.Basecode.WebApp.Controllers
         public IActionResult PostDelete(int Id)
         {
             var RoomToBeDeleted = _roomService.RetrieveAll().Where(u => u.RoomId == Id).FirstOrDefault();
+            var RoomImages = _roomService.GetRoomGallery().Where(x => x.RoomId == Id).ToList();
             if (RoomToBeDeleted != null)
             {
                 try
@@ -266,7 +267,21 @@ namespace ASI.Basecode.WebApp.Controllers
                         string oldThumbnailPath = Path.Combine(_webHostEnvironment.WebRootPath, RoomToBeDeleted.Thumbnail.TrimStart('/'));
                         DeleteFileWithRetry(oldThumbnailPath, 3, 1000);
                     }
+
+          
+                    if (RoomImages != null && RoomImages.Any())
+                    {
+                        foreach (var item in RoomImages)
+                        {
+                            string oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, item.GalleryUrl.TrimStart('/'));
+                            DeleteFileWithRetry(oldImagePath, 3, 1000);
+                        }
+                    }
+                    _roomService.DeleteImage(Id);
+                    _roomService.DeleteRoomEquipmentByRoomId(Id);
+                    _roomService.DeleteUnusedEquipment();
                     _roomService.DeleteRoom(RoomToBeDeleted);
+
                     return Json(new { success = true, message = "User deleted successfully!" });
                 }
                 catch (Exception ex)

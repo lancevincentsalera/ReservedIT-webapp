@@ -15,5 +15,9 @@ namespace ASI.Basecode.Services.Interfaces
         void UpdateRoom(RoomViewModel model);
         void UpdateGallery(RoomGalleryViewModel model);
         void DeleteRoom(RoomViewModel roomId);
+        void DeleteUnusedEquipment();
+        void DeleteRoomEquipmentByRoomId(int roomId);
+        void DeleteImage(int roomId);
+        IEnumerable<RoomGalleryViewModel> GetRoomGallery();
     }
 }
