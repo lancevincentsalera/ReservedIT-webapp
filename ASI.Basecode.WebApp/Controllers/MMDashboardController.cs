@@ -3,13 +3,16 @@ using ASI.Basecode.Services.ServiceModels;
 using ASI.Basecode.Services.Services;
 using ASI.Basecode.WebApp.Mvc;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace ASI.Basecode.WebApp.Controllers
 {
+    [Authorize(Policy = "ManagerOnly")]
     public class MMDashboardController : ControllerBase<MMDashboardController>
     {
         private readonly IBookingService _bookingService;
@@ -31,7 +34,7 @@ namespace ASI.Basecode.WebApp.Controllers
 
         public IActionResult Index()
         {
-            var bookings = _bookingService.GetBookings();
+            var bookings = _bookingService.GetBookingsByUser(int.Parse(UserId));
             return View(bookings);
         }
     }

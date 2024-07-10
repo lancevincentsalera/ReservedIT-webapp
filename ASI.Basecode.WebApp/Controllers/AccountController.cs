@@ -80,7 +80,7 @@ namespace ASI.Basecode.WebApp.Controllers
                     }
                     else if (roleClaim.Value == "ROLE_MANAGER")
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "MMDashboard");
                     }
                 }
                 return RedirectToAction("Index", "Home");
@@ -124,7 +124,7 @@ namespace ASI.Basecode.WebApp.Controllers
                 } 
                 else if (user.RoleId == 2)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "MMDashboard");
                 } else
                 {
                     return RedirectToAction("Index", "Home");

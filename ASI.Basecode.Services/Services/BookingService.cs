@@ -44,18 +44,37 @@ namespace ASI.Basecode.Services.Services
 
         public IEnumerable<BookingViewModel> GetBookings()
         {
-            return _repository.GetBookings().Select(booking => new BookingViewModel
+            var bookings = _repository.GetBookings();
+            return bookings.Select(booking => new BookingViewModel
             {
                 BookingId = booking.BookingId,
                 UserId = booking.UserId,
                 RoomId = booking.RoomId,
                 BookingStatus = booking.BookingStatus,
-                StartDate = booking.StartDate,
-                EndDate = booking.EndDate,
-                TimeFrom = booking.TimeFrom,
-                TimeTo = booking.TimeTo,
+                StartDate = booking.StartDate.HasValue ? booking.StartDate.Value.ToString("dd MMMM yyyy") : string.Empty,
+                EndDate = booking.EndDate.HasValue ? booking.StartDate.Value.ToString("dd MMMM yyyy") : string.Empty,
+                TimeFrom = new DateTime(booking.TimeFrom.Value.Ticks).ToString("h:mm tt"),
+                TimeTo = new DateTime(booking.TimeTo.Value.Ticks).ToString("h:mm tt"),
                 RoomName = booking.Room.RoomName,
-                Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList()
+                Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
+            });
+        }
+
+        public IEnumerable<BookingViewModel> GetBookingsByUser(int userId)
+        {
+            var bookings = _repository.GetBookingsByUser(userId);
+            return bookings.Select(booking => new BookingViewModel
+            {
+                BookingId = booking.BookingId,
+                UserId = booking.UserId,
+                RoomId = booking.RoomId,
+                BookingStatus = booking.BookingStatus,
+                StartDate = booking.StartDate.HasValue ? booking.StartDate.Value.ToString("dd MMMM yyyy") : string.Empty,
+                EndDate = booking.EndDate.HasValue ? booking.StartDate.Value.ToString("dd MMMM yyyy") : string.Empty,
+                TimeFrom = new DateTime(booking.TimeFrom.Value.Ticks).ToString("h:mm tt"),
+                TimeTo = new DateTime(booking.TimeTo.Value.Ticks).ToString("h:mm tt"),
+                RoomName = booking.Room.RoomName,
+                Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
             });
         }
 

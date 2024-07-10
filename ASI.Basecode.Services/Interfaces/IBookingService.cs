@@ -14,5 +14,6 @@ namespace ASI.Basecode.Services.Interfaces
         IEnumerable<BookingViewModel> GetBookings();
         void UpdateBooking(Booking booking);
         void DeleteBooking(Booking booking);
+        IEnumerable<BookingViewModel> GetBookingsByUser(int userId);
     }
 }

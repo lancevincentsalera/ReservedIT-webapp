@@ -58,6 +58,10 @@ namespace ASI.Basecode.WebApp
                 {
                     policy.RequireClaim(ClaimTypes.Role, "ROLE_ADMIN");
                 });
+                options.AddPolicy("ManagerOnly", policy =>
+                {
+                    policy.RequireClaim(ClaimTypes.Role, "ROLE_MANAGER");
+                });
             });
 
             this._services.AddMvc(options =>
