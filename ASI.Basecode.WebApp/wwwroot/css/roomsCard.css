@@ -138,13 +138,19 @@ body {
     background-color: #ffffff;
     border: none;
     color: black;
-    padding: 20px;
+    padding: 25px;
     cursor: pointer;
     z-index: 1;
-    border-radius: 100px;
+    border-radius: 50%;
     border: 0.5px solid #818181;
     margin-top: 50px;
+    width: 40px;
+    height: 40px;
+    display: flex; /* Add this line */
+    align-items: center; /* Add this line */
+    justify-content: center; /* Add this line */
 }
+
 
     .carousel-button.left {
         left: 300px;
