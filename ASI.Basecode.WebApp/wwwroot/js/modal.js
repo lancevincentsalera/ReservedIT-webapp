@@ -1,6 +1,8 @@
 ﻿
-const passUserId = (userId, confirmBtn) => {
-    $(confirmBtn).data('user-id', userId);
+const passId = (btnId, confirmBtn) => {
+    let Id = $(btnId).data('id');
+    console.log(Id)
+    $(confirmBtn).data('id', Id);
 }
 
 const displayModal = (modalId) => {
@@ -42,11 +44,25 @@ const getUserDetails = (btnId, modalId, action, controller) => {
     })
 }
 
-const displayConfirmationModal = (hideId, showId) => {
-    event.preventDefault();
-    $(hideId).modal('hide');
-    $(showId).modal('show');
+let count = 0;
+
+const displayConfirmationModal = (formId, hideId, showId) => {
+    $(formId).validate();
+    let formIsValid = false;
+
+    if ($(formId).valid()) {
+        formIsValid = true;
+    }
+    
+    console.log(formIsValid);
+
+    if (formIsValid) {
+        event.preventDefault();
+        $(hideId).modal('hide');
+        $(showId).modal('show');
+    }
 }
+
 const hideConfirmationModal = ( hideId, showId) => {
     $(showId).modal('show');
     $(hideId).modal('hide');
@@ -90,12 +106,14 @@ const submitForm = (modalId, formId, action, controller) => {
 const deleteModal = (btnId, modalId, action, controller) => {
 
     try {
-        let id = $(btnId).data('user-id');
+        let id = $(btnId).data('id');
+
+        console.log(id);
 
         $.ajax({
             url: `/${controller}/${action}`,
             type: 'POST',
-            data: { userId: id },
+            data: { Id: id },
             success: (response) => {
                 if (response.success) {
                     $(modalId).modal('hide');

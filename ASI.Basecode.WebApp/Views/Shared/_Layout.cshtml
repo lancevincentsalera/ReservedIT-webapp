@@ -13,17 +13,21 @@
     <link rel="stylesheet" href="~/css/main.css" />
     <link rel="stylesheet" href="~/css/style.css" />
     <link rel="stylesheet" href="~/css/sidebar.css" />
-    <link rel="stylesheet" href="~/css/userdashboard.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="~/css/dashboard.css" />
+    <link rel="stylesheet" href="~/css/searchbar.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">      
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     @RenderSection("Styles", required: false)
 </head>
 <body>
     <div class="main-container">
-        @Html.Partial("_Sidebar")
+        @if (User.Identity.IsAuthenticated)
+        {
+            @Html.Partial("_Sidebar")
+        }
         <div class="content-container">
             @Html.Partial("_Header")
-            <main>
+            <main class="main-layout">
                 @RenderBody()
             </main>
         </div>
@@ -34,16 +38,18 @@
         </footer> *@
     </div>
     
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/dropdown.js" asp-append-version="true"></script>
-    <script src="~/js/modal.js" asp-append-version="true"></script>
-    <script src="~/js/toastr.js" asp-append-version="true"></script>
+    
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.js"></script>
     <script src="https://kit.fontawesome.com/7a7c645416.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/dropdown.js" asp-append-version="true"></script>
+    <script src="~/js/modal.js" asp-append-version="true"></script>
+    <script src="~/js/toastr.js" asp-append-version="true"></script>
+    <script src="~/js/passwordtoggle.js" asp-append-version="true"></script>
     <script>
         var errorMessage = @Html.Raw(Json.Serialize(TempData["ErrorMessage"]));
         var successMessage = @Html.Raw(Json.Serialize(TempData["SuccessMessage"]));

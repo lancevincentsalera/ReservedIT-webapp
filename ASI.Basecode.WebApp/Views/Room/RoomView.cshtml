@@ -4,6 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
+@section styles {
+    <link rel="stylesheet" href="~/css/admindashboard.css" />
+}
+
 <div class="dashboard-header">
     <h1>Rooms</h1>
     <button type="button" class="create-user-btn" onclick=""> <img src="~/img/add-logo.png" />Create Room</button>
@@ -16,18 +20,41 @@
         <div class="user-cell">DESCRIPTION</div>
         <div class="user-cell">CAPACITY</div>
         <div class="user-cell">LOCATION</div>
-        <div class="user-cell">EQUIPMENT</div>
+        <div class="user-cell">EQUIPMENTS</div>
         <div class="user-cell"></div>
+        
     </div>
     <ul class="user-list">
         @foreach (var item in Model.roomList)
         {
             <li class="user-row">
-                <div class="user-cell" data-label="USER ID">@Html.DisplayFor(modelItem => item.RoomId)</div>
-                <div class="user-cell" data-label="EMAIL">@Html.DisplayFor(modelItem => item.RoomName)</div>
-                <div class="user-cell" data-label="FIRST NAME">@Html.DisplayFor(modelItem => item.Description)</div>
-                <div class="user-cell" data-label="LAST NAME">@Html.DisplayFor(modelItem => item.Capacity)</div>
-                <div class="user-cell" data-label="ROLE">@Html.DisplayFor(modelItem => item.Location)</div>
+                <div class="user-cell" data-label="ROOM ID">@Html.DisplayFor(modelItem => item.RoomId)</div>
+                <div class="user-cell" data-label="ROOM NAME">@Html.DisplayFor(modelItem => item.RoomName)</div>
+                <div class="user-cell" data-label="DESCRIPTION">@Html.DisplayFor(modelItem => item.Description)</div>
+                <div class="user-cell" data-label="CAPACITY">@Html.DisplayFor(modelItem => item.Capacity)</div>
+                <div class="user-cell" data-label="LOCATION">@Html.DisplayFor(modelItem => item.Location)</div>
+                <div class="user-cell" data-label="EQUIPMENTS">
+                    @if (item.RoomEquipments != null && item.RoomEquipments.Any())
+                    {
+                            @foreach (var roomEquipment in item.RoomEquipments)
+                            {
+                                    @roomEquipment.EquipmentName <label>, </label>
+                                    @* @if (!string.IsNullOrEmpty(roomEquipment.Type))
+                                    {
+                                        <span> (@roomEquipment.Type)</span>
+                                    } *@
+                            }
+                    }
+                    else
+                    {
+                        <span>No equipment</span>
+                    }
+                </div>
+                <div class="user-cell actions">
+                    <div class="mr-20 hover-pointer dropdown-trigger" data-user-id="@item.RoomId">
+                        <span class="ddicon">&#8942;</span>
+                    </div>
+                </div>
             </li>
         }
 

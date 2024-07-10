@@ -9,10 +9,12 @@ using System.Linq;
 using ASI.Basecode.Services.ServiceModels;
 using System.IO;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ASI.Basecode.WebApp.Controllers
 {
-    public class AdminController : ControllerBase<AdminController>
+    [Authorize(Policy = "AdminOnly")]
+    public class AAUserController : ControllerBase<AAUserController>
     {
         private readonly IUserService _userService;
         /// <summary>
@@ -23,7 +25,7 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <param name="configuration"></param>
         /// <param name="localizer"></param>
         /// <param name="mapper"></param>
-        public AdminController(IUserService userService, IHttpContextAccessor httpContextAccessor,
+        public AAUserController(IUserService userService, IHttpContextAccessor httpContextAccessor,
                               ILoggerFactory loggerFactory,
                               IConfiguration configuration,
                               IMapper mapper = null) : base(httpContextAccessor, loggerFactory, configuration, mapper)
@@ -51,9 +53,15 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 try
                 {
-                    user.AccountStatus = "ACTIVE";
-                    _userService.UpdateUser(user);
-                    TempData["SuccessMessage"] = "User activation successful!";
+                    if(user.AccountStatus != "ACTIVE")
+                    {
+                        user.AccountStatus = "ACTIVE";
+                        _userService.UpdateUser(user);
+                        TempData["SuccessMessage"] = "User activation successful!";
+                    } else
+                    {
+                        TempData["ErrorMessage"] = "User has already been activated!";
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -75,9 +83,16 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 try
                 {
-                    user.AccountStatus = "RESTRICTED";
-                    _userService.UpdateUser(user);
-                    TempData["SuccessMessage"] = "User restriction successful!";
+                    if (user.AccountStatus != "RESTRICTED")
+                    {
+                        user.AccountStatus = "RESTRICTED";
+                        _userService.UpdateUser(user);
+                        TempData["SuccessMessage"] = "User restriction successful!";
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "User has already been restricted!";
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -140,9 +155,9 @@ namespace ASI.Basecode.WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteUserPost(int userId)
+        public IActionResult DeleteUserPost(int Id)
         {
-            var userToBeDeleted = _userService.GetUsers().Where(u => u.UserId == userId).FirstOrDefault();
+            var userToBeDeleted = _userService.GetUsers().Where(u => u.UserId == Id).FirstOrDefault();
             if (userToBeDeleted != null)
             {
                 try

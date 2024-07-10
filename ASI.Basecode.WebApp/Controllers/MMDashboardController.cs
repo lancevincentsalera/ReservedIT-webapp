@@ -1,21 +1,21 @@
 ﻿using ASI.Basecode.Services.Interfaces;
+using ASI.Basecode.Services.ServiceModels;
+using ASI.Basecode.Services.Services;
 using ASI.Basecode.WebApp.Mvc;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Linq;
-using ASI.Basecode.Data.Models;
 
 namespace ASI.Basecode.WebApp.Controllers
 {
-    /// <summary>
-    /// Home Controller
-    /// </summary>
-    public class HomeController : ControllerBase<HomeController>
+    [Authorize(Policy = "ManagerOnly")]
+    public class MMDashboardController : ControllerBase<MMDashboardController>
     {
-        private readonly IUserService _userService;
+        private readonly IBookingService _bookingService;
         /// <summary>
         /// Constructor
         /// </summary>
@@ -24,42 +24,18 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <param name="configuration"></param>
         /// <param name="localizer"></param>
         /// <param name="mapper"></param>
-        public HomeController(IUserService userService, IHttpContextAccessor httpContextAccessor,
+        public MMDashboardController(IBookingService bookingService, IHttpContextAccessor httpContextAccessor,
                               ILoggerFactory loggerFactory,
                               IConfiguration configuration,
                               IMapper mapper = null) : base(httpContextAccessor, loggerFactory, configuration, mapper)
         {
-            this._userService = userService;
+            this._bookingService = bookingService;
         }
 
-        /// <summary>
-        /// Returns Home View.
-        /// </summary>
-        /// <returns> Home View </returns>
         public IActionResult Index()
         {
-            var users = _userService.GetUsers();
-            return View(users);
+            var bookings = _bookingService.GetBookingsByUser(int.Parse(UserId));
+            return View(bookings);
         }
-
-/*        public ActionResult ConfirmationModal()
-        {
-
-
-            return PartialView();
-        }
-
-        [HttpPost]
-        public ActionResult ConfirmationModal()
-        {
-
-            return View();
-        }*/
-
-        public IActionResult Test()
-        { 
-            return View(); 
-        }
-        
     }
 }

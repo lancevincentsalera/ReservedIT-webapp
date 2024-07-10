@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ASI.Basecode.Data.Models
+namespace ASI.Basecode.Services.ServiceModels
 {
-    public partial class RoomEquipment
+    public class RoomEquipmentViewModel
     {
         public int RoomEquipmentId { get; set; }
         public int? RoomId { get; set; }
         public int? EquipmentId { get; set; }
-
-        public virtual Equipment Equipment { get; set; }
-        public virtual Room Room { get; set; }
+        public string EquipmentName { get; set; }
     }
 }

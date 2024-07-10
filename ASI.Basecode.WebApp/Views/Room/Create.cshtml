@@ -53,6 +53,17 @@
                 </div>
                 <span asp-validation-for="RoomGalleryImg" class="text-danger"></span>
             </div>
+
+            <h4>Equipment</h4>
+            <div id="equipment-list">
+                <div class="form-group equipment-item">
+                    <label>Equipment Name</label>
+                    <input name="RoomEquipments[0].EquipmentName" class="form-control" />
+                    <label>Type</label>
+                    <input name="RoomEquipments[0].Type" class="form-control" />
+                    <button type="button" class="btn btn-danger remove-equipment">Remove</button>
+                </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
