@@ -43,10 +43,11 @@ body {
     flex-shrink: 0;
     position: relative;
     transition: transform 0.3s ease-in-out;
+    cursor: pointer;
 }
 
     .card:hover {
-        transform: scale(1.1); /* Enlarge to 110% on hover */
+        transform: scale(1.02); /* Enlarge to 110% on hover */
     }
 
 .card-image {
