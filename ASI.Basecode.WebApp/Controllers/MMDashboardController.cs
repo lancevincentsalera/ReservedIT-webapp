@@ -31,8 +31,8 @@ namespace ASI.Basecode.WebApp.Controllers
 
         public IActionResult Index()
         {
-            ViewData["bookings"] = _bookingService.GetBookings();
-            return View();
+            var bookings = _bookingService.GetBookings();
+            return View(bookings);
         }
     }
 }

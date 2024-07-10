@@ -42,5 +42,10 @@ namespace ASI.Basecode.Data.Repositories
             this.GetDbSet<Booking>().Update(booking);
             UnitOfWork.SaveChanges();
         }
+
+        public IQueryable<Recurrence> GetBookingRecurrence(int bookingID)
+        {
+            return this.GetDbSet<Recurrence>().Where(r => r.BookingId == bookingID);
+        }
     }
 }

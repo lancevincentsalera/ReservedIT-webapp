@@ -155,9 +155,9 @@ namespace ASI.Basecode.WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteUserPost(int userId)
+        public IActionResult DeleteUserPost(int Id)
         {
-            var userToBeDeleted = _userService.GetUsers().Where(u => u.UserId == userId).FirstOrDefault();
+            var userToBeDeleted = _userService.GetUsers().Where(u => u.UserId == Id).FirstOrDefault();
             if (userToBeDeleted != null)
             {
                 try

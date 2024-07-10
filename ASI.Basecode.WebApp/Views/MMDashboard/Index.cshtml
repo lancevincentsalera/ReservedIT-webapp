@@ -1,8 +1,7 @@
 ﻿@model IEnumerable<ASI.Basecode.Services.ServiceModels.BookingViewModel>
 
 @{
-    ViewData["Title"] = "Index";
-    IEnumerable<ASI.Basecode.Services.ServiceModels.BookingViewModel> bookings = ViewData["bookings"] as IEnumerable<ASI.Basecode.Services.ServiceModels.BookingViewModel>;
+    ViewData["Title"] = "Dashboard";
 }
 
 @section styles {
@@ -26,10 +25,10 @@
         <div class="user-cell"></div>
     </div>
     <ul class="user-list">
-        @foreach (var item in bookings)
+        @foreach (var item in Model)
         {
             <li class="user-row">
-                <div class="user-cell" data-label="Room Name">@Html.DisplayFor(modelItem => item.UserId)</div>
+                <div class="user-cell" data-label="Room Name">@Html.DisplayFor(modelItem => item.RoomName)</div>
                 <div class="user-cell" data-label="Date">@Html.DisplayFor(modelItem => item.StartDate)</div>
                 <div class="user-cell" data-label="Time From">@Html.DisplayFor(modelItem => item.TimeFrom)</div>
                 <div class="user-cell" data-label="Time To">@Html.DisplayFor(modelItem => item.TimeTo)</div>
