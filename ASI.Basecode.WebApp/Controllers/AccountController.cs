@@ -124,10 +124,11 @@ namespace ASI.Basecode.WebApp.Controllers
                 } 
                 else if (user.RoleId == 2)
                 {
-                    return RedirectToAction("Index", "MMDashboard");
-                } else
-                {
                     return RedirectToAction("Index", "Home");
+                } 
+                else
+                {
+                    return RedirectToAction("Index", "MMDashboard");
                 }
             }
             else
