@@ -32,6 +32,7 @@ namespace ASI.Basecode.Services.Services
                     Description = s.Description,
                     Location = s.Location,
                     Capacity = s.Capacity.Value,
+                    Thumbnail = s.Thumbnail,
                     RoomEquipments = s.RoomEquipments.Select(re => new RoomEquipmentViewModel
                     {
                         RoomEquipmentId = re.RoomEquipmentId,
@@ -130,9 +131,13 @@ namespace ASI.Basecode.Services.Services
             _roomRepository.UpdateGallery(existingData);
         }
 
-        public void DeleteRoom(int roomId)
+        public void DeleteRoom(RoomViewModel room)
         {
-            _roomRepository.DeleteRoom(roomId);
+            var RoomToBeDeleted = _roomRepository.GetRooms().Where(u => u.RoomId == room.RoomId).FirstOrDefault();
+            if (RoomToBeDeleted != null)
+            {
+                _roomRepository.DeleteRoom(RoomToBeDeleted);
+            }
         }
     }
 }

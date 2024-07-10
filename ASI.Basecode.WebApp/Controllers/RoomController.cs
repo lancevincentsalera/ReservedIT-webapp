@@ -1,6 +1,7 @@
 ﻿using ASI.Basecode.Data.Models;
 using ASI.Basecode.Services.Interfaces;
 using ASI.Basecode.Services.ServiceModels;
+using ASI.Basecode.Services.Services;
 using ASI.Basecode.WebApp.Mvc;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
@@ -253,24 +254,31 @@ namespace ASI.Basecode.WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostDelete(int roomId)
+        public IActionResult PostDelete(int Id)
         {
-            var existingRoom = _roomService.RetrieveRoom(roomId);
-
-            if (existingRoom == null)
+            var RoomToBeDeleted = _roomService.RetrieveAll().Where(u => u.RoomId == Id).FirstOrDefault();
+            if (RoomToBeDeleted != null)
             {
-                _logger.LogError($"Room with ID {roomId} not found.");
-                TempData["ErrorMessage"] = "Room not found.";
-                return RedirectToAction("Index");
+                try
+                {
+                    if (!string.IsNullOrEmpty(RoomToBeDeleted.Thumbnail))
+                    {
+                        string oldThumbnailPath = Path.Combine(_webHostEnvironment.WebRootPath, RoomToBeDeleted.Thumbnail.TrimStart('/'));
+                        DeleteFileWithRetry(oldThumbnailPath, 3, 1000);
+                    }
+                    _roomService.DeleteRoom(RoomToBeDeleted);
+                    return Json(new { success = true, message = "User deleted successfully!" });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message });
+                }
             }
-
-            if (!string.IsNullOrEmpty(existingRoom.Thumbnail))
+            else
             {
-                string oldThumbnailPath = Path.Combine(_webHostEnvironment.WebRootPath, existingRoom.Thumbnail.TrimStart('/'));
-                DeleteFileWithRetry(oldThumbnailPath, 3, 1000);
+                return Json(new { success = false, message = "User not found." });
+
             }
-            _roomService.DeleteRoom(roomId);
-            return RedirectToAction("Index");
         }
         #endregion
 

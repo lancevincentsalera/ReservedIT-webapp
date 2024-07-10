@@ -43,9 +43,9 @@ namespace ASI.Basecode.Data.Repositories
             UnitOfWork.SaveChanges();
         }
 
-        public void DeleteRoom(int roomId) 
+        public void DeleteRoom(Room room) 
         {
-            var deleteRoom = this.GetDbSet<Room>().FirstOrDefault(x => x.RoomId == roomId);
+            this.GetDbSet<Room>().Remove(room);
             UnitOfWork.SaveChanges();
         }
     }

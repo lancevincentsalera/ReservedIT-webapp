@@ -123,7 +123,7 @@ const deleteModal = (btnId, modalId, action, controller) => {
                     }, toastr.options.timeOut);
                 } else {
                     $(modalId).modal('hide');
-                    toastr.error(response.message);
+                    toastr.error('naunsa?',response.message);
                 }
 
             },

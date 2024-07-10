@@ -14,6 +14,6 @@ namespace ASI.Basecode.Services.Interfaces
         void AddRoom(RoomViewModel model);
         void UpdateRoom(RoomViewModel model);
         void UpdateGallery(RoomGalleryViewModel model);
-        void DeleteRoom(int roomId);
+        void DeleteRoom(RoomViewModel roomId);
     }
 }
