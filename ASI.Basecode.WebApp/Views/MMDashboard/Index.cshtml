@@ -1,8 +1,7 @@
 ﻿@model IEnumerable<ASI.Basecode.Services.ServiceModels.BookingViewModel>
 
 @{
-    ViewData["Title"] = "Index";
-    IEnumerable<ASI.Basecode.Services.ServiceModels.BookingViewModel> bookings = ViewData["bookings"] as IEnumerable<ASI.Basecode.Services.ServiceModels.BookingViewModel>;
+    ViewData["Title"] = "Dashboard";
 }
 
 @section styles {
@@ -26,20 +25,41 @@
         <div class="user-cell"></div>
     </div>
     <ul class="user-list">
-        @foreach (var item in bookings)
+        @foreach (var item in Model)
         {
-            <li class="user-row">
-                <div class="user-cell" data-label="Room Name">@Html.DisplayFor(modelItem => item.UserId)</div>
-                <div class="user-cell" data-label="Date">@Html.DisplayFor(modelItem => item.StartDate)</div>
-                <div class="user-cell" data-label="Time From">@Html.DisplayFor(modelItem => item.TimeFrom)</div>
-                <div class="user-cell" data-label="Time To">@Html.DisplayFor(modelItem => item.TimeTo)</div>
-                <div class="user-cell" data-label="Recurrence">@Html.DisplayFor(modelItem => item.BookingStatus)</div>
-                <div class="user-cell actions">
-                    <div class="mr-20 hover-pointer dropdown-trigger" data-user-id="">
-                        <span class="ddicon">&#8942;</span>
+            if(item.BookingStatus == "APPROVED")
+            {
+                <li class="user-row">
+                    <div class="user-cell" data-label="Room Name">@Html.DisplayFor(modelItem => item.RoomName)</div>
+                    <div class="user-cell" data-label="Date">@Html.DisplayFor(modelItem => item.StartDate)</div>
+                    <div class="user-cell" data-label="Time From">@Html.DisplayFor(modelItem => item.TimeFrom)</div>
+                    <div class="user-cell" data-label="Time To">@Html.DisplayFor(modelItem => item.TimeTo)</div>
+                    <div class="user-cell" data-label="Recurrence">
+                        @if (item.Recurrence.Count() > 0)
+                        {
+                            @foreach (var recurrence in item.Recurrence)
+                            {
+                                var dayName = recurrence.DayOfWeek.DayName.Substring(0, 3);
+                                @Html.DisplayFor(modelItem => dayName)
+                                if (recurrence != item.Recurrence.Last())
+                                {
+                                    <text>, </text>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <text>None</text>
+                        }
+
                     </div>
-                </div>
-            </li>
+                    <div class="user-cell actions">
+                        <div class="mr-20 hover-pointer dropdown-trigger" data-id="">
+                            <span class="ddicon">&#8942;</span>
+                        </div>
+                    </div>
+                </li>
+            }
         }
 
     </ul>
@@ -55,24 +75,41 @@
         <div class="user-cell">Time From</div>
         <div class="user-cell">Time To</div>
         <div class="user-cell">Recurrence</div>
-        <div class="user-cell"></div>
+        <div class="user-cell">Status</div>
     </div>
     <ul class="user-list">
-        @* @foreach (var item in users)
-        { *@
-        <li class="user-row">
-            <div class="user-cell" data-label="Room Name">@* @Html.DisplayFor(modelItem => item.UserId) *@</div>
-            <div class="user-cell" data-label="Date">@* @Html.DisplayFor(modelItem => item.Email) *@</div>
-            <div class="user-cell" data-label="Time From">@* @Html.DisplayFor(modelItem => item.FirstName) *@</div>
-            <div class="user-cell" data-label="Time To">@* @Html.DisplayFor(modelItem => item.LastName) *@</div>
-            <div class="user-cell" data-label="Recurrence">@* @Html.DisplayFor(modelItem => item.RoleName) *@</div>
-            <div class="user-cell actions">
-                <div class="mr-20 hover-pointer dropdown-trigger" data-user-id="">
-                    <span class="ddicon">&#8942;</span>
-                </div>
-            </div>
-        </li>
-        @* } *@
+        @foreach (var item in Model)
+        {
+            if (item.BookingStatus == "COMPLETED" || item.BookingStatus == "CANCELLED")
+            {
+                <li class="user-row">
+                    <div class="user-cell" data-label="Room Name">@Html.DisplayFor(modelItem => item.RoomName)</div>
+                    <div class="user-cell" data-label="Date">@Html.DisplayFor(modelItem => item.StartDate)</div>
+                    <div class="user-cell" data-label="Time From">@Html.DisplayFor(modelItem => item.TimeFrom)</div>
+                    <div class="user-cell" data-label="Time To">@Html.DisplayFor(modelItem => item.TimeTo)</div>
+                    <div class="user-cell" data-label="Recurrence">
+                        @if (item.Recurrence.Count() > 0)
+                        {
+                            @foreach (var recurrence in item.Recurrence)
+                            {
+                                var dayName = recurrence.DayOfWeek.DayName.Substring(0, 3);
+                                @Html.DisplayFor(modelItem => dayName)
+                                if (recurrence != item.Recurrence.Last())
+                                {
+                                    <text>, </text>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <text>None</text>
+                        }
+
+                    </div>
+                    <div class="user-cell" data-label="Status">@Html.DisplayFor(modelItem => item.BookingStatus)</div>
+                </li>
+            }
+        }
 
     </ul>
 </div>

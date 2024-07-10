@@ -14,5 +14,7 @@ namespace ASI.Basecode.Data.Interfaces
         void AddBooking(Booking booking);
         void UpdateBooking(Booking booking);
         void DeleteBooking(Booking booking);
+        IQueryable<Recurrence> GetBookingRecurrence(int bookingID);
+        IQueryable<Booking> GetBookingsByUser(int userId);
     }
 }

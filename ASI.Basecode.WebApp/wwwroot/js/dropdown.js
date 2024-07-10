@@ -31,7 +31,7 @@ $(document).ready(() => {
     let dropdownTriggers = $('.dropdown-trigger');
 
     dropdownTriggers.each((index,trigger) => {
-        let userId = $(trigger).data('user-id');
+        let Id = $(trigger).data('id');
 
         trigger.addEventListener('click', (event) => {
             event.stopPropagation();
@@ -68,9 +68,9 @@ $(document).ready(() => {
                 });
             }
             
-            console.log(userId);
-            $(`.dropdown-action input`).val(userId);
-            $(`.dropdown-action button`).data('user-id', userId);
+            console.log(Id);
+            $(`.dropdown-action input`).val(Id);
+            $(`.dropdown-action button`).data('id', Id);
              
             dropdown.show();
         })

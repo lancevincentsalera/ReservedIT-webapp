@@ -1,6 +1,7 @@
 ﻿using ASI.Basecode.Data.Interfaces;
 using ASI.Basecode.Data.Models;
 using Basecode.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,10 +38,20 @@ namespace ASI.Basecode.Data.Repositories
             return this.GetDbSet<Booking>();
         }
 
+        public IQueryable<Booking> GetBookingsByUser(int userId)
+        {
+            return this.GetDbSet<Booking>().Where(b => b.UserId == userId);
+        }
         public void UpdateBooking(Booking booking)
         {
             this.GetDbSet<Booking>().Update(booking);
             UnitOfWork.SaveChanges();
+        }
+
+        public IQueryable<Recurrence> GetBookingRecurrence(int bookingID)
+        {
+            var r = this.GetDbSet<Recurrence>().Include(r => r.DayOfWeek).Where(r => r.BookingId == bookingID);
+            return this.GetDbSet<Recurrence>().Include(r => r.DayOfWeek).Where(r => r.BookingId == bookingID);
         }
     }
 }
