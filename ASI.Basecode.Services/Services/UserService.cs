@@ -82,6 +82,7 @@ namespace ASI.Basecode.Services.Services
                 UserId = u.UserId,
                 Email = u.Email,
                 FirstName = u.FirstName,
+                Password = PasswordManager.DecryptPassword(u.Password),
                 LastName = u.LastName,
                 RoleId = u.RoleId,
                 RoleName = u.Role.RoleName,
