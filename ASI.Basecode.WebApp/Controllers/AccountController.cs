@@ -118,7 +118,8 @@ namespace ASI.Basecode.WebApp.Controllers
                 // 認証OK
                 await this._signInManager.SignInAsync(user);
                 this._session.SetString("UserName", string.Join(' ', user.FirstName, user.LastName));
-                if(user.RoleId == 1)
+                this._session.SetInt32("UserId", user.UserId);
+                if (user.RoleId == 1)
                 {
                     return RedirectToAction("Index", "AAUser");
                 } 

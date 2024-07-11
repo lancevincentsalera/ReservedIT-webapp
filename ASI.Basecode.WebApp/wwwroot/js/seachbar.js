@@ -27,3 +27,25 @@
 function filterRoom() {
     console.log("filter room")
 }
+function filterList() {
+    var input, filter, list, li, cells, i, txtValue;
+    input = document.getElementById("searchInput");
+    filter = input.value.toUpperCase();
+    list = document.querySelector(".user-list");
+    li = list.getElementsByTagName("li");
+
+    for (i = 0; i < li.length; i++) {
+        var shouldShow = false;
+        cells = li[i].getElementsByClassName("user-cell");
+
+        for (var j = 0; j < cells.length - 1; j++) {
+            txtValue = cells[j].textContent || cells[j].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                shouldShow = true;
+                break;
+            }
+        }
+
+        li[i].style.display = shouldShow ? "" : "none";
+    }
+}
