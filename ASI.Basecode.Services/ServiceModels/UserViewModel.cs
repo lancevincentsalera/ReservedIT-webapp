@@ -20,7 +20,7 @@ namespace ASI.Basecode.Services.ServiceModels
         [Required(ErrorMessage = "Last name is required.")]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "Password is required.")]
+        /*[Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$",
         ErrorMessage = "Password must contain at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 8 characters long.")]
@@ -28,7 +28,7 @@ namespace ASI.Basecode.Services.ServiceModels
 
         [Required(ErrorMessage = "Confirmation Password is required.")]
         [Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
-        public string ConfirmPassword { get; set; }
+        public string ConfirmPassword { get; set; }*/
 
         [Required]
         public int? RoleId { get; set; }

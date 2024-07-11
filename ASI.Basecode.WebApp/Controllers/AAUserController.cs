@@ -10,6 +10,8 @@ using ASI.Basecode.Services.ServiceModels;
 using System.IO;
 using System;
 using Microsoft.AspNetCore.Authorization;
+using static ASI.Basecode.Resources.Constants.Enums;
+using ASI.Basecode.Resources.Constants;
 
 namespace ASI.Basecode.WebApp.Controllers
 {
@@ -53,9 +55,9 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 try
                 {
-                    if(user.AccountStatus != "ACTIVE")
+                    if(user.AccountStatus != UserAccountStatus.Active.ToString())
                     {
-                        user.AccountStatus = "ACTIVE";
+                        user.AccountStatus = UserAccountStatus.Active.ToString();
                         _userService.UpdateUser(user);
                         TempData["SuccessMessage"] = "User activation successful!";
                     } else
@@ -83,9 +85,9 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 try
                 {
-                    if (user.AccountStatus != "RESTRICTED")
+                    if (user.AccountStatus != UserAccountStatus.Restricted.ToString())
                     {
-                        user.AccountStatus = "RESTRICTED";
+                        user.AccountStatus = UserAccountStatus.Restricted.ToString();
                         _userService.UpdateUser(user);
                         TempData["SuccessMessage"] = "User restriction successful!";
                     }

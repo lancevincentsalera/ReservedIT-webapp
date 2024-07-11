@@ -25,5 +25,24 @@
             Restricted = -1,
             Pending = 2,
         }
+
+        /// <summary>
+        /// ACCOUNT STATUS
+        /// </summary>
+        public enum UserAccountStatus
+        {
+            Active,
+            Restricted
+        }
+
+        /// <summary>
+        /// ROLES
+        /// </summary>
+        public enum UserRoleManager
+        {
+            Admin = 1,
+            Regular = 2,
+            Manager = 3
+        }
     }
 }

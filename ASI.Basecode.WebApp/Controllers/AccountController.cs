@@ -1,4 +1,5 @@
 ﻿using ASI.Basecode.Data.Models;
+using ASI.Basecode.Resources.Constants;
 using ASI.Basecode.Services.Interfaces;
 using ASI.Basecode.Services.Manager;
 using ASI.Basecode.Services.ServiceModels;
@@ -72,16 +73,9 @@ namespace ASI.Basecode.WebApp.Controllers
                 var roleClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
                 var nameClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
                 this._session.SetString("UserName", nameClaim);
-                if (roleClaim != null)
+                if (roleClaim != null && Enum.TryParse<UserRoleManager>(roleClaim.Value, out var userRole))
                 {
-                    if (roleClaim.Value == "ROLE_ADMIN")
-                    {
-                        return RedirectToAction("Index", "AAUser");
-                    }
-                    else if (roleClaim.Value == "ROLE_MANAGER")
-                    {
-                        return RedirectToAction("Index", "MMDashboard");
-                    }
+                    RedirectToEndpointByRole(userRole);
                 }
                 return RedirectToAction("Index", "Home");
             }
@@ -119,17 +113,8 @@ namespace ASI.Basecode.WebApp.Controllers
                 await this._signInManager.SignInAsync(user);
                 this._session.SetString("UserName", string.Join(' ', user.FirstName, user.LastName));
                 this._session.SetInt32("UserId", user.UserId);
-                if (user.RoleId == 1)
-                {
-                    return RedirectToAction("Index", "AAUser");
-                } 
-                else if (user.RoleId == 2)
-                {
-                    return RedirectToAction("Index", "Home");
-                } else
-                {
-                    return RedirectToAction("Index", "MMDashboard");
-                }
+                Enum.TryParse<UserRoleManager>(user.RoleId, true, out var userRole);
+                RedirectToEndpointByRole(userRole);
             }
             else if(loginResult == LoginResult.Pending)
             {
@@ -187,6 +172,28 @@ namespace ASI.Basecode.WebApp.Controllers
         {
             await this._signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
+        }
+
+
+        /// <summary>
+        /// Reusable Code for redirecting the user when logging
+        /// in based on the registered ROLE
+        /// </summary>
+        /// <param name="userRole"></param>
+        /// <returns></returns>
+        public IActionResult RedirectToEndpointByRole(UserRoleManager userRole)
+        {
+            switch (userRole)
+            {
+                case UserRoleManager.Admin:
+                    return RedirectToAction("Index", "AAUser");
+                case UserRoleManager.Manager:
+                    return RedirectToAction("Index", "MMDashboard");
+                case UserRoleManager.Regular:
+                    return RedirectToAction("Index", "Home");
+                default:
+                    return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ASI.Basecode.Data.Interfaces;
 using ASI.Basecode.Data.Models;
 using ASI.Basecode.Data.Repositories;
+using ASI.Basecode.Resources.Constants;
 using ASI.Basecode.Services.Interfaces;
 using ASI.Basecode.Services.Manager;
 using ASI.Basecode.Services.ServiceModels;
@@ -55,8 +56,8 @@ namespace ASI.Basecode.Services.Services
             if (!_repository.UserExists(model.Email))
             {
                 _mapper.Map(model, user);
-                user.AccountStatus = "PENDING";
-                user.Password = PasswordManager.EncryptPassword(model.Password);
+                user.AccountStatus = Const.DefaultAccountStatus;
+                user.Password = PasswordManager.EncryptPassword(Const.DefaultPassword);
                 user.CreatedDt = DateTime.Now;
                 user.UpdatedDt = DateTime.Now;
                 user.CreatedBy = System.Environment.UserName;
@@ -82,7 +83,6 @@ namespace ASI.Basecode.Services.Services
                 UserId = u.UserId,
                 Email = u.Email,
                 FirstName = u.FirstName,
-                Password = PasswordManager.DecryptPassword(u.Password),
                 LastName = u.LastName,
                 RoleId = u.RoleId,
                 RoleName = u.Role.RoleName,
@@ -98,7 +98,6 @@ namespace ASI.Basecode.Services.Services
             if(userToBeUpdated != null)
             {
                 _mapper.Map(user, userToBeUpdated);
-                userToBeUpdated.Password = PasswordManager.EncryptPassword(user.Password);
                 userToBeUpdated.UpdatedDt = DateTime.Now;
                 userToBeUpdated.UpdatedBy = System.Environment.UserName;
 
