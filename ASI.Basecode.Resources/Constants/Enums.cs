@@ -31,8 +31,8 @@
         /// </summary>
         public enum UserAccountStatus
         {
-            Active,
-            Restricted
+            ACTIVE,
+            RESTRICTED
         }
 
         /// <summary>
@@ -40,9 +40,10 @@
         /// </summary>
         public enum UserRoleManager
         {
-            Admin = 1,
-            Regular = 2,
-            Manager = 3
+            ROLE_SUPER = 0,
+            ROLE_ADMIN = 1,
+            ROLE_REGULAR = 2,
+            ROLE_MANAGER = 3,
         }
     }
 }

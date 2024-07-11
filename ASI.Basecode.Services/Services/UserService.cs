@@ -71,9 +71,40 @@ namespace ASI.Basecode.Services.Services
             }
         }
 
-        public List<Role> GetRoles()
+        public List<Role> GetRolesByRoleOrDefault(int roleId)
         {
+            switch ((UserRoleManager) roleId)
+            {
+                case UserRoleManager.ROLE_SUPER:
+                    return _repository.GetRoles().Where(r =>  r.RoleId == (int)UserRoleManager.ROLE_ADMIN).ToList();
+                case UserRoleManager.ROLE_ADMIN:
+                    return _repository.GetRoles().Where(r => r.RoleId > roleId).ToList();
+            }
            return _repository.GetRoles().ToList();
+        }
+
+        public IEnumerable<UserViewModel> GetUsersByRoleOrDefault(int roleId)
+        {
+            var users = _repository.GetUsers().Select(u => new UserViewModel
+            {
+                UserId = u.UserId,
+                Email = u.Email,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                RoleId = u.RoleId,
+                RoleName = u.Role.RoleName,
+                AccountStatus = u.AccountStatus,
+            });
+
+            switch ((UserRoleManager)roleId)
+            {
+                case UserRoleManager.ROLE_SUPER:
+                    return users.Where(u => u.RoleId == (int)UserRoleManager.ROLE_ADMIN);
+                case UserRoleManager.ROLE_ADMIN:
+                    return users.Where(u => u.RoleId > roleId);
+            }
+
+            return users;
         }
 
         public IEnumerable<UserViewModel> GetUsers()
@@ -88,7 +119,6 @@ namespace ASI.Basecode.Services.Services
                 RoleName = u.Role.RoleName,
                 AccountStatus = u.AccountStatus,
             });
-
             return users;
         }
 

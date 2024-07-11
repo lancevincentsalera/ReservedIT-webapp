@@ -75,7 +75,7 @@ namespace ASI.Basecode.WebApp.Controllers
                 this._session.SetString("UserName", nameClaim);
                 if (roleClaim != null && Enum.TryParse<UserRoleManager>(roleClaim.Value, out var userRole))
                 {
-                    RedirectToEndpointByRole(userRole);
+                    return RedirectToEndpointByRole(userRole);
                 }
                 return RedirectToAction("Index", "Home");
             }
@@ -105,29 +105,20 @@ namespace ASI.Basecode.WebApp.Controllers
             this._session.SetString("UserName", model.UserId);
 
             return RedirectToAction("Index", "Admin");*/
-            
             var loginResult = _userService.AuthenticateUser(model.Email, model.Password, ref user);
-            if (loginResult == LoginResult.Success)
+            switch (loginResult)
             {
-                // 認証OK
-                await this._signInManager.SignInAsync(user);
-                this._session.SetString("UserName", string.Join(' ', user.FirstName, user.LastName));
-                this._session.SetInt32("UserId", user.UserId);
-                Enum.TryParse<UserRoleManager>(user.RoleId, true, out var userRole);
-                RedirectToEndpointByRole(userRole);
-            }
-            else if(loginResult == LoginResult.Pending)
-            {
-                TempData["ErrorMessage"] = "Your account is pending approval. Please check back later.";
-            }
-            else if(loginResult == LoginResult.Restricted)
-            {
-                TempData["ErrorMessage"] = "Your account is restricted. Please contact support.";
-            }
-            else
-            {
-                // 認証NG
-                TempData["ErrorMessage"] = "Incorrect Email or Password";
+                case LoginResult.Success:
+                    await this._signInManager.SignInAsync(user);
+                    this._session.SetString("UserName", string.Join(' ', user.FirstName, user.LastName));
+                    this._session.SetInt32("UserId", user.UserId);
+                    return RedirectToEndpointByRole((UserRoleManager)user.RoleId);
+                case LoginResult.Restricted:
+                    TempData["ErrorMessage"] = "Your account is restricted. Please contact support.";
+                    break;
+                default:
+                    TempData["ErrorMessage"] = "Incorrect Email or Password";
+                    break;
             }
             return View();
         }
@@ -136,17 +127,15 @@ namespace ASI.Basecode.WebApp.Controllers
         [AllowAnonymous]
         public IActionResult Register()
         {
-            var roles = _userService.GetRoles();
-            var model = new UserViewModel { Roles = roles };
-            return View(model);
+            return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
         public IActionResult Register(UserViewModel model)
         {
-            var roles = _userService.GetRoles();
-            model.Roles = roles;
+            /*var roles = _userService.GetRoles();
+            model.Roles = roles;*/
             try
             {
                 _userService.AddUser(model);
@@ -181,15 +170,16 @@ namespace ASI.Basecode.WebApp.Controllers
         /// </summary>
         /// <param name="userRole"></param>
         /// <returns></returns>
-        public IActionResult RedirectToEndpointByRole(UserRoleManager userRole)
+        public ActionResult RedirectToEndpointByRole(UserRoleManager userRole)
         {
             switch (userRole)
             {
-                case UserRoleManager.Admin:
+                case UserRoleManager.ROLE_SUPER:
+                case UserRoleManager.ROLE_ADMIN:
                     return RedirectToAction("Index", "AAUser");
-                case UserRoleManager.Manager:
+                case UserRoleManager.ROLE_MANAGER:
                     return RedirectToAction("Index", "MMDashboard");
-                case UserRoleManager.Regular:
+                case UserRoleManager.ROLE_REGULAR:
                     return RedirectToAction("Index", "Home");
                 default:
                     return RedirectToAction("Index", "Home");

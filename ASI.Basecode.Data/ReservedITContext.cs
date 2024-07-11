@@ -89,7 +89,7 @@ namespace ASI.Basecode.Data
             modelBuilder.Entity<DayOfTheWeek>(entity =>
             {
                 entity.HasKey(e => e.DayOfWeekId)
-                    .HasName("PK__DayOfThe__01AA8DDF9649E8D5");
+                    .HasName("PK__DayOfThe__01AA8DDFF7F35BB5");
 
                 entity.ToTable("DayOfTheWeek");
 
@@ -115,7 +115,7 @@ namespace ASI.Basecode.Data
             modelBuilder.Entity<ImageGallery>(entity =>
             {
                 entity.HasKey(e => e.ImageId)
-                    .HasName("PK__ImageGal__7516F4EC42A9C489");
+                    .HasName("PK__ImageGal__7516F4EC67C989AA");
 
                 entity.ToTable("ImageGallery");
 
@@ -139,7 +139,7 @@ namespace ASI.Basecode.Data
             {
                 entity.ToTable("Permission");
 
-                entity.HasIndex(e => e.PermissionName, "UQ__Permissi__0FFDA3576D986E36")
+                entity.HasIndex(e => e.PermissionName, "UQ__Permissi__0FFDA357EC40E9E9")
                     .IsUnique();
 
                 entity.Property(e => e.PermissionId).HasColumnName("PermissionID");
@@ -176,7 +176,7 @@ namespace ASI.Basecode.Data
 
             modelBuilder.Entity<Role>(entity =>
             {
-                entity.HasIndex(e => e.RoleName, "UQ__Roles__8A2B616012A7CAA2")
+                entity.HasIndex(e => e.RoleName, "UQ__Roles__8A2B6160FDC5F25D")
                     .IsUnique();
 
                 entity.Property(e => e.RoleId).HasColumnName("RoleID");
@@ -189,7 +189,7 @@ namespace ASI.Basecode.Data
             modelBuilder.Entity<RolePermission>(entity =>
             {
                 entity.HasKey(e => e.RolePermissionsId)
-                    .HasName("PK__RolePerm__18B28180DB1C25A1");
+                    .HasName("PK__RolePerm__18B28180A598C925");
 
                 entity.Property(e => e.RolePermissionsId).HasColumnName("RolePermissionsID");
 
@@ -214,7 +214,7 @@ namespace ASI.Basecode.Data
             {
                 entity.ToTable("Room");
 
-                entity.HasIndex(e => e.RoomName, "UQ__Room__6B500B55CDA9AE88")
+                entity.HasIndex(e => e.RoomName, "UQ__Room__6B500B55F2207FEE")
                     .IsUnique();
 
                 entity.Property(e => e.RoomId).HasColumnName("RoomID");
@@ -287,7 +287,7 @@ namespace ASI.Basecode.Data
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.HasIndex(e => e.Email, "UQ__Users__A9D1053413516F39")
+                entity.HasIndex(e => e.Email, "UQ__Users__A9D105346CDCB7D2")
                     .IsUnique();
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");

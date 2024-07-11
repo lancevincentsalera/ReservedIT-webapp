@@ -56,11 +56,11 @@ namespace ASI.Basecode.WebApp
                 });
                 options.AddPolicy("AdminOnly", policy =>
                 {
-                    policy.RequireClaim(ClaimTypes.Role, "ROLE_ADMIN");
+                    policy.RequireClaim(ClaimTypes.Role, Enums.UserRoleManager.ROLE_ADMIN.ToString(), Enums.UserRoleManager.ROLE_SUPER.ToString());
                 });
                 options.AddPolicy("ManagerOnly", policy =>
                 {
-                    policy.RequireClaim(ClaimTypes.Role, "ROLE_MANAGER");
+                    policy.RequireClaim(ClaimTypes.Role, Enums.UserRoleManager.ROLE_MANAGER.ToString());
                 });
             });
 
