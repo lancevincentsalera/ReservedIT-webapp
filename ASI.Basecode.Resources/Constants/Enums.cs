@@ -22,6 +22,8 @@
         {
             Success = 0,
             Failed = 1,
+            Restricted = -1,
+            Pending = 2,
         }
     }
 }

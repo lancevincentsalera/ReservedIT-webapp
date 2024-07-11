@@ -111,7 +111,7 @@ namespace ASI.Basecode.WebApp.Controllers
             this._session.SetString("UserName", model.UserId);
 
             return RedirectToAction("Index", "Admin");*/
-
+            
             var loginResult = _userService.AuthenticateUser(model.Email, model.Password, ref user);
             if (loginResult == LoginResult.Success)
             {
@@ -125,11 +125,19 @@ namespace ASI.Basecode.WebApp.Controllers
                 } 
                 else if (user.RoleId == 2)
                 {
-                    return RedirectToAction("Index", "MMDashboard");
+                    return RedirectToAction("Index", "Home");
                 } else
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "MMDashboard");
                 }
+            }
+            else if(loginResult == LoginResult.Pending)
+            {
+                TempData["ErrorMessage"] = "Your account is pending approval. Please check back later.";
+            }
+            else if(loginResult == LoginResult.Restricted)
+            {
+                TempData["ErrorMessage"] = "Your account is restricted. Please contact support.";
             }
             else
             {

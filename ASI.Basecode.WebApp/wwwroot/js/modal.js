@@ -10,7 +10,7 @@ const displayModal = (modalId) => {
 }
 
 const getUserDetails = (btnId, modalId, action, controller) => {
-    let id = $(btnId).data('user-id');
+    let id = $(btnId).data('id');
 
     console.log(id);
     console.log(`/${controller}/${action}`)
@@ -20,7 +20,6 @@ const getUserDetails = (btnId, modalId, action, controller) => {
         type: 'GET',
         data: { userId : id },
         success: (response) => {
-            console.log(response);
             for (let key in response) { 
                 if (key === 'RoleId') {
                     $(`${modalId} select[name="RoleId"] option`).each((index, element) => {

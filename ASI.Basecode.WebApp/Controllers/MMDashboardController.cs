@@ -34,7 +34,7 @@ namespace ASI.Basecode.WebApp.Controllers
 
         public IActionResult Index()
         {
-            var bookings = _bookingService.GetBookingsByUser(int.Parse(UserId));
+            var bookings = _bookingService.GetBookingsByUser(UserId);
             return View(bookings);
         }
     }

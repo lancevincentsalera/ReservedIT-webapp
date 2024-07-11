@@ -56,9 +56,18 @@ namespace ASI.Basecode.WebApp.Mvc
         /// <summary>
         /// Get UserId.
         /// </summary>
-        public string UserId
+        public int UserId
         {
-            get { return User.FindFirst(ClaimTypes.NameIdentifier).Value; }
+            get 
+            { 
+                var claim = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                if (!string.IsNullOrEmpty(claim) && int.TryParse(claim, out int userId)) 
+                {
+                    return userId;
+                }
+
+                return 0;
+            }
         }
 
         /// <summary>
