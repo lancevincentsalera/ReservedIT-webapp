@@ -2,7 +2,7 @@
     ViewData["Title"] = "Index";
     var rooms = new List<dynamic>
     {
-        new { Name = "Board Room", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt", Location = "14th Lane, Business Center, Sunion Road", Capacity = 7, Equipment = "None", ImageUrl = "board_room.jpg" },
+        new { Name = "Board Room", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt", Location = "14th Lane, Business Center, Sunion Road", Capacity = 7, Equipment = "None", ImageUrl = "login-image.jpg" },
         new { Name = "Ramen", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt", Location = "11th Floor, Business Center, Sunion Road", Capacity = 15, Equipment = "None", ImageUrl = "ramen.jpg" },
         new { Name = "Mantawi", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt", Location = "10th Floor, Business Center, Sunion Road", Capacity = 15, Equipment = "Projector", ImageUrl = "mantawi.jpg" },
         new { Name = "Orchid", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt", Location = "9th Floor, Business Center, Sunion Road", Capacity = 10, Equipment = "Whiteboard", ImageUrl = "orchid.jpg" },
@@ -23,29 +23,31 @@
     <div class="container">
         @foreach (var room in rooms)
         {
-            <div class="card" onclick="displayModal('#viewRoomCardModal')">
-                <div class="card-content">
+            <div class="card">
+                <div class="card-content" onclick="displayModal('#viewRoomCardModal')">
                     <h3>@room.Name</h3>
                     <img src="~/images/@room.ImageUrl" alt="@room.Name" class="card-image">
                     <h1>Description</h1>
                     <p>@room.Description</p>
                     <div class="details">
                         <div class="detail-item">
-                            <div><span class="font-weight-bold">Location</span></div>
-                            <div><img src="~/images/location_icon.png" alt="Location"></div>
-                            <div><span>@room.Location</span></div>
+                            <span class="font-weight-bold">Location</span>
+                            @*<img src="~/img/Logo1.png" alt="Logo">*@
+                            <span>@room.Location</span>
                         </div>
                         <div class="detail-item">
                             <span class="font-weight-bold">Capacity</span>
-                            <img src="~/images/capacity_icon.png" alt="Capacity">
+                            @*@<img src="~/img/Logo1.png" alt="Logo">*@
                             <span>@room.Capacity</span>
                         </div>
                         <div class="detail-item">
                             <span class="font-weight-bold">Equipment</span>
-                            <img src="~/images/equipment_icon.png" alt="Equipment">
+                            @*<img src="~/img/Logo1.png" alt="Logo">*@
                             <span>@room.Equipment</span>
                         </div>
                     </div>
+                </div>
+                <div class="btn-book">
                     <button class="book-button">Book Room</button>
                 </div>
             </div>

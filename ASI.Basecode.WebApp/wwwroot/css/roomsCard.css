@@ -79,24 +79,34 @@ body {
     .card-content p {
         margin: 5px 0;
         color: #555;
+        text-align: justify;
+        font-size: 0.8em;
     }
 
 .details {
     margin: 10px 0;
     display: grid;
     gap: 8px;
-    grid-template-columns: auto; /* Ensure each item occupies full width */
-    grid-template-rows: auto auto auto; /* Three rows */
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    width: 230px;
+    max-height: 40px;
+    justify-content: center;
+    margin-bottom:100px;
 }
 
 .detail-item {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    flex-direction: column; /* Arrange content in a column */
+    align-items: center; /* Center items horizontally */
     border: 0.5px solid #CACACA;
     border-radius: 10px;
     padding: 5px;
-    justify-content: center;
+    background-color: white;
+    color: black;
+    text-align: center; /* Center text */
+    height: 80px;
+    font-size: 0.9em;
 }
 
     .detail-item img {
@@ -106,7 +116,8 @@ body {
 
     .detail-item span {
         font-size: 0.7em;
-        text-align: center; /* Optional: center the text */
+        text-align: left; /* Optional: center the text */
+        justify-content: center;
     }
 
     .detail-item span,
@@ -159,3 +170,10 @@ body {
     .carousel-button.right {
         right: 50px;
     }
+
+.btn-book {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: auto; /* Push the button to the bottom of the card */
+    padding:10px;
+}
