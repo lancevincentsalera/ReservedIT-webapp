@@ -5,6 +5,11 @@
     align-items: center;
 }
 
+.dashboard-header-right {
+    display: flex;
+    align-items: center;
+}
+
 h1 {
     font-weight: bold;
 }
