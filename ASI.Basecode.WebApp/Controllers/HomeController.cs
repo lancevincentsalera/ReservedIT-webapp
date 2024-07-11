@@ -42,24 +42,19 @@ namespace ASI.Basecode.WebApp.Controllers
             return View(users);
         }
 
-/*        public ActionResult ConfirmationModal()
-        {
+        /*        public ActionResult ConfirmationModal()
+                {
 
 
-            return PartialView();
-        }
+                    return PartialView();
+                }
 
-        [HttpPost]
-        public ActionResult ConfirmationModal()
-        {
+                [HttpPost]
+                public ActionResult ConfirmationModal()
+                {
 
-            return View();
-        }*/
+                    return View();
+                }*/
 
-        public IActionResult Test()
-        { 
-            return View(); 
-        }
-        
     }
 }

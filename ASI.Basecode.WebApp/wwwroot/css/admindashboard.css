@@ -7,6 +7,7 @@
     color: white;
     border-radius: 25px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    white-space: nowrap;
 }
 
 .create-user-btn:hover {
@@ -61,5 +62,3 @@
     background-color: #FF4C4C;
     color: white;
 }
-
-

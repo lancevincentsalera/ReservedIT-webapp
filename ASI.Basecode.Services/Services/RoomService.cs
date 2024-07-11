@@ -31,8 +31,8 @@ namespace ASI.Basecode.Services.Services
                     RoomName = s.RoomName,
                     Description = s.Description,
                     Location = s.Location,
-
                     Capacity = s.Capacity.Value,
+                    Thumbnail = s.Thumbnail,
                     RoomEquipments = s.RoomEquipments.Select(re => new RoomEquipmentViewModel
                     {
                         RoomEquipmentId = re.RoomEquipmentId,
@@ -85,9 +85,10 @@ namespace ASI.Basecode.Services.Services
             {
                 foreach (var item in model.RoomEquipments)
                 {
-                    newModel.RoomEquipments.Add(new RoomEquipment() 
+                    var equipment = new Equipment { EquipmentName = item.EquipmentName };
+                    newModel.RoomEquipments.Add(new RoomEquipment
                     {
-                        EquipmentId = item.EquipmentId,
+                        Equipment = equipment,
                         RoomId = newModel.RoomId,
                     });
                 }
@@ -103,6 +104,21 @@ namespace ASI.Basecode.Services.Services
             existingData.UpdatedDt = DateTime.Now;
             existingData.Thumbnail = model.Thumbnail;
 
+            existingData.RoomEquipments.Clear();
+
+            if (model.RoomEquipments != null && model.RoomEquipments.Any())
+            {
+                foreach (var item in model.RoomEquipments)
+                {
+                    var equipment = new Equipment { EquipmentName = item.EquipmentName };
+                    existingData.RoomEquipments.Add(new RoomEquipment
+                    {
+                        Equipment = equipment,
+                        RoomId = existingData.RoomId,
+                    });
+                }
+            }
+
             _roomRepository.UpdateRoom(existingData);
         }
 
@@ -115,10 +131,67 @@ namespace ASI.Basecode.Services.Services
             _roomRepository.UpdateGallery(existingData);
         }
 
-        public void DeleteRoom(int roomId)
+        public void DeleteRoom(RoomViewModel room)
         {
-            _roomRepository.DeleteRoom(roomId);
+            var RoomToBeDeleted = _roomRepository.GetRooms().Where(u => u.RoomId == room.RoomId).FirstOrDefault();
+            if (RoomToBeDeleted != null)
+            {
+                _roomRepository.DeleteRoom(RoomToBeDeleted);
+            }
         }
+
+        public void DeleteRoomEquipmentByRoomId(int roomId)
+        {
+            var roomEquipments = _roomRepository.GetRoomEquipments().Where(re => re.RoomId == roomId).ToList();
+            if (roomEquipments != null && roomEquipments.Any())
+            {
+                foreach (var item in roomEquipments)
+                {
+                    _roomRepository.DeleteRoomEquipment(item);
+                }
+            }
+        }
+
+        public IEnumerable<RoomGalleryViewModel> GetRoomGallery()
+        {
+            var data = _roomRepository.GetRoomGalleries().Select(s => new RoomGalleryViewModel
+                {
+                    RoomId = (int)s.RoomId,
+                    GalleryId = s.ImageId,
+                    GalleryUrl = s.Path,
+                    GalleryName = s.ImageName,
+                });
+            return data;
+        }
+        public void DeleteImage(int roomId)
+        {
+            var roomImages = _roomRepository.GetRoomGalleries().Where(x => x.RoomId == roomId).ToList();
+            if (roomImages != null && roomImages.Any())
+            {
+                foreach (var item in roomImages)
+                {
+                    _roomRepository.DeleteRoomImage(item);
+                }
+            }
+        }
+
+        public void DeleteUnusedEquipment()
+        {
+            var unusedEquipments = _roomRepository.GetEquipments()
+                .Where(e => !_roomRepository.GetRoomEquipments().Any(re => re.EquipmentId == e.EquipmentId))
+                .ToList();
+
+            if (unusedEquipments != null && unusedEquipments.Any())
+            {
+                foreach (var equipment in unusedEquipments)
+                {
+                    _roomRepository.DeleteEquipment(equipment);
+                }
+            }
+        }
+
+
+
     }
 }
     

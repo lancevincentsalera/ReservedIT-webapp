@@ -4,6 +4,8 @@
     width: 100%;
     margin-bottom: 1rem !important;
     box-sizing: border-box;
+    margin-right: 1rem !important;
+    margin-top: 1rem !important;
 }
 
 .custom-input-group-text {

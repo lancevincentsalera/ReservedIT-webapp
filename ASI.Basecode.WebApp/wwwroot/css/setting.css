@@ -1,0 +1,10 @@
+﻿.table-container {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: space-between;
+    height: 90%;
+}
+
+.table-column{
+    padding: 1em;
+}

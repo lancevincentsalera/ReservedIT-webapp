@@ -16,7 +16,7 @@
         @if (role == "ROLE_ADMIN")
         {
             <li>
-                <a asp-action="RoomView" asp-controller="Room">
+                <a asp-action="Index" asp-controller="Room">
                     <img src="~/img/user-sidebar-logo.png" />
                     Rooms
                 </a>
@@ -39,7 +39,7 @@
 
             </li>
             <li>
-                <a asp-action="RoomView" asp-controller="Room">
+                <a>
                     <img src="~/img/user-sidebar-logo.png" />
                     Rooms
                 </a>
@@ -91,7 +91,7 @@
     <div class="list-2">
         <ul >
             <li>
-                <a>
+                <a asp-action="Index" asp-controller="Setting">
                     <img src="~/img/settings-logo.png" />
                     Settings
                 </a>

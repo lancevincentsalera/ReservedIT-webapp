@@ -1,0 +1,118 @@
+﻿@model ASI.Basecode.Services.ServiceModels.SettingViewModel
+
+@{
+    ViewData["Title"] = "Settings & Preferences";
+}
+
+@section styles {
+    <link rel="stylesheet" href="~/css/admindashboard.css" />
+    <link rel="stylesheet" href="~/css/setting.css" />
+}
+
+<div class="dashboard-header">
+    <h1>Settings & Preferences</h1>
+</div>
+
+<div class="table-container">
+    <div class="table-column">
+        <div class="basic-information">
+            <h2>Basic Information</h2>
+            <div class="profile-picture">
+                <img src="~/img/default-profile.png" alt="Profile Picture">
+                @* <button class="edit-picture-btn">Edit</button> *@
+            </div>
+            <div class="info-field">
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" value="@HttpContextAccessor.HttpContext.Session.GetString("UserName")" disabled>
+            </div>
+            <div class="info-field">
+                <label for="email">Email</label>
+                <input type="email" id="email" value="@Html.DisplayFor(model => model.User.Email)" disabled>
+            </div>
+            <div class="info-field">
+                <label for="role">Role</label>
+                <input type="text" id="role" value="@Html.DisplayFor(model => model.User.Role.RoleName)" disabled>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-column">
+        <div class="notifications">
+            <h2>Notifications</h2>
+            <div class="notification-option">
+                <input type="checkbox" id="successful-booking">
+                <label for="successful-booking">Successful Booking</label>
+            </div>
+            <div class="notification-option">
+                <input type="checkbox" id="booking-status" checked>
+                <label for="booking-status">Booking Status</label>
+            </div>
+            <div class="notification-option">
+                <label for="set-reminders">Set Reminders</label>
+                <select id="set-reminders">
+                    <option value="30-mins" selected>30 mins</option>
+                    <option value="1-hour">1 hour</option>
+                    <option value="2-hours">2 hours</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="booking-references">
+            <h2>Booking References</h2>
+            <div class="duration-setting">
+                <label for="duration">Duration</label>
+                <input type="number" id="hours" min="0" max="23" value="1"> Hours
+                <input type="number" id="minutes" min="0" max="59" value="0"> Minutes
+            </div>
+        </div>
+
+        <button class="save-changes-btn">Save Changes</button>
+    </div>
+
+</div>
+@* <div>
+    <h4>SettingViewModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SettingId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SettingId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BookingSuccess)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BookingSuccess)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BookingStatusChange)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BookingStatusChange)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BookingReminder)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BookingReminder)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BookingDuration)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BookingDuration)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div> *@

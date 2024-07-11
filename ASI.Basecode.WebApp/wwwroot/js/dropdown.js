@@ -33,6 +33,8 @@ $(document).ready(() => {
     dropdownTriggers.each((index,trigger) => {
         let Id = $(trigger).data('id');
 
+        console.log(Id);
+
         trigger.addEventListener('click', (event) => {
             event.stopPropagation();
 
@@ -45,8 +47,7 @@ $(document).ready(() => {
             let spaceBelow = viewportHeight - (offset.top + triggerHeight);
             let spaceAbove = offset.top;
             let leftOffset = offset.left - 25;
-
-            console.log(offset.left, leftOffset);
+        
 
             if (spaceBelow >= dropdownHeight) {
                 dropdown.css({

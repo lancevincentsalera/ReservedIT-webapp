@@ -31,7 +31,22 @@ namespace ASI.Basecode.Services.Services
             user = _repository.GetUsers().Where(x => x.Email == email &&
                                                      x.Password == passwordKey).FirstOrDefault();
 
-            return user != null ? LoginResult.Success : LoginResult.Failed;
+            if(user != null)
+            {
+                switch (user.AccountStatus)
+                {
+                    case "ACTIVE":
+                        return LoginResult.Success;
+                    case "RESTRICTED":
+                        return LoginResult.Restricted;
+                    case "PENDING":
+                        return LoginResult.Pending;
+                    default:
+                        return LoginResult.Failed;
+                }
+
+            }
+            return LoginResult.Failed;
         }
 
         public void AddUser(UserViewModel model)
