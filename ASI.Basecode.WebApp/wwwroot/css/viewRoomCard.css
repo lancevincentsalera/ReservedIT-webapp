@@ -1,78 +1,97 @@
-﻿/* Adjust modal dialog max-width for specific modals */
-#viewRoomCardModal .modal-dialog {
-    max-width: 1500px !important; /* Adjust as needed */
+﻿/* Apply a more specific selector or use !important to override Bootstrap defaults */
+#createRoomModal .modal-dialog,
+#editRoomModal .modal-dialog {
+    max-width: 45vw !important;
 }
 
-/* Ensure modal content height adjusts to fit its content */
 .modal-content {
     height: fit-content;
 }
 
-/* Flexbox layout for form elements */
 .modal-body form {
     display: flex;
     justify-content: space-between;
     gap: 20px;
 }
 
-/* Image container styling */
-.image-container-view {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; /* Ensure image does not overflow */
-    height: 400px; /* Adjust height as needed */
-    border-radius: 10px; /* Rounded corners */
+.modal-image {
+    max-width: 435px;
+    height: 576px;
 }
 
-    /* Image styling */
-    .image-container-view img {
-        width: fit-content; /* Ensure image takes full width of container */
-        height: 100%; /* Ensure image takes full height of container */
-        object-fit: cover; /* Maintain aspect ratio and cover container */
-        border-radius: 10px; /* Rounded corners */
+.modal-body form .firstHalf,
+.modal-body form .secondHalf {
+    flex: 1;
+}
+
+.modal-body form .uploadPhoto {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.modal-body .form-group {
+    margin-bottom: 15px;
+}
+
+    .modal-body .form-group label {
+        display: block;
     }
 
-/* Custom file upload container */
+    .modal-body .form-group input,
+    .modal-body .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+.additional-info .form-group {
+    flex: 1;
+}
+
 .modal-body .custom-file-upload {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #ccc;
+    border: 1px solid;
     height: 100px;
-    width: 10vw; /* Adjust width as needed */
+    width: 10vw;
 }
 
-/* Upload icon styling */
-.custom-file-upload .upload-icon {
+.modal-body .file-upload input {
+    margin-right: 10px;
+}
+
+.custom-file-upload input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload .upload-label {
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #eee;
+    border: 1px solid #ccc;
+}
+
+.custom-file-upload .upload-icon {
+    justify-content: center;
     width: 25px;
     height: 25px;
     background-color: #f8f8f8;
-    border-radius: 50%;
 }
 
-/* Button group styling */
-.modal-body .button-group {
-    margin-top: 20px;
-    display: flex;
-    gap: 15px;
-}
+    .custom-file-upload .upload-icon i.fa {
+        font-size: 15px;
+    }
 
-/* Custom button styles */
-.btn-custom {
-    width: 7vw; /* Adjust width as needed */
-    background-color: #B5838E;
-    color: white;
-    border-radius: 10px;
-    border: 0;
-    font-size: 12px;
-    padding: 8px;
-}
-
-/* Equipment list styles */
+/* Styles for the equipment list */
 #equipmentList {
     list-style-type: none;
     padding: 0;
@@ -86,3 +105,27 @@
         border: 1px solid #ccc;
         border-radius: 5px;
     }
+
+.add-equipment {
+    border-radius: 10px;
+    border: 0px solid;
+    font-size: 12px;
+    padding: 8px;
+}
+
+.modal-body .button-group {
+    float: inline-end;
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+.btn-danger,
+.btn-custom {
+    width: 7vw;
+}
+
+.btn-custom {
+    background-color: #b5838e;
+    color: white;
+}
