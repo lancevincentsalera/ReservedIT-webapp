@@ -18,16 +18,22 @@
                             <div class="form-group file-upload">
                                 <label for="thumbnail">Thumbnail</label>
                                 <div class="custom-file-upload">
-                                    <input type="file" id="thumbnail1" name="RoomThumbnailImg" />
+                                    <input type="file" id="thumbnail1" name="RoomThumbnailImg" 
+                                        onchange="showImage(event, 'thumbnailPreview')" accept="image/png, image/jpeg, image/jpg, image/heic" required
+                                        />
                                     <label for="thumbnail1" class="upload-icon"> <i class="fa fa-plus"></i> </label>
+                                    <div class="image-container">
+                                        <button type="button" style="width: 24px; height: 24px; " class="delete-button" onclick="deleteImage('thumbnail')"><span>&times;</span></button>
+                                        <img id="thumbnailPreview" class="image-preview" src="#" alt="Thumbnail Preview" style="display:none;" />
+                                    </div>
                                 </div>
 
                             </div>
                             <div class="form-group file-upload">
                                 <label for="uploadImage">Upload Image</label>
                                 <div class="custom-file-upload">
-                                    <input type="file" id="uploadImage1" name="RoomGalleryImg" multiple />
-                                    <label for="uploadImage1" class="upload-icon"> <i class="fa fa-plus"></i> </label>
+                                    <input type="file" id="uploadImage1" name="RoomGalleryImg" multiple onchange="displayFileNames(event)" />
+                                    
                                 </div>
                             </div>
                         </div>
@@ -73,6 +79,56 @@
 </div>
 
 <script>
-    
+
+    ////////////// Thumbnail Preview
+    function showImage(event, previewId) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            const output = document.getElementById(previewId);
+            output.src = reader.result;
+            output.style.display = 'block';
+            const deleteButton = document.querySelector('.delete-button');
+            deleteButton.style.display = 'block'; // Show delete button
+            const uploadIcon = document.querySelector('.upload-icon');
+            uploadIcon.style.display = 'none'; // Hide upload icon
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+    ////////////Delete Thumbnail
+    function deleteImage(inputId) {
+        const input = document.getElementById(inputId);
+        const preview = document.getElementById(inputId + 'Preview');
+        const deleteButton = document.querySelector('.delete-button');
+
+        input.value = ''; // Clear the file input
+        preview.src = '#';
+        preview.style.display = 'none';
+        deleteButton.style.display = 'none';
+        const uploadIcon = document.querySelector('.upload-icon');
+        uploadIcon.style.display = 'flex'; // Show upload icon
+    }
+    ////// Validation
+    function validateForm() {
+        const capacity = document.getElementById('capacity').value;
+        const capacityError = document.getElementById('capacityError');
+        if (capacity === '' || isNaN(capacity) || capacity < 1) {
+            capacityError.textContent = 'Please enter a valid capacity (number greater than 0).';
+            return false;
+        }
+        capacityError.textContent = '';
+        return true;
+    }
+    //////// Display file names of uploaded images
+    @*   function displayFileNames(event) {
+        const files = event.target.files;
+        const container = document.getElementById('fileNamesContainer');
+        container.innerHTML = ''; // Clear the container
+
+        for (let i = 0; i < files.length; i++) {
+        const fileName = document.createElement('div');
+        fileName.textContent = files[i].name;
+        container.appendChild(fileName);
+        }
+        }*@
 </script>
 
