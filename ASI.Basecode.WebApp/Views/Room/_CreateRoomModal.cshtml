@@ -10,9 +10,6 @@
         <div class="modal-content ">
             <div class="modal-header">
                 <h5 class="modal-title" id="createRoomModalLabel">Create Room</h5>
-                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button> *@
             </div>
             <div class="modal-body">
                 <form asp-action="PostCreate" enctype="multipart/form-data" method="post">
@@ -21,18 +18,17 @@
                             <div class="form-group file-upload">
                                 <label for="thumbnail">Thumbnail</label>
                                 <div class="custom-file-upload">
-                                    <input type="file" id="thumbnail" name="RoomThumbnailImg" />
-                                    <label for="thumbnail" class="upload-icon"> <i class="fa fa-plus"></i> </label>
+                                    <input type="file" id="thumbnail1" name="RoomThumbnailImg" />
+                                    <label for="thumbnail1" class="upload-icon"> <i class="fa fa-plus"></i> </label>
                                 </div>
-                                
+
                             </div>
                             <div class="form-group file-upload">
                                 <label for="uploadImage">Upload Image</label>
                                 <div class="custom-file-upload">
-                                    <input type="file" id="uploadImage" name="RoomGalleryImg" multiple />
-                                    <label for="uploadImage" class="upload-icon"> <i class="fa fa-plus"></i> </label>
+                                    <input type="file" id="uploadImage1" name="RoomGalleryImg" multiple />
+                                    <label for="uploadImage1" class="upload-icon"> <i class="fa fa-plus"></i> </label>
                                 </div>
-                                
                             </div>
                         </div>
 
@@ -52,20 +48,17 @@
                             <label style="font-weight: 600; margin-bottom:20px;">Additional Information</label>
                             <div class="form-group">
                                 <label for="location">Location</label>
-                                <input type="text" id="location" name="Location" placeholder="Enter location" required />
+                                <input type="text" id="location" name="Location" placeholder="Enter location" />
                             </div>
                             <div class="form-group">
                                 <label for="capacity">Capacity</label>
-                                <input type="text" id="capacity" name="Capacity" placeholder="Enter capacity" required />
+                                <input type="number" id="capacity" name="Capacity" placeholder="Enter capacity" required />
                             </div>
                             <div class="form-group">
-                                <label for="Equipment">Equipments</label>
-                                <div id="equipmentList">
-                                    <input type="text" class="form-control mb-2" name="Equipments[]" placeholder="Enter equipment name">
-                                </div>
-                                <button type="button" class="btn btn-secondary" id="addEquipmentButton">Add Equipment</button>
+                                <label for="equipment">Equipment</label>
+                                <textarea id="equipment" name="Equipment" rows="4" placeholder="Enter room equipments" required></textarea>
                             </div>
-                            
+
                         </div>
                         <div class="button-group">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
@@ -73,8 +66,6 @@
                         </div>
 
                     </div>
-                    
-                    
                 </form>
             </div>
         </div>
@@ -82,24 +73,6 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var addEquipmentButton = document.getElementById('addEquipmentButton');
-        var equipmentList = document.getElementById('equipmentList');
-
-        addEquipmentButton.addEventListener('click', function () {
-            var lastInput = equipmentList.querySelector('input:last-child');
-
-            // Check if the last input is empty
-            if (lastInput && lastInput.value.trim() === '') {
-                alert('Please enter the current equipment name before adding a new one.');
-            } else {
-                var newInput = document.createElement('input');
-                newInput.type = 'text';
-                newInput.name = 'Equipments[]';
-                newInput.className = 'form-control mb-2';
-                newInput.placeholder = 'Enter equipment name';
-                equipmentList.appendChild(newInput);
-            }
-        });
-    });
+    
 </script>
+
