@@ -17,20 +17,11 @@
     <ul>
         @switch (role)
         {
-            case UserRoleManager.ROLE_SUPER:
-                <li>
-                    <a asp-action="Index" asp-controller="AAUser">
-                        <img src="~/img/room-sidebar-logo.png" />
-                        Users
-                    </a>
-                </li>
-                break;
-            case UserRoleManager.ROLE_ADMIN:
-                <li>
-                    <a asp-action="Index" asp-controller="Room">
-                        <img src="~/img/user-sidebar-logo.png" />
-                        Rooms
-                    </a>
+            <li>
+                <a asp-action="Index" asp-controller="AARoom">
+                    <img src="~/img/user-sidebar-logo.png" />
+                    Rooms
+                </a>
 
                 </li>
                 <li>
@@ -49,7 +40,7 @@
 
                 </li>
                 <li>
-                    <a>
+                    <a asp-action="RoomView" asp-controller="AARoom">
                         <img src="~/img/user-sidebar-logo.png" />
                         Rooms
                     </a>
@@ -83,7 +74,7 @@
 
                 </li>
                 <li>
-                    <a asp-action="RoomView" asp-controller="Room">
+                    <a asp-action="RoomView" asp-controller="AARoom">
                         <img src="~/img/user-sidebar-logo.png" />
                         Rooms
                     </a>

@@ -21,7 +21,7 @@ namespace ASI.Basecode.WebApp.Controllers
     /// <summary>
     /// Room Controller
     /// </summary>
-    public class RoomController : ControllerBase<RoomController>
+    public class AARoomController : ControllerBase<AARoomController>
     {
         private readonly IRoomService _roomService;
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -34,7 +34,7 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <param name="configuration"></param>
         /// <param name="localizer"></param>
         /// <param name="mapper"></param>
-        public RoomController(IRoomService roomService,
+        public AARoomController(IRoomService roomService,
                               IHttpContextAccessor httpContextAccessor,
                               ILoggerFactory loggerFactory,
                               IConfiguration configuration,
