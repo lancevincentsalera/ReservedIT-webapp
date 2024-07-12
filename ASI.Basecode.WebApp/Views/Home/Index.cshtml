@@ -1,41 +1,86 @@
 ﻿@{
-    ViewBag.Title = "Home Page"; /// remove later
+    ViewData["Title"] = "Index";
+    var rooms = new List<dynamic>
+    {
+        new { Name = "Board Room", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt", Location = "14th Lane, Business Center, Sunion Road", Capacity = 7, Equipment = "None", ImageUrl = "login-image.jpg" },
+        new { Name = "Ramen", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt", Location = "11th Floor, Business Center, Sunion Road", Capacity = 15, Equipment = "None", ImageUrl = "ramen.jpg" },
+        new { Name = "Mantawi", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt", Location = "10th Floor, Business Center, Sunion Road", Capacity = 15, Equipment = "Projector", ImageUrl = "mantawi.jpg" },
+        new { Name = "Orchid", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt", Location = "9th Floor, Business Center, Sunion Road", Capacity = 10, Equipment = "Whiteboard", ImageUrl = "orchid.jpg" },
+        new { Name = "Tulip", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt", Location = "8th Floor, Business Center, Sunion Road", Capacity = 8, Equipment = "Teleconferencing", ImageUrl = "tulip.jpg" }
+    };
 }
 
-<div class="text-center">
-    
-    <p>These are just temporary buttons to trigger modals</p>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmationModal">
-        Delete (Temp btn)
-    </button>
+@section styles {
+    <link rel="stylesheet" href="~/css/roomsCard.css" />
+}
 
-    <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#createUserModal">
-        Create User (Temp btn)
-    </button>    
-    
-    <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#editUserModal">
-        Edit User (Temp btn)
-    </button>
-
-    <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#createRoomModal">
-        Add Room (Temp btn)
-    </button>
-
-        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#editRoomModal">
-        Edit Room (Temp btn)
-    </button>
+<div class="room-header">
+    <h1>Rooms</h1>
+    <p>Find Meeting Rooms for your taste and needs.</p>
 </div>
+<button class="carousel-button left" onclick="moveLeft()">&#10094;</button>
+<div class="container-wrapper">
+    <div class="container">
+        @foreach (var room in rooms)
+        {
+            <div class="card">
+                <div class="card-content" onclick="displayModal('#viewRoomCardModal')">
+                    <h3>@room.Name</h3>
+                    <img src="~/images/@room.ImageUrl" alt="@room.Name" class="card-image">
+                    <h1>Description</h1>
+                    <p>@room.Description</p>
+                    <div class="details">
+                        <div class="detail-item">
+                            <span class="font-weight-bold">Location</span>
+                            @*<img src="~/img/Logo1.png" alt="Logo">*@
+                            <span>@room.Location</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="font-weight-bold">Capacity</span>
+                            @*@<img src="~/img/Logo1.png" alt="Logo">*@
+                            <span>@room.Capacity</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="font-weight-bold">Equipment</span>
+                            @*<img src="~/img/Logo1.png" alt="Logo">*@
+                            <span>@room.Equipment</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-book">
+                    <button class="book-button">Book Room</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<button class="carousel-button right" onclick="moveRight()">&#10095;</button>
 
-@* <!-- Include the modal partial view -->
-@Html.Partial("_ConfirmationModal")
-@Html.Partial("_CreateUserModal")
-@Html.Partial("_EditUserModal")
-@Html.Partial("_CreateRoomModal")
-@Html.Partial("_EditRoomModal") *@
+@Html.Partial("_ViewRoomCardModal")
+@section scripts {
+    <script>
+        let currentPosition = 0;
+        const container = document.querySelector('.container');
+        const totalCards = @rooms.Count();
+        const visibleCards = 3;
+        const cardWidth = 310; // 280px card + 30px gap
 
-<style>
-    .btn-custom{
-        background-color: #B5838E;
-        color: white;
-    }
-</style>
+        function moveLeft() {
+            if (currentPosition > 0) {
+                currentPosition--;
+                updateCarousel();
+            }
+        }
+
+        function moveRight() {
+            if (currentPosition < totalCards - visibleCards) {
+                currentPosition++;
+                updateCarousel();
+            }
+        }
+
+        function updateCarousel() {
+            container.style.transform = `translateX(-${currentPosition * cardWidth}px)`;
+        }
+    </script>
+}

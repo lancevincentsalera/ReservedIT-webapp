@@ -19,12 +19,11 @@
 
 <div class="table-container">
     <div class="user-row header">
-        <div class="user-cell">USER ID</div>
-        <div class="user-cell">EMAIL</div>
-        <div class="user-cell">FIRST NAME</div>
-        <div class="user-cell">LAST NAME</div>
-        <div class="user-cell">ROLE</div>
-        <div class="user-cell">STATUS</div>
+        <div class="user-cell">Room Name</div>
+        <div class="user-cell">Date</div>
+        <div class="user-cell">Time from</div>
+        <div class="user-cell">Time to</div>
+        <div class="user-cell">Recurrence</div>
         <div class="user-cell"></div>
     </div>
     <ul class="user-list">
@@ -36,7 +35,6 @@
                 <div class="user-cell" data-label="FIRST NAME">@Html.DisplayFor(modelItem => item.FirstName)</div>
                 <div class="user-cell" data-label="LAST NAME">@Html.DisplayFor(modelItem => item.LastName)</div>
                 <div class="user-cell" data-label="ROLE">@Html.DisplayFor(modelItem => item.RoleName)</div>
-                <div class="user-cell" data-label="STATUS"><span class="status">@Html.DisplayFor(modelItem => item.AccountStatus)</span></div>
                 <div class="user-cell actions">
                     <div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.UserId">
                         <span class="ddicon">&#8942;</span>
