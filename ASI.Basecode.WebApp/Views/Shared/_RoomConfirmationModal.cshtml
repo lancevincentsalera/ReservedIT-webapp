@@ -20,7 +20,26 @@
     </div>
 </div>
 
-
+<!-- confirm EDIT -->
+<div class="modal fade" id="confirmationRoomEditModal" tabindex="-1" aria-labelledby="confirmationRoomEditModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationEditModalLabel">Confirm Action</h5>
+                <button type="button" style="width: 24px; height: 24px;" class="btn-close" data-dismiss="modal" aria-label="Close">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to edit this item?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="hideConfirmationModal('#confirmationEditModal', '#editUserModal')">Close</button>
+                <button type="button" class="btn btn-danger" id="confirmEditBtn" onclick="submitForm('#confirmationRoomEditModal','#editRoomForm', 'PostEdit', 'Room' )">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 

@@ -12,15 +12,11 @@ namespace ASI.Basecode.Data.Interfaces
     {
         IQueryable<Room> GetRooms();
         IQueryable<ImageGallery> GetRoomGalleries();
-        IQueryable<Equipment> GetEquipments();
-        IQueryable<RoomEquipment> GetRoomEquipments();
         bool RoomExists(int roomId);
         void AddRoom(Room room);
         void UpdateRoom(Room room);
         void UpdateGallery(ImageGallery imageGallery);
         void DeleteRoom(Room room);
-        void DeleteEquipment(Equipment equipment);
-        void DeleteRoomEquipment(RoomEquipment roomEquipment);
         void DeleteRoomImage(ImageGallery imageGallery);
     }
 }

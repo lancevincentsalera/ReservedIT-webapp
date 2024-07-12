@@ -54,7 +54,7 @@ namespace ASI.Basecode.Services.Services
                 EndDate = booking.EndDate,
                 TimeFrom = booking.TimeFrom,
                 TimeTo = booking.TimeTo,
-                RoomName = booking.Room.RoomName,
+                /*RoomName = booking.Room.RoomName,*/
                 Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList()
             });
         }
