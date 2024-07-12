@@ -36,31 +36,6 @@
                         </div>
 
                         <div class="input-box">
-                            <span class="details">Password</span>
-                            <div class="password-container">
-                                <input name="Password" type="password" id="edit-passwordInput" class="form-control"
-                                       asp-for="Password" placeholder="Enter password" />
-                                <span class="input-group-text toggle-password" onclick="togglePasswordVisibility('edit-passwordInput', this)">
-                                    <img src="@Url.Content("~/img/eye.svg")" onclick="togglePasswordVisibility('edit-passwordInput')" />
-                                </span>
-                            </div>
-                            <span asp-validation-for="Password" class="text-danger"></span>
-
-                        </div>
-
-                        <div class="input-box">
-                            <span class="details">Confirm Password</span>
-                            <div class="password-container">
-                                <input name="ConfirmPassword" type="password" id="edit-confirmPasswordInput" class="form-control"
-                                       asp-for="ConfirmPassword" placeholder="Reenter password" />
-                                <span class="input-group-text toggle-password" onclick="togglePasswordVisibility('edit-confirmPasswordInput', this)">
-                                    <img src="@Url.Content("~/img/eye.svg")"  />
-                                </span>
-                            </div>
-                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                        </div>
-
-                        <div class="input-box">
                             <span class="details">Role</span>
                             <select name="RoleId" class="form-select" aria-label="Select Role" required>
                                 <option value="" disabled>Select Role</option>

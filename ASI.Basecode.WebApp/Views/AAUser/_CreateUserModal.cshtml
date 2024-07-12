@@ -32,31 +32,6 @@
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
 
-                         <div class="input-box">
-                            <span class="details">Password</span>
-                            <div class="password-container">
-                                <input name="Password" type="password" id="create-passwordInput" class="form-control"
-                                       asp-for="Password" placeholder="Enter password" />
-                                <span class="input-group-text toggle-password" onclick="togglePasswordVisibility('create-passwordInput', this)">
-                                    <img src="@Url.Content("~/img/eye.svg")"/>
-                                </span>
-                            </div>
-                            <span asp-validation-for="Password" class="text-danger"></span>
-
-                        </div>
-
-                        <div class="input-box">
-                            <span class="details">Confirm Password</span>
-                            <div class="password-container">
-                                <input name="ConfirmPassword" type="password" id="create-confirmPasswordInput" class="form-control"
-                                       asp-for="ConfirmPassword" placeholder="Reenter password" />
-                                <span class="input-group-text toggle-password" onclick="togglePasswordVisibility('create-confirmPasswordInput', this)">
-                                    <img src="@Url.Content("~/img/eye.svg")" />
-                                </span>
-                            </div>
-                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                        </div>
-
                         <div class="input-box">
                             <span class="details">Role</span>
                             <select name="RoleId" class="form-select" id="" aria-label="Select Role" required>

@@ -34,5 +34,13 @@
         /// authentication Issuer
         /// </summary>
         public const string Issuer = "asi.basecode";
+
+        ///DEFAULT PASSWORD
+        ///
+        public const string DefaultPassword = "Alliance@12345";
+
+        ///DEFAULT ACCOUNT STATUS
+        ///
+        public const string DefaultAccountStatus = "ACTIVE";
     }
 }

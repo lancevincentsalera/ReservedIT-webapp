@@ -10,6 +10,8 @@ using ASI.Basecode.Services.ServiceModels;
 using System.IO;
 using System;
 using Microsoft.AspNetCore.Authorization;
+using static ASI.Basecode.Resources.Constants.Enums;
+using ASI.Basecode.Resources.Constants;
 
 namespace ASI.Basecode.WebApp.Controllers
 {
@@ -33,14 +35,18 @@ namespace ASI.Basecode.WebApp.Controllers
             this._userService = userService;
         }
 
+        /// <summary>
+        /// DASHBOARD PAGE OF ADMIN
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
-            var roles = _userService.GetRoles();
+            var roles = _userService.GetRolesByRoleOrDefault(RoleId);
             var userViewModel = new UserViewModel()
             {
                 Roles = roles
             };
-            ViewData["users"] = _userService.GetUsers();
+            ViewData["users"] = _userService.GetUsersByRoleOrDefault(RoleId);
             return View(userViewModel);
         }
 
@@ -53,9 +59,9 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 try
                 {
-                    if(user.AccountStatus != "ACTIVE")
+                    if(user.AccountStatus != UserAccountStatus.ACTIVE.ToString())
                     {
-                        user.AccountStatus = "ACTIVE";
+                        user.AccountStatus = UserAccountStatus.ACTIVE.ToString();
                         _userService.UpdateUser(user);
                         TempData["SuccessMessage"] = "User activation successful!";
                     } else
@@ -83,9 +89,9 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 try
                 {
-                    if (user.AccountStatus != "RESTRICTED")
+                    if (user.AccountStatus != UserAccountStatus.RESTRICTED.ToString())
                     {
-                        user.AccountStatus = "RESTRICTED";
+                        user.AccountStatus = UserAccountStatus.RESTRICTED.ToString();
                         _userService.UpdateUser(user);
                         TempData["SuccessMessage"] = "User restriction successful!";
                     }

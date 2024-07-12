@@ -35,7 +35,7 @@
                         <input type="password" id="passwordInput" class="form-control"
                                asp-for="Password" placeholder="Enter password" />
                         <span class="input-group-text toggle-password" onclick="togglePasswordVisibility('passwordInput', this)">
-                            <img src="@Url.Content("~/img/eye.svg")"/>
+                            <img class="toggle-pic" src="@Url.Content("~/img/eye.svg")"/>
                         </span>
                     </div>
                     <span asp-validation-for="Password" class="text-danger"></span>
@@ -45,10 +45,10 @@
                         @Login
                     </button>
                 </div>
+                <div class="contact-info">
+                    <p>For inquiries, you can contact <a href="mailto:alliance@asi-dev2.com">alliance@asi-dev2.com</a> for assistance</p>
+                </div>
             </form>
-            <div class="contact-info">
-                <p>For inquiries, you can contact <a href="mailto:alliance@asi-dev2.com">alliance@asi-dev2.com</a> for assistance</p>
-            </div>
         </div>
     </div>
 </body>
