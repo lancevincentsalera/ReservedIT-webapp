@@ -1,0 +1,91 @@
+﻿/* Import Montserrat font */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+
+.modal-content {
+    background-color: white;
+    border-radius: 20px;
+    height: 100%;
+    color: black;
+    padding: 28px;
+}
+
+.modal-header {
+    border-bottom: 2px solid;
+    padding: 0;
+    align-items: center;
+}
+
+.modal-body {
+    padding: 28px 0 0 0;
+}
+
+.custom-line {
+    border: 0;
+    height: 4px;
+    background: #007bff;
+    margin: 20px 0;
+}
+
+.modal-title {
+    color: black;
+    font-weight: 600;
+}
+
+.modal-body form .user-details .userName {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.modal-body form .user-details {
+    justify-content: space-between;
+}
+
+/*form .user-details .userName {
+    width: calc(100%/2 - 2px) !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}*/
+form .user-details .input-box input, select {
+    width: calc(100% - 2px);
+    height: 35px;
+    border-radius: 10px;
+    border-color: #c5c5c5;
+    border-width: 1px;
+    border-image: none;
+    border-style: groove;
+    margin-bottom: 10px;
+    color: black;
+    padding-left: 12px;
+    font-size: smaller;
+}
+
+.user-details .input-box .details {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.btn-danger, .btn-custom {
+    width: 7vw;
+}
+
+.btn-custom {
+    background-color: #B5838E;
+    color: white;
+}
+
+.modal-footer {
+    border-top: none;
+    padding-top: 30px;
+    padding-bottom: 0;
+}
+
+.modal.modal-second {
+    z-index: 1060;
+}
+
+.modal-backdrop.modal-backdrop-second {
+    z-index: 1055; 
+}

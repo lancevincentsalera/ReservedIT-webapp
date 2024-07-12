@@ -26,6 +26,9 @@ namespace ASI.Basecode.WebApp
             public AutoMapperProfileConfiguration()
             {
                 CreateMap<UserViewModel, User>();
+                CreateMap<RoomViewModel, Room>();
+                CreateMap<RoomEquipmentViewModel, RoomEquipment>();
+                CreateMap<SettingViewModel, Setting>();
             }
         }
     }

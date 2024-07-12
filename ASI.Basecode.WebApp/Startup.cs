@@ -80,10 +80,15 @@ namespace ASI.Basecode.WebApp
         {
             this._services = services;
 
+            services.AddMvc().AddJsonOptions(jsonOptions =>
+            {
+                jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null;
+            });
+
             services.AddMemoryCache();
 
             // Register SQL database configuration context as services.
-            services.AddDbContext<AsiBasecodeDBContext>(options =>
+            services.AddDbContext<ReservedITContext>(options =>
             {
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"),

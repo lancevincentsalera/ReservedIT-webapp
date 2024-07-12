@@ -1,0 +1,78 @@
+﻿@model ASI.Basecode.Services.ServiceModels.RoomViewModel
+
+@section styles {
+    <link rel="stylesheet" href="~/css/roomModal.css" />
+}
+
+<!-- Create Room Modal -->
+<div class="modal fade" id="createRoomModal" tabindex="-1" role="dialog" aria-labelledby="createRoomModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createRoomModalLabel">Create Room</h5>
+            </div>
+            <div class="modal-body">
+                <form asp-action="PostCreate" enctype="multipart/form-data" method="post">
+                    <div class="firstHalf">
+                        <div class="uploadPhoto">
+                            <div class="form-group file-upload">
+                                <label for="thumbnail">Thumbnail</label>
+                                <div class="custom-file-upload">
+                                    <input type="file" id="thumbnail1" name="RoomThumbnailImg" />
+                                    <label for="thumbnail1" class="upload-icon"> <i class="fa fa-plus"></i> </label>
+                                </div>
+
+                            </div>
+                            <div class="form-group file-upload">
+                                <label for="uploadImage">Upload Image</label>
+                                <div class="custom-file-upload">
+                                    <input type="file" id="uploadImage1" name="RoomGalleryImg" multiple />
+                                    <label for="uploadImage1" class="upload-icon"> <i class="fa fa-plus"></i> </label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="RoomName" placeholder="Enter room name" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" name="Description" rows="4" placeholder="Enter room description" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="secondHalf">
+                        <div class="additional-info">
+                            <label style="font-weight: 600; margin-bottom:20px;">Additional Information</label>
+                            <div class="form-group">
+                                <label for="location">Location</label>
+                                <input type="text" id="location" name="Location" placeholder="Enter location" />
+                            </div>
+                            <div class="form-group">
+                                <label for="capacity">Capacity</label>
+                                <input type="number" id="capacity" name="Capacity" placeholder="Enter capacity" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="equipment">Equipment</label>
+                                <textarea id="equipment" name="Equipment" rows="4" placeholder="Enter room equipments" required></textarea>
+                            </div>
+
+                        </div>
+                        <div class="button-group">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-custom">Add</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    
+</script>
+

@@ -7,7 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Home\ConfirmationModal.cshtml" />
+  
+    <Content Remove="wwwroot\css\Index.cshtml" />
+    <Content Remove="wwwroot\roomModal.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="appsettings.json.rej" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\toastr.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\toastr.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +52,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\img\" />
+    <Folder Include="wwwroot\room\gallery\" />
+    <Folder Include="wwwroot\room\thumbnail\" />
   </ItemGroup>
 </Project>

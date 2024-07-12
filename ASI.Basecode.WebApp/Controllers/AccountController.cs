@@ -1,4 +1,5 @@
 ﻿using ASI.Basecode.Data.Models;
+using ASI.Basecode.Resources.Constants;
 using ASI.Basecode.Services.Interfaces;
 using ASI.Basecode.Services.Manager;
 using ASI.Basecode.Services.ServiceModels;
@@ -13,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using static ASI.Basecode.Resources.Constants.Enums;
 
@@ -65,6 +68,17 @@ namespace ASI.Basecode.WebApp.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var roleClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+                var nameClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
+                this._session.SetString("UserName", nameClaim);
+                if (roleClaim != null && Enum.TryParse<UserRoleManager>(roleClaim.Value, out var userRole))
+                {
+                    return RedirectToEndpointByRole(userRole);
+                }
+                return RedirectToAction("Index", "Home");
+            }
             TempData["returnUrl"] = System.Net.WebUtility.UrlDecode(HttpContext.Request.Query["ReturnUrl"]);
             this._sessionManager.Clear();
             this._session.SetString("SessionId", System.Guid.NewGuid().ToString());
@@ -83,30 +97,30 @@ namespace ASI.Basecode.WebApp.Controllers
         {
             this._session.SetString("HasSession", "Exist");
 
-            //User user = null;
+            User user = null;
 
-            User user = new() { Id = 0, UserId = "0", Name = "Name", Password = "Password" };
+            /*User user = new() { UserId = 0, Email = "0", FirstName = "Name", Password = "Password" };
             
             await this._signInManager.SignInAsync(user);
             this._session.SetString("UserName", model.UserId);
 
-            return RedirectToAction("Index", "Home");
-
-            /*var loginResult = _userService.AuthenticateUser(model.UserId, model.Password, ref user);
-            if (loginResult == LoginResult.Success)
+            return RedirectToAction("Index", "Admin");*/
+            var loginResult = _userService.AuthenticateUser(model.Email, model.Password, ref user);
+            switch (loginResult)
             {
-                // 認証OK
-                await this._signInManager.SignInAsync(user);
-                this._session.SetString("UserName", user.Name);
-                return RedirectToAction("Index", "Home");
+                case LoginResult.Success:
+                    await this._signInManager.SignInAsync(user);
+                    this._session.SetString("UserName", string.Join(' ', user.FirstName, user.LastName));
+                    this._session.SetInt32("UserId", user.UserId);
+                    return RedirectToEndpointByRole((UserRoleManager)user.RoleId);
+                case LoginResult.Restricted:
+                    TempData["ErrorMessage"] = "Your account is restricted. Please contact support.";
+                    break;
+                default:
+                    TempData["ErrorMessage"] = "Incorrect Email or Password";
+                    break;
             }
-            else
-            {
-                // 認証NG
-                TempData["ErrorMessage"] = "Incorrect UserId or Password";
-                return View();
-            }
-            return View();*/
+            return View();
         }
 
         [HttpGet]
@@ -120,6 +134,8 @@ namespace ASI.Basecode.WebApp.Controllers
         [AllowAnonymous]
         public IActionResult Register(UserViewModel model)
         {
+            /*var roles = _userService.GetRoles();
+            model.Roles = roles;*/
             try
             {
                 _userService.AddUser(model);
@@ -133,7 +149,7 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 TempData["ErrorMessage"] = Resources.Messages.Errors.ServerError;
             }
-            return View();
+            return View(model);
         }
 
         /// <summary>
@@ -145,6 +161,29 @@ namespace ASI.Basecode.WebApp.Controllers
         {
             await this._signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
+        }
+
+
+        /// <summary>
+        /// Reusable Code for redirecting the user when logging
+        /// in based on the registered ROLE
+        /// </summary>
+        /// <param name="userRole"></param>
+        /// <returns></returns>
+        public ActionResult RedirectToEndpointByRole(UserRoleManager userRole)
+        {
+            switch (userRole)
+            {
+                case UserRoleManager.ROLE_SUPER:
+                case UserRoleManager.ROLE_ADMIN:
+                    return RedirectToAction("Index", "AAUser");
+                case UserRoleManager.ROLE_MANAGER:
+                    return RedirectToAction("Index", "MMDashboard");
+                case UserRoleManager.ROLE_REGULAR:
+                    return RedirectToAction("Index", "Home");
+                default:
+                    return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

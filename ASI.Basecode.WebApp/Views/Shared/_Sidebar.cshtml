@@ -1,0 +1,146 @@
+﻿@using System.Security.Claims;
+@using static ASI.Basecode.Resources.Constants.Enums;
+
+@{
+    var claimsIdentity = User.Identity as ClaimsIdentity;
+    var role = UserRoleManager.ROLE_REGULAR;
+    if (claimsIdentity != null)
+    {
+        Enum.TryParse<UserRoleManager>(claimsIdentity.FindFirst(ClaimTypes.Role).Value, true, out var userRole);
+        role = userRole;
+    }
+}
+<div class="sidebar">
+    <div class="logo-container">
+        <img src="~/img/reservedit-logo.png" />
+    </div>
+    <ul>
+        @switch (role)
+        {
+            case UserRoleManager.ROLE_SUPER:
+                <li>
+                    <a asp-action="Index" asp-controller="AAUser">
+                        <img src="~/img/room-sidebar-logo.png" />
+                        Users
+                    </a>
+                </li>
+                break;
+            case UserRoleManager.ROLE_ADMIN:
+                <li>
+                    <a asp-action="Index" asp-controller="Room">
+                        <img src="~/img/user-sidebar-logo.png" />
+                        Rooms
+                    </a>
+
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="AAUser">
+                        <img src="~/img/room-sidebar-logo.png" />
+                        Users
+                    </a>
+                </li>
+                break;
+            case UserRoleManager.ROLE_MANAGER:
+                <li>
+                    <a asp-action="Index" asp-controller="MMDashboard">
+                        <img src="~/img/dashboard-logo.png" />
+                        Dashboard
+                    </a>
+
+                </li>
+                <li>
+                    <a>
+                        <img src="~/img/user-sidebar-logo.png" />
+                        Rooms
+                    </a>
+
+                </li>
+                <li>
+                    <a>
+                        <img src="~/img/bookings-logo.png" />
+                        Bookings
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <img src="~/img/calendar-logo.png" />
+                        Calendar
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <img src="~/img/reports-logo.png" />
+                        Reports
+                    </a>
+                </li>
+                break;
+            case UserRoleManager.ROLE_REGULAR:
+                <li>
+                    <a>
+                        <img src="~/img/dashboard-logo.png" />
+                        Dashboard
+                    </a>
+
+                </li>
+                <li>
+                    <a asp-action="RoomView" asp-controller="Room">
+                        <img src="~/img/user-sidebar-logo.png" />
+                        Rooms
+                    </a>
+
+                </li>
+                <li>
+                    <a>
+                        <img src="~/img/calendar-logo.png" />
+                        Calendar
+                    </a>
+                </li>
+                break;
+        }
+    </ul>
+    <div class="list-2">
+        <ul >
+            <li>
+                <a asp-action="Index" asp-controller="Setting">
+                    <img src="~/img/settings-logo.png" />
+                    Settings
+                </a>
+                
+            </li>
+            <li>
+                <a asp-action="SignOutUser" asp-controller="Account"> <img src="~/img/logout-sidebar-logo.png" />Logout</a>
+            </li>
+        <ul>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const sidebarItems = document.querySelectorAll('a');
+
+        const setActiveClass = () => {
+            const currPath = window.location.pathname;
+
+            sidebarItems.forEach(item => {
+                if (item.getAttribute('href') === currPath) {
+                    item.parentElement.classList.add('active');
+                } else {
+                    item.parentElement.classList.remove('active');
+                }
+            });
+        };
+
+        setActiveClass();
+
+        sidebarItems.forEach(item => {
+            item.addEventListener('click', function (e) {
+                sidebarItems.forEach(item => {
+                    item.parentElement.classList.remove('active');
+                });
+
+                this.parentElement.classList.add('active');
+            });
+        });
+    });
+
+</script>
