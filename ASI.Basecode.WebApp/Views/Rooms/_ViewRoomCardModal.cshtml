@@ -1,6 +1,4 @@
-﻿@model List<ASI.Basecode.Services.ServiceModels.RoomGalleryViewModel>
-
-@section styles {
+﻿@section styles {
     <link rel="stylesheet" href="~/css/viewRoomCard.css" />
 }
 
@@ -13,6 +11,15 @@
                     <div class="col-md-6">
                         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img src="image1.jpg" class="d-block w-100 modal-image" alt="Image 1">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="image2.jpg" class="d-block w-100 modal-image" alt="Image 2">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="image3.jpg" class="d-block w-100 modal-image" alt="Image 3">
+                                </div>
                             </div>
                             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -27,9 +34,9 @@
                     <!-- Right Column for Description -->
                     <div class="col-md-6">
                         <div class="description-container">
-                            <h1 ></h1>
+                            <h1 data-name="RoomName"</h1>
                             <h5>Description</h5>
-                            <p ></p>
+                            <p data-name="Description"></p>
                         </div>
                     </div>
                 </div>

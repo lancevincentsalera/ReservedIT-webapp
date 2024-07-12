@@ -34,6 +34,14 @@ namespace ASI.Basecode.Services.Services
                     Capacity = s.Capacity.Value,
                     Thumbnail = s.Thumbnail,
                     Equipments = s.Equipments,
+                    _RoomGallery = s.ImageGalleries.Select(i => new RoomGalleryViewModel
+                    {
+                        RoomId = s.RoomId,
+                        GalleryId = i.ImageId,
+                        GalleryName = i.ImageName,
+                        GalleryUrl = i.Path,
+                        
+                    }).ToList(),
                 });
             return data;
         }

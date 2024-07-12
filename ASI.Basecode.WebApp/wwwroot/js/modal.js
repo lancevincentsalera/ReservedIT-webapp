@@ -73,7 +73,40 @@ const getRoomDetails = (btnId, modalId, action, controller) => {
             }
         },
         error: (xhr, status, error) => {
-            console.error('Error fetching user details:', error);
+            console.error('Error fetching room details:', error);
+        }
+    })
+}
+
+const getRoomModalDetails = (btnId, modalId, action, controller) => {
+    let id = $(btnId).data('id');
+
+    $.ajax({
+        url: `/${controller}/${action}`,
+        type: 'GET',
+        data: { roomId: id },
+        success: (response) => {
+            for (let key in response) {
+                if (response.hasOwnProperty(key) && key !== "RoomGallery") {
+                    $(`${modalId} [data-name="${key}"]`).text(response[key]);
+                }
+            }
+
+            let carouselInner = $(`${modalId} .carousel-inner`);
+            carouselInner.empty();
+
+            console.log(response.RoomGallery)
+            response.RoomGallery.forEach((img, index) => {
+                let activeClass = index === 0 ? "active" : "";
+                carouselInner.append(`
+                    <div class="carousel-item ${activeClass}">
+                        <img src="${img.GalleryUrl}" class="d-block w-100 modal-image" alt="${img.GalleryName}">
+                    </div>
+                `);
+            })
+        },
+        error: (xhr, status, error) => {
+            console.error('Error fetching room details:', error);
         }
     })
 }

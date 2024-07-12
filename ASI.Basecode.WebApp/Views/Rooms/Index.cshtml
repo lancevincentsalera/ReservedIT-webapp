@@ -1,0 +1,81 @@
+﻿@model IEnumerable<ASI.Basecode.Services.ServiceModels.RoomViewModel>;
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@section styles {
+    <link rel="stylesheet" href="~/css/roomsCard.css" />
+}
+
+<div class="room-header">
+    <h1>Rooms</h1>
+    <p>Find Meeting Rooms for your taste and needs.</p>
+</div>
+<button class="carousel-button left" onclick="moveLeft()">&#10094;</button>
+<div class="container-wrapper">
+    <div class="container">
+        @foreach (var room in Model)
+        {
+            <div class="card">
+                <div class="card-content" onclick="displayModal('#viewRoomCardModal'); getRoomModalDetails(this, '#viewRoomCardModal', 'GetRoomDetails', 'Rooms')" data-id="@room.RoomId">
+                    <h3>@room.RoomName</h3>
+                    <img src="@room.Thumbnail" alt="@room.RoomName" class="card-image">
+                    <h1>Description</h1>
+                    <p>@room.Description</p>
+                    <div class="details">
+                        <div class="detail-item">
+                            <span class="font-weight-bold">Location</span>
+                            @*<img src="~/img/Logo1.png" alt="Logo">*@
+                            <span>@room.Location</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="font-weight-bold">Capacity</span>
+                            @*@<img src="~/img/Logo1.png" alt="Logo">*@
+                            <span>@room.Capacity</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="font-weight-bold">Equipment</span>
+                            @*<img src="~/img/Logo1.png" alt="Logo">*@
+                            <span>@room.Equipments</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-book">
+                    <button class="book-button">Book Room</button>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+<button class="carousel-button right" onclick="moveRight()">&#10095;</button>
+
+@Html.Partial("_ViewRoomCardModal")
+@section scripts {
+    <script>
+        let currentPosition = 0;
+        const container = document.querySelector('.container');
+        const totalCards = @Model.Count();
+        const visibleCards = 3;
+        const cardWidth = 310; // 280px card + 30px gap
+
+        function moveLeft() {
+            if (currentPosition > 0) {
+                currentPosition--;
+                updateCarousel();
+            }
+        }
+
+        function moveRight() {
+            if (currentPosition < totalCards - visibleCards) {
+                currentPosition++;
+                updateCarousel();
+            }
+        }
+
+        function updateCarousel() {
+            container.style.transform = `translateX(-${currentPosition * cardWidth}px)`;
+        }
+    </script>
+}

@@ -180,7 +180,7 @@ namespace ASI.Basecode.WebApp.Controllers
                 case UserRoleManager.ROLE_MANAGER:
                     return RedirectToAction("Index", "Dashboard");
                 case UserRoleManager.ROLE_REGULAR:
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Dashboard");
                 default:
                     return RedirectToAction("Index", "Home");
             }
