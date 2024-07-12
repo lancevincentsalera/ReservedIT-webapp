@@ -33,7 +33,7 @@ namespace ASI.Basecode.Services.Services
                     Location = s.Location,
                     Capacity = s.Capacity.Value,
                     Thumbnail = s.Thumbnail,
-                    Equipment = s.Equipment,
+                    Equipments = s.Equipments,
 
 
                 });

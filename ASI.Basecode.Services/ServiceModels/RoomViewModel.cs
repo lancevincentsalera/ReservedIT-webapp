@@ -22,7 +22,7 @@ namespace ASI.Basecode.Services.ServiceModels
         [Display(Name = "Capacity")]
         public int Capacity { get; set; }
         [Display(Name = "Room Equipments")]
-        public string Equipment { get; set; }
+        public string Equipments { get; set; }
         public IFormFileCollection RoomGalleryImg { get; set; }
 
         [Display(Name = "Thumbnail Photo")]
