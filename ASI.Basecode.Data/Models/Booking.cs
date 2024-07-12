@@ -23,6 +23,7 @@ namespace ASI.Basecode.Data.Models
         public string UpdatedBy { get; set; }
         public DateTime? UpdatedDt { get; set; }
 
+        public virtual Room Room { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<Recurrence> Recurrences { get; set; }
     }
