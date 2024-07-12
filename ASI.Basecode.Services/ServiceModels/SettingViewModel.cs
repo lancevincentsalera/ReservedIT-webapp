@@ -15,7 +15,7 @@ namespace ASI.Basecode.Services.ServiceModels
         public int? BookingSuccess { get; set; }
         public int? BookingStatusChange { get; set; }
         public int? BookingReminder { get; set; }
-        public TimeSpan? BookingDuration { get; set; }
+        public int? BookingDuration { get; set; }
         public virtual User User { get; set; }
     }
 }
