@@ -34,8 +34,6 @@ namespace ASI.Basecode.Services.Services
                     Capacity = s.Capacity.Value,
                     Thumbnail = s.Thumbnail,
                     Equipments = s.Equipments,
-
-
                 });
             return data;
         }

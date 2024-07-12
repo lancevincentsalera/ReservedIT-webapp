@@ -13,7 +13,7 @@ using System.Linq;
 namespace ASI.Basecode.WebApp.Controllers
 {
     [Authorize(Policy = "ManagerOnly")]
-    public class MMDashboardController : ControllerBase<MMDashboardController>
+    public class DashboardController : ControllerBase<DashboardController>
     {
         private readonly IBookingService _bookingService;
         /// <summary>
@@ -24,7 +24,7 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <param name="configuration"></param>
         /// <param name="localizer"></param>
         /// <param name="mapper"></param>
-        public MMDashboardController(IBookingService bookingService, IHttpContextAccessor httpContextAccessor,
+        public DashboardController(IBookingService bookingService, IHttpContextAccessor httpContextAccessor,
                               ILoggerFactory loggerFactory,
                               IConfiguration configuration,
                               IMapper mapper = null) : base(httpContextAccessor, loggerFactory, configuration, mapper)
