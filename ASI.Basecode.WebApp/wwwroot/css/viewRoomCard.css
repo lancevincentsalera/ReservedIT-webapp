@@ -1,22 +1,46 @@
 ﻿/* Apply a more specific selector or use !important to override Bootstrap defaults */
-#createRoomModal .modal-dialog,
-#editRoomModal .modal-dialog {
-    max-width: 45vw !important;
+.modal-dialog {
+    max-width: 90%; /* Adjust this value as needed */
+    width: 90%;
 }
 
 .modal-content {
     height: fit-content;
+    width: 100%;
 }
 
-.modal-body form {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
+.modal-body {
+    padding: 0;
 }
+
+.carousel-column .carousel-inner .carousel-item {
+    display: flex; /* Make the carousel item a flex container */
+    height: 100%; /* Make the carousel item take full height */
+}
+
+    .carousel-column .carousel-inner .carousel-item img {
+        height: 100%;
+        width: 100%; /* Make the image take full width */
+        object-fit: cover; /* Ensure the image covers the entire area */
+        padding: 0; /* Remove padding */
+    }
 
 .modal-image {
-    max-width: 435px;
-    height: 576px;
+    max-height: 100%; /* Ensure the modal image doesn't exceed the container height */
+    width: 100%;
+    object-fit: cover; /* Ensures the image covers the container without distortion */
+}
+
+.description-container {
+    padding: 20px;
+}
+
+.details {
+    margin-top: 20px;
+}
+
+.detail-item {
+    margin-bottom: 10px;
 }
 
 .modal-body form .firstHalf,
@@ -114,10 +138,10 @@
 }
 
 .modal-body .button-group {
-    float: inline-end;
-    margin-top: 20px;
     display: flex;
+    justify-content: flex-end; /* Align to the right */
     gap: 15px;
+    margin-top: 20px;
 }
 
 .btn-danger,
@@ -128,4 +152,13 @@
 .btn-custom {
     background-color: #b5838e;
     color: white;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
 }

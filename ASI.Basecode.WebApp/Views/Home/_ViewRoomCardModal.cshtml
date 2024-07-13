@@ -8,17 +8,18 @@
             <div class="modal-body">
                 <div class="row">
                     <!-- Left Column for Images -->
-                    <div class="col-md-6">
+                    <div class="col-md-6 carousel-column">
                         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
+                                <!-- Static Data for image gallery -->
                                 <div class="carousel-item active">
-                                    <img src="image1.jpg" class="d-block w-100 modal-image" alt="Image 1">
+                                    <img src="~/img/login-image.jpg" class="d-block w-100 modal-image" alt="Image 1">
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="image2.jpg" class="d-block w-100 modal-image" alt="Image 2">
+                                    <img src="~/img/login-image.jpg" class="d-block w-100 modal-image" alt="Image 2">
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="image3.jpg" class="d-block w-100 modal-image" alt="Image 3">
+                                    <img src="~/img/login-image.jpg" class="d-block w-100 modal-image" alt="Image 3">
                                 </div>
                             </div>
                             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -32,12 +33,32 @@
                         </div>
                     </div>
                     <!-- Right Column for Description -->
-                    <div class="col-md-6">
+                    <div class="col-md-6 description-column">
                         <div class="description-container">
                             <h1>Room Name</h1>
                             <h5>Description</h5>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            <div class="details">
+                                <h2>Details</h2>
+                                <div class="details">
+                                    <div class="detail-item">
+                                        <span class="font-weight-bold">Location</span>
+                                        @*<img src="~/img/Logo1.png" alt="Logo">*@
+                                        <span>@*@room.Location*@</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="font-weight-bold">Capacity</span>
+                                        @*@<img src="~/img/Logo1.png" alt="Logo">*@
+                                        <span>@*@room.Capacity*@</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="font-weight-bold">Equipment</span>
+                                        @*<img src="~/img/Logo1.png" alt="Logo">*@
+                                        <span>@*@room.Equipment*@</span>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -45,7 +66,6 @@
         </div>
     </div>
 </div>
-
 <script>
     // Your JavaScript can remain here if needed
 </script>
