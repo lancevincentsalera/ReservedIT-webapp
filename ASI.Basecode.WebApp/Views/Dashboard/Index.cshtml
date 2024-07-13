@@ -27,11 +27,12 @@
     <ul class="user-list">
         @foreach (var item in Model)
         {
+            var date = item.StartDate.Value.ToString("dd MMMM yyyy");
             if(item.BookingStatus == "APPROVED")
             {
                 <li class="user-row">
                     <div class="user-cell" data-label="Room Name">@Html.DisplayFor(modelItem => item.RoomName)</div>
-                    <div class="user-cell" data-label="Date">@Html.DisplayFor(modelItem => item.StartDate)</div>
+                    <div class="user-cell" data-label="Date">@Html.DisplayFor(modelItem => date)</div>
                     <div class="user-cell" data-label="Time From">@Html.DisplayFor(modelItem => item.TimeFrom)</div>
                     <div class="user-cell" data-label="Time To">@Html.DisplayFor(modelItem => item.TimeTo)</div>
                     <div class="user-cell" data-label="Recurrence">
@@ -46,6 +47,10 @@
                                     <text>, </text>
                                 }
                             }
+                        }
+                        else if(item.Recurrence.Count() == 7)
+                        {
+                            <text>Daily</text>
                         }
                         else
                         {

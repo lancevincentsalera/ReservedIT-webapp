@@ -51,12 +51,14 @@ namespace ASI.Basecode.Services.Services
                 UserId = booking.UserId,
                 RoomId = booking.RoomId,
                 BookingStatus = booking.BookingStatus,
-                StartDate = booking.StartDate.HasValue ? booking.StartDate.Value.ToString("dd MMMM yyyy") : string.Empty,
-                EndDate = booking.EndDate.HasValue ? booking.StartDate.Value.ToString("dd MMMM yyyy") : string.Empty,
+                StartDate = booking.StartDate.Value,
+                EndDate = booking.EndDate.Value,
                 TimeFrom = new DateTime(booking.TimeFrom.Value.Ticks).ToString("h:mm tt"),
                 TimeTo = new DateTime(booking.TimeTo.Value.Ticks).ToString("h:mm tt"),
                 RoomName = booking.Room.RoomName,
                 Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
+                User = booking.User,
+                Room = booking.Room,
             });
         }
 
@@ -69,8 +71,8 @@ namespace ASI.Basecode.Services.Services
                 UserId = booking.UserId,
                 RoomId = booking.RoomId,
                 BookingStatus = booking.BookingStatus,
-                StartDate = booking.StartDate.HasValue ? booking.StartDate.Value.ToString("dd MMMM yyyy") : string.Empty,
-                EndDate = booking.EndDate.HasValue ? booking.StartDate.Value.ToString("dd MMMM yyyy") : string.Empty,
+                StartDate = booking.StartDate.Value,
+                EndDate =  booking.EndDate.Value,
                 TimeFrom = new DateTime(booking.TimeFrom.Value.Ticks).ToString("h:mm tt"),
                 TimeTo = new DateTime(booking.TimeTo.Value.Ticks).ToString("h:mm tt"),
                 RoomName = booking.Room.RoomName,

@@ -1,0 +1,130 @@
+﻿@using ASI.Basecode.Services.ServiceModels
+@model IEnumerable<BookingViewModel>
+@{
+    ViewData["Title"] = "Bookings";
+}
+
+@section styles {
+    <link rel="stylesheet" href="~/css/bookingdashboard.css" />
+}
+
+<div class="dashboard-header">
+    <h1>Bookings</h1>
+    <div class="dashboard-header-right">
+        @Html.Partial("_SearchBarPartial")
+    </div>
+</div>
+
+<div class="table-container">
+    <div class="user-row header">
+        <div class="user-cell">BOOKING ID</div>
+        <div class="user-cell">NAME</div>
+        <div class="user-cell">ROOM</div>
+        <div class="user-cell">DATE</div>
+        <div class="user-cell">TIME</div>
+        <div class="user-cell">RECURRENCE</div>
+        <div class="user-cell">STATUS</div>
+        <div class="user-cell"></div>
+    </div>
+    <ul class="user-list">
+        @foreach (var item in Model)
+        {
+            var nameColumn = $"{item.User.FirstName} {item.User.LastName}<br>{item.User.Email}";
+            var dateColumn = $"{(item.StartDate.HasValue ? item.StartDate.Value.ToString("MMMM dd, yyyy") : string.Empty)} - {(item.EndDate.HasValue ? item.EndDate.Value.ToString("MMMM dd, yyyy") : string.Empty)}";
+            var timeColumn = $"{item.TimeFrom}<br>{item.TimeTo}";
+            <li class="user-row">
+                <div class="user-cell" data-label="BOOKING ID">@Html.DisplayFor(modelItem => item.BookingId)</div>
+                <div class="user-cell" data-label="NAME">@Html.Raw(nameColumn)</div>
+                <div class="user-cell" data-label="ROOM">@Html.DisplayFor(modelItem => item.Room.RoomName)</div>
+                <div class="user-cell" data-label="DATE">@Html.Raw(dateColumn)</div>
+                <div class="user-cell" data-label="TIME">@Html.Raw(timeColumn)</div>
+                <div class="user-cell" data-label="RECURRENCE">
+                    @if (item.Recurrence.Count() > 0)
+                    {
+                        @foreach (var recurrence in item.Recurrence)
+                        {
+                            var dayName = recurrence.DayOfWeek.DayName.Substring(0, 3);
+                            @Html.DisplayFor(modelItem => dayName)
+                            if (recurrence != item.Recurrence.Last())
+                            {
+                                <text>, </text>
+                            }
+                        }
+                    }
+                    else if (item.Recurrence.Count() == 7)
+                    {
+                        <text>Daily</text>
+                    }
+                    else
+                    {
+                        <text>None</text>
+                    }
+                </div>
+                <div class="user-cell" data-label="STATUS"><span class="status">@Html.DisplayFor(modelItem => item.BookingStatus)</span></div>
+                <div class="user-cell actions">
+                    <div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.UserId">
+                        <span class="ddicon">&#8942;</span>
+                    </div>
+                </div>
+            </li>
+        }
+
+    </ul>
+    <div class="dropdown-action">
+        <ul>
+            <li>
+                <form asp-action="ActivateUser" method="post">
+                    <input type="hidden" name="userId" />
+                    <button type="submit" class="btn-status">
+                        <i class="fas fa-circle" style="color: #00FF75; font-size: 10px;"></i> Approve
+                    </button>
+                </form>
+            </li>
+            <li>
+                <form asp-action="RestrictUser" method="post">
+                    <input type="hidden" name="userId" />
+                    <button type="submit" class="btn-status">
+                        <i class="fas fa-circle" style="color: #FF0000; font-size: 10px;"></i> Reject
+                    </button>
+                </form>
+            </li>\
+            <li>
+                <button type="button" class="btn-status" onclick="displayModal('#confirmationDeleteModal'); passId(this, '#confirmDeleteBtn');">
+                    <i class="fas fa-trash-alt" style="color: #FF0000; font-size: 10px;"></i> Delete
+                </button>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+@section scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let statusCells = document.querySelectorAll('.user-cell[data-label="STATUS"] span');
+
+            statusCells.forEach((cell) => {
+                let statusText = cell.textContent.trim().toLowerCase();
+
+                switch (statusText) {
+                    case 'approved':
+                        cell.classList.add('status-active');
+                        break;
+                    case 'rejected':
+                        cell.classList.add('status-restricted');
+                        break;
+                    case 'pending':
+                        cell.classList.add('status-pending');
+                        break;
+                    default:
+                        // Add a default style or leave it as is
+                        break;
+                }
+            });
+
+
+
+        });
+        document.getElementById("searchInput").addEventListener("keyup", filterList);
+    </script>
+}
