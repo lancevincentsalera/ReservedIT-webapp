@@ -66,7 +66,7 @@ namespace ASI.Basecode.WebApp.Mvc
                     return userId;
                 }
 
-                return 0;
+                return -1;
             }
         }
 
@@ -83,15 +83,27 @@ namespace ASI.Basecode.WebApp.Mvc
         /// </summary>
         public string UserRole
         {
-            get { return User.FindFirst(ClaimTypes.Role).Value; }
+            get 
+            { 
+                return User.FindFirst(ClaimTypes.Role).Value;
+            }
         }
 
         /// <summary>
-        /// Get ClientId.
+        /// Get RoleId.
         /// </summary>
-        public string ClientId
+        public int RoleId
         {
-            get { return User.FindFirst("ClientId").Value; }
+            get 
+            {
+                var claim = User.FindFirst("RoleId").Value;
+                if (!string.IsNullOrEmpty(claim) && int.TryParse(claim, out int roleId))
+                {
+                    return roleId;
+                }
+
+                return -1;
+            }
         }
 
         /// <summary>

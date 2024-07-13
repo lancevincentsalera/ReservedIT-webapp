@@ -1,6 +1,7 @@
 ﻿using ASI.Basecode.Data.Interfaces;
 using ASI.Basecode.Data.Models;
 using ASI.Basecode.Data.Repositories;
+using ASI.Basecode.Resources.Constants;
 using ASI.Basecode.Services.Interfaces;
 using ASI.Basecode.Services.Manager;
 using ASI.Basecode.Services.ServiceModels;
@@ -55,8 +56,8 @@ namespace ASI.Basecode.Services.Services
             if (!_repository.UserExists(model.Email))
             {
                 _mapper.Map(model, user);
-                user.AccountStatus = "PENDING";
-                user.Password = PasswordManager.EncryptPassword(model.Password);
+                user.AccountStatus = Const.DefaultAccountStatus;
+                user.Password = PasswordManager.EncryptPassword(Const.DefaultPassword);
                 user.CreatedDt = DateTime.Now;
                 user.UpdatedDt = DateTime.Now;
                 user.CreatedBy = System.Environment.UserName;
@@ -70,9 +71,40 @@ namespace ASI.Basecode.Services.Services
             }
         }
 
-        public List<Role> GetRoles()
+        public List<Role> GetRolesByRoleOrDefault(int roleId)
         {
+            switch ((UserRoleManager) roleId)
+            {
+                case UserRoleManager.ROLE_SUPER:
+                    return _repository.GetRoles().Where(r =>  r.RoleId == (int)UserRoleManager.ROLE_ADMIN).ToList();
+                case UserRoleManager.ROLE_ADMIN:
+                    return _repository.GetRoles().Where(r => r.RoleId > roleId).ToList();
+            }
            return _repository.GetRoles().ToList();
+        }
+
+        public IEnumerable<UserViewModel> GetUsersByRoleOrDefault(int roleId)
+        {
+            var users = _repository.GetUsers().Select(u => new UserViewModel
+            {
+                UserId = u.UserId,
+                Email = u.Email,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                RoleId = u.RoleId,
+                RoleName = u.Role.RoleName,
+                AccountStatus = u.AccountStatus,
+            });
+
+            switch ((UserRoleManager)roleId)
+            {
+                case UserRoleManager.ROLE_SUPER:
+                    return users.Where(u => u.RoleId == (int)UserRoleManager.ROLE_ADMIN);
+                case UserRoleManager.ROLE_ADMIN:
+                    return users.Where(u => u.RoleId > roleId);
+            }
+
+            return users;
         }
 
         public IEnumerable<UserViewModel> GetUsers()
@@ -82,13 +114,11 @@ namespace ASI.Basecode.Services.Services
                 UserId = u.UserId,
                 Email = u.Email,
                 FirstName = u.FirstName,
-                Password = PasswordManager.DecryptPassword(u.Password),
                 LastName = u.LastName,
                 RoleId = u.RoleId,
                 RoleName = u.Role.RoleName,
                 AccountStatus = u.AccountStatus,
             });
-
             return users;
         }
 
@@ -98,7 +128,6 @@ namespace ASI.Basecode.Services.Services
             if(userToBeUpdated != null)
             {
                 _mapper.Map(user, userToBeUpdated);
-                userToBeUpdated.Password = PasswordManager.EncryptPassword(user.Password);
                 userToBeUpdated.UpdatedDt = DateTime.Now;
                 userToBeUpdated.UpdatedBy = System.Environment.UserName;
 

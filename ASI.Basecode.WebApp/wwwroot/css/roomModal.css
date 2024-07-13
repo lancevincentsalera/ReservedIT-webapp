@@ -4,15 +4,15 @@
     max-width: 45vw !important;
 }
 
-.modal-content{
-    height:fit-content;
+.modal-content {
+    height: fit-content;
 }
 
 
-.modal-body form{
+.modal-body form {
     display: flex;
     justify-content: space-between;
-    gap:20px;
+    gap: 20px;
 }
 Q
 
@@ -21,10 +21,10 @@ Q
     justify-content: space-between;
 }
 
-.modal-body form .firstHalf,
-.modal-body form .secondHalf{
-    flex: 1;
-}
+    .modal-body form .firstHalf,
+    .modal-body form .secondHalf {
+        flex: 1;
+    }
 
     .modal-body form .uploadPhoto {
         display: flex;
@@ -39,7 +39,7 @@ Q
 
     .modal-body .form-group label {
         display: block;
-/*        margin-bottom: 5px;*/
+        /*        margin-bottom: 5px;*/
     }
 
     .modal-body .form-group input,
@@ -55,67 +55,90 @@ Q
     flex: 1;
 }
 
-/*    .additional-info .form-group input {
-        width: calc(100% - 10px);
-    }
+/* Styles for the image container */
+.image-container {
+    position: relative;
+    display:;
+    width: 100%;
+    height: -webkit-fill-available;
+}
 
-    .additional-info .form-group button {
-        width: 100%;
-    }*/
+.delete-button {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #a99f9f;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    line-height: 25px;
+}
+
+/*thumbnail*/
+.image-preview {
+    display: none;
+    width: 100%;
+    max-width: 200px;
+    height: -webkit-fill-available;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
 
 /*---- Custom File upload styles----*/
 .modal-body .custom-file-upload {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid;
+    border: 1px solid #ccc;
     height: 100px;
     width: 10vw;
 }
 
 .modal-body .file-upload input {
     margin-right: 10px;
+    text-wrap: balance;
 }
 
-    .custom-file-upload input[type="file"] {
-        display: none;
-    }
+.custom-file-upload input[type="file"] {
+    display: none;
+}
 
-        .custom-file-upload .upload-label {
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background-color: #eee;
-        border: 1px solid #ccc;
-        }
+.custom-file-upload .upload-label {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #eee;
+    border: 1px solid #ccc;
+}
 
 .custom-file-upload .upload-icon {
-    /*    cursor: pointer;
-    padding: 10px;
-    border: 1px solid #ccc;*/
+    position: absolute;
+    z-index: 999;
     border-radius: 20px;
-    /*color: black;
-    display: inline-block;
-    align-items: center;
-    margin-bottom: 0;*/
     justify-content: center;
     width: 25px;
     height: 25px;
-    /*  font: 200;*/
     text-align: center;
     background-color: #f8f8f8;
 }
 
-            .custom-file-upload .upload-icon i.fa {
-                font-size: 15px;
-            }
+    .custom-file-upload .upload-icon i.fa {
+        font-size: 15px;
+    }
 
 /* Styles for the equipment list */
-#equipmentList {
+/*#equipmentList {
     list-style-type: none;
     padding: 0;
     margin-top: 10px;
@@ -133,17 +156,18 @@ Q
         border-radius: 10px;
         border: 0px solid;
         font-size: 12px;
-        padding:8px;
-        /*background-color: */
+        padding:8px;*/
+/*background-color: */
 
-    }
+/*}*/
 
-.modal-body .button-group{
-   float:inline-end;
-   margin-top: 20px;
-   display:flex;
-   gap: 15px;
+.modal-body .button-group {
+    float: inline-end;
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
 }
+
 .btn-danger, .btn-custom {
     width: 7vw;
 }

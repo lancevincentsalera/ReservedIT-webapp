@@ -14,105 +14,247 @@
 </div>
 
 <div class="table-container">
-    <div class="table-column">
-        <div class="basic-information">
-            <h2>Basic Information</h2>
-            <div class="profile-picture">
-                <img src="~/img/default-profile.png" alt="Profile Picture">
-                @* <button class="edit-picture-btn">Edit</button> *@
+    <div class="setting">
+        <div class="table-column">
+            <div class="basic-information">
+                <h2>Basic Information</h2>
+                <div class="profile-picture">
+                    <img src="~/img/default-profile.png" alt="Profile Picture">
+                    @* <button class="edit-picture-btn">Edit</button> *@
+                    <h5>@HttpContextAccessor.HttpContext.Session.GetString("UserName")</h5>
+                    <h6>@Html.DisplayFor(model => model.User.Role.RoleName)</h6>
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="full-name">Full Name</label>
+                    <input class="form-control" type="text" id="full-name" value="@HttpContextAccessor.HttpContext.Session.GetString("UserName")" disabled>
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-control" type="email" id="email" value="@Html.DisplayFor(model => model.User.Email)" disabled>
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="role">Role</label>
+                    <input class="form-control" type="text" id="role" value="@Html.DisplayFor(model => model.User.Role.RoleName)" disabled>
+                </div>
             </div>
-            <div class="info-field">
-                <label for="full-name">Full Name</label>
-                <input type="text" id="full-name" value="@HttpContextAccessor.HttpContext.Session.GetString("UserName")" disabled>
+        </div>
+
+        <div class="table-column">
+            <div class="notifications">
+                <h2>Notifications</h2>
+
+                <div class="notification-option">
+                    <h5>
+                        Successful Booking
+                        <label class="switch">
+                            <input type="checkbox" id="booking-success-checkbox" checked=@(Model.BookingSuccess == 1)>
+                            <span class="slider"></span>
+                        </label>
+                    </h5>
+                    <h6>Notify when booking is sucessfully created</h6>
+                </div>
+
+                <div class="notification-option">
+                    <h5 for="booking-status-change" aria-labelledby="booking-status-change">
+                        Booking Status
+                        <label class="switch">
+                            <input type="checkbox" id="booking-status-change-checkbox" checked=@(Model.BookingStatusChange == 1)>
+                            <span class="slider"></span>
+                        </label>
+                    </h5>
+                    <h6>Notify when booking status changes</h6>
+                </div>
+
+                <div class="notification-option">
+                    <h5 for="booking-reminder" aria-labelledby="booking-reminder">
+                        Set Reminders
+                    </h5>
+                    <h6>Set reminders prior to a booking</h6>
+                    <select id="booking-reminder" onchange="handleReminderChange()">
+                        <option value=0 id="booking-reminder-none" selected>None</option>
+                        <option value=900 id="booking-reminder-15-mins" selected>15 mins</option>
+                        <option value=1800 id="booking-reminder-30-mins">30 mins</option>
+                        <option value=3600 id="booking-reminder-1-hour">1 hour</option>
+                        <option value="custom" id="booking-reminder-custom">Custom</option>
+                    </select>
+                    <div id="booking-reminder-custom-time" hidden style="">
+                        <input type="number" id="days" min=0 max=31 value=1 oninput="limitTime(this)">Days
+                        <input type="number" id="hours" min=0 max=24 value=0 oninput="limitTime(this)">Hours
+                    </div>
+                </div>
             </div>
-            <div class="info-field">
-                <label for="email">Email</label>
-                <input type="email" id="email" value="@Html.DisplayFor(model => model.User.Email)" disabled>
+
+
+            <div class="booking-references">
+                <h2>Booking References</h2>
+                <div class="notification-option">
+                    <h5 for="booking-duration" aria-labelledby="booking-duration">
+                        Duration
+                    </h5>
+                    <h6>Set default booking duration</h6>
+                    <div id="booking-duration-time">
+                        <input type="number" id="hours" min=0 max=8 value="" oninput="limitTime(this)"> Hours
+                        <input type="number" id="minutes" min=0 max=59 value=0 oninput="limitTime(this)"> Minutes
+                    </div>
+                </div>
             </div>
-            <div class="info-field">
-                <label for="role">Role</label>
-                <input type="text" id="role" value="@Html.DisplayFor(model => model.User.Role.RoleName)" disabled>
+
+            <div class="save-button">
+                <button type="button" class="btn btn-custom" onclick="sendData()">Save Changes</button>
             </div>
         </div>
     </div>
-
-    <div class="table-column">
-        <div class="notifications">
-            <h2>Notifications</h2>
-            <div class="notification-option">
-                <input type="checkbox" id="successful-booking">
-                <label for="successful-booking">Successful Booking</label>
-            </div>
-            <div class="notification-option">
-                <input type="checkbox" id="booking-status" checked>
-                <label for="booking-status">Booking Status</label>
-            </div>
-            <div class="notification-option">
-                <label for="set-reminders">Set Reminders</label>
-                <select id="set-reminders">
-                    <option value="30-mins" selected>30 mins</option>
-                    <option value="1-hour">1 hour</option>
-                    <option value="2-hours">2 hours</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="booking-references">
-            <h2>Booking References</h2>
-            <div class="duration-setting">
-                <label for="duration">Duration</label>
-                <input type="number" id="hours" min="0" max="23" value="1"> Hours
-                <input type="number" id="minutes" min="0" max="59" value="0"> Minutes
-            </div>
-        </div>
-
-        <button class="save-changes-btn">Save Changes</button>
-    </div>
-
 </div>
-@* <div>
-    <h4>SettingViewModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SettingId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SettingId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.BookingSuccess)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BookingSuccess)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.BookingStatusChange)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BookingStatusChange)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.BookingReminder)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BookingReminder)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.BookingDuration)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BookingDuration)
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
-</div> *@
+
+@section Scripts {
+    <script>
+
+        function sendData() {
+            const bookingSuccessChecked = document.getElementById('booking-success-checkbox').checked ? 1 : 0;
+            const bookingStatusChangeChecked = document.getElementById('booking-status-change-checkbox').checked ? 1 : 0;
+            const bookingReminderSeconds = parseInt(calculateTotalSecondsBookingReminder());
+            const bookingDurationSeconds = parseInt(calculateTotalSecondsBookingDuration());
+
+            function calculateTotalSecondsBookingReminder() {
+                const selectElement = document.getElementById('booking-reminder');
+                const daysInput = parseInt($('#booking-reminder-custom-time #days').val());
+                const hoursInput = parseInt($('#booking-reminder-custom-time #hours').val());
+
+                if (selectElement.value === 'custom') {
+                    const totalSeconds = (daysInput * 24 * 60 * 60) + (hoursInput * 60 * 60);
+                    return totalSeconds;
+                }
+                return selectElement.value;
+            }
+
+            function calculateTotalSecondsBookingDuration() {
+                const selectElement = document.getElementById('booking-reminder');
+                const hoursInput = parseInt($('#booking-duration-time #hours').val());
+                const minutesInput = parseInt($('#booking-duration-time #minutes').val());
+
+                const totalSeconds = (hoursInput * 60 * 60) + (minutesInput * 60);
+                return totalSeconds;
+            }
+
+            const data = {
+                SettingId: @Model.SettingId,
+                UserId: @Model.UserId,
+                BookingSuccess: bookingSuccessChecked,
+                BookingStatusChange: bookingStatusChangeChecked,
+                BookingReminder: bookingReminderSeconds,
+                BookingDuration: bookingDurationSeconds
+            };
+
+            fetch(`/Setting/Edit/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    alert('Data sent successfully');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error sending data');
+                });
+        }
+
+
+        window.onload = () => {
+            showCustomTime();
+            showDefaultDuration();
+            // Default option selection of booking-reminder based on user settings
+            function showCustomTime() {
+                const select = document.getElementById("booking-reminder");
+                const timeInput = document.getElementById("booking-reminder-custom-time");
+
+                let bookingReminder = parseInt(@Model.BookingReminder);
+
+                if (![0, 900, 1800, 3600].includes(bookingReminder)) {
+                    select.value = 'custom';
+                    handleReminderChange();
+                    const secondToDay = parseInt(bookingReminder / (24 * 60 * 60));
+                    const secondToHour = parseInt((bookingReminder % (24 * 60 * 60) / (60 * 60)));
+                    $('#booking-reminder-custom-time #days').val(secondToDay);
+                    $('#booking-reminder-custom-time #hours').val(secondToHour);
+                } else {
+                    select.value = bookingReminder;
+                }
+            }
+
+            function showDefaultDuration() {
+                let bookingDuration = parseInt(@Model.BookingDuration);
+
+                const secondToHour = parseInt(bookingDuration / (60 * 60));
+                const secondToMinutes = parseInt((bookingDuration % (60 * 60)) / 60);
+
+                $('#booking-duration-time #hours').val(secondToHour);
+                $('#booking-duration-time #minutes').val(secondToMinutes);
+
+
+            }
+        }
+
+        // Dropdown number input for custom booking reminders
+        function handleReminderChange() {
+            const select = document.getElementById("booking-reminder");
+            const timeInput = document.getElementById("booking-reminder-custom-time");
+
+            if (select.value === 'custom') {
+                timeInput.hidden = false;
+                $('#booking-reminder-custom-time .html-duration-picker-input-controls-wrapper').show();
+                $('#booking-reminder-custom-time .html-duration-picker-input-controls-wrapper').css({
+                    'width': '224px',
+                    'margin-left': '0px',
+                    'margin-right': '0px'
+                });
+                $('.controls').css({
+                    'left': '204px',
+                    'height': '28px'
+                });
+            } else {
+                timeInput.hidden = true;
+                $('#booking-reminder-custom-time .html-duration-picker-input-controls-wrapper').hide();
+            }
+        }
+
+        function printValue(element) {
+            console.log(element.value);
+        }
+
+        // Prevent exponential values for input type number
+        $("input[type=number]").on("keydown", function (e) {
+            var invalidChars = ["-", "+", "e"];
+            if (invalidChars.includes(e.key)) {
+                e.preventDefault();
+            }
+        });
+
+        $(document).ready(function () {
+            $('#booking-duration-time').on('change', function () {
+                limitTotalTime();
+            });
+
+            // Function to enforce total time limit (8 hours max)
+            function limitTotalTime() {
+                const hours = parseInt($('#booking-duration-time #hours').val());
+                const minutes = parseInt($('#booking-duration-time #minutes').val());
+
+                if (hours === 8 && minutes > 0) {
+                    $('#minutes').val(0);
+                }
+            }
+        });
+
+        // Function to enforce time limit
+        function limitTime(input) {
+            if (parseInt(input.value) < parseInt(input.min)) input.value = parseInt(input.min);
+            if (parseInt(input.value) > parseInt(input.max)) input.value = parseInt(input.max);
+        }
+
+    </script>
+}

@@ -9,7 +9,6 @@ namespace ASI.Basecode.Data.Models
         {
             Bookings = new HashSet<Booking>();
             ImageGalleries = new HashSet<ImageGallery>();
-            RoomEquipments = new HashSet<RoomEquipment>();
         }
 
         public int RoomId { get; set; }
@@ -22,9 +21,9 @@ namespace ASI.Basecode.Data.Models
         public DateTime? CreatedDt { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime? UpdatedDt { get; set; }
+        public string Equipments { get; set; }
 
         public virtual ICollection<Booking> Bookings { get; set; }
         public virtual ICollection<ImageGallery> ImageGalleries { get; set; }
-        public virtual ICollection<RoomEquipment> RoomEquipments { get; set; }
     }
 }

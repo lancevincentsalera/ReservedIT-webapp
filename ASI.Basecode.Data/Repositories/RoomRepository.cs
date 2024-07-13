@@ -49,28 +49,6 @@ namespace ASI.Basecode.Data.Repositories
             this.GetDbSet<Room>().Remove(room);
             UnitOfWork.SaveChanges();
         }
-
-        public IQueryable<RoomEquipment> GetRoomEquipments()
-        {
-           return this.GetDbSet<RoomEquipment>();
-        }
-
-        public IQueryable<Equipment> GetEquipments()
-        {
-            return this.GetDbSet<Equipment>();
-        }
-
-        public void DeleteRoomEquipment(RoomEquipment roomEquipment)
-        {
-            this.GetDbSet<RoomEquipment>().Remove(roomEquipment);
-            UnitOfWork.SaveChanges();
-        }
-
-        public void DeleteEquipment(Equipment equipment)
-        {
-            this.GetDbSet<Equipment>().Remove(equipment);
-            UnitOfWork.SaveChanges();
-        }
         public void DeleteRoomImage(ImageGallery imageGallery)
         {
             this.GetDbSet<ImageGallery>().Remove(imageGallery);

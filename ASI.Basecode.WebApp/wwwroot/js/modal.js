@@ -43,6 +43,75 @@ const getUserDetails = (btnId, modalId, action, controller) => {
     })
 }
 
+const getRoomDetails = (btnId, modalId, action, controller) => {
+    let id = $(btnId).data('id');
+
+    console.log(id);
+    console.log(`/${controller}/${action}`)
+
+    $.ajax({
+        url: `/${controller}/${action}`,
+        type: 'GET',
+        data: { userId: id },
+        success: (response) => {
+            console.log(response);
+            for (let key in response) {
+                if (key === 'RoleId') {
+                    $(`${modalId} select[name="RoleId"] option`).each((index, element) => {
+                        let $option = $(element);
+                        if ($option.val() === ('' + response[key])) {
+                            console.log("val", typeof $option.val(), "vs", typeof ('' + response[key]));
+                            $option.prop('selected', true);
+                        } else {
+                            $option.prop('selected', false);
+                        }
+                    })
+                } else {
+                    $(`${modalId} input[name="${key}"], ${modalId} textarea[name="${key}"]`).val(response[key]);
+                }
+
+            }
+        },
+        error: (xhr, status, error) => {
+            console.error('Error fetching room details:', error);
+        }
+    })
+}
+
+const getRoomModalDetails = (btnId, modalId, action, controller) => {
+    let id = $(btnId).data('id');
+
+    $.ajax({
+        url: `/${controller}/${action}`,
+        type: 'GET',
+        data: { roomId: id },
+        success: (response) => {
+            for (let key in response) {
+                if (response.hasOwnProperty(key) && key !== "RoomGallery") {
+                    $(`${modalId} [data-name="${key}"]`).text(response[key]);
+                }
+            }
+
+            let carouselInner = $(`${modalId} .carousel-inner`);
+            carouselInner.empty();
+
+            console.log(response.RoomGallery)
+            response.RoomGallery.forEach((img, index) => {
+                let activeClass = index === 0 ? "active" : "";
+                carouselInner.append(`
+                    <div class="carousel-item ${activeClass}">
+                        <img src="${img.GalleryUrl}" class="d-block w-100 modal-image" alt="${img.GalleryName}">
+                    </div>
+                `);
+            })
+        },
+        error: (xhr, status, error) => {
+            console.error('Error fetching room details:', error);
+        }
+    })
+}
+
+
 let count = 0;
 
 const displayConfirmationModal = (formId, hideId, showId) => {
@@ -71,6 +140,11 @@ const submitForm = (modalId, formId, action, controller) => {
     try {
         let form = document.querySelector(formId);
         let formData = new FormData(form);
+        setTimeout(()=>console.log(formData), 5000)
+
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
+        }
 
         $.ajax({
             url: `/${controller}/${action}`,
