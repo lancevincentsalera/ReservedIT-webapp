@@ -15,8 +15,8 @@ namespace ASI.Basecode.Services.ServiceModels
         public string BookingStatus { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public string TimeFrom { get; set; }
-        public string TimeTo { get; set; }
+        public TimeSpan? TimeFrom { get; set; }
+        public TimeSpan? TimeTo { get; set; }
         public string RoomName { get; set; }
         public List<Recurrence> Recurrence { get; set; }
         public User User { get; set; }

@@ -36,6 +36,18 @@
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public enum BookingStatus
+        {
+            APPROVED,
+            REJECTED,
+            CANCELLED,
+            PENDING,
+            COMPLETED
+        }
+
+        /// <summary>
         /// ROLES
         /// </summary>
         public enum UserRoleManager

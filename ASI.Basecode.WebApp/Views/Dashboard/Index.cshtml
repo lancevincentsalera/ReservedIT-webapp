@@ -30,11 +30,13 @@
             var date = item.StartDate.Value.ToString("dd MMMM yyyy");
             if(item.BookingStatus == "APPROVED")
             {
+                var timeFrom = new DateTime(item.TimeFrom.Value.Ticks).ToString("h:mm tt").ToUpper();
+                var timeTo = new DateTime(item.TimeTo.Value.Ticks).ToString("h:mm tt").ToUpper();
                 <li class="user-row">
                     <div class="user-cell" data-label="Room Name">@Html.DisplayFor(modelItem => item.RoomName)</div>
                     <div class="user-cell" data-label="Date">@Html.DisplayFor(modelItem => date)</div>
-                    <div class="user-cell" data-label="Time From">@Html.DisplayFor(modelItem => item.TimeFrom)</div>
-                    <div class="user-cell" data-label="Time To">@Html.DisplayFor(modelItem => item.TimeTo)</div>
+                    <div class="user-cell" data-label="Time From">@Html.DisplayFor(modelItem => timeFrom)</div>
+                    <div class="user-cell" data-label="Time To">@Html.DisplayFor(modelItem => timeTo)</div>
                     <div class="user-cell" data-label="Recurrence">
                         @if (item.Recurrence.Count() > 0)
                         {
@@ -87,11 +89,13 @@
         {
             if (item.BookingStatus == "COMPLETED" || item.BookingStatus == "CANCELLED")
             {
+                var timeFrom = new DateTime(item.TimeFrom.Value.Ticks).ToString("h:mm tt").ToUpper();
+                var timeTo = new DateTime(item.TimeTo.Value.Ticks).ToString("h:mm tt").ToUpper();
                 <li class="user-row">
                     <div class="user-cell" data-label="Room Name">@Html.DisplayFor(modelItem => item.RoomName)</div>
                     <div class="user-cell" data-label="Date">@Html.DisplayFor(modelItem => item.StartDate)</div>
-                    <div class="user-cell" data-label="Time From">@Html.DisplayFor(modelItem => item.TimeFrom)</div>
-                    <div class="user-cell" data-label="Time To">@Html.DisplayFor(modelItem => item.TimeTo)</div>
+                    <div class="user-cell" data-label="Time From">@Html.DisplayFor(modelItem => timeFrom)</div>
+                    <div class="user-cell" data-label="Time To">@Html.DisplayFor(modelItem => timeTo)</div>
                     <div class="user-cell" data-label="Recurrence">
                         @if (item.Recurrence.Count() > 0)
                         {

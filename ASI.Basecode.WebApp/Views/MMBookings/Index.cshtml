@@ -29,9 +29,11 @@
     <ul class="user-list">
         @foreach (var item in Model)
         {
+            var timeFrom = new DateTime(item.TimeFrom.Value.Ticks).ToString("h:mm tt").ToUpper();
+            var timeTo = new DateTime(item.TimeTo.Value.Ticks).ToString("h:mm tt").ToUpper();
             var nameColumn = $"{item.User.FirstName} {item.User.LastName}<br>{item.User.Email}";
             var dateColumn = $"{(item.StartDate.HasValue ? item.StartDate.Value.ToString("MMMM dd, yyyy") : string.Empty)} - {(item.EndDate.HasValue ? item.EndDate.Value.ToString("MMMM dd, yyyy") : string.Empty)}";
-            var timeColumn = $"{item.TimeFrom}<br>{item.TimeTo}";
+            var timeColumn = $"{timeFrom}<br>{timeTo}";
             <li class="user-row">
                 <div class="user-cell" data-label="BOOKING ID">@Html.DisplayFor(modelItem => item.BookingId)</div>
                 <div class="user-cell" data-label="NAME">@Html.Raw(nameColumn)</div>
@@ -62,7 +64,7 @@
                 </div>
                 <div class="user-cell" data-label="STATUS"><span class="status">@Html.DisplayFor(modelItem => item.BookingStatus)</span></div>
                 <div class="user-cell actions">
-                    <div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.UserId">
+                    <div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.BookingId">
                         <span class="ddicon">&#8942;</span>
                     </div>
                 </div>
@@ -73,23 +75,23 @@
     <div class="dropdown-action">
         <ul>
             <li>
-                <form asp-action="ActivateUser" method="post">
-                    <input type="hidden" name="userId" />
+                <form asp-action="ApproveBooking" method="post">
+                    <input type="hidden" name="bookingId" />
                     <button type="submit" class="btn-status">
                         <i class="fas fa-circle" style="color: #00FF75; font-size: 10px;"></i> Approve
                     </button>
                 </form>
             </li>
             <li>
-                <form asp-action="RestrictUser" method="post">
-                    <input type="hidden" name="userId" />
+                <form asp-action="RejectBooking" method="post">
+                    <input type="hidden" name="bookingId" />
                     <button type="submit" class="btn-status">
                         <i class="fas fa-circle" style="color: #FF0000; font-size: 10px;"></i> Reject
                     </button>
                 </form>
-            </li>\
+            </li>
             <li>
-                <button type="button" class="btn-status" onclick="displayModal('#confirmationDeleteModal'); passId(this, '#confirmDeleteBtn');">
+                <button type="button" class="btn-status" onclick="displayModal('#confirmationBookingDeleteModal'); passId(this, '#confirmDeleteBtn');">
                     <i class="fas fa-trash-alt" style="color: #FF0000; font-size: 10px;"></i> Delete
                 </button>
             </li>
@@ -97,6 +99,8 @@
     </div>
 
 </div>
+
+@Html.Partial("_BookingsConfirmationModal")
 
 @section scripts {
     <script>
@@ -115,6 +119,12 @@
                         break;
                     case 'pending':
                         cell.classList.add('status-pending');
+                        break;
+                    case 'cancelled':
+                        cell.classList.add('status-cancelled');
+                        break;
+                    case 'completed':
+                        cell.classList.add('status-completed');
                         break;
                     default:
                         // Add a default style or leave it as is
