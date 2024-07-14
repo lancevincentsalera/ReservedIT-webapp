@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Manager Bookings";
+}
+
+@section styles {
+    <link rel="stylesheet" href="~/css/Booking.css" />
+}
+
+<div class="dashboard-header">
+    <h1>Bookings</h1>
+    <div class="dashboard-header-right">
+        @*Filter Button*@
+        @*Search Bar*@
+    </div>
+</div>
+<div class="table-container">
+    <div class="user-row header">
+        <div class="user-cell">BOOKING ID</div>
+        <div class="user-cell">NAME</div>
+        <div class="user-cell">ROOM</div>
+        <div class="user-cell">DATE</div>
+        <div class="user-cell">TIME</div>
+        <div class="user-cell">RECURRENCE</div>
+        <div class="user-cell">STATUS</div>
+        <div class="user-cell"></div>
+    </div>
+    <ul class="user-list">
+        @*@foreach (var item in Model.roomList)
+        {*@
+            <li class="user-row">
+            <div class="user-cell" data-label="BOOKING ID"></div>
+                <div class="user-cell" data-label="NAME"></div>
+                <div class="user-cell" data-label="ROOM"></div>
+                <div class="user-cell" data-label="DATE"></div>
+                <div class="user-cell" data-label="TIME"></div>
+                <div class="user-cell" data-label="RECURRENCE"></div>
+            <div class="user-cell" data-label="STATUS"></div>
+                <div class="user-cell actions">
+                    <div class="mr-20 hover-pointer dropdown-trigger" data-id="">
+                        <span class="ddicon">&#8942;</span>
+                    </div>
+                </div>
+            </li>
+        @*}*@
+
+    </ul>
+    <div class="dropdown-action">
+        <ul>
+            <li>
+                <button type="button" class="btn-status" onclick="">
+                    <i class="fas fa-circle" style="color: #00FF75; font-size: 10px;"></i> Approve
+            </li>
+            <li>
+                <button type="button" class="btn-status" onclick="">
+                    <i class="fas fa-circle" style="color: #FF0000; font-size: 10px;"></i> Reject
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    </ul>
+</div>
+
+
+@section scripts {
+    
+}

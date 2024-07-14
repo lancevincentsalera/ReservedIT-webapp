@@ -55,4 +55,11 @@
     <Folder Include="wwwroot\room\gallery\" />
     <Folder Include="wwwroot\room\thumbnail\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Jose\Bookings.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
