@@ -1,0 +1,102 @@
+﻿
+#createBookingModal .modal-dialog {
+    max-width: 30vw !important;
+}
+
+#createBookingModal form{
+    display:flex;
+    flex-direction:column;
+    margin:0;
+  
+}
+
+#createBookingModal .modal-content {
+    height: fit-content;
+    padding:40px;
+}
+
+
+#createBookingModal .modal-body .form-row {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: -10px;
+}
+
+#createBookingModal .modal-body form .custom-recur {
+    display: block; /* Hide the div initially */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    margin:0 auto;
+    width: 100%;
+}
+
+    #createBookingModal .modal-body form .custom-recur .custom-recur-title{
+        font-size: medium;
+    }
+
+    .modal-body .checkbox-recur {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        gap: 8px;
+        margin-top: 10px;
+    }
+
+.modal-body .custom-recur label {
+    font: menu;
+    text-align: center;
+    vertical-align: middle;
+    overflow-wrap: anywhere;
+    margin: 4px 0 0 0;
+}
+
+#createBookingModal .modal-body .setRecurrence {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+#createBookingModal .modal-body .setRecurrence button {
+    width: 17vh;
+    height: 35px;
+    font: 100;
+    color: black;
+    border-color: #ccc;
+    text-wrap: nowrap;
+}
+
+#createBookingModal .modal-body .setRecurrence button:hover {
+    background-color: #B5838E;
+    color: white;
+}
+
+
+
+#createBookingModal .modal-body .button-group {
+    float: inline-end;
+    margin-top: 12vh;
+    display: flex;
+    align-self: self-end;
+    gap: 15px;
+}
+
+    #createBookingModal .btn-danger, .btn-custom {
+        width: 7vw;
+        height: 50px;
+        font-weight: 300;
+    }
+
+        .btn-danger, .btn-custom:hover {
+            color: white;
+            font-weight: 800;
+        }
+
+        #createBookingModal .btn-custom {
+            background-color: #B5838E;
+            color: white;
+        }
+
