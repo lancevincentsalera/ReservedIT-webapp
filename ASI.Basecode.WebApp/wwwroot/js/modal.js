@@ -211,5 +211,4 @@ const deleteModal = (btnId, modalId, action, controller) => {
     }
 }
 
-
   

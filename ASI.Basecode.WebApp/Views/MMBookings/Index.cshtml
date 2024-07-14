@@ -2,6 +2,7 @@
 @model IEnumerable<BookingViewModel>
 @{
     ViewData["Title"] = "Bookings";
+    ViewBag.Rooms = ViewData["rooms"] as IEnumerable<ASI.Basecode.Services.ServiceModels.RoomViewModel>;
 }
 
 @section styles {
@@ -10,7 +11,10 @@
 
 <div class="dashboard-header">
     <h1>Bookings</h1>
-    <div class="dashboard-header-right">
+    <div class="dashboard-header-right" >
+        <div class="filter" onclick="displayModal('#filterModal')">
+            <i class="fa fa-filter"></i>
+        </div>
         @Html.Partial("_SearchBarPartial")
     </div>
 </div>
@@ -101,6 +105,7 @@
 </div>
 
 @Html.Partial("_BookingsConfirmationModal")
+@Html.Partial("_FilterBookingsModal", new ASI.Basecode.Services.ServiceModels.BookingViewModel())
 
 @section scripts {
     <script>
