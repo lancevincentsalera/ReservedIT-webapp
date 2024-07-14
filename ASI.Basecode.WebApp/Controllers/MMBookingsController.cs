@@ -1,5 +1,6 @@
-﻿using ASI.Basecode.Data.Models;
+﻿
 using ASI.Basecode.Services.Interfaces;
+using ASI.Basecode.Services.ServiceModels;
 using ASI.Basecode.Services.Services;
 using ASI.Basecode.WebApp.Mvc;
 using AutoMapper;
@@ -18,9 +19,11 @@ namespace ASI.Basecode.WebApp.Controllers
     public class MMBookingsController : ControllerBase<MMBookingsController>
     {
         private readonly IBookingService _bookingService;
-        public MMBookingsController(IBookingService bookingService, IHttpContextAccessor httpContextAccessor, ILoggerFactory loggerFactory, IConfiguration configuration, IMapper mapper = null) : base(httpContextAccessor, loggerFactory, configuration, mapper)
+        private readonly IRoomService _roomService;
+        public MMBookingsController(IRoomService roomService, IBookingService bookingService, IHttpContextAccessor httpContextAccessor, ILoggerFactory loggerFactory, IConfiguration configuration, IMapper mapper = null) : base(httpContextAccessor, loggerFactory, configuration, mapper)
         {
             _bookingService = bookingService;
+            _roomService = roomService;
         }
 
         #region Bookings Page View
@@ -31,7 +34,47 @@ namespace ASI.Basecode.WebApp.Controllers
         public IActionResult Index()
         {
             var model = _bookingService.GetBookings();
+            ViewData["rooms"] = _roomService.RetrieveAll();
             return View(model);
+        }
+        #endregion
+
+
+        #region Filter Bookings
+        /// <summary>
+        /// filter bookings by date, room name, user name, and/or booking status
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public IActionResult FilterBookings(BookingViewModel filter)
+        {
+            var model = _bookingService.GetBookings();
+            if (filter != null)
+            {
+                if (filter.StartDate.HasValue)
+                    model = model.Where(b => b.StartDate.Value == filter.StartDate.Value);
+
+                if (filter.EndDate.HasValue)
+                    model = model.Where(b => b.EndDate.Value == filter.EndDate.Value);
+
+                if (!string.IsNullOrEmpty(filter.RoomName))
+                    model = model.Where(b => b.Room.RoomName.Equals(filter.RoomName, StringComparison.OrdinalIgnoreCase));
+
+                if (!string.IsNullOrEmpty(filter.UserName))
+                    model = model.Where(b => b.User.FirstName.Contains(filter.UserName) || b.User.LastName.Contains(filter.UserName));
+
+                if (filter.BookingStatus != null)
+                {
+                    if (filter.BookingStatus != "All") // No filter
+                    {
+                        model = model.Where(b => b.BookingStatus == filter.BookingStatus);
+                    }
+                }
+            }
+
+            TempData["SuccessMessage"] = "Filters applied successfully";
+            ViewData["rooms"] = _roomService.RetrieveAll();
+            return View("Index", model);
         }
         #endregion
 

@@ -19,6 +19,7 @@ namespace ASI.Basecode.Services.ServiceModels
         public TimeSpan? TimeTo { get; set; }
         public string RoomName { get; set; }
         public List<Recurrence> Recurrence { get; set; }
+        public string UserName { get; set; }
         public User User { get; set; }
         public Room Room { get; set; }
     }

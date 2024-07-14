@@ -1,0 +1,65 @@
+﻿@using static ASI.Basecode.Resources.Constants.Enums;
+
+@{
+    var bookingStatuses = Enum.GetNames(typeof(BookingStatus));
+}
+
+<div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="filterModalLabel">Filter Booking</h5>
+            </div>
+            <div class="modal-body">
+                <form id="filterForm" asp-action="FilterBookings">
+                    <div class="user-details">
+                        <div class="userName">
+                            <div class="input-box">
+                                <span class="details"> Start Date</span>
+                                <input name="StartDate" id="startDate" type="date" />
+                            </div>
+                            <div class="input-box">
+                                <span class="details"> End Date</span>
+                                <input id="endDate" type="date" />
+                            </div>
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details">Room</span>
+                            <select name="RoomName" class="form-select" id="" aria-label="Select Role">
+                                <option value="">No filter</option>
+                                @if(ViewBag.Rooms != null)
+                                {
+                                    IEnumerable<ASI.Basecode.Services.ServiceModels.RoomViewModel> rooms = ViewBag.Rooms as IEnumerable<ASI.Basecode.Services.ServiceModels.RoomViewModel>;
+                                    foreach (var room in rooms)
+                                    {
+                                        <option value="@room.RoomName">@room.RoomName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">User</span>
+                            <input name="UserName" type="text" id="user" />
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Booking Status</span>
+                            <select name="BookingStatus" class="form-select" id="" aria-label="Select Role">
+                                <option value="All">No filter</option>
+                                @foreach (var statusName in bookingStatuses)
+                                {
+                                    <option value="@statusName">@statusName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-custom" id="applyFilterBtn">Apply</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
