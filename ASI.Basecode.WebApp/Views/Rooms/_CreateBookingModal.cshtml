@@ -1,0 +1,111 @@
+﻿@section styles {
+    <link rel="stylesheet" href="~/css/bookingModal.css" />
+}
+
+<!-- Create Booking Modal -->
+<div class="modal fade" id="createBookingModal" tabindex="-1" role="dialog" aria-labelledby="createBookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createBookingModalLabel">Add Booking</h5>
+
+            </div>
+            <div class="modal-body">
+                <form asp-action="PostCreate" method="post">
+                    <div class="form-group">
+                        <label for="roomName">Room Name</label>
+                        <input type="text" class="form-control" id="roomName" name="RoomName" placeholder="Enter Room Name" required />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="startDate">Start</label>
+                            <div class="input-group date" id="datepicker">
+                                <input type="datetime-local" class="form-control" id="startDate" name="StartDate" placeholder="Select Date" required />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="endDate">End</label>
+                            <div class="input-group date" id="datepicker">
+                                <input type="datetime-local" class="form-control" id="endDate" name="EndDate" placeholder="Select Date" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group setRecurrence">
+                        <button type="button" class="btn btn-outline-secondary" id="scheduleOnceButton">Schedule Once</button>
+                        <button type="button" class="btn btn-outline-secondary" id="customButton">Custom</button>
+                    </div>
+                    <div class="custom-recur">
+                        <label class="custom-recur-title"> Repeat </label>
+                        <div class="checkbox-recur">
+                            <input type="checkbox" id="sunday" value="Sunday">
+                            <label for="sunday">Sun</label><br>
+
+                            <input type="checkbox" id="monday" value="Monday">
+                            <label for="monday">Mon</label><br>
+
+                            <input type="checkbox" id="tuesday" value="Tuesday">
+                            <label for="tuesday">Tue</label><br>
+
+                            <input type="checkbox" id="wednesday" value="Wednesday">
+                            <label for="wedbnesday">Wed</label><br>
+
+                            <input type="checkbox" id="thursday" value="Thursday">
+                            <label for="thursday">Thurs</label><br>
+
+                            <input type="checkbox" id="friday" value="Friday">
+                            <label for="friday">Fri</label><br>
+
+                            <input type="checkbox" id="saturday" value="Saturday">
+                            <label for="saturday">Sat</label><br>
+
+                           
+                        </div>
+                    </div>
+                    
+
+                    <div class="button-group">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-custom">Done</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script>
+        
+ 
+  
+
+        $(document).ready(function () {
+            //console.log("Document is ready");
+            // Toggle display of the custom-recur div
+            $('#customButton').click(function () {
+                //console.log("Button clicked"); // Check if the event is triggered  
+                $('.custom-recur').toggle(); // Toggle visibility
+            });
+
+            const now = new Date();
+            var currentHour = now.getHours();
+            var currentMinute = now.getMinutes();
+
+            var config = {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+                altInput: true,
+                altFormat: "F j, Y (h:S K)",
+
+                minuteIncrement: 1,
+                minDate: new Date(),
+                minTime: `${currentHour}:${currentMinute}`
+            }
+
+            flatpickr("input[type=datetime-local]", config);
+        });
+        
+    </script>
+}

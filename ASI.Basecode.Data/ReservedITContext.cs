@@ -31,7 +31,7 @@ namespace ASI.Basecode.Data
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Addr=localhost;database=ReservedIT;Integrated Security=False;Trusted_Connection=True");
+                optionsBuilder.UseSqlServer("Addr=AJ-DEVICE1;database=ReservedIT;Integrated Security=False;Trusted_Connection=True");
             }
         }
 
@@ -75,19 +75,19 @@ namespace ASI.Basecode.Data
                     .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.RoomId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK__Booking__RoomID__46E78A0C");
+                    .HasConstraintName("FK__Booking__RoomID__45F365D3");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK__Booking__UserID__47DBAE45");
+                    .HasConstraintName("FK__Booking__UserID__44FF419A");
             });
 
             modelBuilder.Entity<DayOfTheWeek>(entity =>
             {
                 entity.HasKey(e => e.DayOfWeekId)
-                    .HasName("PK__DayOfThe__01AA8DDFAC974931");
+                    .HasName("PK__DayOfThe__01AA8DDF270B0DA0");
 
                 entity.ToTable("DayOfTheWeek");
 
@@ -102,7 +102,7 @@ namespace ASI.Basecode.Data
             modelBuilder.Entity<ImageGallery>(entity =>
             {
                 entity.HasKey(e => e.ImageId)
-                    .HasName("PK__ImageGal__7516F4EC333DBB58");
+                    .HasName("PK__ImageGal__7516F4EC9ED6D624");
 
                 entity.ToTable("ImageGallery");
 
@@ -118,7 +118,7 @@ namespace ASI.Basecode.Data
                     .WithMany(p => p.ImageGalleries)
                     .HasForeignKey(d => d.RoomId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK__ImageGall__RoomI__48CFD27E");
+                    .HasConstraintName("FK__ImageGall__RoomI__4CA06362");
             });
 
             modelBuilder.Entity<Recurrence>(entity =>
@@ -141,7 +141,7 @@ namespace ASI.Basecode.Data
                     .WithMany(p => p.Recurrences)
                     .HasForeignKey(d => d.DayOfWeekId)
                     .OnDelete(DeleteBehavior.SetNull)
-                    .HasConstraintName("FK__Recurrenc__DayOf__4AB81AF0");
+                    .HasConstraintName("FK__Recurrenc__DayOf__48CFD27E");
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -160,7 +160,7 @@ namespace ASI.Basecode.Data
             {
                 entity.ToTable("Room");
 
-                entity.HasIndex(e => e.RoomName, "UQ__Room__6B500B55BD8B0135")
+                entity.HasIndex(e => e.RoomName, "UQ__Room__6B500B550C4BA1A9")
                     .IsUnique();
 
                 entity.Property(e => e.RoomId).HasColumnName("RoomID");
@@ -211,14 +211,14 @@ namespace ASI.Basecode.Data
                     .WithMany(p => p.Settings)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK__Setting__UserID__4BAC3F29");
+                    .HasConstraintName("FK__Setting__UserID__3D5E1FD2");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("User");
 
-                entity.HasIndex(e => e.Email, "UQ__User__A9D10534F48FDDCF")
+                entity.HasIndex(e => e.Email, "UQ__User__A9D10534F510FEAE")
                     .IsUnique();
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
@@ -269,7 +269,7 @@ namespace ASI.Basecode.Data
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.SetNull)
-                    .HasConstraintName("FK__User__RoleID__4CA06362");
+                    .HasConstraintName("FK__User__RoleID__3A81B327");
             });
 
             OnModelCreatingPartial(modelBuilder);

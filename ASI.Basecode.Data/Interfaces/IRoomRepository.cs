@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace ASI.Basecode.Data.Interfaces
         void AddRoom(Room room);
         void UpdateRoom(Room room);
         void UpdateGallery(ImageGallery imageGallery);
-        void DeleteRoom(int roomId);
+        void DeleteRoom(Room room);
+        void DeleteRoomImage(ImageGallery imageGallery);
     }
 }

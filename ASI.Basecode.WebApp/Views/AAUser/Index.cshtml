@@ -1,4 +1,4 @@
-﻿@using ASI.Basecode.Services.ServiceModels
+﻿﻿@using ASI.Basecode.Services.ServiceModels
 @model UserViewModel
 @{
     ViewData["Title"] = "User Dashboard";
@@ -38,13 +38,13 @@
                 <div class="user-cell" data-label="ROLE">@Html.DisplayFor(modelItem => item.RoleName)</div>
                 <div class="user-cell" data-label="STATUS"><span class="status">@Html.DisplayFor(modelItem => item.AccountStatus)</span></div>
                 <div class="user-cell actions">
-                    <div class="mr-20 hover-pointer dropdown-trigger" data-user-id="@item.UserId">
+                    <div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.UserId">
                         <span class="ddicon">&#8942;</span>
                     </div>
                 </div>
             </li>
         }
-       
+
     </ul>
     <div class="dropdown-action">
         <ul>
@@ -70,7 +70,7 @@
                 </button>
             </li>
             <li>
-                <button type="button" class="btn-status" onclick="displayModal('#confirmationDeleteModal'); passUserId(this, '#confirmDeleteBtn');">
+                <button type="button" class="btn-status" onclick="displayModal('#confirmationDeleteModal'); passId(this, '#confirmDeleteBtn');">
                     <i class="fas fa-trash-alt" style="color: #FF0000; font-size: 10px;"></i> Delete
                 </button>
             </li>
@@ -78,6 +78,7 @@
     </div>
 
 </div>
+
 @Html.Partial("_ConfirmationModal")
 @Html.Partial("_CreateUserModal")
 @Html.Partial("_EditUserModal")

@@ -82,13 +82,14 @@ namespace ASI.Basecode.WebApp.Authentication
             var token = _configuration.GetTokenAuthentication();
             var userId = user.UserId.ToString();
             var name = string.Join(' ', user.FirstName, user.LastName);
+            var roleId = user.RoleId.ToString();
             //TODO
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier, userId, ClaimValueTypes.String, Const.Issuer),
                 new Claim(ClaimTypes.Name, name, ClaimValueTypes.String, Const.Issuer),
-                new Claim(ClaimTypes.Role, user.Role.RoleName, ClaimValueTypes.String, Const.Issuer)
-
+                new Claim(ClaimTypes.Role, user.Role.RoleName, ClaimValueTypes.String, Const.Issuer),
+                new Claim("RoleId", roleId, ClaimValueTypes.String, Const.Issuer)
                 /*new Claim("UserId", user.UserId, ClaimValueTypes.String, Const.Issuer),
                 new Claim("UserName", user.Name, ClaimValueTypes.String, Const.Issuer),*/
             };

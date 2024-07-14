@@ -56,7 +56,19 @@ namespace ASI.Basecode.WebApp
                 });
                 options.AddPolicy("AdminOnly", policy =>
                 {
-                    policy.RequireClaim(ClaimTypes.Role, "ROLE_ADMIN");
+                    policy.RequireClaim(ClaimTypes.Role, Enums.UserRoleManager.ROLE_ADMIN.ToString(), Enums.UserRoleManager.ROLE_SUPER.ToString());
+                });
+                options.AddPolicy("ManagerRegular", policy =>
+                {
+                    policy.RequireClaim(ClaimTypes.Role, Enums.UserRoleManager.ROLE_MANAGER.ToString(), Enums.UserRoleManager.ROLE_REGULAR.ToString());
+                });
+                options.AddPolicy("ManagerOnly", policy =>
+                {
+                    policy.RequireClaim(ClaimTypes.Role, Enums.UserRoleManager.ROLE_MANAGER.ToString());
+                });
+                options.AddPolicy("RegularUserOnly", policy =>
+                {
+                    policy.RequireClaim(ClaimTypes.Role, Enums.UserRoleManager.ROLE_REGULAR.ToString());
                 });
             });
 

@@ -1,0 +1,134 @@
+﻿@model ASI.Basecode.Services.ServiceModels.RoomViewModel
+
+@section styles {
+    <link rel="stylesheet" href="~/css/roomModal.css" />
+}
+
+<!-- Create Room Modal -->
+<div class="modal fade" id="createRoomModal" tabindex="-1" role="dialog" aria-labelledby="createRoomModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createRoomModalLabel">Create Room</h5>
+            </div>
+            <div class="modal-body">
+                <form asp-action="PostCreate" enctype="multipart/form-data" method="post">
+                    <div class="firstHalf">
+                        <div class="uploadPhoto">
+                            <div class="form-group file-upload">
+                                <label for="thumbnail">Thumbnail</label>
+                                <div class="custom-file-upload">
+                                    <input type="file" id="thumbnail1" name="RoomThumbnailImg" 
+                                        onchange="showImage(event, 'thumbnailPreview')" accept="image/png, image/jpeg, image/jpg, image/heic" required
+                                        />
+                                    <label for="thumbnail1" class="upload-icon"> <i class="fa fa-plus"></i> </label>
+                                    <div class="image-container">
+                                        <button type="button" style="width: 24px; height: 24px; " class="delete-button" onclick="deleteImage('thumbnail')"><span>&times;</span></button>
+                                        <img id="thumbnailPreview" class="image-preview" src="#" alt="Thumbnail Preview" style="display:none;" />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group file-upload">
+                                <label for="uploadImage">Upload Image</label>
+                                <div class="default-file-upload">
+                                    <input type="file" id="uploadImage1" name="RoomGalleryImg" multiple onchange="displayFileNames(event)" />
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="RoomName" placeholder="Enter room name" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" name="Description" rows="4" placeholder="Enter room description" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="secondHalf">
+                        <div class="additional-info">
+                            <label style="font-weight: 600; margin-bottom:20px;">Additional Information</label>
+                            <div class="form-group">
+                                <label for="location">Location</label>
+                                <input type="text" id="location" name="Location" placeholder="Enter location" />
+                            </div>
+                            <div class="form-group">
+                                <label for="capacity">Capacity</label>
+                                <input type="number" id="capacity" name="Capacity" placeholder="Enter capacity" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="equipments">Equipments</label>
+                                <textarea id="equipments" name="Equipments" rows="4" placeholder="Enter room equipments" required></textarea>
+                            </div>
+
+                        </div>
+                        <div class="button-group">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-custom">Add</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    ////////////// Thumbnail Preview
+    function showImage(event, previewId) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            const output = document.getElementById(previewId);
+            output.src = reader.result;
+            output.style.display = 'block';
+            const deleteButton = document.querySelector('.delete-button');
+            deleteButton.style.display = 'block'; // Show delete button
+            const uploadIcon = document.querySelector('.upload-icon');
+            uploadIcon.style.display = 'none'; // Hide upload icon
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+    ////////////Delete Thumbnail
+    function deleteImage(inputId) {
+        const input = document.getElementById(inputId);
+        const preview = document.getElementById(inputId + 'Preview');
+        const deleteButton = document.querySelector('.delete-button');
+
+        input.value = ''; // Clear the file input
+        preview.src = '#';
+        preview.style.display = 'none';
+        deleteButton.style.display = 'none';
+        const uploadIcon = document.querySelector('.upload-icon');
+        uploadIcon.style.display = 'flex'; // Show upload icon
+    }
+    ////// Validation
+    function validateForm() {
+        const capacity = document.getElementById('capacity').value;
+        const capacityError = document.getElementById('capacityError');
+        if (capacity === '' || isNaN(capacity) || capacity < 1) {
+            capacityError.textContent = 'Please enter a valid capacity (number greater than 0).';
+            return false;
+        }
+        capacityError.textContent = '';
+        return true;
+    }
+    //////// Display file names of uploaded images
+    @*   function displayFileNames(event) {
+        const files = event.target.files;
+        const container = document.getElementById('fileNamesContainer');
+        container.innerHTML = ''; // Clear the container
+
+        for (let i = 0; i < files.length; i++) {
+        const fileName = document.createElement('div');
+        fileName.textContent = files[i].name;
+        container.appendChild(fileName);
+        }
+        }*@
+</script>
+

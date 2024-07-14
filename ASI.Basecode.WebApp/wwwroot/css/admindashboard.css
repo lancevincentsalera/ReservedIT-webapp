@@ -29,6 +29,13 @@
     overflow: hidden;
 }
 
+.user-cell {
+    width: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .user-cell:first-child {
     text-align: center;
     flex: 0 0 100px;
@@ -36,29 +43,4 @@
 
 .user-cell:nth-child(2) {
     flex: 0 0 250px;
-}
-
-.user-cell .status {
-    font-size: 80%;
-}
-
-.status-pending {
-   padding: 5px;
-   border-radius: 10px;
-    background-color: #E1FCEF;
-    color: #14804A;
-}
-
-.status-active {
-    padding: 5px;
-    border-radius: 10px;
-    background-color: #B5838E;
-    color: white;
-}
-
-.status-restricted {
-    padding: 5px;
-    border-radius: 10px;
-    background-color: #FF4C4C;
-    color: white;
 }

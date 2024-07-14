@@ -21,22 +21,14 @@ namespace ASI.Basecode.Services.ServiceModels
         public string Location { get; set; }
         [Display(Name = "Capacity")]
         public int Capacity { get; set; }
-        [Display(Name = "Available Equipments")]
-
-        /*public string RoomFacility { get; set; }
-        [Display(Name = "Room Photos")]*/
-        public ICollection<RoomEquipmentViewModel> RoomEquipments { get; set; }
+        [Display(Name = "Room Equipments")]
+        public string Equipments { get; set; }
         public IFormFileCollection RoomGalleryImg { get; set; }
 
         [Display(Name = "Thumbnail Photo")]
         public IFormFile RoomThumbnailImg { get; set; }
         public string Thumbnail { get; set; }
         public List<RoomGalleryViewModel> _RoomGallery { get; set; }
-    }
-    public class RoomViewModelList
-    {
-        [Display(Name = "RoomName", ResourceType = typeof(Resources.Views.Screen))]
-        public string RoomNameFilter { get; set; }
         public IEnumerable<RoomViewModel> roomList { get; set; }
     }
 }

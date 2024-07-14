@@ -1,0 +1,122 @@
+﻿/* reportsAndAnalytics.css */
+body {
+    overflow: hidden; /* Prevent scrolling on the body */
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-top: 10px;
+}
+
+    .dashboard-header h1 {
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+.first-header {
+    width: 100%; /* Ensure full width */
+    margin: 0; /* Remove margin for alignment */
+    margin-top: 10px;
+    text-align: left; /* Align text to the left */
+}
+
+    .first-header h1 {
+        font-size: 20px;
+        font-weight: bold;
+        margin-left: 30px; /* Remove default margin */
+    }
+
+
+.reports-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: calc(100vh - 150px); /* Adjust for headers */
+    width: 100%; /* Full width */
+    padding: 10px; /* Optional padding */
+    box-sizing: border-box; /* Include padding in total width/height */
+    margin-bottom: 20px;
+
+}
+    .reports-container h1
+    {
+        font-size: 20px;
+        font-weight: bold;
+        justify-content: flex-start;
+        text-align: left;
+    }
+
+.container-first {
+    width: 95%;
+    max-width: 100%;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    height: 400px; /* Set a fixed height for the container */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Add space between containers */
+}
+
+.graph-header h2 {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.graphs {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    height: 300px; /* Set fixed height */
+    max-height: 300px; /* Ensure max height */
+}
+
+canvas {
+    width: 100% !important; /* Ensure canvas takes full width */
+    height: 100% !important; /* Ensure canvas takes full height */
+}
+
+.table-userbooking {
+    width: 100%;
+    margin-top: 20px; /* Space above the table */
+    max-height: calc(400px - 100px); /* Adjust for header height */
+}
+.tablereport-body {
+    height: calc(300px); /* Set max height for table body */
+    overflow-y: auto; /* Enable vertical scrolling if necessary */
+}
+
+.tablereport-header {
+    display: flex; /* Flex layout for the header */
+    justify-content: space-between; /* Space out the cells */
+    padding: 10px; /* Padding for the header */
+    border-bottom: 2px solid #ddd; /* Bottom border */
+    background-color: #f9f9f9; /* Light background */
+    font-weight: bold; /* Bold text for the header */
+}
+
+.report-row {
+    display: flex; /* Flex layout for rows */
+    justify-content: flex-start; /* Space out the cells */
+    padding: 10px; /* Padding for each row */
+    border-bottom: 1px solid #ddd; /* Bottom border for rows */
+    align-content: flex-start;
+    cursor:pointer;
+}
+
+.report-cell {
+    flex: 1; /* Equal space for cells */
+    text-align: left; /* Align text to the left */
+    align-content: flex-start;
+}
+
+    .report-cell:last-child {
+        text-align: right; /* Align the last cell to the right */
+    }
+
+.detail-table {
+    margin-top: 10px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}

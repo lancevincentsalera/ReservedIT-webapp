@@ -44,22 +44,63 @@ namespace ASI.Basecode.Services.Services
 
         public IEnumerable<BookingViewModel> GetBookings()
         {
-            return _repository.GetBookings().Select(booking => new BookingViewModel
+            var bookings = _repository.GetBookings();
+            return bookings.Select(booking => new BookingViewModel
             {
                 BookingId = booking.BookingId,
                 UserId = booking.UserId,
                 RoomId = booking.RoomId,
                 BookingStatus = booking.BookingStatus,
-                StartDate = booking.StartDate,
-                EndDate = booking.EndDate,
+                StartDate = booking.StartDate.Value,
+                EndDate = booking.EndDate.Value,
                 TimeFrom = booking.TimeFrom,
                 TimeTo = booking.TimeTo,
+                RoomName = booking.Room.RoomName,
+                Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
+                User = booking.User,
+                Room = booking.Room,
             });
         }
 
-        public void UpdateBooking(Booking booking)
+        public IEnumerable<BookingViewModel> GetBookingsByUser(int userId)
         {
-            throw new NotImplementedException();
+            var bookings = _repository.GetBookingsByUser(userId);
+            return bookings.Select(booking => new BookingViewModel
+            {
+                BookingId = booking.BookingId,
+                UserId = booking.UserId,
+                RoomId = booking.RoomId,
+                BookingStatus = booking.BookingStatus,
+                StartDate = booking.StartDate.Value,
+                EndDate =  booking.EndDate.Value,
+                TimeFrom = booking.TimeFrom,
+                TimeTo = booking.TimeTo,
+                RoomName = booking.Room.RoomName,
+                Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
+            });
+        }
+
+        public void UpdateBooking(BookingViewModel booking)
+        {
+            var bookingToBeUpdated = _repository.GetBookings().Where(u => u.BookingId == booking.BookingId).FirstOrDefault();
+            if (bookingToBeUpdated != null)
+            {
+                _mapper.Map(booking, bookingToBeUpdated);
+                bookingToBeUpdated.UpdatedDt = DateTime.Now;
+                bookingToBeUpdated.UpdatedBy = System.Environment.UserName;
+
+                _repository.UpdateBooking(bookingToBeUpdated);
+            }
+        }
+
+        public void DeleteBooking(BookingViewModel booking)
+        {
+            var bookingToBeDeleted = _repository.GetBookings().Where(u => u.BookingId == booking.BookingId).FirstOrDefault();
+            if (bookingToBeDeleted != null)
+            {
+                _repository.DeleteBooking(bookingToBeDeleted);
+            }
+
         }
     }
 }

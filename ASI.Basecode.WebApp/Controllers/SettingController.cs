@@ -45,7 +45,7 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <returns> Setting View </returns>
         public IActionResult Index()
         {
-            int? userId = _session.GetInt32("UserId");
+            int? userId = UserId;
 
             if (!userId.HasValue)
             {

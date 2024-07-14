@@ -31,7 +31,9 @@ $(document).ready(() => {
     let dropdownTriggers = $('.dropdown-trigger');
 
     dropdownTriggers.each((index,trigger) => {
-        let userId = $(trigger).data('user-id');
+        let Id = $(trigger).data('id');
+
+        console.log(Id);
 
         trigger.addEventListener('click', (event) => {
             event.stopPropagation();
@@ -45,8 +47,7 @@ $(document).ready(() => {
             let spaceBelow = viewportHeight - (offset.top + triggerHeight);
             let spaceAbove = offset.top;
             let leftOffset = offset.left - 25;
-
-            console.log(offset.left, leftOffset);
+        
 
             if (spaceBelow >= dropdownHeight) {
                 dropdown.css({
@@ -68,9 +69,9 @@ $(document).ready(() => {
                 });
             }
             
-            console.log(userId);
-            $(`.dropdown-action input`).val(userId);
-            $(`.dropdown-action button`).data('user-id', userId);
+            console.log(Id);
+            $(`.dropdown-action input`).val(Id);
+            $(`.dropdown-action button`).data('id', Id);
              
             dropdown.show();
         })

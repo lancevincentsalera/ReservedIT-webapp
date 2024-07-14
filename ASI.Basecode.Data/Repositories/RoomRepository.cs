@@ -1,6 +1,7 @@
 ﻿using ASI.Basecode.Data.Interfaces;
 using ASI.Basecode.Data.Models;
 using Basecode.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,9 +44,14 @@ namespace ASI.Basecode.Data.Repositories
             UnitOfWork.SaveChanges();
         }
 
-        public void DeleteRoom(int roomId) 
+        public void DeleteRoom(Room room) 
         {
-            var deleteRoom = this.GetDbSet<Room>().FirstOrDefault(x => x.RoomId == roomId);
+            this.GetDbSet<Room>().Remove(room);
+            UnitOfWork.SaveChanges();
+        }
+        public void DeleteRoomImage(ImageGallery imageGallery)
+        {
+            this.GetDbSet<ImageGallery>().Remove(imageGallery);
             UnitOfWork.SaveChanges();
         }
     }

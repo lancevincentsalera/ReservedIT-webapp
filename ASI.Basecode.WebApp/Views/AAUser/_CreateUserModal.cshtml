@@ -1,4 +1,5 @@
 ﻿@model ASI.Basecode.Services.ServiceModels.UserViewModel
+
 <!-- CREATE USER -->
 <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -30,31 +31,6 @@
                             <span class="details">Email</span>
                             <input asp-for="Email" name="Email" type="email" id="email" placeholder="Enter Email Address" required />
                             <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-
-                         <div class="input-box">
-                            <span class="details">Password</span>
-                            <div class="password-container">
-                                <input name="Password" type="password" id="create-passwordInput" class="form-control"
-                                       asp-for="Password" placeholder="Enter password" />
-                                <span class="input-group-text toggle-password" onclick="togglePasswordVisibility('create-passwordInput', this)">
-                                    <img src="@Url.Content("~/img/eye.svg")"/>
-                                </span>
-                            </div>
-                            <span asp-validation-for="Password" class="text-danger"></span>
-
-                        </div>
-
-                        <div class="input-box">
-                            <span class="details">Confirm Password</span>
-                            <div class="password-container">
-                                <input name="ConfirmPassword" type="password" id="create-confirmPasswordInput" class="form-control"
-                                       asp-for="ConfirmPassword" placeholder="Reenter password" />
-                                <span class="input-group-text toggle-password" onclick="togglePasswordVisibility('create-confirmPasswordInput', this)">
-                                    <img src="@Url.Content("~/img/eye.svg")" />
-                                </span>
-                            </div>
-                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                         </div>
 
                         <div class="input-box">

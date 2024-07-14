@@ -1,4 +1,5 @@
 ﻿using ASI.Basecode.Data.Models;
+using ASI.Basecode.Resources.Constants;
 using ASI.Basecode.Services.Interfaces;
 using ASI.Basecode.Services.Manager;
 using ASI.Basecode.Services.ServiceModels;
@@ -72,16 +73,9 @@ namespace ASI.Basecode.WebApp.Controllers
                 var roleClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
                 var nameClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
                 this._session.SetString("UserName", nameClaim);
-                if (roleClaim != null)
+                if (roleClaim != null && Enum.TryParse<UserRoleManager>(roleClaim.Value, out var userRole))
                 {
-                    if (roleClaim.Value == "ROLE_ADMIN")
-                    {
-                        return RedirectToAction("Index", "AAUser");
-                    }
-                    else if (roleClaim.Value == "ROLE_MANAGER")
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    return RedirectToEndpointByRole(userRole);
                 }
                 return RedirectToAction("Index", "Home");
             }
@@ -111,30 +105,20 @@ namespace ASI.Basecode.WebApp.Controllers
             this._session.SetString("UserName", model.UserId);
 
             return RedirectToAction("Index", "Admin");*/
-
             var loginResult = _userService.AuthenticateUser(model.Email, model.Password, ref user);
-            if (loginResult == LoginResult.Success)
+            switch (loginResult)
             {
-                // 認証OK
-                await this._signInManager.SignInAsync(user);
-                this._session.SetString("UserName", string.Join(' ', user.FirstName, user.LastName));
-                this._session.SetInt32("UserId", user.UserId);
-                if (user.RoleId == 1)
-                {
-                    return RedirectToAction("Index", "AAUser");
-                } 
-                else if (user.RoleId == 2)
-                {
-                    return RedirectToAction("Index", "Home");
-                } else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-            else
-            {
-                // 認証NG
-                TempData["ErrorMessage"] = "Incorrect Email or Password";
+                case LoginResult.Success:
+                    await this._signInManager.SignInAsync(user);
+                    this._session.SetString("UserName", string.Join(' ', user.FirstName, user.LastName));
+                    this._session.SetInt32("UserId", user.UserId);
+                    return RedirectToEndpointByRole((UserRoleManager)user.RoleId);
+                case LoginResult.Restricted:
+                    TempData["ErrorMessage"] = "Your account is restricted. Please contact support.";
+                    break;
+                default:
+                    TempData["ErrorMessage"] = "Incorrect Email or Password";
+                    break;
             }
             return View();
         }
@@ -143,17 +127,15 @@ namespace ASI.Basecode.WebApp.Controllers
         [AllowAnonymous]
         public IActionResult Register()
         {
-            var roles = _userService.GetRoles();
-            var model = new UserViewModel { Roles = roles };
-            return View(model);
+            return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
         public IActionResult Register(UserViewModel model)
         {
-            var roles = _userService.GetRoles();
-            model.Roles = roles;
+            /*var roles = _userService.GetRoles();
+            model.Roles = roles;*/
             try
             {
                 _userService.AddUser(model);
@@ -179,6 +161,29 @@ namespace ASI.Basecode.WebApp.Controllers
         {
             await this._signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
+        }
+
+
+        /// <summary>
+        /// Reusable Code for redirecting the user when logging
+        /// in based on the registered ROLE
+        /// </summary>
+        /// <param name="userRole"></param>
+        /// <returns></returns>
+        public ActionResult RedirectToEndpointByRole(UserRoleManager userRole)
+        {
+            switch (userRole)
+            {
+                case UserRoleManager.ROLE_SUPER:
+                case UserRoleManager.ROLE_ADMIN:
+                    return RedirectToAction("Index", "AAUser");
+                case UserRoleManager.ROLE_MANAGER:
+                    return RedirectToAction("Index", "Dashboard");
+                case UserRoleManager.ROLE_REGULAR:
+                    return RedirectToAction("Index", "Dashboard");
+                default:
+                    return RedirectToAction("Index", "Home");
+            }
         }
     }
 }
