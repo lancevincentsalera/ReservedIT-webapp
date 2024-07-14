@@ -102,6 +102,7 @@ canvas {
     padding: 10px; /* Padding for each row */
     border-bottom: 1px solid #ddd; /* Bottom border for rows */
     align-content: flex-start;
+    cursor:pointer;
 }
 
 .report-cell {
