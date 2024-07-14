@@ -1,7 +1,7 @@
 ﻿
 const passId = (btnId, confirmBtn) => {
     let Id = $(btnId).data('id');
-    console.log(Id)
+    console.log("hey",btnId)
     $(confirmBtn).data('id', Id);
 }
 
