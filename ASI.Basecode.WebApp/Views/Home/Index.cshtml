@@ -11,11 +11,31 @@
 <div class="dashboard-header">
     <h1>Reports & Analytics</h1>
 </div>
-
 <div class="reports-container">
-  <div class="container-first">
-      <div class="first-header">
-          <h1>Booking Summary</h1>
-      </div>
-  </div>
+    <div class="first-header">
+        <h1>Booking Summary</h1>
+    </div>
+    <div class="container-first">
+        <div class="graph-header">
+            <div>
+                <h2>Room Booking Overview</h2>
+            </div>
+        </div>
+        <div class="graphs">
+            <canvas id="barChart"></canvas>
+        </div>
+    </div>
+    <div class="container-first">
+        <div class="graph-header">
+            <div>
+                <h2>Daily Booking Trends</h2>
+            </div>
+        </div>
+        <div class="graphs">
+            <canvas id="lineChart"></canvas> <!-- Added line chart canvas -->
+        </div>
+    </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="~/js/reportsAndAnalytics.js"></script>
