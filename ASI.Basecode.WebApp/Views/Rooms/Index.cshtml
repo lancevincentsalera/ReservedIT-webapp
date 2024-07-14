@@ -42,7 +42,9 @@
                     </div>
                 </div>
                 <div class="btn-book">
-                    <button class="book-button">Book Room</button>
+                    <button type="button" class="book-button" data-toggle="modal" data-target="#createBookingModal">
+                        Book Room
+                    </button>
                 </div>
             </div>
 
@@ -52,6 +54,7 @@
 <button class="carousel-button right" onclick="moveRight()">&#10095;</button>
 
 @Html.Partial("_ViewRoomCardModal")
+@Html.Partial("_CreateBookingModal")
 @section scripts {
     <script>
         let currentPosition = 0;
