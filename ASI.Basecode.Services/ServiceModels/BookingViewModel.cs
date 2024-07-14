@@ -13,12 +13,13 @@ namespace ASI.Basecode.Services.ServiceModels
         public int? UserId { get; set; }
         public int? RoomId { get; set; }
         public string BookingStatus { get; set; }
-        public string StartDate { get; set; }
-        public string EndDate { get; set; }
-        public string TimeFrom { get; set; }
-        public string TimeTo { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public TimeSpan? TimeFrom { get; set; }
+        public TimeSpan? TimeTo { get; set; }
         public string RoomName { get; set; }
         public List<Recurrence> Recurrence { get; set; }
-
+        public User User { get; set; }
+        public Room Room { get; set; }
     }
 }
