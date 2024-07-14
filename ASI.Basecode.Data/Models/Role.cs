@@ -7,14 +7,12 @@ namespace ASI.Basecode.Data.Models
     {
         public Role()
         {
-            RolePermissions = new HashSet<RolePermission>();
             Users = new HashSet<User>();
         }
 
         public int RoleId { get; set; }
         public string RoleName { get; set; }
 
-        public virtual ICollection<RolePermission> RolePermissions { get; set; }
         public virtual ICollection<User> Users { get; set; }
     }
 }
