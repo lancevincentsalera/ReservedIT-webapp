@@ -138,29 +138,7 @@
         font-size: 15px;
     }
 
-/* Styles for the equipment list */
-/*#equipmentList {
-    list-style-type: none;
-    padding: 0;
-    margin-top: 10px;
-}
 
-    #equipmentList li {
-        background-color: #f8f8f8;
-        margin-bottom: 5px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-    .add-equipment{
-        border-radius: 10px;
-        border: 0px solid;
-        font-size: 12px;
-        padding:8px;*/
-        /*background-color: */
-
-    /*}*/
 
 .modal-body .button-group{
    float:inline-end;
