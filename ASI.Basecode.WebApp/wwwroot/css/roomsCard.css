@@ -81,6 +81,12 @@ body {
         color: #555;
         text-align: justify;
         font-size: 0.8em;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3; /* Number of lines to show */
+        overflow: hidden;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
 .details {
@@ -116,8 +122,12 @@ body {
 
     .detail-item span {
         font-size: 0.7em;
-        text-align: left; /* Optional: center the text */
+        /* Optional: center the text */
         justify-content: center;
+        width: 100px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .detail-item span,
