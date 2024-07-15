@@ -48,10 +48,20 @@ namespace ASI.Basecode.Data.Repositories
             UnitOfWork.SaveChanges();
         }
 
+
+        public void AddRecurrence(Recurrence recurrence)
+        {
+            this.GetDbSet<Recurrence>().Add(recurrence);
+            UnitOfWork.SaveChanges();
+        }
+
         public IQueryable<Recurrence> GetBookingRecurrence(int bookingID)
         {
-            var r = this.GetDbSet<Recurrence>().Include(r => r.DayOfWeek).Where(r => r.BookingId == bookingID);
-            return this.GetDbSet<Recurrence>().Include(r => r.DayOfWeek).Where(r => r.BookingId == bookingID);
+            return this.GetDbSet<Recurrence>()
+                .Include(r => r.DayOfWeek)
+                .Include(r => r.Booking)
+                .Where(r => r.BookingId == bookingID);
         }
+
     }
 }

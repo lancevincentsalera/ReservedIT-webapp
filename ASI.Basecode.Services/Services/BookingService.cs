@@ -2,6 +2,7 @@
 using ASI.Basecode.Data.Models;
 using ASI.Basecode.Services.Interfaces;
 using ASI.Basecode.Services.ServiceModels;
+using static ASI.Basecode.Resources.Constants.Enums;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -28,12 +29,27 @@ namespace ASI.Basecode.Services.Services
             if(!_repository.BookingExists(model.BookingId))
             {
                 _mapper.Map(model, booking);
+                booking.BookingStatus = BookingStatus.PENDING.ToString();
                 booking.CreatedDt = DateTime.Now;
                 booking.UpdatedDt = DateTime.Now;
                 booking.CreatedBy = System.Environment.UserName;
                 booking.UpdatedBy = System.Environment.UserName;
 
                 _repository.AddBooking(booking);
+
+                if(model.DayOfTheWeekIds != null && model.DayOfTheWeekIds.Any())
+                {
+                    foreach (var id in model.DayOfTheWeekIds)
+                    {
+                        var recurrence = new Recurrence
+                        {
+                            DayOfWeekId = id,
+                            BookingId = booking.BookingId,
+                        };
+
+                        _repository.AddRecurrence(recurrence);
+                    }
+                }
             }
         }
 

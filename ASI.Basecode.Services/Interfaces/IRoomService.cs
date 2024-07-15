@@ -1,4 +1,5 @@
-﻿using ASI.Basecode.Services.ServiceModels;
+﻿using ASI.Basecode.Data.Models;
+using ASI.Basecode.Services.ServiceModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace ASI.Basecode.Services.Interfaces
         void DeleteRoom(RoomViewModel roomId);
         void DeleteImage(RoomGalleryViewModel model);
         IEnumerable<RoomGalleryViewModel> GetRoomGallery();
+        IEnumerable<DayOfTheWeek> GetDays();
     }
 }

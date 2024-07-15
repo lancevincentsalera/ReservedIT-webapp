@@ -1,6 +1,6 @@
 ﻿
 #createBookingModal .modal-dialog {
-    max-width: 30vw !important;
+    max-width: 32vw !important;
 }
 
 #createBookingModal form{
@@ -12,7 +12,7 @@
 
 #createBookingModal .modal-content {
     height: fit-content;
-    padding:40px;
+    padding:30px;
 }
 
 
@@ -25,7 +25,7 @@
 }
 
 #createBookingModal .modal-body form .custom-recur {
-    display: block; /* Hide the div initially */
+    display: none; /* Hide the div initially */
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 15px;
@@ -61,12 +61,12 @@
 }
 
 #createBookingModal .modal-body .setRecurrence button {
-    width: 17vh;
+    width: 20vh;
     height: 35px;
     font: 100;
     color: black;
     border-color: #ccc;
-    text-wrap: nowrap;
+    white-space: nowrap;
 }
 
 #createBookingModal .modal-body .setRecurrence button:hover {
@@ -74,7 +74,10 @@
     color: white;
 }
 
-
+    #createBookingModal .modal-body .setRecurrence button.active {
+        background-color: #aaa;
+        color: white;
+    }
 
 #createBookingModal .modal-body .button-group {
     float: inline-end;

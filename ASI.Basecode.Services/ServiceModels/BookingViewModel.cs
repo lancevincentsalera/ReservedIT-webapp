@@ -22,5 +22,8 @@ namespace ASI.Basecode.Services.ServiceModels
         public string UserName { get; set; }
         public User User { get; set; }
         public Room Room { get; set; }
+
+        public List<DayOfTheWeek> Days { get; set; }
+        public List<int> DayOfTheWeekIds { get; set; }
     }
 }

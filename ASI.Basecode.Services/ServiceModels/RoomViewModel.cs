@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ASI.Basecode.Data.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,5 +31,6 @@ namespace ASI.Basecode.Services.ServiceModels
         public string Thumbnail { get; set; }
         public List<RoomGalleryViewModel> _RoomGallery { get; set; }
         public IEnumerable<RoomViewModel> roomList { get; set; }
+        public BookingViewModel BookingViewModel { get; set; }
     }
 }
