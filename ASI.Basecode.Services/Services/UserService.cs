@@ -32,7 +32,7 @@ namespace ASI.Basecode.Services.Services
             user = _repository.GetUsers().Where(x => x.Email == email &&
                                                      x.Password == passwordKey).FirstOrDefault();
 
-            if(user != null)
+            if (user != null)
             {
                 switch (user.AccountStatus)
                 {
@@ -73,14 +73,14 @@ namespace ASI.Basecode.Services.Services
 
         public List<Role> GetRolesByRoleOrDefault(int roleId)
         {
-            switch ((UserRoleManager) roleId)
+            switch ((UserRoleManager)roleId)
             {
                 case UserRoleManager.ROLE_SUPER:
-                    return _repository.GetRoles().Where(r =>  r.RoleId == (int)UserRoleManager.ROLE_ADMIN).ToList();
+                    return _repository.GetRoles().Where(r => r.RoleId == (int)UserRoleManager.ROLE_ADMIN).ToList();
                 case UserRoleManager.ROLE_ADMIN:
                     return _repository.GetRoles().Where(r => r.RoleId > roleId).ToList();
             }
-           return _repository.GetRoles().ToList();
+            return _repository.GetRoles().ToList();
         }
 
         public IEnumerable<UserViewModel> GetUsersByRoleOrDefault(int roleId)
@@ -122,10 +122,15 @@ namespace ASI.Basecode.Services.Services
             return users;
         }
 
+        public User GetUser(int userId)
+        {
+            return _repository.GetUsers().ToList().Where(u => u.UserId == userId).FirstOrDefault();
+        }
+
         public void UpdateUser(UserViewModel user)
         {
-            var userToBeUpdated = _repository.GetUsers().Where(u => u.UserId ==  user.UserId).FirstOrDefault();
-            if(userToBeUpdated != null)
+            var userToBeUpdated = _repository.GetUsers().Where(u => u.UserId == user.UserId).FirstOrDefault();
+            if (userToBeUpdated != null)
             {
                 _mapper.Map(user, userToBeUpdated);
                 userToBeUpdated.UpdatedDt = DateTime.Now;
@@ -133,6 +138,13 @@ namespace ASI.Basecode.Services.Services
 
                 _repository.UpdateUser(userToBeUpdated);
             }
+        }
+
+        public void UpdateUser(User user)
+        {
+            user.UpdatedDt = DateTime.Now;
+            user.UpdatedBy = System.Environment.UserName;
+            _repository.UpdateUser(user);
         }
 
         public void DeleteUser(UserViewModel user)

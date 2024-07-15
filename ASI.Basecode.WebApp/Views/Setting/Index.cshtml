@@ -36,6 +36,10 @@
                     <label class="form-label" for="role">Role</label>
                     <input class="form-control" type="text" id="role" value="@Html.DisplayFor(model => model.User.Role.RoleName)" disabled>
                 </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-control" type="password" id="password">
+                </div>
             </div>
         </div>
 
@@ -114,6 +118,7 @@
             const bookingStatusChangeChecked = document.getElementById('booking-status-change-checkbox').checked ? 1 : 0;
             const bookingReminderSeconds = parseInt(calculateTotalSecondsBookingReminder());
             const bookingDurationSeconds = parseInt(calculateTotalSecondsBookingDuration());
+            const password = document.getElementById('password').value.trim();
 
             function calculateTotalSecondsBookingReminder() {
                 const selectElement = document.getElementById('booking-reminder');
@@ -145,7 +150,7 @@
                 BookingDuration: bookingDurationSeconds
             };
 
-            fetch(`/Setting/Edit/`, {
+            fetch(`/Setting/EditSetting/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -155,12 +160,36 @@
                 .then(response => response.json())
                 .then(data => {
                     console.log('Success:', data);
-                    alert('Data sent successfully');
+                    alert('Setting updated successfully!');
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('Error sending data');
+                    alert('Error updating setting!');
                 });
+
+            if (password) {
+                const passwordData = {
+                    UserId: @Model.UserId,
+                    Password: password
+                };
+
+                fetch(`/Setting/EditUserPassword/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(passwordData)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Password Success:', data);
+                        alert('Password updated successfully!');
+                    })
+                    .catch(error => {
+                        console.error('Password Error:', error);
+                        document.getElementById('password-validation').innerText = error.message || 'Error updating password!';
+                    });
+            }
         }
 
 

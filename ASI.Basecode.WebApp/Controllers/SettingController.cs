@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Drawing.Printing;
 using System.IO;
 using System.Security.Claims;
@@ -22,6 +23,7 @@ namespace ASI.Basecode.WebApp.Controllers
     public class SettingController : ControllerBase<SettingController>
     {
         private readonly ISettingService _settingService;
+        private readonly IUserService _userService;
         /// <summary>
         /// Constructor
         /// </summary>
@@ -31,12 +33,14 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <param name="localizer"></param>
         /// <param name="mapper"></param>
         public SettingController(ISettingService settingService,
+                              IUserService userService,
                               IHttpContextAccessor httpContextAccessor,
                               ILoggerFactory loggerFactory,
                               IConfiguration configuration,
                               IMapper mapper = null) : base(httpContextAccessor, loggerFactory, configuration, mapper)
         {
             this._settingService = settingService;
+            this._userService = userService;
         }
 
         /// <summary>
@@ -67,7 +71,7 @@ namespace ASI.Basecode.WebApp.Controllers
                 _settingService.Add(setting);
 
                 setting = _settingService.GetSetting(userId.GetValueOrDefault());
-                setting.User = _settingService.GetUser(setting.UserId.GetValueOrDefault());
+                setting.User = _userService.GetUser(setting.UserId.GetValueOrDefault());
                 setting.User.Role = _settingService.GetRole(setting.User.RoleId.GetValueOrDefault());
 
                 return View(setting);
@@ -76,7 +80,7 @@ namespace ASI.Basecode.WebApp.Controllers
             if (_settingService.SettingExists(userId.GetValueOrDefault()))
             {
                 var setting = _settingService.GetSetting(userId.Value);
-                setting.User = _settingService.GetUser(setting.UserId.GetValueOrDefault());
+                setting.User = _userService.GetUser(setting.UserId.GetValueOrDefault());
                 setting.User.Role = _settingService.GetRole(setting.User.RoleId.GetValueOrDefault());
                 return View(setting);
             }
@@ -89,13 +93,40 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <param name="model">The model.</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Edit([FromBody] SettingViewModel model)
+        public IActionResult EditSetting([FromBody] SettingViewModel model)
         {
             try
             {
-                model.User = _settingService.GetUser(model.UserId.GetValueOrDefault());
+                model.User = _userService.GetUser(model.UserId.GetValueOrDefault());
                 _settingService.Update(model);
                 return Json(new { success = true, message = "Setting updated successfully!" });
+            }
+            catch (InvalidDataException ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = Resources.Messages.Errors.ServerError });
+            }
+        }
+
+        /// <summary>
+        /// Edits the user password.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult EditUserPassword([FromBody] UserPasswordViewModel model)
+        {
+
+            try
+            {
+                var user = _userService.GetUser(model.UserId.GetValueOrDefault());
+                user.Password = PasswordManager.EncryptPassword(model.Password);
+                _userService.UpdateUser(user);
+
+                return Json(new { success = true, message = "User updated successfully!" });
             }
             catch (InvalidDataException ex)
             {
