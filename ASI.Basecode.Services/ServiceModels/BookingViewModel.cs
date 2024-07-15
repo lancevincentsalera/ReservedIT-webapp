@@ -9,6 +9,10 @@ namespace ASI.Basecode.Services.ServiceModels
 {
     public class BookingViewModel
     {
+        public BookingViewModel()
+        {
+            DayOfTheWeekIds = new List<int>();
+        }
         public int BookingId { get; set; }
         public int? UserId { get; set; }
         public int? RoomId { get; set; }

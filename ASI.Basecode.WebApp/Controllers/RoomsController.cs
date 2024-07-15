@@ -70,7 +70,7 @@ namespace ASI.Basecode.WebApp.Controllers
             }
             catch (InvalidDataException ex)
             {
-                TempData["ErrorMessage"] = $"An error occurred while creating the booking: {ex.Message}";
+                TempData["ErrorMessage"] = ex.Message;
             }
             catch (Exception ex)
             {

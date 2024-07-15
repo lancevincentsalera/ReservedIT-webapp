@@ -1,7 +1,7 @@
 ﻿@model ASI.Basecode.Services.ServiceModels.RoomViewModel;
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Rooms";
 }
 
 @section styles {
@@ -127,7 +127,15 @@
 
                 minuteIncrement: 1,
                 minDate: new Date(),
-                minTime: `${currentHour}:${currentMinute}`
+                minTime: new Date(),
+                onChange: function (selectedDates, dateStr, instance) {
+                    const selectedDate = selectedDates[0];
+                    if (selectedDate && selectedDate.toDateString() === now.toDateString()) {
+                        instance.set('minTime', `${currentHour}:${currentMinute}`);
+                    } else {
+                        instance.set('minTime', '00:00');
+                    }
+                }
             }
 
             flatpickr("input[type=datetime-local]", config);
