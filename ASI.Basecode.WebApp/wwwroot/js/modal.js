@@ -78,6 +78,67 @@ const getRoomDetails = (btnId, modalId, action, controller) => {
     })
 }
 
+
+const getBookingDetails = (btnId, modalId, action, controller) => {
+    let id = $(btnId).data('id');
+
+    console.log(id);
+    console.log(`/${controller}/${action}`)
+
+    $.ajax({
+        url: `/${controller}/${action}`,
+        type: 'GET',
+        data: { bookingId: id },
+        success: (response) => {
+            console.log(response)
+            for (let key in response) {
+                if (key !== 'Recurrence') {
+                    $(`${modalId} input[name="${key}"]`).val(response[key]);
+                    console.log(`${key}:`, response[key]);
+                }
+            }
+            if (response.Recurrence.length == 0) {
+                $('.custom-recur').hide();
+                $('#scheduleOnceButton').addClass('active');
+                $('#customButton').removeClass('active');
+            } else if (response.Recurrence.length > 0) {
+                console.log('Processing recurrences...');
+
+                response.Recurrence.forEach(rec => {
+                    const dayId = rec.DayOfWeekId;
+                    const checkboxSelector = `${modalId} .checkbox-recur input[name="DayOfTheWeekIds"][value="${dayId}"]`;
+                    const checkbox = $(checkboxSelector);
+
+                    console.log(`Checking checkbox with value: ${dayId}`);
+                    console.log("Checkbox selector: ", checkboxSelector);
+
+                    if (checkbox.length > 0) {
+                        checkbox.prop('checked', true).trigger('change');
+                        console.log(`Checkbox with value ${dayId} is checked.`, checkbox.is(":checked"));
+                    } else {
+                        checkbox.prop('checked', false).trigger('change');
+                        console.log(`Checkbox with value ${dayId} not found.`);
+                    }
+                });
+                
+                $('.custom-recur').show();
+                $('#customButton').addClass('active');
+                $('#scheduleOnceButton').removeClass('active');
+            }
+            // Update other input fields with fetched data
+            
+        },
+        error: (xhr, status, error) => {
+            console.error('Error fetching booking details:', xhr.responseText, error);
+            if (xhr.status === 500) {
+                alert('Internal Server Error. Please try again later.');
+            } else {
+                alert('An error occurred while fetching booking details.');
+            }
+        }
+    })
+}
+
 const getRoomModalDetails = (btnId, modalId, action, controller) => {
     let id = $(btnId).data('id');
 

@@ -1,11 +1,13 @@
-﻿@model IEnumerable<ASI.Basecode.Services.ServiceModels.RoomViewModel>;
+﻿@model ASI.Basecode.Services.ServiceModels.RoomViewModel;
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Rooms";
 }
 
 @section styles {
     <link rel="stylesheet" href="~/css/roomsCard.css" />
+    <link rel="stylesheet" href="~/css/bookingModal.css" />
+    <link rel="stylesheet" href="~/css/viewRoomCard.css" />
 }
 
 <div class="room-header">
@@ -15,7 +17,7 @@
 <button class="carousel-button left" onclick="moveLeft()">&#10094;</button>
 <div class="container-wrapper">
     <div class="container">
-        @foreach (var room in Model)
+        @foreach (var room in Model.roomList)
         {
             <div class="card">
                 <div class="card-content" onclick="displayModal('#viewRoomCardModal'); getRoomModalDetails(this, '#viewRoomCardModal', 'GetRoomDetails', 'Rooms')" data-id="@room.RoomId">
@@ -42,7 +44,9 @@
                     </div>
                 </div>
                 <div class="btn-book">
-                    <button class="book-button">Book Room</button>
+                    <button type="button" class="book-button" data-toggle="modal" data-target="#createBookingModal" data-id="@room.RoomId" data-name="@room.RoomName">
+                        Book Room
+                    </button>
                 </div>
             </div>
 
@@ -52,11 +56,23 @@
 <button class="carousel-button right" onclick="moveRight()">&#10095;</button>
 
 @Html.Partial("_ViewRoomCardModal")
+@Html.Partial("_CreateBookingModal", Model.BookingViewModel)
 @section scripts {
     <script>
+        $('.book-button').click(function() {
+            console.log($('.book-button'))
+            let id = $(this).data('id');
+            let name = $(this).data('name');
+
+            console.log('clicked', id, name);
+
+            $('#roomId').val(id);
+            $('#roomName').val(name);
+        })
+
         let currentPosition = 0;
         const container = document.querySelector('.container');
-        const totalCards = @Model.Count();
+        const totalCards = @Model.roomList.Count();
         const visibleCards = 3;
         const cardWidth = 310; // 280px card + 30px gap
 
@@ -78,4 +94,55 @@
             container.style.transform = `translateX(-${currentPosition * cardWidth}px)`;
         }
     </script>
+
+
+    <script>
+
+        $(document).ready(function () {
+            //console.log("Document is ready");
+            // Toggle display of the custom-recur div
+            $('#scheduleOnceButton').addClass('active');
+
+            $('#customButton').click( function () {
+                console.log("Custom Button clicked");
+                $('.custom-recur').toggle();
+                $('#customButton').addClass('active');
+                $('#scheduleOnceButton').removeClass('active');
+            });
+
+            $('#scheduleOnceButton').click(function () {
+                console.log("Schedule Once Button clicked");
+                $('.custom-recur').hide();
+                $('#scheduleOnceButton').addClass('active');
+                $('#customButton').removeClass('active');
+            });
+
+            const now = new Date();
+            var currentHour = now.getHours();
+            var currentMinute = now.getMinutes();
+
+            var config = {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+                altInput: true,
+                altFormat: "F j, Y (h:S K)",
+
+                minuteIncrement: 1,
+                minDate: new Date(),
+                minTime: new Date(),
+                onChange: function (selectedDates, dateStr, instance) {
+                    const selectedDate = selectedDates[0];
+                    if (selectedDate && selectedDate.toDateString() === now.toDateString()) {
+                        instance.set('minTime', `${currentHour}:${currentMinute}`);
+                    } else {
+                        instance.set('minTime', '00:00');
+                    }
+                }
+            }
+
+            flatpickr("input[type=datetime-local]", config);
+        });
+        
+    </script>
+
 }

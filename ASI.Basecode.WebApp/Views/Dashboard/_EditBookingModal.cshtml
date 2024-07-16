@@ -1,0 +1,66 @@
+﻿@model ASI.Basecode.Services.ServiceModels.BookingViewModel;
+
+@section styles {
+}
+
+<!-- Edit Booking Modal -->
+<div class="modal fade" id="editBookingModal" tabindex="-1" role="dialog" aria-labelledby="editBookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createBookingModalLabel">Edit Booking</h5>
+
+            </div>
+            <div class="modal-body">
+                <form asp-action="UpdateBookingPost" method="post">
+                    <div class="form-group">
+                        <label for="roomName">Room Name</label>
+                        <input asp-for="RoomId" name="RoomId" type="hidden" id="roomId" />
+                        <input asp-for="RoomName" type="text" class="form-control" id="roomName" name="RoomName"/>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="startDate">Start</label>
+                            <div class="input-group date" id="datepicker">
+                                <input type="datetime-local" class="form-control" id="startDate" name="StartDate" placeholder="Select Date" required />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="endDate">End</label>
+                            <div class="input-group date" id="datepicker">
+                                <input type="datetime-local" class="form-control" id="endDate" name="EndDate" placeholder="Select Date" required/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group setRecurrence">
+                        <button type="button" class="btn btn-outline-secondary" id="scheduleOnceButton">Schedule Once</button>
+                        <button type="button" class="btn btn-outline-secondary" id="customButton">Custom</button>
+                    </div>
+                    <div class="custom-recur">
+    <label class="custom-recur-title">Repeat</label>
+    <div class="checkbox-recur">
+        @foreach (var day in Model.Days)
+        {
+            bool isSelected = Model.Recurrence != null && Model.Recurrence.Any(r => r.DayOfWeekId == day.DayOfWeekId);
+
+            <input type="checkbox" id="@day.DayName.ToLower()" name="DayOfTheWeekIds" value="@day.DayOfWeekId" @(isSelected ? "checked" : "")>
+            <label for="@day.DayName.ToLower()">@day.DayName.Substring(0, 3)</label>
+            <br>
+        }
+    </div>
+</div>
+
+                    
+
+                    <div class="button-group">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-custom">Done</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

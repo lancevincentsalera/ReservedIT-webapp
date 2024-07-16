@@ -40,7 +40,7 @@ namespace ASI.Basecode.Services.Services
                         GalleryId = i.ImageId,
                         GalleryName = i.ImageName,
                         GalleryUrl = i.Path,
-                        
+
                     }).ToList(),
                 });
             return data;
@@ -136,6 +136,11 @@ namespace ASI.Basecode.Services.Services
                     _roomRepository.DeleteRoomImage(item);
                 }
             }
+        }
+
+        public IEnumerable<DayOfTheWeek> GetDays()
+        {
+            return _roomRepository.GetDays();
         }
     }
 }

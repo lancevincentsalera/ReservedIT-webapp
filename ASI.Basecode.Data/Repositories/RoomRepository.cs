@@ -54,5 +54,10 @@ namespace ASI.Basecode.Data.Repositories
             this.GetDbSet<ImageGallery>().Remove(imageGallery);
             UnitOfWork.SaveChanges();
         }
+
+        public IQueryable<DayOfTheWeek> GetDays()
+        {
+            return this.GetDbSet<DayOfTheWeek>();
+        }
     }
 }

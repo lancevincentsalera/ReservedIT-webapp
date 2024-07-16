@@ -28,10 +28,6 @@ namespace ASI.Basecode.Data.Repositories
             return this.GetDbSet<Setting>().Include(u => u.User);
         }
 
-        public IEnumerable<User> GetUsers()
-        {
-            return this.GetDbSet<User>().ToList();
-        }
 
         public IEnumerable<Role> GetRoles()
         {

@@ -18,5 +18,7 @@ namespace ASI.Basecode.Data.Interfaces
         void UpdateGallery(ImageGallery imageGallery);
         void DeleteRoom(Room room);
         void DeleteRoomImage(ImageGallery imageGallery);
+
+        IQueryable<DayOfTheWeek> GetDays();
     }
 }
