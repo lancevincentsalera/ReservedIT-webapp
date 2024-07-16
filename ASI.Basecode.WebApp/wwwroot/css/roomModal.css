@@ -58,9 +58,9 @@ Q
 /* Styles for the image container */
 .image-container {
     position: relative;
-    display:;
-    width: 100%;
-    height: -webkit-fill-available;
+    display: ;
+    width:100%;
+    height:-webkit-fill-available;
 }
 
 .delete-button {
@@ -110,17 +110,18 @@ Q
     display: none;
 }
 
-.custom-file-upload .upload-label {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #eee;
-    border: 1px solid #ccc;
-}
+        .custom-file-upload .upload-label {
+            cursor: pointer;
+            display: flex;
+         
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #eee;
+            border: 1px solid #ccc;
+        }
 
 .custom-file-upload .upload-icon {
     position: absolute;
@@ -137,29 +138,7 @@ Q
         font-size: 15px;
     }
 
-/* Styles for the equipment list */
-/*#equipmentList {
-    list-style-type: none;
-    padding: 0;
-    margin-top: 10px;
-}
 
-    #equipmentList li {
-        background-color: #f8f8f8;
-        margin-bottom: 5px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-    .add-equipment{
-        border-radius: 10px;
-        border: 0px solid;
-        font-size: 12px;
-        padding:8px;*/
-/*background-color: */
-
-/*}*/
 
 .modal-body .button-group {
     float: inline-end;

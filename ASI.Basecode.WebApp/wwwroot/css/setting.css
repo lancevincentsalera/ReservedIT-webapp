@@ -1,5 +1,5 @@
 ﻿.table-container {
-    height: 95%;
+    height: 90%;
 }
 
     .table-container .setting {
@@ -10,7 +10,7 @@
     }
 
 .table-column {
-    margin: 3%;
+    margin: 2%;
     height: 100%;
     width: 100%;
 }
@@ -20,28 +20,40 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 3%;
-    height: 50%;
-    width: 50%;
+    margin: 2%;
+    height: auto;
+    width: auto;
 }
 
-.info-field {
-    padding: 0.5em;
+.mb-4, .my-4 {
+    margin-bottom: 0.5rem !important;
 }
 
 h2, h4, h5 {
     font-weight: bold !important;
 }
 
+h2 {
+    font-size: 1.5em;
+}
+
+h5 {
+    font-size: 1em;
+}
+
+h6 {
+    font-size: 1em;
+}
+
 label {
-    margin-top: 10px;
-    margin-bottom: 5px;
+    margin-top: .0%;
+    margin-bottom: .0%;
     font-weight: bold;
     justify-items: center;
 }
 
 .notification-option {
-    margin: 2em;
+    margin: 1em;
 }
 
     .notification-option h5 {
@@ -110,6 +122,12 @@ label {
 .save-button {
     display: flex;
     justify-content: flex-end;
+    white-space: nowrap;
+}
+
+.save-button button {
+    width: auto;
+    height: auto;
 }
 
 #booking-reminder-custom-time {
@@ -119,6 +137,11 @@ label {
 }
 
     #booking-reminder-custom-time input {
+        width: 4em;
+        margin: .1em;
+    }
+
+    #booking-duration-time input {
         width: 4em;
         margin: .1em;
     }

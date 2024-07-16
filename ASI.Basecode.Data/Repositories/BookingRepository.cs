@@ -35,12 +35,15 @@ namespace ASI.Basecode.Data.Repositories
 
         public IQueryable<Booking> GetBookings()
         {
-            return this.GetDbSet<Booking>();
+            return this.GetDbSet<Booking>().Include(b => b.Recurrences);
         }
 
         public IQueryable<Booking> GetBookingsByUser(int userId)
         {
-            return this.GetDbSet<Booking>().Where(b => b.UserId == userId);
+            return this.GetDbSet<Booking>()
+                .Include(b => b.Room)
+                .Include(b => b.User)
+                .Where(b => b.UserId == userId);
         }
         public void UpdateBooking(Booking booking)
         {
@@ -48,10 +51,20 @@ namespace ASI.Basecode.Data.Repositories
             UnitOfWork.SaveChanges();
         }
 
+
+        public void AddRecurrence(Recurrence recurrence)
+        {
+            this.GetDbSet<Recurrence>().Add(recurrence);
+            UnitOfWork.SaveChanges();
+        }
+
         public IQueryable<Recurrence> GetBookingRecurrence(int bookingID)
         {
-            var r = this.GetDbSet<Recurrence>().Include(r => r.DayOfWeek).Where(r => r.BookingId == bookingID);
-            return this.GetDbSet<Recurrence>().Include(r => r.DayOfWeek).Where(r => r.BookingId == bookingID);
+            return this.GetDbSet<Recurrence>()
+                .Include(r => r.DayOfWeek)
+                .Include(r => r.Booking)
+                .Where(r => r.BookingId == bookingID);
         }
+
     }
 }

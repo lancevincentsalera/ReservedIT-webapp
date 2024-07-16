@@ -11,7 +11,6 @@ namespace ASI.Basecode.Data.Interfaces
     {
         void AddSetting(Setting setting);
         IQueryable<Setting> GetSettings();
-        IEnumerable<User> GetUsers();
         IEnumerable<Role> GetRoles();
         void UpdateSetting(Setting setting);
         void DeleteSetting(Setting setting);
