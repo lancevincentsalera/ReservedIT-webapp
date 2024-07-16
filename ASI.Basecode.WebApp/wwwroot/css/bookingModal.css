@@ -1,22 +1,20 @@
 ﻿
-#createBookingModal .modal-dialog {
+.modal .modal-dialog {
     max-width: 32vw !important;
 }
 
-#createBookingModal form{
-    display:flex;
-    flex-direction:column;
-    margin:0;
-  
+.modal form {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
 }
 
-#createBookingModal .modal-content {
+.modal .modal-content {
     height: fit-content;
-    padding:30px;
+    padding: 30px;
 }
 
-
-#createBookingModal .modal-body .form-row {
+.modal .modal-body .form-row {
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
@@ -24,16 +22,16 @@
     margin-bottom: -10px;
 }
 
-#createBookingModal .modal-body form .custom-recur {
+.modal .modal-body form .custom-recur {
     display: none; /* Hide the div initially */
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 15px;
-    margin:0 auto;
+    margin: 0 auto;
     width: 100%;
 }
 
-    #createBookingModal .modal-body form .custom-recur .custom-recur-title{
+    .modal .modal-body form .custom-recur .custom-recur-title {
         font-size: medium;
     }
 
@@ -54,32 +52,32 @@
     margin: 4px 0 0 0;
 }
 
-#createBookingModal .modal-body .setRecurrence {
+.modal .modal-body .setRecurrence {
     display: flex;
     justify-content: center;
     gap: 20px;
 }
 
-#createBookingModal .modal-body .setRecurrence button {
-    width: 20vh;
-    height: 35px;
-    font: 100;
-    color: black;
-    border-color: #ccc;
-    white-space: nowrap;
-}
-
-#createBookingModal .modal-body .setRecurrence button:hover {
-    background-color: #B5838E;
-    color: white;
-}
-
-    #createBookingModal .modal-body .setRecurrence button.active {
-        background-color: #aaa;
-        color: white;
+    .modal .modal-body .setRecurrence button {
+        width: 20vh;
+        height: 35px;
+        font: 100;
+        color: black;
+        border-color: #ccc;
+        white-space: nowrap;
     }
 
-#createBookingModal .modal-body .button-group {
+        .modal .modal-body .setRecurrence button:hover {
+            background-color: #B5838E;
+            color: white;
+        }
+
+        .modal .modal-body .setRecurrence button.active {
+            background-color: #aaa;
+            color: white;
+        }
+
+.modal .modal-body .button-group {
     float: inline-end;
     margin-top: 12vh;
     display: flex;
@@ -87,19 +85,19 @@
     gap: 15px;
 }
 
-    #createBookingModal .btn-danger, .btn-custom {
-        width: 7vw;
-        height: 50px;
-        font-weight: 300;
-    }
+.modal .btn-danger, .btn-custom {
+    width: 7vw;
+    height: 50px;
+    font-weight: 300;
+}
 
         .btn-danger, .btn-custom:hover {
             color: white;
             font-weight: 800;
         }
 
-        #createBookingModal .btn-custom {
-            background-color: #B5838E;
-            color: white;
-        }
+.modal .btn-custom {
+    background-color: #B5838E;
+    color: white;
+}
 

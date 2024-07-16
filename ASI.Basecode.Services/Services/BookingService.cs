@@ -84,6 +84,9 @@ namespace ASI.Basecode.Services.Services
                         (b.TimeFrom >= model.TimeFrom && b.TimeTo <= model.TimeTo)
                     ))
                 .ToList();
+
+
+
             List<List<Booking>> approvedBookingsWithRecurrences = ApprovedBookingsWithRecurrences(approvedBookings);
 
             foreach (var created in createdBookings)
@@ -234,6 +237,10 @@ namespace ASI.Basecode.Services.Services
 
         public void UpdateBooking(BookingViewModel booking)
         {
+            if (IsBookingConflict(booking))
+            {
+                throw new InvalidDataException("Cannot update booking: A conflicting approved booking already exists for the selected date, time, and room.");
+            }
             var bookingToBeUpdated = _repository.GetBookings()
                 .Include(b => b.Recurrences)
                 .Where(u => u.BookingId == booking.BookingId)

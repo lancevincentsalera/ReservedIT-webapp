@@ -64,6 +64,14 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 model.TimeFrom = model.StartDate.Value.TimeOfDay;
                 model.TimeTo = model.EndDate.Value.TimeOfDay;
+                if (model.DayOfTheWeekIds.Count() > 0 && (model.StartDate.Value.Date == model.EndDate.Value.Date))
+                {
+                    throw new InvalidDataException("Invalid booking date range");
+                }
+                if(model.TimeTo <= model.TimeFrom)
+                {
+                    throw new InvalidDataException("Booking time duration should be valid");
+                }
                 model.UserId = UserId;
                 _bookingService.AddBooking(model);
                 TempData["SuccessMessage"] = "Booking created successfully";

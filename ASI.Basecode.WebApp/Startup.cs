@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IO;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace ASI.Basecode.WebApp
 {
@@ -83,6 +84,7 @@ namespace ASI.Basecode.WebApp
             services.AddMvc().AddJsonOptions(jsonOptions =>
             {
                 jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null;
+                jsonOptions.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             });
 
             services.AddMemoryCache();
