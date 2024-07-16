@@ -14,7 +14,9 @@ namespace ASI.Basecode.Services.Interfaces
         List<Role> GetRolesByRoleOrDefault(int roleId);
         IEnumerable<UserViewModel> GetUsersByRoleOrDefault(int userRole);
         IEnumerable<UserViewModel> GetUsers();
+        User GetUser(int userId);
         void UpdateUser(UserViewModel user);
+        void UpdateUser(User user);
         void DeleteUser(UserViewModel user);
     }
 }

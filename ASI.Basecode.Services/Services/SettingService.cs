@@ -16,11 +16,13 @@ namespace ASI.Basecode.Services.Services
     public class SettingService : ISettingService
     {
         private readonly ISettingRepository _settingRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public SettingService(ISettingRepository settingRepository, IMapper mapper)
+        public SettingService(ISettingRepository settingRepository, IUserRepository userRepository, IMapper mapper)
         {
             _settingRepository = settingRepository;
+            _userRepository = userRepository;
             _mapper = mapper;
         }
 
@@ -54,11 +56,6 @@ namespace ASI.Basecode.Services.Services
             };
 
             return setting;
-        }
-
-        public User GetUser(int userId)
-        {
-            return _settingRepository.GetUsers().ToList().Where(u => u.UserId == userId).FirstOrDefault();
         }
 
         public Role GetRole(int roleId)
