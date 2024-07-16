@@ -1,140 +1,29 @@
-html, body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
+.Whole {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #FFF2EA;
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    max-width: 800px; /* Limit the width for better layout */
+    margin: auto; /* Center the whole div */
 }
 
-.card-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    width: 100%;
-    height: 100vh;
-}
-
-.image-container {
-    flex: 1;
-    background-image: url('~/img/login-image.jpg');
-    background-size: cover;
-    background-position: center;
-}
-
-    .image-container img {
-        width: 100%;
-        height: 100%;
-        border-radius: 0 50px 50px 0;
-    }
-
-.login-form {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 100px;
-    padding-bottom: 70px;
-    background-color: #fff3e6;
-    height: 100%;
-}
-
-.login-header {
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-    .login-header img {
-        max-width: 150px;
-        margin-bottom: 5px;
-        border-radius: 100%;
-        background-color: white;
-    }
-
-    .login-header h2 {
-        margin: 0;
-    }
-
-    .login-header p {
-        margin: 5px 0 20px;
-        color: #777;
-    }
-
-form {
-    width: 100%;
-    max-width: 400px; /* Adjust this value to make inputs and button longer */
-    display: flex;
-    flex-direction: column;
-}
-    .contact-info p
-    {
-        margin-top: 20px;
-        text-align: left;
-        font-size: 14px;
-        color: #555;
-    }
-
-
-
-label {
-    margin-top: 10px;
-    margin-bottom: 5px;
+.Error-Message {
+    flex: 1; /* Take up available space */
+    font-size: 24px;
     font-weight: bold;
-    justify-items: center;
+    margin-right: 20px; /* Space between text and image */
+    color: #dc3545; /* Bootstrap danger color */
+    text-align: left; /* Align text to the left */
 }
 
-
-
-
-.login-btn {
-    padding: 10px 10px 7px 10px; /*top, right, bottom, left*/
-    background-color: #775965;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-    margin-top: 60px;
+.Image-Error {
+    flex: 1; /* Take up available space */
 }
 
-    .login-btn:hover {
-        background-color: #B69198;
-    }
-
-.contact-info {
-    margin-top: 5px;
-    text-align: center;
-    font-size: 14px;
-    color: #555;
-}
-
-    .contact-info a {
-        color: #007bff;
-        text-decoration: none;
-    }
-
-        .contact-info a:hover {
-            text-decoration: underline;
-        }
-
-@media (max-width: 768px) {
-    .card-container {
-        flex-direction: column;
+    .Image-Error img {
+        max-width: 100%;
         height: auto;
     }
-
-    .image-container {
-        display: none;
-    }
-
-    .login-form {
-        width: 100%;
-        height: auto;
-    }
-}
