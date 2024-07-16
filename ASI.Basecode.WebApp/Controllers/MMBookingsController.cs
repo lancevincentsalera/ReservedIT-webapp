@@ -106,7 +106,7 @@ namespace ASI.Basecode.WebApp.Controllers
                 }
                 catch (Exception ex)
                 {
-                    TempData["ErrorMessage"] = $"An error occurred while approving the booking: {ex.Message}";
+                    TempData["ErrorMessage"] = ex.Message;
                 }
             }
             else

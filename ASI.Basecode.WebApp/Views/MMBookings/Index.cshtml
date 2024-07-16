@@ -49,11 +49,14 @@
                     {
                         @foreach (var recurrence in item.Recurrence)
                         {
-                            var dayName = recurrence.DayOfWeek.DayName.Substring(0, 3);
-                            @Html.DisplayFor(modelItem => dayName)
-                            if (recurrence != item.Recurrence.Last())
+                            if(recurrence.DayOfWeek != null)
                             {
-                                <text>, </text>
+                                var dayName = recurrence.DayOfWeek.DayName.Substring(0, 3);
+                                @Html.DisplayFor(modelItem => dayName)
+                                if (recurrence != item.Recurrence.Last())
+                                {
+                                    <text>, </text>
+                                }
                             }
                         }
                     }

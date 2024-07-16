@@ -1,19 +1,22 @@
 ﻿@model ASI.Basecode.Services.ServiceModels.BookingViewModel;
 
-<!-- Create Booking Modal -->
-<div class="modal fade" id="createBookingModal" tabindex="-1" role="dialog" aria-labelledby="createBookingModalLabel" aria-hidden="true">
+@section styles {
+}
+
+<!-- Edit Booking Modal -->
+<div class="modal fade" id="editBookingModal" tabindex="-1" role="dialog" aria-labelledby="editBookingModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createBookingModalLabel">Add Booking</h5>
+                <h5 class="modal-title" id="createBookingModalLabel">Edit Booking</h5>
 
             </div>
             <div class="modal-body">
-                <form asp-action="CreateBookingPost" method="post">
+                <form asp-action="UpdateBookingPost" method="post">
                     <div class="form-group">
                         <label for="roomName">Room Name</label>
-                        <input asp-for="RoomId" type="hidden" id="roomId" />
-                        <input asp-for="RoomName" type="text" class="form-control" id="roomName" name="RoomName" readonly/>
+                        <input asp-for="RoomId" name="RoomId" type="hidden" id="roomId" />
+                        <input asp-for="RoomName" type="text" class="form-control" id="roomName" name="RoomName"/>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -35,19 +38,19 @@
                         <button type="button" class="btn btn-outline-secondary" id="customButton">Custom</button>
                     </div>
                     <div class="custom-recur">
-                        <label class="custom-recur-title"> Repeat </label>
-                        <div class="checkbox-recur">
-                            @foreach (var day in Model.Days)
-                            {
-                                bool isSelected = Model.Recurrence != null && Model.Recurrence.Any(r => r.DayOfWeekId == day.DayOfWeekId);
+    <label class="custom-recur-title">Repeat</label>
+    <div class="checkbox-recur">
+        @foreach (var day in Model.Days)
+        {
+            bool isSelected = Model.Recurrence != null && Model.Recurrence.Any(r => r.DayOfWeekId == day.DayOfWeekId);
 
-                                <input type="checkbox" id="@day.DayName.ToLower()" name="DayOfTheWeekIds" value="@day.DayOfWeekId" @(isSelected ? "checked" : "")>
-                                <label for="@day.DayName.ToLower()">@day.DayName.Substring(0, 3)</label>
+            <input type="checkbox" id="@day.DayName.ToLower()" name="DayOfTheWeekIds" value="@day.DayOfWeekId" @(isSelected ? "checked" : "")>
+            <label for="@day.DayName.ToLower()">@day.DayName.Substring(0, 3)</label>
+            <br>
+        }
+    </div>
+</div>
 
-                                <br>
-                            }
-                        </div>
-                    </div>
                     
 
                     <div class="button-group">
