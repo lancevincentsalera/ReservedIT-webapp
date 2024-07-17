@@ -43,6 +43,7 @@ namespace ASI.Basecode.WebApp.Controllers
             var bookings = _bookingService.GetBookingsByUser(UserId);
             var model = new BookingViewModel
             {
+                roomList = _roomService.RetrieveAll(),
                 bookingList = bookings,
                 Days = _roomService.GetDays().ToList()
             };
@@ -59,7 +60,7 @@ namespace ASI.Basecode.WebApp.Controllers
         [HttpPost]
         public IActionResult CancelBooking(int Id)
         {
-            var booking = _bookingService.GetBookings().Where(u => u.BookingId == Id).FirstOrDefault();
+            var booking = _bookingService.GetBookingsByUser(UserId).Where(u => u.BookingId == Id).FirstOrDefault();
             if (booking != null)
             {
                 try
@@ -90,10 +91,15 @@ namespace ASI.Basecode.WebApp.Controllers
 
 
         #region Get Booking Details
+        /// <summary>
+        /// Get details to populate the edit booking modal
+        /// </summary>
+        /// <param name="bookingId"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult GetBookingDetails(int bookingId)
         {
-            var booking = _bookingService.GetBookings().Where(u => u.BookingId == bookingId).FirstOrDefault();
+            var booking = _bookingService.GetBookingsByUser(UserId).Where(u => u.BookingId == bookingId).FirstOrDefault();
             if (booking != null)
             {
                 return Json(booking);
@@ -106,22 +112,39 @@ namespace ASI.Basecode.WebApp.Controllers
 
 
         #region Edit Booking
+        /// <summary>
+        /// Action for updating the booking
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult UpdateBookingPost(BookingViewModel model)
         {
             try
             {
+                model.TimeFrom = model.StartDate.Value.TimeOfDay;
+                model.TimeTo = model.EndDate.Value.TimeOfDay;
+                if (model.DayOfTheWeekIds.Count() > 0 && (model.StartDate.Value.Date == model.EndDate.Value.Date))
+                {
+                    throw new InvalidDataException("Invalid booking date range");
+                }
+                if (model.TimeTo <= model.TimeFrom)
+                {
+                    throw new InvalidDataException("Booking time duration should be valid");
+                }
+                model.UserId = UserId;
                 _bookingService.UpdateBooking(model);
-                return Json(new { success = true, message = "Booking updated successfully!" });
+                TempData["SuccessMessage"] = "Booking successfully updated.";
             }
             catch (InvalidDataException ex)
             {
-                return Json(new { success = false, message = ex.Message });
+                TempData["ErrorMessage"] = ex.Message;
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message   = Resources.Messages.Errors.ServerError });
+                TempData["ErrorMessage"] = "An error occurred.";
             }
+            return RedirectToAction("Index");
         }
 
 

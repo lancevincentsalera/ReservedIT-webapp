@@ -32,9 +32,6 @@ $(document).ready(() => {
 
     dropdownTriggers.each((index,trigger) => {
         let Id = $(trigger).data('id');
-
-        console.log(Id);
-
         trigger.addEventListener('click', (event) => {
             event.stopPropagation();
 

@@ -30,5 +30,6 @@ namespace ASI.Basecode.Services.ServiceModels
         public List<DayOfTheWeek> Days { get; set; }
         public List<int> DayOfTheWeekIds { get; set; }
         public IEnumerable<BookingViewModel> bookingList { get; set; }
+        public IEnumerable<RoomViewModel> roomList { get; set; }
     }
 }

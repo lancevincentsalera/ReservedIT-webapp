@@ -39,8 +39,6 @@ namespace ASI.Basecode.Services.Services
                     booking.CreatedBy = System.Environment.UserName;
                     booking.UpdatedBy = System.Environment.UserName;
 
-                    _repository.AddBooking(booking);
-
                     if (model.DayOfTheWeekIds != null && model.DayOfTheWeekIds.Any())
                     {
                         foreach (var id in model.DayOfTheWeekIds)
@@ -51,9 +49,12 @@ namespace ASI.Basecode.Services.Services
                                 BookingId = booking.BookingId,
                             };
 
-                            _repository.AddRecurrence(recurrence);
+                            booking.Recurrences.Add(recurrence);
                         }
                     }
+
+                    _repository.AddBooking(booking);
+
                 }
                 else
                 {
@@ -200,7 +201,8 @@ namespace ASI.Basecode.Services.Services
         public IEnumerable<BookingViewModel> GetBookings()
         {
             var bookings = _repository.GetBookings();
-            return bookings.Select(booking => new BookingViewModel
+            return bookings.Select(booking => 
+            new BookingViewModel
             {
                 BookingId = booking.BookingId,
                 UserId = booking.UserId,
@@ -212,6 +214,7 @@ namespace ASI.Basecode.Services.Services
                 TimeTo = booking.TimeTo,
                 RoomName = booking.Room.RoomName,
                 Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
+                DayOfTheWeekIds = _repository.GetDayOfWeekIdsForBooking(booking.BookingId),
                 User = booking.User,
                 Room = booking.Room,
             });
@@ -232,6 +235,7 @@ namespace ASI.Basecode.Services.Services
                 TimeTo = booking.TimeTo,
                 RoomName = booking.Room.RoomName,
                 Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
+                DayOfTheWeekIds = _repository.GetDayOfWeekIdsForBooking(booking.BookingId)
             });
         }
 
@@ -250,8 +254,27 @@ namespace ASI.Basecode.Services.Services
                 _mapper.Map(booking, bookingToBeUpdated);
                 bookingToBeUpdated.UpdatedDt = DateTime.Now;
                 bookingToBeUpdated.UpdatedBy = System.Environment.UserName;
+                bookingToBeUpdated.Recurrences.Clear();
+
+                if (booking.DayOfTheWeekIds != null && booking.DayOfTheWeekIds.Any())
+                {
+                    foreach (var id in booking.DayOfTheWeekIds)
+                    {
+                        var recurrence = new Recurrence
+                        {
+                            DayOfWeekId = id,
+                            BookingId = booking.BookingId,
+                        };
+
+                        bookingToBeUpdated.Recurrences.Add(recurrence);
+                    }
+                }
 
                 _repository.UpdateBooking(bookingToBeUpdated);
+
+            } else
+            {
+                throw new InvalidDataException("Booking does not exist!");
             }
         }
 

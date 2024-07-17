@@ -84,7 +84,7 @@ namespace ASI.Basecode.WebApp
             services.AddMvc().AddJsonOptions(jsonOptions =>
             {
                 jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null;
-                jsonOptions.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                jsonOptions.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
             });
 
             services.AddMemoryCache();
