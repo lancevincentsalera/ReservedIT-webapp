@@ -1,5 +1,8 @@
 ﻿﻿@using static ASI.Basecode.Resources.Views.Screen
-
+@{
+    var isError404 = Context.Items["Error404"] != null; // Set this in your error handling logic
+    var isError403 = Context.Items["Error403"] != null; // Set this in your error handling logic
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,12 +26,15 @@
 </head>
 <body>
     <div class="main-container">
-        @if (User.Identity.IsAuthenticated)
+        @if (User.Identity.IsAuthenticated && !isError404 && !isError403)
         {
             @Html.Partial("_Sidebar")
         }
         <div class="content-container">
-            @Html.Partial("_Header")
+            @if (!isError404 && !isError403)
+            {
+                @Html.Partial("_Header")
+            }
             <main class="main-layout">
                 @RenderBody()
             </main>

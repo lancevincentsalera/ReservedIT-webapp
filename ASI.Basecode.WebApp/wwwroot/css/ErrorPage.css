@@ -1,140 +1,123 @@
-html, body {
-    width: 100%;
-    height: 100%;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+body {
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    background-color: #FFF2EA;
+}
+
+.Body-container {
     display: flex;
-    justify-content: center;
     align-items: center;
-    background: #FFF2EA;
-}
-
-.card-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    width: 100%;
-    height: 100vh;
-}
-
-.image-container {
-    flex: 1;
-    background-image: url('~/img/login-image.jpg');
-    background-size: cover;
-    background-position: center;
-}
-
-    .image-container img {
-        width: 100%;
-        height: 100%;
-        border-radius: 0 50px 50px 0;
-    }
-
-.login-form {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 100px;
-    padding-bottom: 70px;
-    background-color: #fff3e6;
-    height: 100%;
+    height: 100vh; /* Full height */
 }
 
-.login-header {
-    text-align: center;
-    margin-bottom: 10px;
+.Error-Container {
+    flex: 1;
+    max-width: 50%; /* Ensures it doesn't exceed half of the container's width */
+    padding: 0 20px;
 }
 
-    .login-header img {
-        max-width: 150px;
-        margin-bottom: 5px;
-        border-radius: 100%;
-        background-color: white;
-    }
-
-    .login-header h2 {
+    .Error-Container h1,
+    .Error-Container h2,
+    .Error-Container h3,
+    .Error-Container p {
         margin: 0;
-    }
-
-    .login-header p {
-        margin: 5px 0 20px;
-        color: #777;
-    }
-
-form {
-    width: 100%;
-    max-width: 400px; /* Adjust this value to make inputs and button longer */
-    display: flex;
-    flex-direction: column;
-}
-    .contact-info p
-    {
-        margin-top: 20px;
+        padding: 0;
         text-align: left;
-        font-size: 14px;
-        color: #555;
+        margin-left: 170px;
     }
 
+    .Error-Container h1 {
+        font-size: 225px;
+        color: #775965;
+        margin-bottom: 0; /* Reduce bottom margin */
+        line-height: 1; /* Adjust line height */
+    }
 
+    .Error-Container h2 {
+        font-size: 50px;
+        color: black;
+    }
 
-label {
-    margin-top: 10px;
-    margin-bottom: 5px;
-    font-weight: bold;
-    justify-items: center;
-}
+    .Error-Container h3 {
+        font-size: 50px;
+        color: #000000;
+    }
 
+    .Error-Container p {
+        font-size: 20px;
+        color: #000000;
+        margin-bottom: 20px;
+        max-width: 70%;
+    }
 
-
-
-.login-btn {
-    padding: 10px 10px 7px 10px; /*top, right, bottom, left*/
-    background-color: #775965;
-    color: white;
+.gohome-btn {
+    padding: 15px 30px;
+    border-radius: 10px;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    background-color: #B5838E;
+    color: white;
     font-size: 16px;
-    transition: background-color 0.3s;
-    margin-top: 60px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-left: 300px;
 }
 
-    .login-btn:hover {
-        background-color: #B69198;
-    }
-
-.contact-info {
-    margin-top: 5px;
+.Image-Error-Container {
+    flex: 1;
+    padding: 20px;
+    max-width: 50%; /* Ensures it doesn't exceed half of the container's width */
     text-align: center;
-    font-size: 14px;
-    color: #555;
 }
 
-    .contact-info a {
-        color: #007bff;
-        text-decoration: none;
+    .Image-Error-Container img {
+        max-width: 80%;
+        height: auto;
     }
-
-        .contact-info a:hover {
-            text-decoration: underline;
-        }
 
 @media (max-width: 768px) {
-    .card-container {
+    .Body-container {
         flex-direction: column;
-        height: auto;
+        text-align: center;
     }
 
-    .image-container {
-        display: none;
+    .Error-Container,
+    .Image-Error-Container {
+        max-width: 100%;
+        padding: 10px;
     }
 
-    .login-form {
-        width: 100%;
-        height: auto;
+        .Error-Container h1 {
+            font-size: 120px;
+        }
+
+        .Error-Container h2 {
+            font-size: 40px;
+        }
+
+        .Error-Container h3 {
+            font-size: 30px;
+        }
+
+        .Error-Container p {
+            font-size: 30px;
+        }
+
+        .Image-Error-Container img {
+            width: 100%; /* Ensures the image takes the full width in smaller screens */
+        }
+
+    .gohome-btn {
+        padding: 10px 20px;
+        font-size: 14px;
     }
+
+.header{
+    display:none;
+}
 }
