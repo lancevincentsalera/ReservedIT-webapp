@@ -125,11 +125,10 @@
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
                 altInput: true,
-                altFormat: "F j, Y (h:S K)",
-
-                minuteIncrement: 1,
+                altFormat: "F j, Y (h:i K)",
+                minuteIncrement: 15,
                 minDate: new Date(),
-                minTime: new Date(),
+                minTime: `${currentHour}:${currentMinute}`,
                 onChange: function (selectedDates, dateStr, instance) {
                     const selectedDate = selectedDates[0];
                     if (selectedDate && selectedDate.toDateString() === now.toDateString()) {
@@ -138,7 +137,8 @@
                         instance.set('minTime', '00:00');
                     }
                 }
-            }
+
+            };
 
             flatpickr("input[type=datetime-local]", config);
         });

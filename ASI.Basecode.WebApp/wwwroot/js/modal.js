@@ -92,44 +92,97 @@ const getBookingDetails = (btnId, modalId, action, controller) => {
         success: (response) => {
             console.log(response)
             for (let key in response) {
-                if (key !== 'Recurrence') {
-                    $(`${modalId} input[name="${key}"]`).val(response[key]);
-                    console.log(`${key}:`, response[key]);
+                if (response[key] != null && key !== 'DayOfTheWeekIds' && key !== "TimeFrom" && key !== "TimeTo") {
+                    if (key === "StartDate" || key === "EndDate") {
+                        let date = new Date(response[key]);
+                        let timeKey = key === "StartDate" ? "TimeFrom" : "TimeTo";
+                        let timeString = response[timeKey];
+
+                        if (timeString && typeof timeString === 'string') {
+                            let [hours, minutes] = timeString.split(':').map(Number);
+
+                            if (!isNaN(hours) && !isNaN(minutes)) {
+                                date.setHours(hours);
+                                date.setMinutes(minutes);
+
+                                let formattedDate = date.getFullYear() + '-' +
+                                    String(date.getMonth() + 1).padStart(2, '0') + '-' +
+                                    String(date.getDate()).padStart(2, '0') + 'T' +
+                                    String(date.getHours()).padStart(2, '0') + ':' +
+                                    String(date.getMinutes()).padStart(2, '0');
+
+
+                                let currentTime = new Date();
+                                currentTime.setHours(currentTime.getHours() + 2);
+                                let minTime = String(currentTime.getHours()).padStart(2, '0') + ':' +
+                                    String(currentTime.getMinutes()).padStart(2, '0');
+
+                                const flatpickrInstance = $(`${modalId} input[name="${key}"]`).flatpickr({
+                                    altInput: true,
+                                    altFormat: "F j, Y (h:i K)",
+                                    dateFormat: "Y-m-d H:i",
+                                    enableTime: true,
+                                    time_24hr: false,
+                                    minuteIncrement: 15,
+                                    minDate: "today",
+                                    minTime: new Date(),
+                                    onChange: function (selectedDates, dateStr, instance) {
+                                        const selectedDate = selectedDates[0];
+                                        if (selectedDate && selectedDate.toDateString() === new Date().toDateString()) {
+                                            instance.set('minTime', minTime);
+                                        } else {
+                                            instance.set('minTime', '00:00');
+                                        }
+                                    }
+                                });
+                                flatpickrInstance.setDate(formattedDate, true);
+                            } else {
+                                console.error("Invalid time value");
+                            }
+                        } else {
+                            console.error("Invalid time string");
+                        }
+                    } else if (key === "RoomId") {
+                        $(`${modalId} select[name="RoomId"] option`).each((index, element) => {
+                            let $option = $(element);
+                            if ($option.val() === ('' + response[key])) {
+                                console.log("val", typeof $option.val(), "vs", typeof ('' + response[key]));
+                                $option.prop('selected', true);
+                            } else {
+                                $option.prop('selected', false);
+                            }
+                        })
+                    }
+                    else {
+                        $(`${modalId} input[name="${key}"]`).val(response[key]);
+                    }
+                    console.log(key, $(`${modalId} input[name="${key}"]`).val() )
                 }
             }
-            if (response.Recurrence.length == 0) {
-                $('.custom-recur').hide();
-                $('#scheduleOnceButton').addClass('active');
-                $('#customButton').removeClass('active');
-            } else if (response.Recurrence.length > 0) {
-                console.log('Processing recurrences...');
 
-                response.Recurrence.forEach(rec => {
-                    const dayId = rec.DayOfWeekId;
-                    const checkboxSelector = `${modalId} .checkbox-recur input[name="DayOfTheWeekIds"][value="${dayId}"]`;
+            $(`${modalId} .checkbox-recur input[type="checkbox"]`).prop('checked', false).trigger('change');
+            if (response.DayOfTheWeekIds && response.DayOfTheWeekIds.$values && response.DayOfTheWeekIds.$values.length > 0) {
+                response.DayOfTheWeekIds.$values.forEach(dayId => {
+                    const checkboxSelector = `${modalId} .checkbox-recur input[type="checkbox"][value="${dayId}"]`;
                     const checkbox = $(checkboxSelector);
-
-                    console.log(`Checking checkbox with value: ${dayId}`);
-                    console.log("Checkbox selector: ", checkboxSelector);
 
                     if (checkbox.length > 0) {
                         checkbox.prop('checked', true).trigger('change');
-                        console.log(`Checkbox with value ${dayId} is checked.`, checkbox.is(":checked"));
-                    } else {
-                        checkbox.prop('checked', false).trigger('change');
-                        console.log(`Checkbox with value ${dayId} not found.`);
-                    }
+                    } 
                 });
                 
+
                 $('.custom-recur').show();
                 $('#customButton').addClass('active');
                 $('#scheduleOnceButton').removeClass('active');
+            } else {
+                $('.custom-recur').hide();
+                $('#scheduleOnceButton').addClass('active');
+                $('#customButton').removeClass('active');
             }
-            // Update other input fields with fetched data
-            
         },
         error: (xhr, status, error) => {
-            console.error('Error fetching booking details:', xhr.responseText, error);
+            console.error('Error fetching booking details:', status, error);
             if (xhr.status === 500) {
                 alert('Internal Server Error. Please try again later.');
             } else {

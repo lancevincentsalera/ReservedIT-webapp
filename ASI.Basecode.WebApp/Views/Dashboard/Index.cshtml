@@ -52,12 +52,6 @@
                                     <text>, </text>
                                 }
                             }
-
-
-                            if (item.BookingStatus.Equals(BookingStatus.PENDING.ToString()))
-                            {
-                                <span style="color: #B5838E; font-weight: bold; font-size: 80%">&emsp;—&emsp;PENDING</span>
-                            }
                         }
                         else if(item.Recurrence.Count() == 7)
                         {
@@ -68,6 +62,10 @@
                             <text>None</text>
                         }
 
+                        @if (item.BookingStatus.Equals(BookingStatus.PENDING.ToString()))
+                            {
+                                <span style="color: #B5838E; font-weight: bold; font-size: 80%">&emsp;—&emsp;PENDING</span>
+                            }
                     </div>
                     <div class="user-cell actions">
                         <div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.BookingId">
@@ -148,7 +146,7 @@
     </ul>
 </div>
 
-@Html.Partial("_EditBookingModal")
+@Html.Partial("_EditBookingModal", new ASI.Basecode.Services.ServiceModels.BookingViewModel() { roomList = Model.roomList, Days = Model.Days })
 @Html.Partial("_BookingsConfirmationModal")
 
 @section scripts {
@@ -180,11 +178,10 @@
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
                 altInput: true,
-                altFormat: "F j, Y (h:S K)",
-
-                minuteIncrement: 1,
+                altFormat: "F j, Y (h:i K)",
+                minuteIncrement: 15,
                 minDate: new Date(),
-                minTime: new Date(),
+                minTime: `${currentHour}:${currentMinute}`,
                 onChange: function (selectedDates, dateStr, instance) {
                     const selectedDate = selectedDates[0];
                     if (selectedDate && selectedDate.toDateString() === now.toDateString()) {
@@ -193,11 +190,19 @@
                         instance.set('minTime', '00:00');
                     }
                 }
-            }
 
-            flatpickr("#startDate", config); // Initialize flatpickr for Start Date input
-            flatpickr("#endDate", config);   // Initialize flatpickr for End Date input
+            };
+            flatpickr("input[type=datetime-local]", config);
         });
         
+    </script>
+
+    <script>
+        $('#scheduleOnceButton').click(function () {
+            let checkbox = $('input[type="checkbox"]');
+            checkbox.each(function () {
+                $(this).prop('checked', false);
+            });
+        })
     </script>
 }

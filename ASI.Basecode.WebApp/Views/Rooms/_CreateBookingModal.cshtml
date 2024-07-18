@@ -12,8 +12,13 @@
                 <form asp-action="CreateBookingPost" method="post">
                     <div class="form-group">
                         <label for="roomName">Room Name</label>
-                        <input asp-for="RoomId" type="hidden" id="roomId" />
-                        <input asp-for="RoomName" type="text" class="form-control" id="roomName" name="RoomName" readonly/>
+                        <select name="RoomId" class="form-select" id="" aria-label="Select Room" required>
+                            <option value="" disabled>Select Room</option>
+                            @foreach (var room in Model.roomList)
+                            {
+                                <option value="@room.RoomId">@room.RoomName</option>
+                            }
+                        </select>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">

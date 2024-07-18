@@ -32,7 +32,8 @@ namespace ASI.Basecode.WebApp.Controllers
                 roomList = data,
                 BookingViewModel = new BookingViewModel
                 {
-                    Days = _roomService.GetDays().ToList()
+                    Days = _roomService.GetDays().ToList(),
+                    roomList = data
                 }
             };
             return View(model);
