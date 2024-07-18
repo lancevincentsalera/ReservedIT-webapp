@@ -25,12 +25,278 @@ namespace ASI.Basecode.Services.Services
             _mapper = mapper;
         }
 
+
+
+        #region Check Booking Conflict
+        /// <summary>
+        /// A method to determine if a created or updated booking conflicting one or more bookings
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public bool IsBookingConflict(BookingViewModel model)
+        {
+            List<Booking> createdBookings = BookingInfo(model); // list of created bookings, recurrence considered
+            var approvedBookings = _repository.GetBookings() // list of approved bookings that overlaps the date/time attr of model
+                .Where(b => b.BookingStatus.Equals(BookingStatus.APPROVED.ToString()) &&
+                    b.Room.RoomName.Equals(model.RoomName) &&
+                    (
+                        // Check for date overlap or containment
+                        (b.StartDate <= model.EndDate && b.EndDate >= model.StartDate) ||
+                        (b.StartDate >= model.StartDate && b.EndDate <= model.EndDate)
+                    ) &&
+                    (
+                        // Check for time overlap or containment
+                        (b.TimeFrom <= model.TimeTo && b.TimeTo >= model.TimeFrom) ||
+                        (b.TimeFrom >= model.TimeFrom && b.TimeTo <= model.TimeTo)
+                    ))
+                .ToList();
+
+
+
+            List<List<Booking>> approvedBookingsWithRecurrences = ApprovedBookingsWithRecurrences(approvedBookings); // list of approved bookings, along with each of their recurrences considered
+
+            foreach (var created in createdBookings)
+            {
+                foreach (var approved in approvedBookingsWithRecurrences)
+                {
+                    foreach (var a in approved)
+                    {
+                        if ((created.StartDate.Value.Date == a.StartDate.Value.Date) && // overlapping dates 
+                                ((a.TimeFrom < created.TimeTo && a.TimeTo > created.TimeFrom) || 
+                                 (a.TimeFrom >= created.TimeFrom && a.TimeTo <= created.TimeTo))) // overlapping timespan, then -> 
+                        {
+                            return true;
+                        }
+                    }
+                }     
+            }
+
+            return false;
+        }
+
+
+
+        /// <summary>
+        /// CALCULATES the booking info of the passed model along with each of its recurrences, returns a list of booking
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public List<Booking> BookingInfo(BookingViewModel model)
+        {
+            List<Booking> createdBookings = new List<Booking>(); // returned value
+            var currCreatedDate = model.StartDate.Value;
+            var endDate = model.EndDate.Value;
+
+            // if there are recurrences
+            if (model.DayOfTheWeekIds.Any())
+            {
+                // calculates the difference between end date and start date
+                // and then converts that into weeks 
+                TimeSpan diff = endDate.Subtract(currCreatedDate);
+                int weeksDiff = (int)Math.Ceiling(diff.TotalDays / 7);
+
+
+                // to calculate how many times a recurrence will happen
+                // in the span of weeksDiff
+                List<int> totalDaysId = new List<int>();
+                for (int x = 0; x < weeksDiff; x++)
+                {
+                    for (int y = 0; y < model.DayOfTheWeekIds.Count(); y++)
+                    {
+                        totalDaysId.Add(model.DayOfTheWeekIds[y]);
+                    }
+                }
+
+                // if start date is also the start of booking, then
+                // remove first value of the list totalDaysId
+                // if not, then total count of IDs remain unchanged
+                if (((int)currCreatedDate.DayOfWeek) + 1 == totalDaysId[0])
+                {
+                    if (currCreatedDate <= endDate)
+                    {
+                        createdBookings.Add(new Booking
+                        {
+                            StartDate = currCreatedDate,
+                            EndDate = currCreatedDate,
+                            TimeFrom = model.TimeFrom,
+                            TimeTo = model.TimeTo,
+                        });
+                    }
+                    totalDaysId.RemoveAt(0);
+                }
+
+                int total = totalDaysId.Count();
+
+                /* alternative 
+                    initialize to original total id count
+                    if start date == end date, decrease total count by 1
+                    if not, total count remains unchanged
+                    
+                 */
+
+                // loop through the count of IDs
+                // calculate the intervals between ids
+                // to determine the exact date values of each recurrence
+                for (int i = 0; i < total; i++)
+                {
+                    int currentCreatedDateId = ((int)currCreatedDate.DayOfWeek) + 1; // sunday = 1, monday = 2, ... , saturday = 7
+                    int nextCreatedDateId = totalDaysId[i];
+
+                    /* if alternative was chosen
+                        
+                        conditionally update the nextCreatedDateId
+                        to the value next to the current iteration
+                        if total count is less than the original count
+                        e.g., instead of totalDaysId[i], it will be totalDaysId[i+1]
+                     */
+
+
+                    // Calculate the interval to the next recurrence date
+                    // If the next day is after today, the interval is the difference
+                    // Otherwise, the interval is the remaining days in the week plus the next day
+                    // This is because the week wraps around, so we need to account for the days left in the current week
+                    int todayToNextInterval = (nextCreatedDateId > currentCreatedDateId)
+                                              ? nextCreatedDateId - currentCreatedDateId
+                                              : (7 - currentCreatedDateId) + nextCreatedDateId;
+
+                    // Add the interval to the current date
+                    currCreatedDate = currCreatedDate.AddDays(todayToNextInterval);
+
+                    // If the current date is before or equal to the end date, add a booking
+                    if (currCreatedDate <= endDate)
+                    {
+                        createdBookings.Add(new Booking
+                        {
+                            StartDate = currCreatedDate,
+                            EndDate = currCreatedDate,
+                            TimeFrom = model.TimeFrom,
+                            TimeTo = model.TimeTo,
+                        });
+                    }
+                }
+            } 
+            else
+            {
+
+                // if not, then just add the booking
+                createdBookings.Add(new Booking { 
+                    StartDate = currCreatedDate,
+                    EndDate = currCreatedDate,
+                    TimeFrom = model.TimeFrom,
+                    TimeTo = model.TimeTo,
+                });
+            }
+
+            return createdBookings;
+        }
+
+
+
+        /// <summary>
+        /// Returns a list of approved bookings with their recurrences
+        /// </summary>
+        /// <param name="approvedBookings"></param>
+        /// <returns></returns>
+        public List<List<Booking>> ApprovedBookingsWithRecurrences(List<Booking> approvedBookings)
+        {
+            List<List<Booking>> approvedBookingsWithRecurrences = new List<List<Booking>>();
+
+            // map the approved bookings to a list of BookingViewModel
+            List<BookingViewModel> approvedBookingsModel = approvedBookings.Select(a => new BookingViewModel
+            {
+                StartDate = a.StartDate,
+                EndDate = a.EndDate,
+                TimeFrom = a.TimeFrom,
+                TimeTo = a.TimeTo,
+                DayOfTheWeekIds = a.Recurrences.Select(r => r.DayOfWeekId ?? 0).ToList(),
+            }).ToList();
+
+
+            // for each approved booking, calculate the booking info
+            foreach (var approvedModel in approvedBookingsModel)
+            {
+                // add the booking info of each approved booking to the list
+                approvedBookingsWithRecurrences.Add(BookingInfo(approvedModel));
+            }
+
+            return approvedBookingsWithRecurrences;
+        }
+        #endregion
+
+
+
+
+        #region Get Bookings
+        /// <summary>
+        /// Returns all the bookings from the database
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<BookingViewModel> GetBookings()
+        {
+            var bookings = _repository.GetBookings();
+            return bookings.Select(booking => 
+            new BookingViewModel
+            {
+                BookingId = booking.BookingId,
+                UserId = booking.UserId,
+                RoomId = booking.RoomId,
+                BookingStatus = booking.BookingStatus,
+                StartDate = booking.StartDate.Value,
+                EndDate = booking.EndDate.Value,
+                TimeFrom = booking.TimeFrom,
+                TimeTo = booking.TimeTo,
+                RoomName = booking.Room.RoomName,
+                Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
+                DayOfTheWeekIds = _repository.GetDayOfWeekIdsForBooking(booking.BookingId),
+                User = booking.User,
+                Room = booking.Room,
+            });
+        }
+
+
+
+
+        
+        /// <summary>
+        /// Returns all the bookings of a user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public IEnumerable<BookingViewModel> GetBookingsByUser(int userId)
+        {
+            var bookings = _repository.GetBookingsByUser(userId);
+            return bookings.Select(booking => new BookingViewModel
+            {
+                BookingId = booking.BookingId,
+                UserId = booking.UserId,
+                RoomId = booking.RoomId,
+                BookingStatus = booking.BookingStatus,
+                StartDate = booking.StartDate.Value,
+                EndDate =  booking.EndDate.Value,
+                TimeFrom = booking.TimeFrom,
+                TimeTo = booking.TimeTo,
+                RoomName = booking.Room.RoomName,
+                Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
+                DayOfTheWeekIds = _repository.GetDayOfWeekIdsForBooking(booking.BookingId)
+            });
+        }
+
+        #endregion
+
+
+
+        #region C r U D operations
+        /// <summary>
+        /// Add a booking to the database
+        /// </summary>
+        /// <param name="model"></param>
+        /// <exception cref="InvalidDataException"></exception>
         public void AddBooking(BookingViewModel model)
         {
             var booking = new Booking();
-            if(!_repository.BookingExists(model.BookingId))
+            if (!_repository.BookingExists(model.BookingId))
             {
-                if(!IsBookingConflict(model))
+                if (!IsBookingConflict(model))
                 {
                     _mapper.Map(model, booking);
                     booking.BookingStatus = BookingStatus.PENDING.ToString();
@@ -60,202 +326,46 @@ namespace ASI.Basecode.Services.Services
                 {
                     throw new InvalidDataException("Cannot create booking: A conflicting approved booking already exists for the selected date, time, and room.");
                 }
-                
-            } 
+
+            }
             else
             {
                 throw new InvalidDataException("Booking already exists!");
             }
         }
 
-        public bool IsBookingConflict(BookingViewModel model)
-        {
-            List<Booking> createdBookings = BookingInfo(model);
-            var approvedBookings = _repository.GetBookings()
-                .Where(b => b.BookingStatus.Equals(BookingStatus.APPROVED.ToString()) &&
-                    b.Room.RoomName.Equals(model.RoomName) &&
-                    (
-                        // Check for date overlap or containment
-                        (b.StartDate <= model.EndDate && b.EndDate >= model.StartDate) ||
-                        (b.StartDate >= model.StartDate && b.EndDate <= model.EndDate)
-                    ) &&
-                    (
-                        // Check for time overlap or containment
-                        (b.TimeFrom <= model.TimeTo && b.TimeTo >= model.TimeFrom) ||
-                        (b.TimeFrom >= model.TimeFrom && b.TimeTo <= model.TimeTo)
-                    ))
-                .ToList();
 
 
-
-            List<List<Booking>> approvedBookingsWithRecurrences = ApprovedBookingsWithRecurrences(approvedBookings);
-
-            foreach (var created in createdBookings)
-            {
-                foreach (var approved in approvedBookingsWithRecurrences)
-                {
-                    foreach (var a in approved)
-                    {
-                        if ((created.StartDate.Value.Date == a.StartDate.Value.Date) &&
-                                ((a.TimeFrom <= created.TimeTo && a.TimeTo >= created.TimeFrom) ||
-                                 (a.TimeFrom >= created.TimeFrom && a.TimeTo <= created.TimeTo)))
-                        {
-                            return true;
-                        }
-                    }
-                }     
-            }
-
-            return false;
-        }
-
-        public bool isRecurrentBooking(Booking booking)
-        {
-            if(booking != null && booking.Recurrences.Any()) { return true; }
-            return false;
-        }
-
-        public List<Booking> BookingInfo(BookingViewModel model)
-        {
-            List<Booking> createdBookings = new List<Booking>();
-            var currCreatedDate = model.StartDate.Value;
-            var endDate = model.EndDate.Value;
-            if (model.DayOfTheWeekIds.Any())
-            {
-                TimeSpan diff = endDate.Subtract(currCreatedDate);
-                int weeksDiff = (int)Math.Ceiling(diff.TotalDays / 7);
-
-                List<int> totalDaysId = new List<int>();
-                for (int x = 0; x < weeksDiff; x++)
-                {
-                    for (int y = 0; y < model.DayOfTheWeekIds.Count(); y++)
-                    {
-                        totalDaysId.Add(model.DayOfTheWeekIds[y]);
-                    }
-                }
-                for (int i = 0; i < totalDaysId.Count() - 1; i++)
-                {
-                    if (currCreatedDate <= model.EndDate.Value)
-                    {
-                        createdBookings.Add(new Booking
-                        {
-                            StartDate = currCreatedDate,
-                            EndDate = currCreatedDate,
-                            TimeFrom = model.TimeFrom,
-                            TimeTo = model.TimeTo,
-                        });
-                    }
-                    int currentCreatedDateId = totalDaysId[i];
-                    int nextCreatedDateId = totalDaysId[(i + 1) % totalDaysId.Count()];
-
-                    int todayToNextInterval = (nextCreatedDateId > currentCreatedDateId)
-                                              ? nextCreatedDateId - currentCreatedDateId
-                                              : (7 - currentCreatedDateId) + nextCreatedDateId;
-                    currCreatedDate = currCreatedDate.AddDays(todayToNextInterval);
-                    if (currCreatedDate <= endDate && i + 1 == totalDaysId.Count()-1)
-                    {
-                        createdBookings.Add(new Booking
-                        {
-                            StartDate = currCreatedDate,
-                            EndDate = currCreatedDate,
-                            TimeFrom = model.TimeFrom,
-                            TimeTo = model.TimeTo,
-                        });
-                    }
-                }
-            } 
-            else
-            {
-                createdBookings.Add(new Booking { 
-                    StartDate = currCreatedDate,
-                    EndDate = currCreatedDate,
-                    TimeFrom = model.TimeFrom,
-                    TimeTo = model.TimeTo,
-                });
-            }
-
-            return createdBookings;
-        }
-
-        public List<List<Booking>> ApprovedBookingsWithRecurrences(List<Booking> approvedBookings)
-        {
-            List<List<Booking>> approvedBookingsWithRecurrences = new List<List<Booking>>();
-
-            List<BookingViewModel> approvedBookingsModel = approvedBookings.Select(a => new BookingViewModel
-            {
-                StartDate = a.StartDate,
-                EndDate = a.EndDate,
-                TimeFrom = a.TimeFrom,
-                TimeTo = a.TimeTo,
-                DayOfTheWeekIds = a.Recurrences.Select(r => r.DayOfWeekId ?? 0).ToList(),
-            }).ToList();
-
-            foreach (var approvedModel in approvedBookingsModel)
-            {
-                approvedBookingsWithRecurrences.Add(BookingInfo(approvedModel));
-            }
-
-            return approvedBookingsWithRecurrences;
-        }
-
-        public IEnumerable<BookingViewModel> GetBookings()
-        {
-            var bookings = _repository.GetBookings();
-            return bookings.Select(booking => 
-            new BookingViewModel
-            {
-                BookingId = booking.BookingId,
-                UserId = booking.UserId,
-                RoomId = booking.RoomId,
-                BookingStatus = booking.BookingStatus,
-                StartDate = booking.StartDate.Value,
-                EndDate = booking.EndDate.Value,
-                TimeFrom = booking.TimeFrom,
-                TimeTo = booking.TimeTo,
-                RoomName = booking.Room.RoomName,
-                Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
-                DayOfTheWeekIds = _repository.GetDayOfWeekIdsForBooking(booking.BookingId),
-                User = booking.User,
-                Room = booking.Room,
-            });
-        }
-
-        public IEnumerable<BookingViewModel> GetBookingsByUser(int userId)
-        {
-            var bookings = _repository.GetBookingsByUser(userId);
-            return bookings.Select(booking => new BookingViewModel
-            {
-                BookingId = booking.BookingId,
-                UserId = booking.UserId,
-                RoomId = booking.RoomId,
-                BookingStatus = booking.BookingStatus,
-                StartDate = booking.StartDate.Value,
-                EndDate =  booking.EndDate.Value,
-                TimeFrom = booking.TimeFrom,
-                TimeTo = booking.TimeTo,
-                RoomName = booking.Room.RoomName,
-                Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
-                DayOfTheWeekIds = _repository.GetDayOfWeekIdsForBooking(booking.BookingId)
-            });
-        }
-
+        /// <summary>
+        /// Updates the booking with the passed model
+        /// </summary>
+        /// <param name="booking"></param>
+        /// <exception cref="InvalidDataException"></exception>
         public void UpdateBooking(BookingViewModel booking)
         {
+
+            // if there is a conflict, throw an exception
             if (IsBookingConflict(booking))
             {
                 throw new InvalidDataException("Cannot update booking: A conflicting approved booking already exists for the selected date, time, and room.");
             }
+
+
+            // get the booking to be updated
             var bookingToBeUpdated = _repository.GetBookings()
                 .Include(b => b.Recurrences)
                 .Where(u => u.BookingId == booking.BookingId)
                 .FirstOrDefault();
             if (bookingToBeUpdated != null)
             {
+                // map the model to the booking, if not null
                 _mapper.Map(booking, bookingToBeUpdated);
                 bookingToBeUpdated.UpdatedDt = DateTime.Now;
                 bookingToBeUpdated.UpdatedBy = System.Environment.UserName;
-                bookingToBeUpdated.Recurrences.Clear();
+                bookingToBeUpdated.Recurrences.Clear(); // clear the recurrences first before adding new ones if there is any
 
+
+                // if there are recurrences, add them to the booking
                 if (booking.DayOfTheWeekIds != null && booking.DayOfTheWeekIds.Any())
                 {
                     foreach (var id in booking.DayOfTheWeekIds)
@@ -274,10 +384,16 @@ namespace ASI.Basecode.Services.Services
 
             } else
             {
+                // if the booking does not exist, throw an exception
                 throw new InvalidDataException("Booking does not exist!");
             }
         }
 
+
+        /// <summary>
+        /// Deletes a booking
+        /// </summary>
+        /// <param name="booking"></param>
         public void DeleteBooking(BookingViewModel booking)
         {
             var bookingToBeDeleted = _repository.GetBookings().Where(u => u.BookingId == booking.BookingId).FirstOrDefault();
@@ -287,5 +403,7 @@ namespace ASI.Basecode.Services.Services
             }
 
         }
+
+        #endregion
     }
 }

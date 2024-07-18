@@ -10,16 +10,20 @@
 
             </div>
             <div class="modal-body">
-                <form asp-action="UpdateBookingPost" asp-controller="Dashboard" method="post">
+                <form asp-action="UpdateBookingPost" asp-controller="Dashboard" id="editBookingForm" method="post">
                     <div class="form-group">
                         <label for="roomName">Room Name</label>
                         <input asp-for="BookingId" name="BookingId" type="hidden" />
                         <input asp-for="BookingStatus" name="BookingStatus" type="hidden" />
-                        <select name="RoomId" class="form-select" id="" aria-label="Select Room" required>
+                        <input asp-for="RoomName" name="RoomName" id="roomName" type="hidden" />
+                        <select name="RoomId" class="form-select" id="roomSelect" aria-label="Select Room" required>
                             <option value="" disabled>Select Room</option>
                             @foreach (var room in Model.roomList)
                             {
-                                <option value="@room.RoomId">@room.RoomName</option>
+                                <option value="@room.RoomId">
+
+                                    @room.RoomName
+                                    </option>
                             }
                         </select>
                     </div>
@@ -37,6 +41,7 @@
                             </div>
                         </div>
                     </div>
+                    <span class="text-danger" id="errorMessage"></span>
 
                     <div class="form-group setRecurrence">
                         <button type="button" class="btn btn-outline-secondary" id="scheduleOnceButton">Schedule Once</button>
@@ -49,11 +54,11 @@
                             {
                                 bool isSelected = Model.DayOfTheWeekIds != null && Model.DayOfTheWeekIds.Any(r => r == day.DayOfWeekId);
 
-                                <input name="DayOfTheWeekIds" type="checkbox" id="@day.DayName.ToLower()" value="@day.DayOfWeekId" @(isSelected ? "checked" : "")>
+                                <input name="DayOfTheWeekIds" onchange="checkBookingConflict()" type="checkbox" id="@day.DayName.ToLower()" value="@day.DayOfWeekId" @(isSelected ? "checked" : "")>
                                 <label for="@day.DayName.ToLower()">@day.DayName.Substring(0, 3)</label>
-                                <br>
+                              <br>
                             }
-                        </div>
+                        </div>  
                     </div>
 
                     
