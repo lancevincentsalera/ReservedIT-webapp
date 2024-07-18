@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\css\calendar.css" />
     <_ContentIncludedByDefault Remove="wwwroot\js\toastr.js" />
   </ItemGroup>
 

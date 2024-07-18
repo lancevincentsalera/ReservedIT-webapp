@@ -1,0 +1,142 @@
+﻿.main-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    height: 88%;
+}
+
+.calendar-header {
+    text-align: center;
+    height: auto;
+}
+
+.month-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 2rem;
+}
+
+    .month-navigation .month-select {
+        width: 11rem;
+    }
+
+    .month-navigation .month-button {
+        width: 5rem;
+    }
+
+.table-container {
+    height: 70% !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.table-header {
+    height: 10%;
+    background-color: #b5838e;
+    color: white;
+    padding: .75rem 0rem;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+    .table-header .table-header-cell {
+        width: auto;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+.table-body {
+    height: 90%;
+    margin-bottom: 0rem !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.table-row {
+    min-height: 20%;
+    max-height: 20%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+    .table-row .table-cell {
+        width: 100%;
+        border: 1px solid #e6e6e6; /*#cacaca*/
+    }
+
+.table-cell {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+}
+
+    .table-cell .day {
+        display: flex;
+        justify-content: flex-end;
+        margin: .5rem 1.4rem;
+        font-weight: bold;
+        font-size: 1.1vw;
+    }
+
+    .table-cell .bookings {
+        display: flex;
+        flex-direction: column;
+        white-space: nowrap;
+        justify-content: flex-start;
+        overflow-y: auto;
+    }
+
+.bookings > div {
+    border-radius: 5px;
+    height: auto;
+    margin: 2px 1px;
+    text-align: right;
+}
+
+/*    .bookings > div:nth-child(n+30) {
+        display: none;
+    }*/
+
+    .bookings > div:nth-child(6n+0) {
+        background-color: lightgreen;
+    }
+
+    .bookings > div:nth-child(6n+1) {
+        background-color: lightblue;
+    }
+
+    .bookings > div:nth-child(6n+2) {
+        background-color: lightgrey;
+    }
+
+    .bookings > div:nth-child(6n+3) {
+        background-color: lightskyblue;
+    }
+
+    .bookings > div:nth-child(6n+4) {
+        background-color: lightcoral;
+    }
+
+    .bookings > div:nth-child(6n+5) {
+        background-color: lightsteelblue;
+    }
+
+.save-button {
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+    height: auto;
+}
+
+    .save-button > button {
+        white-space: nowrap;
+        font-weight: bold !important;
+        width: 9rem;
+        height: auto;
+        margin: .5rem;
+    }
