@@ -285,7 +285,7 @@ namespace ASI.Basecode.Services.Services
 
 
 
-        #region C r U D operations
+        #region BOOKING CrUD operations
         /// <summary>
         /// Add a booking to the database
         /// </summary>
@@ -345,7 +345,7 @@ namespace ASI.Basecode.Services.Services
         {
 
             // if there is a conflict, throw an exception
-            if (IsBookingConflict(booking))
+            if (IsBookingConflict(booking) && !booking.BookingChangeOnly)
             {
                 throw new InvalidDataException("Cannot update booking: A conflicting approved booking already exists for the selected date, time, and room.");
             }
