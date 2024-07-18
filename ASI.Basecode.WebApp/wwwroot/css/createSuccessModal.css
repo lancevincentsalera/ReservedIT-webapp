@@ -1,0 +1,53 @@
+﻿.create-success-modal__content {
+    display: block; /* Override flex properties to maintain size */
+    width: 325px; /* Ensure modal retains its size */
+    max-width: 600px; /* Adjust max-width as needed */
+}
+
+.create-success-modal__body {
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.create-success-modal__img {
+    width: 50px;
+    height: auto;
+    color: #775965;
+}
+
+.create-success-modal__title {
+    font-size: 30px;
+    margin-top: 10px;
+}
+
+.create-success-modal__subtitle {
+    font-size: 15px;
+    margin-top: 30px;
+}
+
+.create-success-modal__footer {
+    border-top: none;
+}
+
+.create-success-modal__button.btn-primary {
+    background-color: #775965;
+    border-color: #775965;
+}
+
+    .create-success-modal__button.btn-primary:hover,
+    .create-success-modal__button.btn-primary:focus {
+        background-color: #B5838E;
+    }
+
+.close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+}
+
+.create-success-modal__dialog {
+    top: 20%; /* Adjust this value to move the modal vertically */
+    left: 45%;
+    transform: translate(-55%, -35%); /* Adjust the second value to match the 'top' percentage */
+    position: absolute;
+}

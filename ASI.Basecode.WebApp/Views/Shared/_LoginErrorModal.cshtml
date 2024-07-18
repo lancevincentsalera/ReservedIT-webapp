@@ -1,27 +1,15 @@
-﻿<!-- _LoginErrorModal.cshtml -->
-<div class="modal fade" id="loginErrorModal" tabindex="-1" role="dialog" aria-labelledby="loginErrorModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="loginErrorModalLabel">Wrong Credentials</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+﻿<div class="modal fade login-error-modal" id="loginErrorModal" tabindex="-1" role="dialog" aria-labelledby="loginErrorModalLabel" aria-hidden="true">
+    <div class="modal-dialog login-error-modal__dialog" role="document">
+        <div class="modal-content login-error-modal__content">
+            <div class="modal-header login-error-modal__header">
+                <h5 class="modal-title login-error-modal__title" id="customLoginErrorModalLabel">Wrong Credentials</h5>
             </div>
-            <div class="modal-body">
+            <div class="modal-body login-error-modal__body">
                 Invalid Email or Password
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+            <div class="modal-footer login-error-modal__footer">
+                <button type="button" class="btn btn-primary login-error-modal__button" data-dismiss="modal">OK</button>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-

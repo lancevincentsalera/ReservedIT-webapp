@@ -5,13 +5,23 @@
 }
 
 @section styles {
-    <link rel="stylesheet" href="~/css/custom-modal.css" />
+    <link rel="stylesheet" href="~/css/loginErrorModal.css" />
+    <link rel="stylesheet" href="~/css/createSuccessModal.css" />
 }
 
 <div class="Whole">
     <button type="button" data-toggle="modal" data-target="#loginErrorModal"">
         Login Error Modal
     </button>
+    <button type="button" data-toggle="modal" data-target="#userCreateSuccessModal">
+        User Create Success Modal
+    </button>
+    <button type="button" data-toggle="modal" data-target="#roomCreateSuccessModal">
+        Room Create Success Modal
+    </button>
 </div>
 
 @Html.Partial("_LoginErrorModal")
+@Html.Partial("_UserCreateSuccessModal")
+@Html.Partial("_RoomCreateSuccessModal")
+
