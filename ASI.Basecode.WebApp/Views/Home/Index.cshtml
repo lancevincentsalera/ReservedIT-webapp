@@ -1,13 +1,17 @@
 ﻿@*@model IEnumerable<ASI.Basecode.Services.ServiceModels.BookingViewModel>*@
 
 @{
-    ViewData["Title"] = "Error Page";
+    ViewData["Title"] = "Tester";
 }
 
 @section styles {
-    <link rel="stylesheet" href="~/css/ErrorPage.css" />
+    <link rel="stylesheet" href="~/css/custom-modal.css" />
 }
 
 <div class="Whole">
-
+    <button type="button" data-toggle="modal" data-target="#loginErrorModal"">
+        Login Error Modal
+    </button>
 </div>
+
+@Html.Partial("_LoginErrorModal")
