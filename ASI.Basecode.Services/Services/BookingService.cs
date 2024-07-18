@@ -28,9 +28,9 @@ namespace ASI.Basecode.Services.Services
         public void AddBooking(BookingViewModel model)
         {
             var booking = new Booking();
-            if(!_repository.BookingExists(model.BookingId))
+            if (!_repository.BookingExists(model.BookingId))
             {
-                if(!IsBookingConflict(model))
+                if (!IsBookingConflict(model))
                 {
                     _mapper.Map(model, booking);
                     booking.BookingStatus = BookingStatus.PENDING.ToString();
@@ -59,8 +59,8 @@ namespace ASI.Basecode.Services.Services
                 {
                     throw new InvalidDataException("Cannot create booking: A conflicting approved booking already exists for the selected date, time, and room.");
                 }
-                
-            } 
+
+            }
             else
             {
                 throw new InvalidDataException("Booking already exists!");
@@ -102,7 +102,7 @@ namespace ASI.Basecode.Services.Services
                             return true;
                         }
                     }
-                }     
+                }
             }
 
             return false;
@@ -110,7 +110,7 @@ namespace ASI.Basecode.Services.Services
 
         public bool isRecurrentBooking(Booking booking)
         {
-            if(booking != null && booking.Recurrences.Any()) { return true; }
+            if (booking != null && booking.Recurrences.Any()) { return true; }
             return false;
         }
 
@@ -151,7 +151,7 @@ namespace ASI.Basecode.Services.Services
                                               ? nextCreatedDateId - currentCreatedDateId
                                               : (7 - currentCreatedDateId) + nextCreatedDateId;
                     currCreatedDate = currCreatedDate.AddDays(todayToNextInterval);
-                    if (currCreatedDate <= endDate && i + 1 == totalDaysId.Count()-1)
+                    if (currCreatedDate <= endDate && i + 1 == totalDaysId.Count() - 1)
                     {
                         createdBookings.Add(new Booking
                         {
@@ -162,10 +162,11 @@ namespace ASI.Basecode.Services.Services
                         });
                     }
                 }
-            } 
+            }
             else
             {
-                createdBookings.Add(new Booking { 
+                createdBookings.Add(new Booking
+                {
                     StartDate = currCreatedDate,
                     EndDate = currCreatedDate,
                     TimeFrom = model.TimeFrom,
@@ -227,7 +228,35 @@ namespace ASI.Basecode.Services.Services
                 RoomId = booking.RoomId,
                 BookingStatus = booking.BookingStatus,
                 StartDate = booking.StartDate.Value,
-                EndDate =  booking.EndDate.Value,
+                EndDate = booking.EndDate.Value,
+                TimeFrom = booking.TimeFrom,
+                TimeTo = booking.TimeTo,
+                RoomName = booking.Room.RoomName,
+                Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
+            });
+        }
+
+        public IEnumerable<BookingViewModel> GetBookingsByDate(int year, int month, int? day)
+        {
+            DateTime startDate = new DateTime(year, month, 1);
+            DateTime endDate = startDate.AddMonths(1).AddDays(-1);
+
+            var bookings = _repository.GetBookings().Include(b => b.Recurrences).Where(u => u.StartDate >= startDate).Where(u => u.EndDate <= endDate);
+
+/*            if (day != null)
+            {
+                DateTime fullDate = new DateTime(year, month, day.GetValueOrDefault());
+                bookings = bookings.Where(u => u.StartDate >= fullDate).Where(u => u.EndDate <= fullDate);
+            }*/
+
+            return bookings.Select(booking => new BookingViewModel
+            {
+                BookingId = booking.BookingId,
+                UserId = booking.UserId,
+                RoomId = booking.RoomId,
+                BookingStatus = booking.BookingStatus,
+                StartDate = booking.StartDate.Value,
+                EndDate = booking.EndDate.Value,
                 TimeFrom = booking.TimeFrom,
                 TimeTo = booking.TimeTo,
                 RoomName = booking.Room.RoomName,
