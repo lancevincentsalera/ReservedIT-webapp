@@ -95,33 +95,23 @@
         }
     </script>
 
-
     <script>
 
+        // instantiate flatpickr and prevent submission on error found
         $(document).ready(function () {
-            //console.log("Document is ready");
-            // Toggle display of the custom-recur div
-            $('#scheduleOnceButton').addClass('active');
-
-            $('#customButton').click( function () {
-                console.log("Custom Button clicked");
-                $('.custom-recur').toggle();
-                $('#customButton').addClass('active');
-                $('#scheduleOnceButton').removeClass('active');
-            });
-
-            $('#scheduleOnceButton').click(function () {
-                console.log("Schedule Once Button clicked");
-                $('.custom-recur').hide();
-                $('#scheduleOnceButton').addClass('active');
-                $('#customButton').removeClass('active');
+            $('#createBookingForm').on('submit', function (e) {
+                if ($('#errorMessage').text().trim() !== '') {
+                    console.log('hereeeeeeeeeeeeeeee=-=============')
+                    e.preventDefault();
+                    alert('Please fix the errors before submitting the form.');
+                }
             });
 
             const now = new Date();
             var currentHour = now.getHours();
-            var currentMinute = now.getMinutes();
+            var currentMinute = Math.ceil(now.getMinutes() / 15) * 15;
 
-            var config = {
+            var configStart = {
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
                 altInput: true,
@@ -136,13 +126,35 @@
                     } else {
                         instance.set('minTime', '00:00');
                     }
+
+                    checkBookingConflict();
                 }
 
             };
 
-            flatpickr("input[type=datetime-local]", config);
-        });
-        
-    </script>
+            var configEnd = {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+                altInput: true,
+                altFormat: "F j, Y (h:i K)",
+                minuteIncrement: 15,
+                minDate: new Date(),
+                minTime: `${currentHour}:${currentMinute}`,
+                onChange: function (selectedDates, dateStr, instance) {
+                    const selectedDate = selectedDates[0];
+                    if (selectedDate && selectedDate.toDateString() === now.toDateString()) {
+                        instance.set('minTime', `${currentHour}:${currentMinute}`);
+                    } else {
+                        instance.set('minTime', '00:00');
+                    }
 
+                    checkBookingConflict();
+                }
+
+            };
+
+            flatpickr("#startDate", configStart);
+            flatpickr("#endDate", configEnd);
+        });
+    </script>
 }

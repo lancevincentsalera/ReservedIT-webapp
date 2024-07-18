@@ -21,6 +21,9 @@ namespace ASI.Basecode.WebApp.Controllers
     {
         private readonly IBookingService _bookingService;
         private readonly IRoomService _roomService;
+
+
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -38,6 +41,12 @@ namespace ASI.Basecode.WebApp.Controllers
             this._roomService = roomService;
         }
 
+
+        #region Index
+        /// <summary>
+        /// Index page for the dashboard
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             var bookings = _bookingService.GetBookingsByUser(UserId);
@@ -49,6 +58,7 @@ namespace ASI.Basecode.WebApp.Controllers
             };
             return View(model);
         }
+        #endregion
 
 
         #region Reject Booking
@@ -146,8 +156,6 @@ namespace ASI.Basecode.WebApp.Controllers
             }
             return RedirectToAction("Index");
         }
-
-
         #endregion
     }
 }
