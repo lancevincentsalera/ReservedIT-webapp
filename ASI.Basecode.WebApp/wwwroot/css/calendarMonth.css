@@ -109,33 +109,29 @@
     text-align: right;
 }
 
-    /*    .bookings > div:nth-child(n+30) {
+/*    .bookings > div:nth-child(n+30) {
         display: none;
     }*/
 
-    .bookings > div:nth-child(6n+0) {
-        background-color: lightgreen;
-    }
+.color-1 {
+    background-color: lightgreen;
+}
 
-    .bookings > div:nth-child(6n+1) {
-        background-color: lightblue;
-    }
+.color-2 {
+    background-color: lightskyblue;
+}
 
-    .bookings > div:nth-child(6n+2) {
-        background-color: lightgrey;
-    }
+.color-3 {
+    background-color: lightcoral;
+}
 
-    .bookings > div:nth-child(6n+3) {
-        background-color: lightskyblue;
-    }
+.color-4 {
+    background-color: lightsteelblue;
+}
 
-    .bookings > div:nth-child(6n+4) {
-        background-color: lightcoral;
-    }
-
-    .bookings > div:nth-child(6n+5) {
-        background-color: lightsteelblue;
-    }
+.color-5 {
+    background-color: lightsalmon;
+}
 
 .book-button {
     display: flex;

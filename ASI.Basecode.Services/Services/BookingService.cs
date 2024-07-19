@@ -238,16 +238,59 @@ namespace ASI.Basecode.Services.Services
 
         public IEnumerable<BookingViewModel> GetBookingsByDate(int year, int month, int? day)
         {
-            DateTime startDate = new DateTime(year, month, 1);
-            DateTime endDate = startDate.AddMonths(1).AddDays(-1);
+            int actualDay = day ?? 1; // Use 1 if day is null
 
-            var bookings = _repository.GetBookings().Include(b => b.Recurrences).Where(u => u.StartDate >= startDate).Where(u => u.EndDate <= endDate);
+            DateTime startDate = new DateTime(year, month, actualDay);
+            DateTime endDate;
 
-/*            if (day != null)
+            if (day == null)
             {
-                DateTime fullDate = new DateTime(year, month, day.GetValueOrDefault());
-                bookings = bookings.Where(u => u.StartDate >= fullDate).Where(u => u.EndDate <= fullDate);
-            }*/
+                endDate = startDate.AddMonths(1).AddDays(-1); // End of the month
+            }
+            else
+            {
+                endDate = startDate; // Specific day
+            }
+
+            var bookings =
+                _repository.GetBookings()
+                    .Include(b => b.Recurrences)
+                    .Include(b => b.Room)
+                    .AsEnumerable() // Switch to LINQ to Objects
+                    .Where(booking =>
+                        {   // Filter recurrent bookings
+                            bool isRecurrent = isRecurrentBooking(booking);
+                            DateTime overlapStart = (DateTime)(booking.StartDate.GetValueOrDefault() > startDate ? booking.StartDate : startDate);
+                            DateTime overlapEnd = (DateTime)(booking.EndDate.GetValueOrDefault() < endDate ? booking.EndDate : endDate);
+                            HashSet<int> dayOfWeekNumbers = new HashSet<int>();
+                            var bookingRecurrence = _repository.GetBookingRecurrence(booking.BookingId);
+
+                            if (overlapStart <= overlapEnd)
+                            {
+                                // Iterate through the range of booking dates
+                                for (DateTime date = overlapStart; date <= overlapEnd; date = date.AddDays(1))
+                                {
+                                    int dayOfWeekNumber = (int)date.DayOfWeek;
+
+                                    // Add the day of the week to the HashSet if it's not already present
+                                    if (!dayOfWeekNumbers.Contains(dayOfWeekNumber))
+                                    {
+                                        dayOfWeekNumbers.Add(dayOfWeekNumber);
+                                    }
+                                }
+                            }
+
+                            bool hasMatchingRecurrence = isRecurrent
+                                ? bookingRecurrence
+                                    .Any(recurrence => dayOfWeekNumbers.Contains(recurrence.DayOfWeek.DayOfWeekId-1))
+                                : false;
+
+                            return booking.BookingStatus == BookingStatus.APPROVED.ToString()
+                                   && !(endDate < booking.StartDate)
+                                   && !(startDate > booking.EndDate)
+                                   && (!isRecurrent || hasMatchingRecurrence);
+                        })
+                    .OrderBy(booking => booking.TimeFrom);
 
             return bookings.Select(booking => new BookingViewModel
             {
@@ -260,6 +303,7 @@ namespace ASI.Basecode.Services.Services
                 TimeFrom = booking.TimeFrom,
                 TimeTo = booking.TimeTo,
                 RoomName = booking.Room.RoomName,
+                Room = booking.Room,
                 Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
             });
         }

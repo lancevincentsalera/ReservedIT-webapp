@@ -76,6 +76,7 @@
     height: 100%;
     width: 80%;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
     .column-time-bookings .time {
@@ -88,27 +89,63 @@
         width: 85%;
     }
 
-.cell {
-    display: flex;
-    justify-content: center;
-    height: 10%;
-    font-size: 1.1rem;
-}
-
-.bookings .cell {
-    border: 1px #e6e6e6; /*#cacaca*/
-    border-style: none none solid solid;
-}
-
 .bookings > div:nth-child(1) {
-    height: 12%;
+    height: 22%;
 }
 
 .bookings > div:nth-last-child() {
     border-style: none !important;
 }
 
+.cell {
+    display: flex;
+    justify-content: center;
+    height: 20%;
+    font-size: 1.1rem;
+}
 
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 20%;
+    font-size: 1.1rem;
+    border: 1px #e6e6e6; /*#cacaca*/
+    border-style: none none solid solid;
+}
+
+.booking {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 90%;
+    flex-grow: 1;
+    margin: 0px 1%;
+    padding: 1rem;
+    border-radius: 1rem;
+    font-size: 1.2rem;
+}
+
+.color-1 {
+    background-color: lightgreen;
+}
+
+.color-2 {
+    background-color: lightskyblue;
+}
+
+.color-3 {
+    background-color: lightcoral;
+}
+
+.color-4 {
+    background-color: lightsteelblue;
+}
+
+.color-5 {
+    background-color: lightsalmon;
+}
 
 .book-button {
     display: flex;

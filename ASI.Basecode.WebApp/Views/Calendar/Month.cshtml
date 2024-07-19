@@ -6,6 +6,8 @@
     DateTime endDay = ViewBag.EndDay;
     DateTime prevMonthStart = startDay.AddDays(-Convert.ToInt32(startDay.DayOfWeek));
     DateTime nextMonthEnd = endDay.AddDays(6 - Convert.ToInt32(endDay.DayOfWeek));
+    Random random = new Random();
+    int randomNumber = random.Next(1, 6);
 }
 
 @section styles {
@@ -33,8 +35,8 @@
         <div class="table-header-cell">TUE</div>
         <div class="table-header-cell">WED</div>
         <div class="table-header-cell">THU</div>
+        <div class="table-header-cell">FRI</div>
         <div class="table-header-cell">SAT</div>
-        <div class="table-header-cell">SUN</div>
     </div>
 
     <ul class="table-body">
@@ -54,7 +56,8 @@
                                        || (booking.StartDate <= prevMonthStart.AddDays(i * 7 + j) && booking.EndDate >= prevMonthStart.AddDays(i * 7 + j) && booking.Recurrence.Any(r => r.DayOfWeekId == Convert.ToInt32(prevMonthStart.AddDays(i * 7 + j).DayOfWeek) + 1 ) ) 
                                         ) // Need to factor recurrence
                                     {
-                                        <div>@@@booking.RoomName @booking.TimeFrom - @booking.TimeTo</div>
+                                        randomNumber = random.Next(1, 6);
+                                        <div class="color-@randomNumber">@@@booking.RoomName @booking.TimeFrom.GetValueOrDefault().ToString("hh\\:mm") - @booking.TimeTo.GetValueOrDefault().ToString("hh\\:mm")</div>
                                     }
                                 }
 

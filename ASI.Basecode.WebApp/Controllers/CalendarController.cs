@@ -67,7 +67,8 @@ namespace ASI.Basecode.WebApp.Controllers
             ViewBag.Month = month;
             ViewBag.Day = day;
 
-            return View();
+            var viewModel = _bookingService.GetBookingsByDate(int.Parse(year), int.Parse(month), int.Parse(day));
+            return View(viewModel);
         }
     }
 }

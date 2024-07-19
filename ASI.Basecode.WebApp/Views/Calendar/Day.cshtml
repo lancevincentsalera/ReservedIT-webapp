@@ -6,6 +6,8 @@
     string month = ViewBag.Month;
     string day = ViewBag.Day;
     DateTime date = new DateTime(int.Parse(year), int.Parse(month), int.Parse(day));
+    Random random = new Random();
+    int randomNumber = random.Next(1, 6);
 }
 
 @section styles {
@@ -25,9 +27,11 @@
     </div>
     <div class="table-body">
         <div class="column-date">
-            <h2>@date.ToString("dddd")</h2>
-            <h1>@day @date.ToString("MMMM")</h1>
-            <h3>@year</h3>
+            <div>
+                <h2>@date.ToString("dddd")</h2>
+                <h1>@day @date.ToString("MMMM")</h1>
+                <h3>@year</h3>
+            </div> 
         </div>
         <div class="column-time-bookings">
             <div class="time">
@@ -44,9 +48,24 @@
             <div class="bookings">
                 @for (int i = 0; i < 24; i++)
                 {
-                    <div class="cell"></div>
+                    <div class="row">
+                        @foreach (var booking in Model)
+                        {
+                            randomNumber = random.Next(1, 6);
+                            int startHour = (int)Math.Floor(booking.TimeFrom.GetValueOrDefault().TotalHours);
+                            int endHour = (int)Math.Floor(booking.TimeTo.GetValueOrDefault().TotalHours);
+                            
+                            @* if (i == booking.TimeFrom.GetValueOrDefault().TotalHours) *@
+                            if (startHour <= endHour && i >= startHour && i < endHour)
+                            {
+                                <div class="booking color-@randomNumber">
+                                    <h4>@booking.RoomName</h4>
+                                    <h6>@booking.Room.Location</h6>
+                                </div>
+                            }
+                        }
+                    </div>
                 }
-                <div class="cell"></div>
             </div>
 
         </div>
