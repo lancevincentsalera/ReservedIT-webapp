@@ -7,6 +7,7 @@
 @section styles {
     <link rel="stylesheet" href="~/css/loginErrorModal.css" />
     <link rel="stylesheet" href="~/css/createSuccessModal.css" />
+    <link rel="stylesheet" href="~/css/AdminUserMessages.css" />
 }
 
 <div class="Whole">
@@ -19,9 +20,25 @@
     <button type="button" data-toggle="modal" data-target="#roomCreateSuccessModal">
         Room Create Success Modal
     </button>
+    <button type="button" data-toggle="modal" data-target="#roomCreateSuccessModal">
+        Activate Message
+    </button>
+    <button type="button" data-toggle="modal" data-target="#roomCreateSuccessModal">
+        Activate User Message
+    </button>
+    <button type="button" data-toggle="modal" data-target="#userMessagesRestrictedModal">
+        Restrict User Message
+    </button>
+    <button type="button" data-toggle="modal" data-target="#roomCreateSuccessModal">
+        Edit User Message
+    </button>
+    <button type="button" data-toggle="modal" data-target="#roomCreateSuccessModal">
+        Delete User Message
+    </button>
 </div>
 
 @Html.Partial("_LoginErrorModal")
 @Html.Partial("_UserCreateSuccessModal")
 @Html.Partial("_RoomCreateSuccessModal")
+@Html.Partial("_UserRestrictedMessage")
 
