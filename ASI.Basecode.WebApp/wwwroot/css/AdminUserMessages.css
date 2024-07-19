@@ -2,6 +2,8 @@
 .success-modal__dialog {
     max-width: 400px;
     margin: 100px auto;
+    top: -12%; /* Adjust this value to move the modal vertically */
+    left: 5%;
 }
 
 .success-modal__content {
@@ -10,6 +12,7 @@
     border: none;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     position: relative;
+    padding: 15px;
 }
 
 .success-modal__body {
