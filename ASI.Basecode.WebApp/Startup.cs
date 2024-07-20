@@ -1,6 +1,7 @@
 ﻿using ASI.Basecode.Data;
 using ASI.Basecode.Resources.Constants;
 using ASI.Basecode.Services.Manager;
+using ASI.Basecode.Services.Services;
 using ASI.Basecode.WebApp.Authentication;
 using ASI.Basecode.WebApp.Extensions.Configuration;
 using ASI.Basecode.WebApp.Models;
@@ -84,7 +85,7 @@ namespace ASI.Basecode.WebApp
             services.AddMvc().AddJsonOptions(jsonOptions =>
             {
                 jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null;
-                jsonOptions.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                jsonOptions.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
             });
 
             services.AddMemoryCache();
@@ -99,6 +100,7 @@ namespace ASI.Basecode.WebApp
 
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddHostedService<BackgroundWorkerService>();
 
             //Configuration
             services.Configure<TokenAuthentication>(Configuration.GetSection("TokenAuthentication"));

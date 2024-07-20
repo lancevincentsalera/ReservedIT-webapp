@@ -17,5 +17,6 @@ namespace ASI.Basecode.Data.Interfaces
         IQueryable<Recurrence> GetBookingRecurrence(int bookingID);
         IQueryable<Booking> GetBookingsByUser(int userId);
         void AddRecurrence(Recurrence recurrence);
+        List<int> GetDayOfWeekIdsForBooking(int bookingID);
     }
 }

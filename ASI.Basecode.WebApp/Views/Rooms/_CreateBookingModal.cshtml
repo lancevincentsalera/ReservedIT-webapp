@@ -9,29 +9,32 @@
 
             </div>
             <div class="modal-body">
-                <form asp-action="CreateBookingPost" method="post">
+                <form asp-action="CreateBookingPost" id="createBookingForm" method="post">
+                    <input type="hidden" asp-for="roomList" value="@Model.roomList" />
+                    <input type="hidden" asp-for="Days" value="@Model.Days" />
                     <div class="form-group">
                         <label for="roomName">Room Name</label>
-                        <input asp-for="RoomId" type="hidden" id="roomId" />
-                        <input asp-for="RoomName" type="text" class="form-control" id="roomName" name="RoomName" readonly/>
+                        <input asp-for="RoomId" name="RoomId" id="roomId" type="hidden" />
+                        <input asp-for="RoomName" name="RoomName" id="roomName" type="text" readonly />
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="startDate">Start</label>
                             <div class="input-group date" id="datepicker">
-                                <input type="datetime-local" class="form-control" id="startDate" name="StartDate" placeholder="Select Date" required />
+                                <input asp-for="StartDate" type="datetime-local" class="form-control" id="startDate" name="StartDate" placeholder="Select Date" required />
                             </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="endDate">End</label>
                             <div class="input-group date" id="datepicker">
-                                <input type="datetime-local" class="form-control" id="endDate" name="EndDate" placeholder="Select Date" required/>
+                                <input asp-for="EndDate" type="datetime-local" class="form-control" id="endDate" name="EndDate" placeholder="Select Date" required/>
                             </div>
                         </div>
                     </div>
+                    <span class="text-danger" id="errorMessage"></span>
 
                     <div class="form-group setRecurrence">
-                        <button type="button" class="btn btn-outline-secondary" id="scheduleOnceButton">Schedule Once</button>
+                        <button type="button" class="btn btn-outline-secondary active" id="scheduleOnceButton">Schedule Once</button>
                         <button type="button" class="btn btn-outline-secondary" id="customButton">Custom</button>
                     </div>
                     <div class="custom-recur">
@@ -39,9 +42,9 @@
                         <div class="checkbox-recur">
                             @foreach (var day in Model.Days)
                             {
-                                bool isSelected = Model.Recurrence != null && Model.Recurrence.Any(r => r.DayOfWeekId == day.DayOfWeekId);
+                                bool isSelected = Model.DayOfTheWeekIds != null && Model.DayOfTheWeekIds.Any(r => r == day.DayOfWeekId);
 
-                                <input type="checkbox" id="@day.DayName.ToLower()" name="DayOfTheWeekIds" value="@day.DayOfWeekId" @(isSelected ? "checked" : "")>
+                                <input type="checkbox" onchange="checkBookingConflict()" id="dayOfTheWeekIds" name="DayOfTheWeekIds" value="@day.DayOfWeekId" @(isSelected ? "checked" : "")>
                                 <label for="@day.DayName.ToLower()">@day.DayName.Substring(0, 3)</label>
 
                                 <br>

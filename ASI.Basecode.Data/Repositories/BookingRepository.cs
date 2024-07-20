@@ -41,8 +41,6 @@ namespace ASI.Basecode.Data.Repositories
         public IQueryable<Booking> GetBookingsByUser(int userId)
         {
             return this.GetDbSet<Booking>()
-                .Include(b => b.Room)
-                .Include(b => b.User)
                 .Where(b => b.UserId == userId);
         }
         public void UpdateBooking(Booking booking)
@@ -62,8 +60,17 @@ namespace ASI.Basecode.Data.Repositories
         {
             return this.GetDbSet<Recurrence>()
                 .Include(r => r.DayOfWeek)
-                .Include(r => r.Booking)
                 .Where(r => r.BookingId == bookingID);
+        }
+
+        public List<int> GetDayOfWeekIdsForBooking(int bookingID)
+        {
+            List<int> DayOfTheWeekIds = this.GetDbSet<Recurrence>()
+                .Where(r => r.BookingId == bookingID)
+                .Select(r => r.DayOfWeekId ?? -1)
+                .ToList();
+
+            return DayOfTheWeekIds;
         }
 
     }

@@ -1,4 +1,6 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+﻿
+// this is used to style the status cell based on the status of the booking/user
+document.addEventListener('DOMContentLoaded', () => {
     let statusCells = document.querySelectorAll('.user-cell[data-label="STATUS"] span');
 
     statusCells.forEach((cell) => {
