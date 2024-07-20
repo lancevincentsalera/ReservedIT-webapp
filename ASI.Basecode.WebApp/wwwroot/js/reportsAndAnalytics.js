@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
+﻿/*document.addEventListener('DOMContentLoaded', function () {
     const ctx = document.getElementById('barChart').getContext('2d');
     const ctx2 = document.getElementById('lineChart').getContext('2d'); // For the line chart
     const daysOfMonth = generateDaysOfMonth();
@@ -9,7 +9,7 @@
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             datasets: [{
                 label: 'No. of Bookings', // Set to an empty string to remove the label
-                data: [65, 59, 80, 81, 56, 55, 33, 23, 34, 55, 9, 2],
+                data: @Html.Raw(Json.Serialize(barChartData)), // Use the data passed from the controller
                 borderColor: 'rgb(229, 158, 176)',
                 backgroundColor: 'rgb(229, 158, 176)',
                 borderWidth: 2,
@@ -50,7 +50,7 @@
             labels: daysOfMonth, // Sample numeric x-axis values
             datasets: [{
                 label: 'No. of Daily Booking', // Set the label for the line graph
-                data: [10, 15, 20, 25, 30, 25, 20, 30, 35, 40, 10, 15, 20, 25, 30, 25, 20, 30, 35, 40, 10, 15, 20, 25, 30, 25, 20, 30, 35, 40, 12], // Sample data for the line chart
+                data: @Html.Raw(Json.Serialize(lineChartData)), // Use the data passed from the controller
                 borderColor: 'rgb(229, 158, 176)',
                 backgroundColor: 'rgb(229, 158, 176)',
                 borderWidth: 2,
@@ -118,3 +118,12 @@ function updateCharts() {
     lineChart.data.labels = daysOfMonth;
     lineChart.update();
 }
+
+function toggleDetail(row) {
+    const detailTable = row.nextElementSibling;
+    if (detailTable.style.display === "none" || detailTable.style.display === "") {
+        detailTable.style.display = "block";
+    } else {
+        detailTable.style.display = "none";
+    }
+}*/
