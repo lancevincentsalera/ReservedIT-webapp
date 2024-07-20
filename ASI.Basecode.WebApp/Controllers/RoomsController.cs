@@ -20,10 +20,12 @@ namespace ASI.Basecode.WebApp.Controllers
     {
         private readonly IRoomService _roomService;
         private readonly IBookingService _bookingService;
-        public RoomsController(IBookingService bookingService,IRoomService roomService,IHttpContextAccessor httpContextAccessor, ILoggerFactory loggerFactory, IConfiguration configuration, IMapper mapper = null) : base(httpContextAccessor, loggerFactory, configuration, mapper)
+        private readonly IEmailService _emailService;
+        public RoomsController(IEmailService emailService, IBookingService bookingService,IRoomService roomService,IHttpContextAccessor httpContextAccessor, ILoggerFactory loggerFactory, IConfiguration configuration, IMapper mapper = null) : base(httpContextAccessor, loggerFactory, configuration, mapper)
         {
             _roomService = roomService;
             _bookingService = bookingService;
+            _emailService = emailService;
         }
 
         #region Index
@@ -166,8 +168,9 @@ namespace ASI.Basecode.WebApp.Controllers
 
 
                 model.UserId = UserId;
-                _bookingService.AddBooking(model);
+                int bookingId = _bookingService.AddBooking(model);
                 TempData["SuccessMessage"] = "Booking created successfully";
+                _emailService.SendEmail(_bookingService.GetBookings().ToList().Where(b => b.BookingId == bookingId).FirstOrDefault(), "Your booking has been created!");
             }
             catch (InvalidDataException ex)
             {

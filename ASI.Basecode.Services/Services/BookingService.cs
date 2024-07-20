@@ -280,6 +280,7 @@ namespace ASI.Basecode.Services.Services
                 EndDate = booking.EndDate.Value,
                 TimeFrom = booking.TimeFrom,
                 TimeTo = booking.TimeTo,
+                User = booking.User,
                 RoomName = booking.Room.RoomName,
                 Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
             });
@@ -368,7 +369,7 @@ namespace ASI.Basecode.Services.Services
         /// </summary>
         /// <param name="model"></param>
         /// <exception cref="InvalidDataException"></exception>
-        public void AddBooking(BookingViewModel model)
+        public int AddBooking(BookingViewModel model)
         {
             var booking = new Booking();
             if (!_repository.BookingExists(model.BookingId))
@@ -397,7 +398,7 @@ namespace ASI.Basecode.Services.Services
                     }
 
                     _repository.AddBooking(booking);
-
+                    return booking.BookingId;
                 }
                 else
                 {
