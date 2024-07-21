@@ -90,29 +90,51 @@ namespace ASI.Basecode.WebApp.Controllers
         [HttpPost]
         public JsonResult CheckBookingConflict(DateTime? startDate, DateTime? endDate, string roomName, List<int> dayOfTheWeekIds)
         {
+            // Validate that startDate and endDate are not null
             if (!endDate.HasValue || !startDate.HasValue)
             {
-                return Json(new { isConflict = false, errorMessage = string.Empty });
-            }
-
-            if (endDate < startDate)
-            {
-                return Json(new { isConflict = true, errorMessage = "Booking end date must be later than the start date." });
+                return Json(new { isConflict = false, errorMessage = "Start date and end date must be provided." });
             }
 
             var timeFrom = startDate.Value.TimeOfDay;
             var timeTo = endDate.Value.TimeOfDay;
 
-            if(timeTo <= timeFrom)
+            // Validate bookings that span across midnight but are less than 24 hours
+            if (endDate.Value.Date > startDate.Value.Date)
             {
+                // Calculate the total duration in hours
+                var totalDuration = (endDate.Value - startDate.Value).TotalHours;
 
-               return Json(new { isConflict = true, errorMessage = "Booking end time must be later than the start time." });
-            }  
-
-            if(endDate.Value.Date > startDate.Value.Date && dayOfTheWeekIds.Count == 0)
+                // Allow booking if the total duration is less than 24 hours
+                if (totalDuration > 24)
+                {
+                    // Check if the booking aligns with the recurrence type for multi-day bookings
+                    if (dayOfTheWeekIds.Count == 0)
+                    {
+                        return Json(new { isConflict = true, errorMessage = "The booking date range must align with the selected recurrence type." });
+                    }
+                }
+            } 
+            else if(endDate.Value.Date == startDate.Value.Date)
             {
-                return Json(new { isConflict = true, errorMessage = "The booking date range must align with the selected recurrence type." });
+                // Validate that the booking aligns with the recurrence type for single-day bookings
+                if (dayOfTheWeekIds.Count > 0)
+                {
+                    return Json(new { isConflict = true, errorMessage = "The booking date range must align with the selected recurrence type." });
+                }
+
+                // Validate time conflicts within the same day
+                if (timeTo <= timeFrom)
+                {
+                    return Json(new { isConflict = true, errorMessage = "Booking end time must be later than the start time." });
+                }
             }
+            else
+            {
+                // Validate that endDate is not before startDate
+                return Json(new { isConflict = true, errorMessage = "Booking end date must be later than the start date." });
+            }
+
 
             var model = new BookingViewModel
             {
