@@ -81,7 +81,7 @@ namespace ASI.Basecode.WebApp.Controllers
                         booking.BookingStatus = BookingStatus.CANCELLED.ToString();
                         booking.BookingChangeOnly = true;
                         _bookingService.UpdateBooking(booking);
-                        _emailService.SendEmail(booking, "Your booking has been cancelled");
+                        _emailService.SendEmail(_bookingService.GetBookings().ToList().Where(b => b.BookingId == booking.BookingId).FirstOrDefault(), "Your booking has been cancelled");
                         return Json(new { success = true, message = "Booking cancelled successfully!" });
                     }
                     else

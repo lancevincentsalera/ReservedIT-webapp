@@ -35,13 +35,13 @@ namespace ASI.Basecode.Data.Repositories
 
         public IQueryable<Booking> GetBookings()
         {
-            return this.GetDbSet<Booking>().Include(b => b.Recurrences).Include(b => b.Room).Include(b => b.User);
+            return this.GetDbSet<Booking>().Include(b => b.Recurrences);
         }
 
         public IQueryable<Booking> GetBookingsByUser(int userId)
         {
             return this.GetDbSet<Booking>()
-                .Where(b => b.UserId == userId).Include(b => b.User);
+                .Where(b => b.UserId == userId);
         }
         public void UpdateBooking(Booking booking)
         {

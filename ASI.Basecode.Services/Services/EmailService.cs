@@ -17,6 +17,7 @@ using System.Net;
 using ASI.Basecode.Services.Manager;
 using System.Text.Encodings.Web;
 using System.Net.Mime;
+using static System.Net.Mime.MediaTypeNames;
 
 
 namespace ASI.Basecode.Services.Services
@@ -48,7 +49,28 @@ namespace ASI.Basecode.Services.Services
 
         public void SendEmail(BookingViewModel model, string headerInfo)
         {
-            model.UserName = model.User.FirstName + " " + model.User.LastName;
+            model.UserName = model.User.FirstName + " " + model.User.LastName; ;
+            var recurrencesString = "";
+            if (model.Recurrence.Count() > 0)
+            {
+                foreach (var recurrence in model.Recurrence)
+                {
+                    recurrencesString += recurrence.DayOfWeek.DayName;
+                    if (recurrence != model.Recurrence.Last())
+                    {
+                        recurrencesString += ", ";
+                    }
+                }
+            }
+            else if (model.Recurrence.Count() == 7)
+            {
+                recurrencesString = " Daily";
+            }
+            else
+            {
+                recurrencesString = "None";
+            }
+
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
 
             MailAddress from = new MailAddress("reserveditalliance@gmail.com", "Reserved IT");
@@ -599,10 +621,10 @@ namespace ASI.Basecode.Services.Services
 													<div class='overlay'></div>
 													<div
 														style='padding: 0 4em; background-color: white; width: auto; height: auto;'>
-														<h1>" + headerInfo +"</h1><div style='font-size: 1.1rem;'><p style='margin-bottom: 0px; margin-top: 10px;'><b>Booking ID: </b>"+ model.BookingId +"</p><p style='margin-bottom: 0px;'><b>Booking Status: </b>"+ model.BookingStatus +"</p><p style='margin-bottom: 0px;'><b>User Name: </b>"+ model.UserName +"</p><p style='margin-bottom: 0px;'><b>Room: </b>"+ model.RoomName +"</p><p style='margin-bottom: 0px;'><b>Date: </b>"+ model.StartDate.GetValueOrDefault().ToString("MMMM d, yyyy") +" - "+ model.EndDate.GetValueOrDefault().ToString("MMMM d, yyyy") +"</p><p style='margin-bottom: 0px;'><b>Time: </b>"+ model.TimeFrom.GetValueOrDefault().ToString(@"hh\:mm") +" - "+ model.TimeTo.GetValueOrDefault().ToString(@"hh\:mm") +"</p></div></td></tr><!-- end tr --><tr><td class='bg_dark email-section' style='text-align:center;'><div class='heading-section heading-section-white'><span class='subheading'>Welcome</span><h2>About ReservedIT</h2></div></td></tr><!-- end: tr --></table></div></center></body></html>";
+														<h1>" + headerInfo + "</h1><div style='font-size: 1.1rem;'><p style='margin-bottom: 0px; margin-top: 10px;'><b>Booking ID: </b>" + model.BookingId + "</p><p style='margin-bottom: 0px;'><b>Booking Status: </b>" + model.BookingStatus + "</p><p style='margin-bottom: 0px;'><b>User Name: </b>" + model.UserName + "</p><p style='margin-bottom: 0px;'><b>Room: </b>" + model.RoomName + "</p><p style='margin-bottom: 0px;'><b>Date: </b>" + model.StartDate.GetValueOrDefault().ToString("MMMM d, yyyy") + " - " + model.EndDate.GetValueOrDefault().ToString("MMMM d, yyyy") + "</p><p style='margin-bottom: 0px;'><b>Time: </b>" + model.TimeFrom.GetValueOrDefault().ToString(@"hh\:mm") + " - " + model.TimeTo.GetValueOrDefault().ToString(@"hh\:mm") + "</p><p style='margin-bottom: 0px;'><b>Recurrences: </b>" + recurrencesString + "</p></div></td></tr><!-- end tr --><tr><td class='bg_dark email-section' style='text-align:center;'><div class='heading-section heading-section-white'><span class='subheading'>Welcome</span><h2>About ReservedIT</h2></div></td></tr><!-- end: tr --></table></div></center></body></html>";
 
-           
-			var inlineImage = new Attachment(@"wwwroot/img/reservedit-logo.png", "image/png")
+
+            var inlineImage = new Attachment(@"wwwroot/img/reservedit-logo.png", "image/png")
             {
                 ContentId = "reservedit-logo.png" // This CID will be used in the email body
             };
@@ -620,7 +642,7 @@ namespace ASI.Basecode.Services.Services
             SendCompletedEventHandler(SendCompletedCallback);
             string userState = "test message1";
             client.SendAsync(message, userState);
-            
+
         }
     }
 }
