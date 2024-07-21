@@ -68,7 +68,7 @@
                     </a>
                 </li>
                 <li>
-                    <a>
+                    <a asp-action="Index" asp-controller="MMAnalytics">
                         <img src="~/img/reports-logo.png" />
                         Reports
                     </a>
@@ -122,7 +122,8 @@
             const currPath = window.location.pathname;
 
             sidebarItems.forEach(item => {
-                if (item.getAttribute('href') === currPath) {
+                console.log(item.getAttribute('href').split('?')[0])
+                if (item.getAttribute('href').split('?')[0] === currPath) {
                     item.parentElement.classList.add('active');
                 } else {
                     item.parentElement.classList.remove('active');
