@@ -36,6 +36,7 @@ namespace ASI.Basecode.Services.ServiceModels
         public User User { get; set; }
         public Room Room { get; set; }
 
+        public bool BookingChangeOnly { get; set; }
         public List<DayOfTheWeek> Days { get; set; }
         public List<int> DayOfTheWeekIds { get; set; }
         public IEnumerable<BookingViewModel> bookingList { get; set; }

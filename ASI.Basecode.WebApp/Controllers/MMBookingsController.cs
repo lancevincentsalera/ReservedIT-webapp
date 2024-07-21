@@ -96,6 +96,7 @@ namespace ASI.Basecode.WebApp.Controllers
                         booking.BookingStatus == BookingStatus.REJECTED.ToString())
                     {
                         booking.BookingStatus = BookingStatus.APPROVED.ToString();
+                        booking.BookingChangeOnly = true;
                         _bookingService.UpdateBooking(booking);
                         TempData["SuccessMessage"] = "Booking approved successfully!";
                     }
@@ -136,6 +137,7 @@ namespace ASI.Basecode.WebApp.Controllers
                         booking.BookingStatus == BookingStatus.APPROVED.ToString())
                     {
                         booking.BookingStatus = BookingStatus.REJECTED.ToString();
+                        booking.BookingChangeOnly = true;
                         _bookingService.UpdateBooking(booking);
                         TempData["SuccessMessage"] = "Booking rejected successfully!";
                     }

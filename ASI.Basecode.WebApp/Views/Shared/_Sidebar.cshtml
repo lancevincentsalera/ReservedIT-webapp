@@ -62,7 +62,7 @@
                     </a>
                 </li>
                 <li>
-                    <a asp-action="Index" asp-controller="Calendar">
+                    <a asp-action="Month" asp-controller="Calendar" asp-route-year="@DateTime.Now.Year" asp-route-month="@DateTime.Now.Month">
                         <img src="~/img/calendar-logo.png" />
                         Calendar
                     </a>
@@ -90,7 +90,7 @@
 
                 </li>
                 <li>
-                    <a asp-action="Index" asp-controller="Calendar">
+                    <a asp-action="Month" asp-controller="Calendar" asp-route-year="@DateTime.Now.Year" asp-route-month="@DateTime.Now.Month">
                         <img src="~/img/calendar-logo.png" />
                         Calendar
                     </a>

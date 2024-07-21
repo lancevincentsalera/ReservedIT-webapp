@@ -61,7 +61,7 @@ namespace ASI.Basecode.WebApp.Controllers
         #endregion
 
 
-        #region Reject Booking
+        #region Cancel Booking
         /// <summary>
         /// Booking status will change to CANCELLED
         /// </summary>
@@ -78,6 +78,7 @@ namespace ASI.Basecode.WebApp.Controllers
                     if (booking.BookingStatus == BookingStatus.APPROVED.ToString())
                     {
                         booking.BookingStatus = BookingStatus.CANCELLED.ToString();
+                        booking.BookingChangeOnly = true;
                         _bookingService.UpdateBooking(booking);
                         return Json(new { success = true, message = "Booking cancelled successfully!" });
                     }
@@ -143,6 +144,7 @@ namespace ASI.Basecode.WebApp.Controllers
                     throw new InvalidDataException("Booking time duration should be valid");
                 }
                 model.UserId = UserId;
+                model.BookingChangeOnly = false;
                 _bookingService.UpdateBooking(model);
                 TempData["SuccessMessage"] = "Booking successfully updated.";
             }

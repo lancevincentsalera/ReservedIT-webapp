@@ -68,12 +68,17 @@ namespace ASI.Basecode.Services.Services
                             return true;
                         }
                     }
-                }     
+                }
             }
 
             return false;
         }
 
+        public bool isRecurrentBooking(Booking booking)
+        {
+            if (booking != null && booking.Recurrences.Any()) { return true; }
+            return false;
+        }
 
 
         /// <summary>
@@ -174,7 +179,7 @@ namespace ASI.Basecode.Services.Services
                         });
                     }
                 }
-            } 
+            }
             else
             {
 
@@ -272,10 +277,82 @@ namespace ASI.Basecode.Services.Services
                 RoomId = booking.RoomId,
                 BookingStatus = booking.BookingStatus,
                 StartDate = booking.StartDate.Value,
-                EndDate =  booking.EndDate.Value,
+                EndDate = booking.EndDate.Value,
                 TimeFrom = booking.TimeFrom,
                 TimeTo = booking.TimeTo,
                 RoomName = booking.Room.RoomName,
+                Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
+            });
+        }
+
+        public IEnumerable<BookingViewModel> GetBookingsByDate(int year, int month, int? day)
+        {
+            int actualDay = day ?? 1; // Use 1 if day is null
+
+            DateTime startDate = new DateTime(year, month, actualDay);
+            DateTime endDate;
+
+            if (day == null)
+            {
+                endDate = startDate.AddMonths(1).AddDays(-1); // End of the month
+            }
+            else
+            {
+                endDate = startDate; // Specific day
+            }
+
+            var bookings =
+                _repository.GetBookings()
+                    .Include(b => b.Recurrences)
+                    .Include(b => b.Room)
+                    .AsEnumerable() // Switch to LINQ to Objects
+                    .Where(booking =>
+                        {   // Filter recurrent bookings
+                            bool isRecurrent = isRecurrentBooking(booking);
+                            DateTime overlapStart = (DateTime)(booking.StartDate.GetValueOrDefault() > startDate ? booking.StartDate : startDate);
+                            DateTime overlapEnd = (DateTime)(booking.EndDate.GetValueOrDefault() < endDate ? booking.EndDate : endDate);
+                            HashSet<int> dayOfWeekNumbers = new HashSet<int>();
+                            var bookingRecurrence = _repository.GetBookingRecurrence(booking.BookingId);
+
+                            if (overlapStart <= overlapEnd)
+                            {
+                                // Iterate through the range of booking dates
+                                for (DateTime date = overlapStart; date <= overlapEnd; date = date.AddDays(1))
+                                {
+                                    int dayOfWeekNumber = (int)date.DayOfWeek;
+
+                                    // Add the day of the week to the HashSet if it's not already present
+                                    if (!dayOfWeekNumbers.Contains(dayOfWeekNumber))
+                                    {
+                                        dayOfWeekNumbers.Add(dayOfWeekNumber);
+                                    }
+                                }
+                            }
+
+                            bool hasMatchingRecurrence = isRecurrent
+                                ? bookingRecurrence
+                                    .Any(recurrence => dayOfWeekNumbers.Contains(recurrence.DayOfWeek.DayOfWeekId-1))
+                                : false;
+
+                            return booking.BookingStatus == BookingStatus.APPROVED.ToString()
+                                   && !(endDate < booking.StartDate)
+                                   && !(startDate > booking.EndDate)
+                                   && (!isRecurrent || hasMatchingRecurrence);
+                        })
+                    .OrderBy(booking => booking.TimeFrom);
+
+            return bookings.Select(booking => new BookingViewModel
+            {
+                BookingId = booking.BookingId,
+                UserId = booking.UserId,
+                RoomId = booking.RoomId,
+                BookingStatus = booking.BookingStatus,
+                StartDate = booking.StartDate.Value,
+                EndDate = booking.EndDate.Value,
+                TimeFrom = booking.TimeFrom,
+                TimeTo = booking.TimeTo,
+                RoomName = booking.Room.RoomName,
+                Room = booking.Room,
                 Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
                 DayOfTheWeekIds = _repository.GetDayOfWeekIdsForBooking(booking.BookingId)
             });
@@ -285,7 +362,7 @@ namespace ASI.Basecode.Services.Services
 
 
 
-        #region C r U D operations
+        #region BOOKING CrUD operations
         /// <summary>
         /// Add a booking to the database
         /// </summary>
@@ -345,7 +422,7 @@ namespace ASI.Basecode.Services.Services
         {
 
             // if there is a conflict, throw an exception
-            if (IsBookingConflict(booking))
+            if (IsBookingConflict(booking) && !booking.BookingChangeOnly)
             {
                 throw new InvalidDataException("Cannot update booking: A conflicting approved booking already exists for the selected date, time, and room.");
             }

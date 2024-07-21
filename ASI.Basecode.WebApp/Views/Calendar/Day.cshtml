@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ASI.Basecode.Services.ServiceModels.BookingViewModel>
+
+@{
+    ViewData["Title"] = "Day";
+    string year = ViewBag.Year;
+    string month = ViewBag.Month;
+    string day = ViewBag.Day;
+    DateTime date = new DateTime(int.Parse(year), int.Parse(month), int.Parse(day));
+    Random random = new Random();
+    int randomNumber = random.Next(1, 6);
+}
+
+@section styles {
+    <link rel="stylesheet" href="~/css/calendarDay.css" />
+    <link rel="stylesheet" href="~/css/admindashboard.css" />
+}
+
+<div class="calendar-header">
+    <h1>Calendar</h1>
+    <div class="back-navigation">
+        <button class="back-button" onclick="location.href='/Calendar/Month?year='+ @year +'&month=' + @month">< Back</button>
+    </div>
+</div>
+
+<div class="table-container">
+    <div class="table-header">
+    </div>
+    <div class="table-body">
+        <div class="column-date">
+            <div>
+                <h2>@date.ToString("dddd")</h2>
+                <h1>@day @date.ToString("MMMM")</h1>
+                <h3>@year</h3>
+            </div> 
+        </div>
+        <div class="column-time-bookings">
+            <div class="time">
+                @for (int i = 0; i < 24; i++)
+                {
+                    var hour = i % 12;
+                    hour = hour == 0 ? 12 : hour;
+                    var ampm = i < 12 ? "AM" : "PM";
+                    <div class="cell">@hour:00 @ampm</div>
+                }
+                <div class="cell">12:00 AM</div>
+            </div>
+
+            <div class="bookings">
+                @for (int i = 0; i < 24; i++)
+                {
+                    <div class="row">
+                        @foreach (var booking in Model)
+                        {
+                            randomNumber = random.Next(1, 6);
+                            int startHour = (int)Math.Floor(booking.TimeFrom.GetValueOrDefault().TotalHours);
+                            int endHour = (int)Math.Floor(booking.TimeTo.GetValueOrDefault().TotalHours);
+                            
+                            @* if (i == booking.TimeFrom.GetValueOrDefault().TotalHours) *@
+                            if (startHour <= endHour && i >= startHour && i < endHour)
+                            {
+                                <div class="booking color-@randomNumber">
+                                    <h4>@booking.RoomName</h4>
+                                    <h6>@booking.Room.Location</h6>
+                                </div>
+                            }
+                        }
+                    </div>
+                }
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="book-button">
+    <button type="button" class="btn btn-custom" onclick="location.href='/Rooms/Index/'">Book Room</button>
+</div>

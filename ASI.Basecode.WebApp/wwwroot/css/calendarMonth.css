@@ -21,7 +21,13 @@
     }
 
     .month-navigation .month-button {
-        width: 5rem;
+        /*width: 5rem;*/
+        white-space: nowrap;
+        font-weight: bold;
+        font-size: 1.1em;
+        text-transform: uppercase;
+        background-color: transparent;
+        border: none;
     }
 
 .table-container {
@@ -63,12 +69,10 @@
     justify-content: space-between;
 }
 
-    .table-row .table-cell {
-        width: 100%;
-        border: 1px solid #e6e6e6; /*#cacaca*/
-    }
 
 .table-cell {
+    width: 14.28%;
+    border: 1px solid #e6e6e6; /*#cacaca*/
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -81,20 +85,27 @@
         margin: .5rem 1.4rem;
         font-weight: bold;
         font-size: 1.1vw;
+        cursor: pointer;
     }
+
+        .table-cell .day[disabled] {
+            color: #9f9797;
+            cursor: auto;
+        }
 
     .table-cell .bookings {
         display: flex;
         flex-direction: column;
         white-space: nowrap;
         justify-content: flex-start;
-        overflow-y: auto;
+        overflow-y: hidden;
     }
 
 .bookings > div {
     border-radius: 5px;
     height: auto;
-    margin: 2px 1px;
+    width: auto;
+    margin: 3px 1px;
     text-align: right;
 }
 
@@ -102,38 +113,34 @@
         display: none;
     }*/
 
-    .bookings > div:nth-child(6n+0) {
-        background-color: lightgreen;
-    }
+.color-1 {
+    background-color: lightgreen;
+}
 
-    .bookings > div:nth-child(6n+1) {
-        background-color: lightblue;
-    }
+.color-2 {
+    background-color: lightskyblue;
+}
 
-    .bookings > div:nth-child(6n+2) {
-        background-color: lightgrey;
-    }
+.color-3 {
+    background-color: lightcoral;
+}
 
-    .bookings > div:nth-child(6n+3) {
-        background-color: lightskyblue;
-    }
+.color-4 {
+    background-color: lightsteelblue;
+}
 
-    .bookings > div:nth-child(6n+4) {
-        background-color: lightcoral;
-    }
+.color-5 {
+    background-color: lightsalmon;
+}
 
-    .bookings > div:nth-child(6n+5) {
-        background-color: lightsteelblue;
-    }
-
-.save-button {
+.book-button {
     display: flex;
     justify-content: center;
     margin: 1rem;
     height: auto;
 }
 
-    .save-button > button {
+    .book-button > button {
         white-space: nowrap;
         font-weight: bold !important;
         width: 9rem;

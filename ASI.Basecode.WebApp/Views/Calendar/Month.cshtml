@@ -1,0 +1,200 @@
+﻿@model IEnumerable<ASI.Basecode.Services.ServiceModels.BookingViewModel>
+
+@{
+    ViewData["Title"] = "Month";
+    DateTime startDay = ViewBag.StartDay;
+    DateTime endDay = ViewBag.EndDay;
+    DateTime prevMonthStart = startDay.AddDays(-Convert.ToInt32(startDay.DayOfWeek));
+    DateTime nextMonthEnd = endDay.AddDays(6 - Convert.ToInt32(endDay.DayOfWeek));
+    Random random = new Random();
+    int randomNumber = random.Next(1, 6);
+}
+
+@section styles {
+    <link rel="stylesheet" href="~/css/calendarMonth.css" />
+    <link rel="stylesheet" href="~/css/admindashboard.css" />
+}
+
+<div class="calendar-header">
+    <h1>Calendar</h1>
+    <div class="month-navigation">
+        <button class="month-button previous"><</button>
+        <div>
+            <form id="year-month-form">
+                <input type="date" id="year-month" name="year-month">
+            </form>
+        </div>
+        <button class="month-button next">></button>
+    </div>
+</div>
+
+<div class="table-container">
+    <div class="table-header">
+        <div class="table-header-cell">SUN</div>
+        <div class="table-header-cell">MON</div>
+        <div class="table-header-cell">TUE</div>
+        <div class="table-header-cell">WED</div>
+        <div class="table-header-cell">THU</div>
+        <div class="table-header-cell">FRI</div>
+        <div class="table-header-cell">SAT</div>
+    </div>
+
+    <ul class="table-body">
+        @for (int i = 0; i < 5; i++)
+        {
+            <li class="table-row">
+                @for (int j = 0; j < 7; j++)
+                {
+                    <div class="table-cell">
+                        @if (prevMonthStart.AddDays(i * 7 + j) >= startDay && prevMonthStart.AddDays(i * 7 + j) <= endDay)
+                        {
+                            <div class="day">@prevMonthStart.AddDays(i * 7 + j).Day</div>
+                            <div class="bookings">
+                                @foreach (var booking in Model)
+                                {
+                                    @if ( (booking.StartDate == prevMonthStart.AddDays(i * 7 + j) && booking.EndDate == prevMonthStart.AddDays(i * 7 + j))
+                                       || (booking.StartDate <= prevMonthStart.AddDays(i * 7 + j) && booking.EndDate >= prevMonthStart.AddDays(i * 7 + j) && booking.Recurrence.Any(r => r.DayOfWeekId == Convert.ToInt32(prevMonthStart.AddDays(i * 7 + j).DayOfWeek) + 1 ) ) 
+                                        ) // Need to factor recurrence
+                                    {
+                                        randomNumber = random.Next(1, 6);
+                                        <div class="color-@randomNumber">@@@booking.RoomName @booking.TimeFrom.GetValueOrDefault().ToString("hh\\:mm") - @booking.TimeTo.GetValueOrDefault().ToString("hh\\:mm")</div>
+                                    }
+                                }
+
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="day" disabled>@prevMonthStart.AddDays(i * 7 + j).Day</div>
+                            <div class="bookings">
+                            </div>
+                        }
+                    </div>
+                }
+            </li>
+        }
+        <li class="table-row">
+            <div class="table-cell">
+                <div class="day">1</div>
+                <div class="bookings">
+                    <div>test</div>
+                    <div>test</div>
+                </div>
+            </div>
+            <div class="table-cell">
+                <div class="day">2</div>
+                <div class="bookings">
+                </div>
+            </div>
+        </li>
+
+    </ul>
+</div>
+
+<div class="book-button">
+    <button type="button" class="btn btn-custom" onclick="location.href='/Rooms/Index/'">Book Room</button>
+</div>
+
+@section Scripts {
+    <script>
+        var dayElements = document.querySelectorAll('.day');
+        var form = document.getElementById('year-month-form');
+        var yearMonthInput = document.getElementById('year-month');
+        var previousButton = document.querySelector('.month-button.previous');
+        var nextButton = document.querySelector('.month-button.next');
+
+        dayElements.forEach(function (dayElement) {
+            dayElement.addEventListener('click', function () {
+                if (this.hasAttribute('disabled')) {
+                    return; // Do nothing if the day is disabled
+                }
+                var selectedDate = new Date(yearMonthInput.value);
+                var year = selectedDate.getFullYear();
+                var month = selectedDate.getMonth() + 1; // getMonth() returns zero-based index
+
+                // Get the value of the 'day' element
+                var dayValue = this.textContent.trim(); // Trim to remove any extra whitespace
+
+                console.log('Clicked day:', dayValue);
+
+                var actionUrl = '/Calendar/Day?year=' + year + '&month=' + month + '&day=' + dayValue;
+                window.location.href = actionUrl;
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            form.addEventListener('change', function (event) {
+                var selectedDate = new Date(yearMonthInput.value);
+                var year = selectedDate.getFullYear();
+                var month = selectedDate.getMonth() + 1; // getMonth() returns zero-based index
+
+                // Construct the new action URL with query parameters
+                var actionUrl = '/Calendar/Month?year=' + year + '&month=' + month;
+                window.location.href = actionUrl;
+            });
+
+            var urlParams = new URLSearchParams(window.location.search);
+
+            // Check if year and month parameters exist in the URL
+            if (urlParams.has('year') && urlParams.has('month')) {
+                var year = parseInt(urlParams.get('year'));
+                var month = parseInt(urlParams.get('month'));
+
+                // Calculate previous and next months
+                var previousMonth = month === 1 ? 12 : month - 1;
+                var nextMonth = month === 12 ? 1 : month + 1;
+                var previousYear = month === 1 ? year - 1 : year;
+                var nextYear = month === 12 ? year + 1 : year;
+
+                // Set text for previous and next buttons
+                previousButton.textContent = '<' + ' ' + getMonthName(previousMonth);
+                nextButton.textContent = getMonthName(nextMonth) + ' ' + '>';
+
+                // Set the year-month input value
+                var currentDate = new Date();
+                var day = currentDate.getDate().toString();
+                var dateString = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day.length === 1 ? '0' + day : day);
+                yearMonthInput.value = dateString;
+            }
+
+            // Function to get month name from month number
+            function getMonthName(monthNumber) {
+                var months = [
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ];
+                return months[monthNumber - 1];
+            }
+
+            // Event listener for previous button
+            previousButton.addEventListener('click', function () {
+                var urlParams = new URLSearchParams(window.location.search);
+                var currentYear = parseInt(urlParams.get('year'));
+                var currentMonth = parseInt(urlParams.get('month'));
+
+                // Calculate previous month
+                var previousMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+                var previousYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+
+                // Update URL with new year and month
+                var actionUrl = '/Calendar/Month?year=' + previousYear + '&month=' + previousMonth;
+                window.location.href = actionUrl;
+            });
+
+            // Event listener for next button
+            nextButton.addEventListener('click', function () {
+                var urlParams = new URLSearchParams(window.location.search);
+                var currentYear = parseInt(urlParams.get('year'));
+                var currentMonth = parseInt(urlParams.get('month'));
+
+                // Calculate next month
+                var nextMonth = currentMonth === 12 ? 1 : currentMonth + 1;
+                var nextYear = currentMonth === 12 ? currentYear + 1 : currentYear;
+
+                // Update URL with new year and month
+                var actionUrl = '/Calendar/Month?year=' + nextYear + '&month=' + nextMonth;
+                window.location.href = actionUrl;
+            });
+        });
+    </script>
+}
