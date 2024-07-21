@@ -441,4 +441,38 @@ const deleteModal = (btnId, modalId, action, controller) => {
     }
 }
 
+//for cancel bookings
+const cancelModal = (btnId, modalId, action, controller) => {
+    try {
+        let id = $(btnId).data('id');
+
+        console.log(id);
+
+        $.ajax({
+            url: `/${controller}/${action}`,
+            type: 'POST',
+            data: { Id: id },
+            success: (response) => {
+                if (response.success) {
+                    $(modalId).modal('hide');
+                    toastr.success(response.message);
+                    setTimeout(() => {
+                        window.location.href = `/${controller}/Index`
+                    }, toastr.options.timeOut);
+                } else {
+                    $(modalId).modal('hide');
+                    toastr.error(response.message);
+                }
+            },
+            error: (xhr, status, error) => {
+                console.error('Error canceling booking', error);
+            }
+        });
+    } catch (err) {
+        $(modalId).modal('hide');
+        console.error('Error in submitForm:', err);
+        toastr.error('Error submitting form. Please try again.');
+    }
+}
+
   

@@ -33,8 +33,8 @@ namespace ASI.Basecode.Services.ServiceModels
         public string RoomName { get; set; }
         public List<Recurrence> Recurrence { get; set; }
         public string UserName { get; set; }
-        public User User { get; set; }
-        public Room Room { get; set; }
+        public User modelUser { get; set; }
+        public Room modelRoom { get; set; }
 
         public bool BookingChangeOnly { get; set; }
         public List<DayOfTheWeek> Days { get; set; }

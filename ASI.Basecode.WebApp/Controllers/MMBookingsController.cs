@@ -58,10 +58,10 @@ namespace ASI.Basecode.WebApp.Controllers
                     model = model.Where(b => b.EndDate.Value == filter.EndDate.Value);
 
                 if (!string.IsNullOrEmpty(filter.RoomName))
-                    model = model.Where(b => b.Room.RoomName.Equals(filter.RoomName, StringComparison.OrdinalIgnoreCase));
+                    model = model.Where(b => b.modelRoom.RoomName.Equals(filter.RoomName, StringComparison.OrdinalIgnoreCase));
 
                 if (!string.IsNullOrEmpty(filter.UserName))
-                    model = model.Where(b => b.User.FirstName.Contains(filter.UserName) || b.User.LastName.Contains(filter.UserName));
+                    model = model.Where(b => b.modelUser.FirstName.Contains(filter.UserName) || b.modelUser.LastName.Contains(filter.UserName));
 
                 if (filter.BookingStatus != null)
                 {
