@@ -1,6 +1,6 @@
 ﻿/* Success Modal Styles */
 .success-modal__dialog {
-    max-width: 400px;
+    max-width: 300px;
     margin: 100px auto;
     top: -12%; /* Adjust this value to move the modal vertically */
     left: 5%;
@@ -22,6 +22,7 @@
     align-items: center;
     text-align: left;
     position: relative;
+    padding-bottom: 10px; /* Added space for the progress bar */
 }
 
 .success-modal__close {
@@ -42,8 +43,8 @@
     }
 
 .success-modal__img {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: auto;
     margin-right: 20px;
 }
 
@@ -53,14 +54,14 @@
 }
 
 .success-modal__title {
-    font-size: 24px;
+    font-size: 15px;
     font-weight: bold;
     margin: 0;
-    color: #A50000; /* Green color */
+    color: #A50000; /* Red color */
 }
 
 .success-modal__subtitle {
-    font-size: 16px;
+    font-size: 10px;
     margin: 5px 0 0 0;
     color: #6c757d; /* Grey color */
 }
@@ -78,3 +79,21 @@
     .success-modal__button:hover {
         background-color: #218838; /* Darker green */
     }
+
+/* Progress Bar Styles */
+.success-modal__progress-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #ddd;
+    border-radius: 0 0 10px 10px; /* Rounded corners at the bottom */
+}
+
+.success-modal__progress-bar {
+    height: 100%;
+    width: 100%;
+    background-color: #808080; /* Green color */
+    transition: width 0.05s linear; /* Smooth transition */
+}
