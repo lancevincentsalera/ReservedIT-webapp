@@ -1,6 +1,7 @@
 ﻿/* Import Montserrat font */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
 
+/**CSS FOR ALL USER AND CONFIRMATION (USER & ROOM) MODAL*/
 .modal-content {
     background-color: white;
     border-radius: 20px;
@@ -71,9 +72,41 @@ form .user-details .input-box input, select {
     width: 7vw;
 }
 
+#confirmationDeleteModal .btn-secondary, /**delete user*/
+#confirmationDeleteModal .btn-danger,
+#confirmationAddModal .btn-secondary, /**add user*/
+#confirmationAddModal .btn-danger,
+#confirmationEditModal .btn-secondary, /**edit user*/
+#confirmationEditModal .btn-danger,
+#confirmationRoomDeleteModal .btn-secondary, /**delete room*/
+#confirmationRoomDeleteModal .btn-danger,
+#confirmationRoomEditModal .btn-secondary, /**edit room*/
+#confirmationRoomEditModal .btn-danger {
+    width: 5vw;
+}
+
+
 .btn-custom {
     background-color: #B5838E;
     color: white;
+}
+
+.btn-custom:hover {
+    background-color: #775965 !important;
+    color: white;
+    text-decoration: none;
+}
+
+.btn-danger:hover {
+    background-color: #ab0c0c;
+    color: white;
+    text-decoration: none;
+}
+
+.btn-secondary:hover {
+    background-color: #3c3b3b;
+    color: white;
+    text-decoration: none;
 }
 
 .modal-footer {

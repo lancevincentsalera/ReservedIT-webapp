@@ -155,3 +155,15 @@ Q
     background-color: #B5838E;
     color: white;
 }
+
+.btn-custom:hover {
+    background-color: #775965 !important;
+    color: white;
+    text-decoration: none;
+}
+
+.btn-danger:hover {
+    background-color: #ab0c0c;
+    color: white;
+    text-decoration: none;
+}

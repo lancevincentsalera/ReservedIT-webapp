@@ -104,7 +104,7 @@
             </div>
 
             <div class="save-button">
-                <button type="button" class="btn btn-custom" onclick="sendData()">Save Changes</button>
+                <button type="button" class="btn btn-custom" id="saveChangesBtn" onclick="sendData()">Save Changes</button>
             </div>
         </div>
     </div>
@@ -114,6 +114,9 @@
     <script>
 
         function sendData() {
+            const button = document.getElementById('saveChangesBtn');
+            button.disabled = true; //Disable button until form submission is completed
+
             const bookingSuccessChecked = document.getElementById('booking-success-checkbox').checked ? 1 : 0;
             const bookingStatusChangeChecked = document.getElementById('booking-status-change-checkbox').checked ? 1 : 0;
             const bookingReminderSeconds = parseInt(calculateTotalSecondsBookingReminder());
@@ -161,10 +164,12 @@
                 .then(data => {
                     console.log('Success:', data);
                     alert('Setting updated successfully!');
+                    button.disabled = false; // Re-enable the button on success
                 })
                 .catch(error => {
                     console.error('Error:', error);
                     alert('Error updating setting!');
+                    button.disabled = false; // Re-enable the button on success
                 });
 
             if (password) {

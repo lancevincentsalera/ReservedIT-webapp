@@ -363,8 +363,11 @@ const hideConfirmationModal = ( hideId, showId) => {
 
 // to submit details and do action using AJAX
 // used in the create user, edit user
-const submitForm = (modalId, formId, action, controller) => {
+const submitForm = (btnId, modalId, formId, action, controller) => {
     try {
+        //Disable button to prevent multiple clicks
+        btnId.disabled = true;
+
         let form = document.querySelector(formId);
         let formData = new FormData(form); // model binding in the controller
         
@@ -409,6 +412,9 @@ const submitForm = (modalId, formId, action, controller) => {
 const deleteModal = (btnId, modalId, action, controller) => {
 
     try {
+        //Disable button to prevent multiple clicks
+        btnId.disabled = true;
+
         let id = $(btnId).data('id');
 
         console.log(id);
