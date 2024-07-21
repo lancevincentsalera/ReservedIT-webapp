@@ -60,6 +60,14 @@
     color: #A50000; /* Red color */
 }
 
+/*Restriced Message Modal*/
+.success-modal__title2 {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0;
+    color: #28a745; /* Red color */
+}
+
 .success-modal__subtitle {
     font-size: 10px;
     margin: 5px 0 0 0;

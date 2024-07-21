@@ -53,11 +53,20 @@
     flex-direction: column;
 }
 
+/*Restriced Message Modal*/
 .success-modal__title {
     font-size: 15px;
     font-weight: bold;
     margin: 0;
     color: #A50000; /* Red color */
+}
+
+/*Edited Message Modal*/
+.success-modal__title2 {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0;
+    color: #808080; /* Red color */
 }
 
 .success-modal__subtitle {
