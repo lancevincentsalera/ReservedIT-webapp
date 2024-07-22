@@ -6232,6 +6232,7 @@ a.close.disabled {
   display: block;
   clear: both;
   content: "";
+  width: 500px;
 }
 
 .carousel-item {

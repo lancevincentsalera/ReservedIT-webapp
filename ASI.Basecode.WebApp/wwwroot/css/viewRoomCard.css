@@ -41,7 +41,12 @@
     .description-container button {
         align-self: flex-end; /* Align the button to the right side */
         margin-top: 20px; /* Space above the button, adjust as needed */
+        background: #B5838E;
     }
+        .description-container button:hover {
+            opacity: 0.75;
+            background: #B5838E;
+        }
 
 .room-info {
     display: grid;
