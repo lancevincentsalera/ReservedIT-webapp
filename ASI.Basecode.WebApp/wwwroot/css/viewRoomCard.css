@@ -22,13 +22,13 @@
     padding: 10px;
     height: 100%; /* Ensure the container takes full height of its parent */
 }
+
     .description-container h1 {
         font-size: 25px;
         margin-bottom: 20px;
     }
 
-    .description-container h5
-    {
+    .description-container h5 {
         font-size: 16px;
         font-weight: bold;
     }
@@ -43,6 +43,7 @@
         margin-top: 20px; /* Space above the button, adjust as needed */
         background: #B5838E;
     }
+
         .description-container button:hover {
             opacity: 0.75;
             background: #B5838E;
@@ -71,8 +72,8 @@
 }
 
     .room-info-item i {
-    margin-right: 10px;
-    font-size: 20px;
+        margin-right: 10px;
+        font-size: 20px;
     }
 
     .room-info-item span {
@@ -112,9 +113,9 @@
     z-index: 1050; /* Ensure it's above other content */
 }
 
-.close:hover {
-    opacity: 0.75;
-}
+    .close:hover {
+        opacity: 0.75;
+    }
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
@@ -138,7 +139,7 @@
 
 .carousel-inns {
     height: 60vh;
-    width:auto;
+    width: auto;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -1,4 +1,6 @@
-﻿@section styles {
+﻿@model ASI.Basecode.Services.ServiceModels.RoomViewModel
+
+@section styles {
     <link rel="stylesheet" href="~/css/viewRoomCard.css" />
 }
 
@@ -10,9 +12,13 @@
                     <!-- Left Column for Images -->
                     <div class="col-md-6">
                         <div id="carouselRoomImages" class="carousel slide" data-ride="carousel">
-                            <div class="carousel-inns">
-                                <!-- Images will be dynamically inserted here -->
-                                <img src="~/img/login-image.jpg" alt="Login Image">
+                            <div class="carousel-inner">
+                                @foreach (var image in Model)
+                                {
+                                    <div class="carousel-item @(Model.First() == image ? "active" : "")">
+                                        <img src="@image.GalleryUrl" class="d-block w-100" alt="@image.GalleryName">
+                                    </div>
+                                }
                             </div>
                             <a class="carousel-control-prev" href="#carouselRoomImages" role="button" data-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
