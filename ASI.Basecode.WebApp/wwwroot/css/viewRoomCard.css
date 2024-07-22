@@ -91,7 +91,7 @@
     position: absolute; /* Position the close button absolutely within the modal content */
     top: 10px; /* Adjust as needed */
     right: 10px; /* Align the button to the right side */
-    background: none;
+    background: #B5838E;
     border: none;
     font-size: 1.5rem;
     color: #000;
