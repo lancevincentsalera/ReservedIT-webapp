@@ -100,10 +100,12 @@
         // instantiate flatpickr and prevent submission on error found
         $(document).ready(function () {
             $('#createBookingForm').on('submit', function (e) {
-                if ($('#errorMessage').text().trim() !== '') {
+                if ($('#errorMessage').text().trim() !== '' ||
+                    $('#startDate').val().trim() === '' ||
+                    $('#endDate').val().trim() === '') {
                     console.log('hereeeeeeeeeeeeeeee=-=============')
                     e.preventDefault();
-                    alert('Please fix the errors before submitting the form.');
+                    alert('Please validate the input fields with correct values before submitting the form.');
                 }
             });
 

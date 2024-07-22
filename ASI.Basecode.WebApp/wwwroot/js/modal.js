@@ -316,7 +316,7 @@ const getRoomModalDetails = (btnId, modalId, action, controller) => {
             carouselInner.empty();
 
             console.log(response.RoomGallery)
-            response.RoomGallery.forEach((img, index) => {
+            response.RoomGallery.$values.forEach((img, index) => {
                 let activeClass = index === 0 ? "active" : "";
                 carouselInner.append(`
                     <div class="carousel-item ${activeClass}">
