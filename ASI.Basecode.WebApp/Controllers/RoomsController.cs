@@ -99,22 +99,27 @@ namespace ASI.Basecode.WebApp.Controllers
             var timeFrom = startDate.Value.TimeOfDay;
             var timeTo = endDate.Value.TimeOfDay;
 
-            // Validate same time conflicts
-            if (timeTo <= timeFrom)
-            {
-                return Json(new { isConflict = true, errorMessage = "Booking end time must be later than the start time." });
-            }
-
             int diff = (int) endDate.Value.Subtract(startDate.Value).TotalDays;
 
             // Validate bookings that span across midnight but are less than 24 hours
             if (endDate.Value.Date > startDate.Value.Date)
             {
-                // Calculate the total duration in hours
+                if (timeTo == timeFrom)
+                {
+                    return Json(new { isConflict = true, errorMessage = "Booking end time must be later than the start time." });
+                }
+
+                // Calculate the total duration in hours and days
                 var totalDuration = (endDate.Value - startDate.Value).TotalDays;
+                var totalDurationHours = (endDate.Value - startDate.Value).TotalHours;
+
+                if(totalDurationHours < 24 && dayOfTheWeekIds.Count > 0)
+                {
+                    return Json(new { isConflict = true, errorMessage = "The booking date range must align with the selected recurrence type." });
+                }
 
                 // Allow booking if the total duration is less than 24 hours
-                if (totalDuration > 7)
+                if (totalDuration > 7 || totalDurationHours > 24)
                 {
                     // Check if the booking aligns with the recurrence type for multi-day bookings
                     if (dayOfTheWeekIds.Count == 0)
@@ -155,6 +160,13 @@ namespace ASI.Basecode.WebApp.Controllers
                 if (dayOfTheWeekIds.Count > 0)
                 {
                     return Json(new { isConflict = true, errorMessage = "The booking date range must align with the selected recurrence type." });
+                }
+
+
+                // Validate same time conflicts
+                if (timeTo <= timeFrom)
+                {
+                    return Json(new { isConflict = true, errorMessage = "Booking end time must be later than the start time." });
                 }
             }
             else
