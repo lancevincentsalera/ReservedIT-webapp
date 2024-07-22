@@ -1,20 +1,24 @@
-﻿
-<div class="modal fade" id="viewRoomCardModal" tabindex="-1" role="dialog" aria-labelledby="createRoomModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+﻿@section styles {
+    <link rel="stylesheet" href="~/css/viewRoomCard.css" />
+}
+
+<div class="modal fade" id="viewRoomCardModal" tabindex="-1" role="dialog" aria-labelledby="viewRoomCardModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered modal-lg">
+        <div class="modal-content custom-modal-content">
             <div class="modal-body">
                 <div class="row">
                     <!-- Left Column for Images -->
                     <div class="col-md-6">
-                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <div id="carouselRoomImages" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
-                                
+                                <!-- Images will be dynamically inserted here -->
+                                <img src="~/img/login-image.jpg" alt="Login Image">
                             </div>
-                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <a class="carousel-control-prev" href="#carouselRoomImages" role="button" data-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="sr-only">Previous</span>
                             </a>
-                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <a class="carousel-control-next" href="#carouselRoomImages" role="button" data-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="sr-only">Next</span>
                             </a>
@@ -23,9 +27,27 @@
                     <!-- Right Column for Description -->
                     <div class="col-md-6">
                         <div class="description-container">
-                            <h1 data-name="RoomName"</h1>
+                            <h1 data-name="RoomName"></h1>
                             <h5>Description</h5>
                             <p data-name="Description"></p>
+                            <div class="room-info">
+                                <div class="room-info-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span data-name="Location">Location</span>
+                                    <p>12th Floor</p> @*Example of Location*@
+                                </div>
+                                <div class="room-info-item">
+                                    <i class="fas fa-users"></i>
+                                    <span data-name="Capacity">Capacity</span>
+                                    <p>23</p> @*Example of Capacity*@
+                                </div>
+                                <div class="room-info-item">
+                                    <i class="fas fa-tools"></i>
+                                    <span data-name="Equipment">Equipment</span>
+                                    <p>Projector, Whiteboard, Microphone</p> @* Example of Equipment *@
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
@@ -33,7 +55,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    // Your JavaScript can remain here if needed
-</script>
