@@ -49,7 +49,7 @@ namespace ASI.Basecode.Services.Services
 
         public void SendEmail(BookingViewModel model, string headerInfo)
         {
-            model.UserName = model.User.FirstName + " " + model.User.LastName; ;
+            model.UserName = model.modelUser.FirstName + " " + model.modelUser.LastName; ;
             var recurrencesString = "";
             if (model.Recurrence.Count() > 0)
             {
@@ -74,7 +74,7 @@ namespace ASI.Basecode.Services.Services
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
 
             MailAddress from = new MailAddress("reserveditalliance@gmail.com", "Reserved IT");
-            MailAddress to = new MailAddress(model.User.Email);
+            MailAddress to = new MailAddress(model.modelUser.Email);
 
             MailMessage message = new MailMessage(from, to);
 

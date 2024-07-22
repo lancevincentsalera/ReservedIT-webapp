@@ -1,8 +1,6 @@
-﻿@using ASI.Basecode.Services.ServiceModels
-@model IEnumerable<BookingViewModel>
+﻿@model ASI.Basecode.Services.ServiceModels.BookingViewModel
 @{
     ViewData["Title"] = "Bookings";
-    ViewBag.Rooms = ViewData["rooms"] as IEnumerable<ASI.Basecode.Services.ServiceModels.RoomViewModel>;
 }
 
 @section styles {
@@ -21,7 +19,7 @@
 
 <div class="table-container">
     <div class="user-row header">
-        <div class="user-cell">BOOKING ID</div>
+        <div class="user-cell">No.</div>
         <div class="user-cell">NAME</div>
         <div class="user-cell">ROOM</div>
         <div class="user-cell">DATE</div>
@@ -31,47 +29,48 @@
         <div class="user-cell"></div>
     </div>
     <ul class="user-list">
-        @foreach (var item in Model)
+        @foreach (var item in Model.bookingList.Select((value , i) => (value, i)))
         {
-            var timeFrom = new DateTime(item.TimeFrom.Value.Ticks).ToString("h:mm tt").ToUpper();
-            var timeTo = new DateTime(item.TimeTo.Value.Ticks).ToString("h:mm tt").ToUpper();
-            var nameColumn = $"{item.modelUser.FirstName} {item.modelUser.LastName}<br>{item.modelUser.Email}";
-            var dateColumn = $"{(item.StartDate.HasValue ? item.StartDate.Value.ToString("MMMM dd, yyyy") : string.Empty)} - {(item.EndDate.HasValue ? item.EndDate.Value.ToString("MMMM dd, yyyy") : string.Empty)}";
+            var index = item.i + 1;
+            var timeFrom = new DateTime(item.value.TimeFrom.Value.Ticks).ToString("h:mm tt").ToUpper();
+            var timeTo = new DateTime(item.value.TimeTo.Value.Ticks).ToString("h:mm tt").ToUpper();
+            var nameColumn = $"{item.value.modelUser.FirstName} {item.value.modelUser.LastName}<br>{item.value.modelUser.Email}";
+            var dateColumn = $"{(item.value.StartDate.HasValue ? item.value.StartDate.Value.ToString("MMMM dd, yyyy") : string.Empty)} - {(item.value.EndDate.HasValue ? item.value.EndDate.Value.ToString("MMMM dd, yyyy") : string.Empty)}";
             var timeColumn = $"{timeFrom}<br>{timeTo}";
             <li class="user-row">
-                <div class="user-cell" data-label="BOOKING ID">@Html.DisplayFor(modelItem => item.BookingId)</div>
+                <div class="user-cell" data-label="BOOKING ID">@index</div>
                 <div class="user-cell" data-label="NAME">@Html.Raw(nameColumn)</div>
-                <div class="user-cell" data-label="ROOM">@Html.DisplayFor(modelItem => item.modelRoom.RoomName)</div>
+                <div class="user-cell" data-label="ROOM">@Html.DisplayFor(modelItem => item.value.modelRoom.RoomName)</div>
                 <div class="user-cell" data-label="DATE">@Html.Raw(dateColumn)</div>
                 <div class="user-cell" data-label="TIME">@Html.Raw(timeColumn)</div>
                 <div class="user-cell" data-label="RECURRENCE">
-                    @if (item.Recurrence.Count() > 0)
+                    @if (item.value.Recurrence.Count() == 7)    
                     {
-                        @foreach (var recurrence in item.Recurrence)
+                        <text>Daily</text>
+                    }
+                    else if (item.value.Recurrence.Count() > 0)
+                    {
+                        @foreach (var recurrence in item.value.Recurrence)
                         {
                             if(recurrence.DayOfWeek != null)
                             {
                                 var dayName = recurrence.DayOfWeek.DayName.Substring(0, 3);
                                 @Html.DisplayFor(modelItem => dayName)
-                                if (recurrence != item.Recurrence.Last())
+                                if (recurrence != item.value.Recurrence.Last())
                                 {
                                     <text>, </text>
                                 }
                             }
                         }
                     }
-                    else if (item.Recurrence.Count() == 7)
-                    {
-                        <text>Daily</text>
-                    }
                     else
                     {
                         <text>None</text>
                     }
                 </div>
-                <div class="user-cell" data-label="STATUS"><span class="status">@Html.DisplayFor(modelItem => item.BookingStatus)</span></div>
+                <div class="user-cell" data-label="STATUS"><span class="status">@Html.DisplayFor(modelItem => item.value.BookingStatus)</span></div>
                 <div class="user-cell actions">
-                    <div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.BookingId">
+                    <div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.value.BookingId">
                         <span class="ddicon">&#8942;</span>
                     </div>
                 </div>
@@ -108,4 +107,4 @@
 </div>
 
 @Html.Partial("_BookingsConfirmationModal")
-@Html.Partial("_FilterBookingsModal")
+@Html.Partial("_FilterBookingsModal", new ASI.Basecode.Services.ServiceModels.BookingViewModel {roomList = Model.roomList})

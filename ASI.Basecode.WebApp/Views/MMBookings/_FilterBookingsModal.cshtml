@@ -1,5 +1,5 @@
 ﻿@using static ASI.Basecode.Resources.Constants.Enums;
-
+@model ASI.Basecode.Services.ServiceModels.BookingViewModel
 @{
     var bookingStatuses = Enum.GetNames(typeof(BookingStatus));
 }
@@ -30,13 +30,10 @@
                             <span class="details">Room</span>
                             <select name="RoomName" class="form-select" id="" aria-label="Select Role">
                                 <option value="">No filter</option>
-                                @if(ViewBag.Rooms != null)
+                                
+                                @foreach (var room in Model.roomList)
                                 {
-                                    IEnumerable<ASI.Basecode.Services.ServiceModels.RoomViewModel> rooms = ViewBag.Rooms as IEnumerable<ASI.Basecode.Services.ServiceModels.RoomViewModel>;
-                                    foreach (var room in rooms)
-                                    {
-                                        <option value="@room.RoomName">@room.RoomName</option>
-                                    }
+                                    <option value="@room.RoomName">@room.RoomName</option>
                                 }
                             </select>
                         </div>
