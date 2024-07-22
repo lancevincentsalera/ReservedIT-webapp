@@ -19,7 +19,7 @@
 
 <div class="table-container">
     <div class="user-row header">
-        <div class="user-cell">USER ID</div>
+        <div class="user-cell">No.</div>
         <div class="user-cell">EMAIL</div>
         <div class="user-cell">FIRST NAME</div>
         <div class="user-cell">LAST NAME</div>
@@ -28,17 +28,18 @@
         <div class="user-cell"></div>
     </div>
     <ul class="user-list">
-        @foreach (var item in users)
+        @foreach (var item in users.Select((value , i) => (value, i)))
         {
+            var index = item.i + 1;
             <li class="user-row">
-                <div class="user-cell" data-label="USER ID">@Html.DisplayFor(modelItem => item.UserId)</div>
-                <div class="user-cell" data-label="EMAIL">@Html.DisplayFor(modelItem => item.Email)</div>
-                <div class="user-cell" data-label="FIRST NAME">@Html.DisplayFor(modelItem => item.FirstName)</div>
-                <div class="user-cell" data-label="LAST NAME">@Html.DisplayFor(modelItem => item.LastName)</div>
-                <div class="user-cell" data-label="ROLE">@Html.DisplayFor(modelItem => item.RoleName)</div>
-                <div class="user-cell" data-label="STATUS"><span class="status">@Html.DisplayFor(modelItem => item.AccountStatus)</span></div>
+                <div class="user-cell" data-label="USER ID">@index</div>
+                <div class="user-cell" data-label="EMAIL">@Html.DisplayFor(modelItem => item.value.Email)</div>
+                <div class="user-cell" data-label="FIRST NAME">@Html.DisplayFor(modelItem => item.value.FirstName)</div>
+                <div class="user-cell" data-label="LAST NAME">@Html.DisplayFor(modelItem => item.value.LastName)</div>
+                <div class="user-cell" data-label="ROLE">@Html.DisplayFor(modelItem => item.value.RoleName)</div>
+                <div class="user-cell" data-label="STATUS"><span class="status">@Html.DisplayFor(modelItem => item.value.AccountStatus)</span></div>
                 <div class="user-cell actions">
-                    <div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.UserId">
+                    <div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.value.UserId">
                         <span class="ddicon">&#8942;</span>
                     </div>
                 </div>

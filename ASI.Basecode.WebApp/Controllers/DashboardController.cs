@@ -1,4 +1,4 @@
-﻿using ASI.Basecode.Data.Models;
+using ASI.Basecode.Data.Models;
 using ASI.Basecode.Services.Interfaces;
 using ASI.Basecode.Services.ServiceModels;
 using ASI.Basecode.Services.Services;
@@ -21,7 +21,7 @@ namespace ASI.Basecode.WebApp.Controllers
     {
         private readonly IBookingService _bookingService;
         private readonly IRoomService _roomService;
-
+        private readonly IEmailService _emailService;
 
 
         /// <summary>
@@ -32,13 +32,14 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <param name="configuration"></param>
         /// <param name="localizer"></param>
         /// <param name="mapper"></param>
-        public DashboardController(IRoomService roomService, IBookingService bookingService, IHttpContextAccessor httpContextAccessor,
+        public DashboardController(IEmailService emailService, IRoomService roomService, IBookingService bookingService, IHttpContextAccessor httpContextAccessor,
                               ILoggerFactory loggerFactory,
                               IConfiguration configuration,
                               IMapper mapper = null) : base(httpContextAccessor, loggerFactory, configuration, mapper)
         {
             this._bookingService = bookingService;
             this._roomService = roomService;
+            this._emailService = emailService;
         }
 
 
@@ -80,6 +81,7 @@ namespace ASI.Basecode.WebApp.Controllers
                         booking.BookingStatus = BookingStatus.CANCELLED.ToString();
                         booking.BookingChangeOnly = true;
                         _bookingService.UpdateBooking(booking);
+                        _emailService.SendEmail(_bookingService.GetBookings().ToList().Where(b => b.BookingId == booking.BookingId).FirstOrDefault(), "Your booking has been cancelled");
                         return Json(new { success = true, message = "Booking cancelled successfully!" });
                     }
                     else
@@ -146,6 +148,7 @@ namespace ASI.Basecode.WebApp.Controllers
                 model.UserId = UserId;
                 model.BookingChangeOnly = false;
                 _bookingService.UpdateBooking(model);
+                _emailService.SendEmail(_bookingService.GetBookings().ToList().Where(b => b.BookingId == model.BookingId).FirstOrDefault(), "Your booking has been edited!");
                 TempData["SuccessMessage"] = "Booking successfully updated.";
             }
             catch (InvalidDataException ex)
