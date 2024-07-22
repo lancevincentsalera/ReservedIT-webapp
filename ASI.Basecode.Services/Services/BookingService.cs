@@ -253,8 +253,8 @@ namespace ASI.Basecode.Services.Services
                 RoomName = booking.Room.RoomName,
                 Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
                 DayOfTheWeekIds = _repository.GetDayOfWeekIdsForBooking(booking.BookingId),
-                User = booking.User,
-                Room = booking.Room,
+                modelUser = booking.User,
+                modelRoom = booking.Room,
             });
         }
 
@@ -280,8 +280,11 @@ namespace ASI.Basecode.Services.Services
                 EndDate = booking.EndDate.Value,
                 TimeFrom = booking.TimeFrom,
                 TimeTo = booking.TimeTo,
+                User = booking.User,
                 RoomName = booking.Room.RoomName,
                 Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
+                modelUser = booking.User,
+                modelRoom = booking.Room,
             });
         }
 
@@ -352,7 +355,7 @@ namespace ASI.Basecode.Services.Services
                 TimeFrom = booking.TimeFrom,
                 TimeTo = booking.TimeTo,
                 RoomName = booking.Room.RoomName,
-                Room = booking.Room,
+                modelRoom = booking.Room,
                 Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
                 DayOfTheWeekIds = _repository.GetDayOfWeekIdsForBooking(booking.BookingId)
             });
@@ -368,7 +371,7 @@ namespace ASI.Basecode.Services.Services
         /// </summary>
         /// <param name="model"></param>
         /// <exception cref="InvalidDataException"></exception>
-        public void AddBooking(BookingViewModel model)
+        public int AddBooking(BookingViewModel model)
         {
             var booking = new Booking();
             if (!_repository.BookingExists(model.BookingId))
@@ -397,7 +400,7 @@ namespace ASI.Basecode.Services.Services
                     }
 
                     _repository.AddBooking(booking);
-
+                    return booking.BookingId;
                 }
                 else
                 {
@@ -439,8 +442,9 @@ namespace ASI.Basecode.Services.Services
                 _mapper.Map(booking, bookingToBeUpdated);
                 bookingToBeUpdated.UpdatedDt = DateTime.Now;
                 bookingToBeUpdated.UpdatedBy = System.Environment.UserName;
-                bookingToBeUpdated.Recurrences.Clear(); // clear the recurrences first before adding new ones if there is any
+                bookingToBeUpdated.Recurrences.Clear();
 
+                _repository.UpdateBooking(bookingToBeUpdated);
 
                 // if there are recurrences, add them to the booking
                 if (booking.DayOfTheWeekIds != null && booking.DayOfTheWeekIds.Any())
@@ -453,13 +457,12 @@ namespace ASI.Basecode.Services.Services
                             BookingId = booking.BookingId,
                         };
 
-                        bookingToBeUpdated.Recurrences.Add(recurrence);
+                        _repository.AddRecurrence(recurrence);
                     }
                 }
 
-                _repository.UpdateBooking(bookingToBeUpdated);
-
-            } else
+            } 
+            else
             {
                 // if the booking does not exist, throw an exception
                 throw new InvalidDataException("Booking does not exist!");

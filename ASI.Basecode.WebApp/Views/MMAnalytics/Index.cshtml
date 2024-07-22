@@ -139,7 +139,7 @@
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 datasets: [{
                     label: 'No. of Bookings', // Set to an empty string to remove the label
-                    data: @Html.Raw(Json.Serialize(barChartData)), // Use the data passed from the controller
+                    data: @Html.Raw(Json.Serialize(barChartData)).$values, // Use the data passed from the controller
                     borderColor: 'rgb(229, 158, 176)',
                     backgroundColor: 'rgb(229, 158, 176)',
                     borderWidth: 2,
@@ -172,6 +172,7 @@
                 }
             }
         });
+        console.log(@Html.Raw(Json.Serialize(barChartData)).$values);
 
         // Line chart configuration
         const lineChart = new Chart(ctx2, {
@@ -180,7 +181,7 @@
                 labels: daysOfMonth, // Sample numeric x-axis values
                 datasets: [{
                     label: 'No. of Daily Booking', // Set the label for the line graph
-                    data: @Html.Raw(Json.Serialize(lineChartData)), // Use the data passed from the controller
+                    data: @Html.Raw(Json.Serialize(lineChartData)).$values, // Use the data passed from the controller
                     borderColor: 'rgb(229, 158, 176)',
                     backgroundColor: 'rgb(229, 158, 176)',
                     borderWidth: 2,

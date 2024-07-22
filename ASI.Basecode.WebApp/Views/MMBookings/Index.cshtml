@@ -35,13 +35,13 @@
         {
             var timeFrom = new DateTime(item.TimeFrom.Value.Ticks).ToString("h:mm tt").ToUpper();
             var timeTo = new DateTime(item.TimeTo.Value.Ticks).ToString("h:mm tt").ToUpper();
-            var nameColumn = $"{item.User.FirstName} {item.User.LastName}<br>{item.User.Email}";
+            var nameColumn = $"{item.modelUser.FirstName} {item.modelUser.LastName}<br>{item.modelUser.Email}";
             var dateColumn = $"{(item.StartDate.HasValue ? item.StartDate.Value.ToString("MMMM dd, yyyy") : string.Empty)} - {(item.EndDate.HasValue ? item.EndDate.Value.ToString("MMMM dd, yyyy") : string.Empty)}";
             var timeColumn = $"{timeFrom}<br>{timeTo}";
             <li class="user-row">
                 <div class="user-cell" data-label="BOOKING ID">@Html.DisplayFor(modelItem => item.BookingId)</div>
                 <div class="user-cell" data-label="NAME">@Html.Raw(nameColumn)</div>
-                <div class="user-cell" data-label="ROOM">@Html.DisplayFor(modelItem => item.Room.RoomName)</div>
+                <div class="user-cell" data-label="ROOM">@Html.DisplayFor(modelItem => item.modelRoom.RoomName)</div>
                 <div class="user-cell" data-label="DATE">@Html.Raw(dateColumn)</div>
                 <div class="user-cell" data-label="TIME">@Html.Raw(timeColumn)</div>
                 <div class="user-cell" data-label="RECURRENCE">

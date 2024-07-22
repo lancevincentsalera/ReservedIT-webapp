@@ -10,7 +10,7 @@ namespace ASI.Basecode.Services.Interfaces
 {
     public interface IBookingService
     {
-        void AddBooking(BookingViewModel model);
+        int AddBooking(BookingViewModel model);
         IEnumerable<BookingViewModel> GetBookings();
         void UpdateBooking(BookingViewModel booking);
         IEnumerable<BookingViewModel> GetBookingsByUser(int userId);
