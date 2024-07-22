@@ -68,20 +68,20 @@ form .user-details .input-box input, select {
     margin-bottom: 5px;
 }
 
-.btn-danger, .btn-custom {
+.btn-close, .btn-custom {
     width: 7vw;
 }
 
 #confirmationDeleteModal .btn-secondary, /**delete user*/
-#confirmationDeleteModal .btn-danger,
+#confirmationDeleteModal .btn-close,
 #confirmationAddModal .btn-secondary, /**add user*/
-#confirmationAddModal .btn-danger,
+#confirmationAddModal .btn-close,
 #confirmationEditModal .btn-secondary, /**edit user*/
-#confirmationEditModal .btn-danger,
+#confirmationEditModal .btn-close,
 #confirmationRoomDeleteModal .btn-secondary, /**delete room*/
-#confirmationRoomDeleteModal .btn-danger,
+#confirmationRoomDeleteModal .btn-close,
 #confirmationRoomEditModal .btn-secondary, /**edit room*/
-#confirmationRoomEditModal .btn-danger {
+#confirmationRoomEditModal .btn-close {
     width: 5vw;
 }
 
@@ -97,17 +97,31 @@ form .user-details .input-box input, select {
     text-decoration: none;
 }
 
-.btn-danger:hover {
-    background-color: #ab0c0c;
-    color: white;
-    text-decoration: none;
+.btn-close{
+    color: black;
+    border-color: #474646;
+   
 }
 
-.btn-secondary:hover {
-    background-color: #3c3b3b;
+    .btn-close:hover {
+        background-color: #ab0c0c;
+        border-color: #ab0c0c;
+        color: white;
+        text-decoration: none;
+    }
+
+.btn-secondary {
+    background-color: #B5838E;
+    border-color: #B5838E;
     color: white;
-    text-decoration: none;
 }
+
+    .btn-secondary:hover {
+        background-color: #775965 !important;
+        border-color: #775965 !important;
+        color: white;
+        text-decoration: none;
+    }
 
 .modal-footer {
     border-top: none;

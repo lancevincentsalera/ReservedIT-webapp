@@ -25,6 +25,9 @@ Q
     .modal-body form .secondHalf {
         flex: 1;
     }
+    .modal-body form .secondHalf{
+        margin-top: 25px !important;
+    }
 
     .modal-body form .uploadPhoto {
         display: flex;
@@ -147,13 +150,17 @@ Q
     gap: 15px;
 }
 
-.btn-danger, .btn-custom {
+.btn-close, .btn-custom {
     width: 7vw;
 }
 
 .btn-custom {
     background-color: #B5838E;
     color: white;
+}
+.btn-close{
+    color: black;
+    border-color: black;
 }
 
 .btn-custom:hover {
@@ -162,7 +169,7 @@ Q
     text-decoration: none;
 }
 
-.btn-danger:hover {
+.btn-close:hover {
     background-color: #ab0c0c;
     color: white;
     text-decoration: none;
