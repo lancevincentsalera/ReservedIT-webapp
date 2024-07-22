@@ -99,17 +99,51 @@ namespace ASI.Basecode.WebApp.Controllers
             var timeFrom = startDate.Value.TimeOfDay;
             var timeTo = endDate.Value.TimeOfDay;
 
+            // Validate same time conflicts
+            if (timeTo <= timeFrom)
+            {
+                return Json(new { isConflict = true, errorMessage = "Booking end time must be later than the start time." });
+            }
+
+            int diff = (int) endDate.Value.Subtract(startDate.Value).TotalDays;
+
             // Validate bookings that span across midnight but are less than 24 hours
             if (endDate.Value.Date > startDate.Value.Date)
             {
                 // Calculate the total duration in hours
-                var totalDuration = (endDate.Value - startDate.Value).TotalHours;
+                var totalDuration = (endDate.Value - startDate.Value).TotalDays;
 
                 // Allow booking if the total duration is less than 24 hours
-                if (totalDuration > 24)
+                if (totalDuration > 7)
                 {
                     // Check if the booking aligns with the recurrence type for multi-day bookings
                     if (dayOfTheWeekIds.Count == 0)
+                    {
+                        return Json(new { isConflict = true, errorMessage = "The booking date range must align with the selected recurrence type." });
+                    }
+                }
+                else if ((totalDuration > 1 && totalDuration <= 7))
+                {
+                    if(dayOfTheWeekIds.Count >0)
+                    {
+                        int start = (int)startDate.Value.DayOfWeek + 1;
+                        int end = (int)endDate.Value.DayOfWeek + 1;
+                        if (start < end)
+                        {
+                            if (dayOfTheWeekIds.Any(d => d < start || d > end))
+                            {
+                                return Json(new { isConflict = true, errorMessage = "The selected days of the week are outside the range of the start and end dates." });
+                            }
+                        } 
+                        else if(start > end)
+                        {
+                            if(dayOfTheWeekIds.Any( d => d < start && d > end))
+                            {
+                                return Json(new { isConflict = true, errorMessage = "Txxxxxxhe selected days of the week are outside the range of the start and end dates." });
+                            }
+                        } 
+                    }
+                    else
                     {
                         return Json(new { isConflict = true, errorMessage = "The booking date range must align with the selected recurrence type." });
                     }
@@ -121,12 +155,6 @@ namespace ASI.Basecode.WebApp.Controllers
                 if (dayOfTheWeekIds.Count > 0)
                 {
                     return Json(new { isConflict = true, errorMessage = "The booking date range must align with the selected recurrence type." });
-                }
-
-                // Validate time conflicts within the same day
-                if (timeTo <= timeFrom)
-                {
-                    return Json(new { isConflict = true, errorMessage = "Booking end time must be later than the start time." });
                 }
             }
             else

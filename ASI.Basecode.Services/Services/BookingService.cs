@@ -280,9 +280,9 @@ namespace ASI.Basecode.Services.Services
                 EndDate = booking.EndDate.Value,
                 TimeFrom = booking.TimeFrom,
                 TimeTo = booking.TimeTo,
-                User = booking.User,
                 RoomName = booking.Room.RoomName,
                 Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
+                DayOfTheWeekIds = _repository.GetDayOfWeekIdsForBooking(booking.BookingId),
                 modelUser = booking.User,
                 modelRoom = booking.Room,
             });

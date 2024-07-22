@@ -36,8 +36,12 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            var model = _bookingService.GetBookings();
-            ViewData["rooms"] = _roomService.RetrieveAll();
+            var data = _bookingService.GetBookings();
+            var model = new BookingViewModel
+            {
+                bookingList = data,
+                roomList = _roomService.RetrieveAll()
+            };
             return View(model);
         }
         #endregion
