@@ -81,6 +81,13 @@
         font-weight: bold;
     }
 
+    .room-info-item p {
+        margin-right: 10px;
+        font-size: 10px;
+        justify-items: center; /* Center horizontally within each grid cell */
+        text-align: center; /* Center text within each grid cell */
+    }
+
 .modal-footer {
     display: flex;
     justify-content: flex-end;
@@ -105,8 +112,6 @@
     z-index: 1050; /* Ensure it's above other content */
 }
 
-
-
 .close:hover {
     opacity: 0.75;
 }
@@ -123,10 +128,25 @@
 
 .carousel-control-prev .sr-only,
 .carousel-control-next .sr-only {
-    color: #000000; /* Change this to your desired color for screen readers text */
+    color: #FFFFFF; /* Change this to your desired color for screen readers text */
 }
 
 .carousel-control-prev,
 .carousel-control-next {
-    margin-top: 180px; /* Adjust this value as needed to move the controls down */
+    margin-top: 0px; /* Adjust this value as needed to move the controls down */
 }
+
+.carousel-inns {
+    height: 60vh;
+    width:auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .carousel-inns img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+    }
