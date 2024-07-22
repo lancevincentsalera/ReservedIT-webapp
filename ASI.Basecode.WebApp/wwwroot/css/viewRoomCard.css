@@ -1,36 +1,36 @@
 ﻿.custom-modal-dialog {
     position: fixed;
     right: 15px;
-    top: 50%;
     transform: translateY(-50%);
 }
 
-.custom-modal-content {
+.modal-content {
     max-width: 800px;
-    left: 60%;
+    left: 30%;
 }
 
 .modal-image {
     max-width: 100%;
-    height: auto;
+    height: 65vh;
+    object-fit: cover; /* or object-fit: contain; based on your preference */
+    border-radius: 10px;
 }
 
 .description-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Space between items */
     padding: 10px;
     height: 100%; /* Ensure the container takes full height of its parent */
 }
 
     .description-container h1 {
         font-size: 25px;
-        margin-bottom: 20px;
     }
 
     .description-container h5 {
         font-size: 16px;
         font-weight: bold;
+        margin-top: 30px;
     }
 
     .description-container p {
@@ -39,9 +39,13 @@
     }
 
     .description-container button {
-        align-self: flex-end; /* Align the button to the right side */
-        margin-top: 20px; /* Space above the button, adjust as needed */
+        position: absolute; /* Position the button absolutely within the container */
+        bottom: 10px; /* Adjust as needed */
+        right: 10px; /* Align the button to the right side */
         background: #B5838E;
+        padding: 10px;
+        font-size: 13px;
+        font-weight: normal;
     }
 
         .description-container button:hover {
@@ -53,8 +57,8 @@
     display: grid;
     grid-template-columns: 1fr 1fr; /* 2 columns */
     grid-template-rows: auto auto; /* 2 rows */
-    gap: 20px; /* Space between items */
-    margin-top: 20px;
+    gap: 15px; /* Space between items */
+    margin-top: 10px;
 }
 
 .room-info-item {
@@ -64,11 +68,12 @@
     align-items: center;
     justify-items: center; /* Center horizontally within each grid cell */
     text-align: center; /* Center text within each grid cell */
-    margin-bottom: 15px;
     border: 2px solid #CACACA;
     height: 80px;
     border-radius: 10px;
     padding: 5px; /* Optional: Add padding if needed */
+    margin-top:20px;
+    gap:0px;
 }
 
     .room-info-item i {
@@ -97,25 +102,12 @@
 
 .btn-secondary {
     background-color: #6c757d;
-    color: #fff;
-}
-
-.close {
-    position: absolute; /* Position the close button absolutely within the modal content */
-    top: 10px; /* Adjust as needed */
-    right: 10px; /* Align the button to the right side */
-    background: #B5838E;
+    color: white;
+    padding: 20px;
     border: none;
-    font-size: 1.5rem;
-    color: #000;
-    opacity: 0.5;
-    cursor: pointer;
-    z-index: 1050; /* Ensure it's above other content */
+    border-radius: 5px;
+    width: 80px;
 }
-
-    .close:hover {
-        opacity: 0.75;
-    }
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
