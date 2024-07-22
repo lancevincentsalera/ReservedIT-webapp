@@ -282,6 +282,8 @@ namespace ASI.Basecode.Services.Services
                 TimeTo = booking.TimeTo,
                 RoomName = booking.Room.RoomName,
                 Recurrence = _repository.GetBookingRecurrence(booking.BookingId).ToList(),
+                modelUser = booking.User,
+                modelRoom = booking.Room,
             });
         }
 

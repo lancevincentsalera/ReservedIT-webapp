@@ -79,7 +79,8 @@ namespace ASI.Basecode.WebApp.Controllers
                     {
                         booking.BookingStatus = BookingStatus.CANCELLED.ToString();
                         booking.BookingChangeOnly = true;
-                        _bookingService.UpdateBooking(booking);
+                        booking.DayOfTheWeekIds = booking.Recurrence.Select(b => b.DayOfWeekId ?? -1).ToList();
+                        _bookingService.UpdateBooking(booking); 
                         return Json(new { success = true, message = "Booking cancelled successfully!" });
                     }
                     else
