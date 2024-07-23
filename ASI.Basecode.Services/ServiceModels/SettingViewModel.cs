@@ -17,13 +17,12 @@ namespace ASI.Basecode.Services.ServiceModels
         public int? BookingReminder { get; set; }
         public int? BookingDuration { get; set; }
         public virtual User User { get; set; }
-    }
-    public class UserPasswordViewModel
-    {
-        public int? UserId { get; set; }
         [DataType(DataType.Password)]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$",
         ErrorMessage = "Password must contain at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 8 characters long.")]
         public string Password { get; set; }
+        [Required(ErrorMessage = "Confirmation Password is required.")]
+        [Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
+        public string ConfirmPassword { get; set; }
     }
 }

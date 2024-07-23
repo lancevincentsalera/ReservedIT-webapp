@@ -97,16 +97,18 @@ namespace ASI.Basecode.WebApp.Controllers
         {
             try
             {
-                model.User = _userService.GetUser(model.UserId.GetValueOrDefault());
+                var modelCopy = _settingService.GetSetting(model.UserId.GetValueOrDefault());
                 _settingService.Update(model);
                 return Json(new { success = true, message = "Setting updated successfully!" });
             }
             catch (InvalidDataException ex)
             {
+                TempData["ErrorMessage"] = ex.Message;
                 return Json(new { success = false, message = ex.Message });
             }
             catch (Exception ex)
             {
+                TempData["ErrorMessage"] = Resources.Messages.Errors.ServerError;
                 return Json(new { success = false, message = Resources.Messages.Errors.ServerError });
             }
         }
@@ -117,25 +119,34 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <param name="model">The model.</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult EditUserPassword([FromBody] UserPasswordViewModel model)
+        public IActionResult EditUserPassword(SettingViewModel model)
         {
 
             try
             {
                 var user = _userService.GetUser(model.UserId.GetValueOrDefault());
-                user.Password = PasswordManager.EncryptPassword(model.Password);
-                _userService.UpdateUser(user);
+                model.Password = PasswordManager.EncryptPassword(model.Password);
 
-                return Json(new { success = true, message = "User updated successfully!" });
+                if (_userService.GetUser(model.UserId.GetValueOrDefault()).Password != model.Password)
+                {
+                    user.Password = model.Password;
+                    _userService.UpdateUser(user);
+                    TempData["SuccessMessage"] = "User password updated successfully!";
+                }
+                else if (_userService.GetUser(model.UserId.GetValueOrDefault()).Password == model.Password)
+                {
+                    TempData["ErrorMessage"] = "User password update failed! Set password is current password.";
+                }
             }
             catch (InvalidDataException ex)
             {
-                return Json(new { success = false, message = ex.Message });
+                TempData["ErrorMessage"] = ex.Message;
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = Resources.Messages.Errors.ServerError });
+                TempData["ErrorMessage"] = Resources.Messages.Errors.ServerError;
             }
+            return RedirectToAction("Index");
         }
 
     }
