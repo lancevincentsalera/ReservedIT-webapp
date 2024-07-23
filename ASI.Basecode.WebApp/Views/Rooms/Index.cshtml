@@ -6,8 +6,8 @@
 
 @section styles {
     <link rel="stylesheet" href="~/css/roomsCard.css" />
-    <link rel="stylesheet" href="~/css/bookingModal.css" />
     <link rel="stylesheet" href="~/css/viewRoomCard.css" />
+    <link rel="stylesheet" href="~/css/bookingModal.css" />
 }
 
 <div class="room-header">
@@ -57,6 +57,7 @@
 
 @Html.Partial("_ViewRoomCardModal")
 @Html.Partial("_CreateBookingModal", Model.BookingViewModel)
+
 @section scripts {
     <script>
         $('.book-button').click(function() {

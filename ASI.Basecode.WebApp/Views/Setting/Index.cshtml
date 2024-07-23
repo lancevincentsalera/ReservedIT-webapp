@@ -19,26 +19,49 @@
             <div class="basic-information">
                 <h2>Basic Information</h2>
                 <div class="profile-picture">
-                    <img src="~/img/default-profile.png" alt="Profile Picture">
+                    <img class="picture" src="~/img/default-profile.png" alt="Profile Picture">
                     @* <button class="edit-picture-btn">Edit</button> *@
                     <h5>@HttpContextAccessor.HttpContext.Session.GetString("UserName")</h5>
-                    <h6>@Html.DisplayFor(model => model.User.Role.RoleName)</h6>
+
                 </div>
-                <div class="form-outline mb-4">
-                    <label class="form-label" for="full-name">Full Name</label>
-                    <input class="form-control" type="text" id="full-name" value="@HttpContextAccessor.HttpContext.Session.GetString("UserName")" disabled>
-                </div>
-                <div class="form-outline mb-4">
-                    <label class="form-label" for="email">Email</label>
-                    <input class="form-control" type="email" id="email" value="@Html.DisplayFor(model => model.User.Email)" disabled>
-                </div>
-                <div class="form-outline mb-4">
-                    <label class="form-label" for="role">Role</label>
-                    <input class="form-control" type="text" id="role" value="@Html.DisplayFor(model => model.User.Role.RoleName)" disabled>
-                </div>
-                <div class="form-outline mb-4">
-                    <label class="form-label" for="password">Password</label>
-                    <input class="form-control" type="password" id="password">
+                <div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="full-name">Full Name</label>
+                        <input class="form-control" type="text" id="full-name" value="@HttpContextAccessor.HttpContext.Session.GetString("UserName")" disabled>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="email">Email</label>
+                        <input class="form-control" type="email" id="email" value="@Html.DisplayFor(model => model.User.Email)" disabled>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="role">Role</label>
+                        <input class="form-control" type="text" id="role" value="@(Model.User.Role.RoleName.Substring(5, 1).ToUpper() + Model.User.Role.RoleName.Substring(6).ToLower())" disabled>
+                    </div>
+                    <form asp-action="EditUserPassword" method="post" id="user-password-form">
+                        <input asp-for="UserId" name="UserId" id="UserId" type="text" value=@Model.UserId hidden>
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="Password">Change Password</label>
+                            <div class="password-container">
+                                <input type="password" id="passwordInput" class="form-control"
+                                       asp-for="Password" placeholder="Enter password" />
+                                <span class="input-group-text toggle-password" onclick="togglePasswordVisibility('passwordInput', this)">
+                                    <img class="toggle-pic" src="@Url.Content("~/img/eye.svg")" />
+                                </span>
+                            </div>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="ConfirmPassword">Confirm Password</label>
+                            <div class="password-container">
+                                <input type="password" id="confirmPasswordInput" class="form-control"
+                                       asp-for="ConfirmPassword" placeholder="Enter password" />
+                                <span class="input-group-text toggle-password" onclick="togglePasswordVisibility('confirmPasswordInput', this)">
+                                    <img class="toggle-pic" src="@Url.Content("~/img/eye.svg")" />
+                                </span>
+                            </div>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -70,10 +93,10 @@
                 </div>
 
                 <div class="notification-option">
-                    <h5 for="booking-reminder" aria-labelledby="booking-reminder">
+                    <h5 for="booking-reminder" aria-labelledby="booking-reminder" id="set-reminders">
                         Set Reminders
                     </h5>
-                    <h6>Set reminders prior to a booking</h6>
+                    <h6 id="set-reminders-description">Set email reminders before your booking</h6>
                     <select id="booking-reminder" onchange="handleReminderChange()">
                         <option value=0 id="booking-reminder-none" selected>None</option>
                         <option value=900 id="booking-reminder-15-mins" selected>15 mins</option>
@@ -89,23 +112,26 @@
             </div>
 
 
-            <div class="booking-references">
-                <h2>Booking References</h2>
+            <div class="booking-preferences">
+                <h2>Booking Preferences</h2>
                 <div class="notification-option">
-                    <h5 for="booking-duration" aria-labelledby="booking-duration">
+                    <h5 for="booking-duration" aria-labelledby="booking-duration" id="duration">
                         Duration
                     </h5>
-                    <h6>Set default booking duration</h6>
-                    <div id="booking-duration-time">
-                        <input type="number" id="hours" min=0 max=8 value="" oninput="limitTime(this)"> Hours
-                        <input type="number" id="minutes" min=0 max=59 value=0 oninput="limitTime(this)"> Minutes
+                    <h6 id="duration-description">Set default booking duration</h6>
+                    <div class="booking-duration">
+                        <div id="booking-duration-time">
+                            <input type="number" id="hours" min=0 max=8 value="" oninput="limitTime(this)"> Hours
+                            <input type="number" id="minutes" min=0 max=59 value=0 oninput="limitTime(this)"> Minutes
+                        </div>
+                    </div>
+                    <div class="save-button">
+                        <button type="button" class="btn btn-custom" onclick="sendData()">Save Changes</button>
                     </div>
                 </div>
             </div>
 
-            <div class="save-button">
-                <button type="button" class="btn btn-custom" onclick="sendData()">Save Changes</button>
-            </div>
+
         </div>
     </div>
 </div>
@@ -118,7 +144,9 @@
             const bookingStatusChangeChecked = document.getElementById('booking-status-change-checkbox').checked ? 1 : 0;
             const bookingReminderSeconds = parseInt(calculateTotalSecondsBookingReminder());
             const bookingDurationSeconds = parseInt(calculateTotalSecondsBookingDuration());
-            const password = document.getElementById('password').value.trim();
+            const password = document.getElementById('passwordInput').value.trim();
+            const confirmPassword = document.getElementById('confirmPasswordInput').value.trim();
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/;
 
             function calculateTotalSecondsBookingReminder() {
                 const selectElement = document.getElementById('booking-reminder');
@@ -141,6 +169,21 @@
                 return totalSeconds;
             }
 
+            function areValuesEqual(obj1, obj2) {
+                const keys1 = Object.keys(obj1);
+                const keys2 = Object.keys(obj2);
+
+                if (keys1.length !== keys2.length) return false; // Different number of properties
+
+                for (let key of keys1) {
+                    if (obj1[key] !== obj2[key]) {
+                        return false; // Values differ
+                    }
+                }
+
+                return true; // All values are equal
+            }
+
             const data = {
                 SettingId: @Model.SettingId,
                 UserId: @Model.UserId,
@@ -150,45 +193,48 @@
                 BookingDuration: bookingDurationSeconds
             };
 
-            fetch(`/Setting/EditSetting/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
-                    alert('Setting updated successfully!');
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Error updating setting!');
-                });
+            const modelData = {
+                SettingId: @Model.SettingId,
+                UserId: @Model.UserId,
+                BookingSuccess: @Model.BookingSuccess,
+                BookingStatusChange: @Model.BookingStatusChange,
+                BookingReminder: @Model.BookingReminder,
+                BookingDuration: @Model.BookingDuration
+                                                            };
 
-            if (password) {
-                const passwordData = {
-                    UserId: @Model.UserId,
-                    Password: password
-                };
-
-                fetch(`/Setting/EditUserPassword/`, {
+            if (!areValuesEqual(data, modelData)) {  // Check if user changed settings before saving
+                fetch(`/Setting/EditSetting/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(passwordData)
+                    body: JSON.stringify(data)
                 })
                     .then(response => response.json())
                     .then(data => {
-                        console.log('Password Success:', data);
-                        alert('Password updated successfully!');
+                        console.log('Success:', data);
+                        toastr.success('Setting updated successfully!');
+                        setTimeout(function () {
+                            location.reload(true);
+                        }, 1500);
                     })
                     .catch(error => {
-                        console.error('Password Error:', error);
-                        document.getElementById('password-validation').innerText = error.message || 'Error updating password!';
+                        console.error('Error:', error);
+                        toastr.error('Error updating setting: ' + String(error));
                     });
+            } else if (areValuesEqual(data, modelData)) {
+                toastr.error('Error updating setting: No changes detected!');
+            }
+
+            if (password && confirmPassword) { // Password Validation
+                if (password != confirmPassword)
+                    toastr.error("Password must match!");
+                else if (password == confirmPassword) {
+                    if (!passwordRegex.test(password))
+                        toastr.error("Password must contain at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 8 characters long.");
+                    else if (passwordRegex.test(password))
+                        document.getElementById("user-password-form").submit();
+                }
             }
         }
 

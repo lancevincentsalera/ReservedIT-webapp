@@ -1,0 +1,45 @@
+﻿.login-error-modal__content {
+    display: block; /* Override flex properties to maintain size */
+    width: 450px; /* Ensure modal retains its size */
+    max-width: 600px; /* Adjust max-width as needed */
+}
+
+.login-error-modal__header {
+    border-bottom: none;
+}
+
+.login-error-modal__body {
+    font-size: 1.2em;
+    text-align: left;
+}
+
+.login-error-modal__title {
+    color: #775965;
+}
+
+.login-error-modal__footer {
+    border-top: none;
+}
+
+.login-error-modal__button.btn-primary {
+    background-color: #775965;
+    border-color: #775965;
+}
+
+    .login-error-modal__button.btn-primary:hover,
+    .login-error-modal__button.btn-primary:focus {
+        background-color: #B5838E;
+    }
+
+.close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+}
+
+.login-error-modal__dialog {
+    top: 35%; /* Adjust this value to move the modal vertically */
+    left: 55%;
+    transform: translate(-55%, -35%); /* Adjust the second value to match the 'top' percentage */
+    position: absolute;
+}

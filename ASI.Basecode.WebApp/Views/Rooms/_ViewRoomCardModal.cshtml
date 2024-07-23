@@ -1,4 +1,9 @@
-﻿
+﻿@model ASI.Basecode.Services.ServiceModels.RoomViewModel
+
+@section styles {
+    <link rel="stylesheet" href="~/css/viewRoomCard.css" />
+}
+
 <div class="modal fade" id="viewRoomCardModal" tabindex="-1" role="dialog" aria-labelledby="createRoomModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -8,7 +13,7 @@
                     <div class="col-md-6">
                         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
-                                
+                                <!-- Add your dynamic carousel items here -->
                             </div>
                             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -23,9 +28,28 @@
                     <!-- Right Column for Description -->
                     <div class="col-md-6">
                         <div class="description-container">
-                            <h1 data-name="RoomName"</h1>
+                            <h1 data-name="RoomName"></h1>
                             <h5>Description</h5>
                             <p data-name="Description"></p>
+                            <!-- Room Info Section -->
+                            <div class="room-info">
+                                <div class="room-info-item">
+                                    <i class="fa fa-map-marker"></i>
+                                    <span>Location</span>
+                                    <p data-name="Location"></p>
+                                </div>
+                                <div class="room-info-item">
+                                    <i class="fa fa-users"></i>
+                                    <span>Capacity</span>
+                                    <p data-name="Capacity"></p>
+                                </div>
+                                <div class="room-info-item">
+                                    <i class="fa fa-cog"></i>
+                                    <span>Equipment</span>
+                                    <p data-name="Equipments"></p>
+                                </div>
+                                <button class="btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>

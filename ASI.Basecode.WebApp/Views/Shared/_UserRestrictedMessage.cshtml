@@ -1,0 +1,42 @@
+﻿<div class="modal fade success-modal" id="userMessagesRestrictedModal" tabindex="-1" role="dialog" aria-labelledby="userMessagesRestrictedModalLabel" aria-hidden="true">
+    <div class="modal-dialog success-modal__dialog" role="document">
+        <div class="modal-content success-modal__content">
+            <div class="modal-body success-modal__body">
+                <img src="~/img/Restricted.png" alt="Restricted Image" class="success-modal__img">
+                <div class="success-modal__text">
+                    <h1 class="success-modal__title">Restricted</h1>
+                    <h2 class="success-modal__subtitle">User has been Restricted.</h2>
+                </div>
+                <div class="success-modal__progress-container">
+                    <div class="success-modal__progress-bar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById('userMessagesRestrictedModal');
+        const progressBar = document.querySelector('.success-modal__progress-bar');
+
+        if (modal) {
+            const duration = 3000; // 3 seconds
+            let startTime = Date.now();
+
+            const updateProgress = () => {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.max(0, duration - elapsed);
+                progressBar.style.width = (progress / duration * 100) + '%';
+                if (progress <= 0) {
+                    $(modal).modal('hide');
+                    clearInterval(interval);
+                }
+            };
+
+            const interval = setInterval(updateProgress, 50);
+
+            $(modal).modal('show');
+        }
+    });
+</script>

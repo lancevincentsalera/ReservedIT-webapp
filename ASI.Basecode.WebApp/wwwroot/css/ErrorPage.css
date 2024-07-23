@@ -1,0 +1,123 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #FFF2EA;
+}
+
+.Body-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full height */
+}
+
+.Error-Container {
+    flex: 1;
+    max-width: 50%; /* Ensures it doesn't exceed half of the container's width */
+    padding: 0 20px;
+}
+
+    .Error-Container h1,
+    .Error-Container h2,
+    .Error-Container h3,
+    .Error-Container p {
+        margin: 0;
+        padding: 0;
+        text-align: left;
+        margin-left: 170px;
+    }
+
+    .Error-Container h1 {
+        font-size: 225px;
+        color: #775965;
+        margin-bottom: 0; /* Reduce bottom margin */
+        line-height: 1; /* Adjust line height */
+    }
+
+    .Error-Container h2 {
+        font-size: 50px;
+        color: black;
+    }
+
+    .Error-Container h3 {
+        font-size: 50px;
+        color: #000000;
+    }
+
+    .Error-Container p {
+        font-size: 20px;
+        color: #000000;
+        margin-bottom: 20px;
+        max-width: 70%;
+    }
+
+.gohome-btn {
+    padding: 15px 30px;
+    border-radius: 10px;
+    border: none;
+    background-color: #B5838E;
+    color: white;
+    font-size: 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-left: 300px;
+}
+
+.Image-Error-Container {
+    flex: 1;
+    padding: 20px;
+    max-width: 50%; /* Ensures it doesn't exceed half of the container's width */
+    text-align: center;
+}
+
+    .Image-Error-Container img {
+        max-width: 80%;
+        height: auto;
+    }
+
+@media (max-width: 768px) {
+    .Body-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .Error-Container,
+    .Image-Error-Container {
+        max-width: 100%;
+        padding: 10px;
+    }
+
+        .Error-Container h1 {
+            font-size: 120px;
+        }
+
+        .Error-Container h2 {
+            font-size: 40px;
+        }
+
+        .Error-Container h3 {
+            font-size: 30px;
+        }
+
+        .Error-Container p {
+            font-size: 30px;
+        }
+
+        .Image-Error-Container img {
+            width: 100%; /* Ensures the image takes the full width in smaller screens */
+        }
+
+    .gohome-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+.header{
+    display:none;
+}
+}

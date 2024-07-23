@@ -3,10 +3,11 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    display: flex;
+    display: inline;
     justify-content: center;
     align-items: center;
     background: #FFF2EA;
+    overflow:hidden;
 }
 
 .card-container {
@@ -79,8 +80,6 @@ form {
         color: #555;
     }
 
-
-
 label {
     margin-top: 10px;
     margin-bottom: 5px;
@@ -88,23 +87,19 @@ label {
     justify-items: center;
 }
 
-
-
-
 .login-btn {
     padding: 10px 10px 7px 10px; /*top, right, bottom, left*/
-    background-color: #775965;
+    background-color: #B5838E;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s;
-    margin-top: 60px;
+    margin-top: 55px;
 }
 
     .login-btn:hover {
-        background-color: #B69198;
+        background-color: #775965;
     }
 
 .contact-info {
@@ -123,6 +118,28 @@ label {
             text-decoration: underline;
         }
 
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-container .form-control {
+    padding-right: 2.5rem; /* Ensure there's space for the eye icon */
+}
+
+.password-container .toggle-password {
+    position: absolute;
+    right: 0.75rem; /* Adjust based on your design */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.password-container .toggle-pic {
+    width: 1.5rem; /* Adjust based on your design */
+    height: auto;
+}
 @media (max-width: 768px) {
     .card-container {
         flex-direction: column;

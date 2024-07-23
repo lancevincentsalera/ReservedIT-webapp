@@ -109,6 +109,31 @@
     text-align: right;
 }
 
+/*@media (max-width: 1520px) {
+    .bookings > div {
+        font-size: .6rem !important;
+    }
+}*/
+
+@media screen and (max-width: 1366px) {
+
+    .table-header {
+        padding: .5rem 0rem;
+    }
+
+    .table-header-cell {
+        font-size: .8rem;
+    }
+
+    .bookings > div {
+        font-size: .6rem;
+    }
+}
+
+[class^="color-"] {
+    /* CSS styles */
+}
+
 /*    .bookings > div:nth-child(n+30) {
         display: none;
     }*/
