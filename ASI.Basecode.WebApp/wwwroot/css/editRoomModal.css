@@ -1,5 +1,5 @@
 ﻿/* Apply a more specific selector or use !important to override Bootstrap defaults */
-#createRoomModal .modal-dialog {
+#editRoomModal .modal-dialog {
     max-width: 45vw !important;
 }
 
@@ -13,6 +13,7 @@
     justify-content: space-between;
     gap: 20px;
 }
+
 Q
 
 .modal-body form {
@@ -20,17 +21,17 @@ Q
     justify-content: space-between;
 }
 
-    .modal-body form .firstHalf,
-    .modal-body form .secondHalf {
-        flex: 1;
-    }
+.modal-body form .firstHalf,
+.modal-body form .secondHalf {
+    flex: 1;
+}
 
-    .modal-body form .uploadPhoto {
-        display: flex;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-        gap: 20px;
-    }
+.modal-body form .uploadPhoto {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 20px;
+}
 
 .modal-body .form-group {
     margin-bottom: 15px;
@@ -57,9 +58,9 @@ Q
 /* Styles for the image container */
 .image-container {
     position: relative;
-    display: ;
-    width:100%;
-    height:-webkit-fill-available;
+    display:;
+    width: 100%;
+    height: -webkit-fill-available;
 }
 
 .delete-button {
@@ -109,20 +110,19 @@ Q
     display: none;
 }
 
-        .custom-file-upload .upload-label {
-            cursor: pointer;
-            display: flex;
-         
-            justify-content: center;
-            align-items: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #eee;
-            border: 1px solid #ccc;
-        }
+.custom-file-upload .upload-label {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #eee;
+    border: 1px solid #ccc;
+}
 
-.custom-file-upload .upload-icon {
+.custom-file-upload .upload-icon1 {
     position: absolute;
     z-index: 999;
     border-radius: 20px;
@@ -133,7 +133,7 @@ Q
     background-color: #f8f8f8;
 }
 
-    .custom-file-upload .upload-icon i.fa {
+    .custom-file-upload .upload-icon1 i.fa {
         font-size: 15px;
     }
 

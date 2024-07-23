@@ -88,20 +88,7 @@ const getRoomDetails = (btnId, modalId, action, controller) => {
         success: (response) => {
             console.log(response);
             for (let key in response) {
-                if (key === 'RoleId') {
-                    $(`${modalId} select[name="RoleId"] option`).each((index, element) => {
-                        let $option = $(element);
-                        if ($option.val() === ('' + response[key])) {
-                            console.log("val", typeof $option.val(), "vs", typeof ('' + response[key]));
-                            $option.prop('selected', true);
-                        } else {
-                            $option.prop('selected', false);
-                        }
-                    })
-                } else {
-                    $(`${modalId} input[name="${key}"], ${modalId} textarea[name="${key}"]`).val(response[key]);
-                }
-
+                $(`${modalId} input[name="${key}"], ${modalId} textarea[name="${key}"]`).val(response[key]);
             }
         },
         error: (xhr, status, error) => {

@@ -18,16 +18,17 @@
                             <div class="form-group file-upload">
                                 <input type="hidden" name="RoomId" />
                                 <input type="hidden" name="Thumbnail" />
-                                <label for="thumbnail">Thumbnail</label>
+                                <label for="thumbnail1">Thumbnail</label>
                                 <div class="custom-file-upload">
-                                    <input type="file" id="thumbnail" name="RoomThumbnailImg"
-                                           onchange="showImage(event, 'thumbnailPreview')" accept="image/png, image/jpeg, image/jpg, image/heic" required />
-                                    <label for="thumbnail" class="upload-icon"> <i class="fa fa-plus"></i> </label>
+                                    <input type="file" id="thumbnail1" name="RoomThumbnailImg"
+                                           onchange="showImage(event, 'thumbnail1Preview')" accept="image/png, image/jpeg, image/jpg, image/heic" required />
+                                    <label for="thumbnail1" class="upload-icon"> <i class="fa fa-plus"></i> </label>
                                     <div class="image-container">
-                                        <button type="button" style="width: 24px; height: 24px; " class="delete-button" onclick="deleteImage('thumbnail')"><span>&times;</span></button>
-                                        <img id="thumbnailPreview" class="image-preview" src="#" alt="Thumbnail Preview" style="display:none;" />
+                                        <button type="button" style="width: 24px; height: 24px;" class="delete-button" onclick="deleteImage('thumbnail1')"><span>&times;</span></button>
+                                        <img id="thumbnail1Preview" class="image-preview" src="#" alt="Thumbnail Preview" style="display:none;" />
                                     </div>
                                 </div>
+
 
                             </div>  
                             <div class="form-group file-upload">
@@ -84,13 +85,14 @@
 </div> 
 @Html.Partial("_RoomConfirmationModal")
 
-<script>
+@* <script>
 
     ////////////// Thumbnail Preview
-    function showImage(event, previewId) {
+    function showImage1(event, previewId1) {
         const reader = new FileReader();
+        console.log('here');
         reader.onload = function () {
-            const output = document.getElementById(previewId);
+            const output = document.getElementById(previewId1);
             output.src = reader.result;
             output.style.display = 'block';
             const deleteButton = document.querySelector('.delete-button');
@@ -101,16 +103,16 @@
         reader.readAsDataURL(event.target.files[0]);
     }
     ////////////Delete Thumbnail
-    function deleteImage(inputId) {
-        const input = document.getElementById(inputId);
-        const preview = document.getElementById(inputId + 'Preview');
-        const deleteButton = document.querySelector('.delete-button');
+    function deleteImage1(inputId1) {
+        const input = document.getElementById(inputId1);
+        const preview = document.getElementById(inputId1 + 'Preview');
+        const deleteButton = document.querySelector('.delete-button1');
 
         input.value = ''; // Clear the file input
         preview.src = '#';
         preview.style.display = 'none';
         deleteButton.style.display = 'none';
-        const uploadIcon = document.querySelector('.upload-icon');
+        const uploadIcon = document.querySelector('.upload-icon1');
         uploadIcon.style.display = 'flex'; // Show upload icon
     }
     ////// Validation
@@ -135,5 +137,5 @@
         fileName.textContent = files[i].name;
         container.appendChild(fileName);
         }
-        }*@
-</script>
+        }
+</script> *@

@@ -13,6 +13,7 @@
 @section styles {
     <link rel="stylesheet" href="~/css/admindashboard.css" />
     <link rel="stylesheet" href="~/css/roomModal.css" />
+    <link rel="stylesheet" href="~/css/editRoomModal.css" />
 }
 
 <div class="dashboard-header">
@@ -70,12 +71,61 @@
     </ul>
 </div>
 @Html.Partial("_RoomConfirmationModal")
-@Html.Partial("_EditRoomModal", Model)
-@Html.Partial("_CreateRoomModal", Model)
+@Html.Partial("_CreateRoomModal")
+@Html.Partial("_EditRoomModal")
 
 @section scripts {
     <script>
         document.getElementById("searchInput").addEventListener("keyup", filterList);
+    </script>
+
+
+    <script>
+        // Thumbnail Preview
+        function showImage(event, previewId) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const output = document.getElementById(previewId);
+                output.src = reader.result;
+                output.style.display = 'block';
+
+                const parent = output.closest('.custom-file-upload');
+                const deleteButton = parent.querySelector('.delete-button');
+                deleteButton.style.display = 'block';
+                const uploadIcon = parent.querySelector('.upload-icon');
+                uploadIcon.style.display = 'none';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        // Delete Thumbnail
+        function deleteImage(inputId) {
+            console.log("here========")
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(inputId + 'Preview');
+
+            const parent = input.closest('.custom-file-upload');
+            const deleteButton = parent.querySelector('.delete-button');
+            const uploadIcon = parent.querySelector('.upload-icon');
+
+            input.value = '';
+            preview.src = '#';
+            preview.style.display = 'none';
+            deleteButton.style.display = 'none';
+            uploadIcon.style.display = 'flex';
+        }
+
+        // Display file names
+        function displayFileNames(event) {
+            const files = event.target.files;
+            const container = document.getElementById('fileNamesContainer');
+            container.innerHTML = '';
+            for (let i = 0; i < files.length; i++) {
+                const fileName = document.createElement('div');
+                fileName.textContent = files[i].name;
+                container.appendChild(fileName);
+            }
+        }
     </script>
 }
 
