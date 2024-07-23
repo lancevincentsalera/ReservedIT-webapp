@@ -1,10 +1,10 @@
-﻿.custom-modal-dialog {
-    position: fixed;
-    right: 15px;
-    transform: translateY(-50%);
+﻿.modal#viewRoomCardModal .modal-dialog {
+    width: 90vw !important;
+    max-width: 90vh !important;
+    left: 5%;
 }
 
-.modal-content {
+#viewRoomModal .modal-content {
     max-width: 800px;
     left: 30%;
 }

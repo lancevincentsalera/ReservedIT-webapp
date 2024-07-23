@@ -67,7 +67,10 @@ namespace ASI.Basecode.WebApp.Controllers
                 {
                     RoomName = room.RoomName,
                     Description = room.Description,
-                    RoomGallery = room._RoomGallery
+                    RoomGallery = room._RoomGallery,
+                    Capacity = room.Capacity,
+                    Location = room.Location,
+                    Equipments = room.Equipments
                 };
                 return Json(response);
             }
