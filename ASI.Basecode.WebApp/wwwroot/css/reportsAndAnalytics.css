@@ -108,16 +108,31 @@ canvas {
 
 .report-cell {
     flex: 1; /* Equal space for cells */
-    text-align: left; /* Align text to the left */
+    text-align: center; /* Align text to the left */
     align-content: flex-start;
+
 }
 
     .report-cell:last-child {
-        text-align: right; /* Align the last cell to the right */
+        text-align: center; /* Align the last cell to the right */
     }
+    .report-cell:nth-child(1) {
+        text-align: left /* Align the last cell to the right */
+    }
+
 
 .detail-table {
     margin-top: 10px;
     border-top: 1px solid #ddd;
     padding-top: 10px;
 }
+
+.user-cell {
+    text-align: center;
+}
+    .user-cell:nth-child(1) {
+        text-align: left /* Align the last cell to the right */
+    }
+    .user-cell:last-child {
+        text-align: center; /* Align the last cell to the right */
+    }
