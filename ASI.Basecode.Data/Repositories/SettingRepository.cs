@@ -25,7 +25,7 @@ namespace ASI.Basecode.Data.Repositories
 
         public IQueryable<Setting> GetSettings()
         {
-            return this.GetDbSet<Setting>().Include(u => u.User);
+            return this.GetDbSet<Setting>();
         }
 
 
