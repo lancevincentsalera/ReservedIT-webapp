@@ -84,7 +84,7 @@ canvas {
     max-height: calc(400px - 100px); /* Adjust for header height */
 }
 .tablereport-body {
-    height: calc(300px); /* Set max height for table body */
+    height: calc(250px); /* Set max height for table body */
     overflow-y: auto; /* Enable vertical scrolling if necessary */
 }
 

@@ -82,50 +82,61 @@ namespace ASI.Basecode.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> PostCreate(RoomViewModel model)
         {
-            _logger.LogInformation("=======Sample Crud : PostCreate Start=======");
             try
             {
-                bool isExist = _roomService.RetrieveAll().Any(data => data.RoomName == model.RoomName);
-                if (isExist)
+                _logger.LogInformation("=======Sample Crud : PostCreate Start=======");
+                try
                 {
-                    TempData["DuplicateErr"] = "Duplicate Data";
-                    _logger.LogError($"Duplicate Name: {model.RoomName}");
-                    return RedirectToAction("Create", model);
-                }
-                if (ModelState.IsValid)
-                {
-                    if (model.RoomThumbnailImg != null)
+                    bool isExist = _roomService.RetrieveAll().Any(data => data.RoomName == model.RoomName);
+                    if (isExist)
                     {
-                        string folder = "room/thumbnail/";
-                        model.Thumbnail = await UploadImage(folder, model.RoomThumbnailImg);
+                        TempData["DuplicateErr"] = "Duplicate Data";
+                        _logger.LogError($"Duplicate Name: {model.RoomName}");
+                        return RedirectToAction("Create", model);
                     }
-
-                    if (model.RoomGalleryImg != null)
+                    if (ModelState.IsValid)
                     {
-                        string folder = "room/gallery/";
-
-                        model._RoomGallery = new List<RoomGalleryViewModel>();
-
-                        foreach (var file in model.RoomGalleryImg)
+                        if (model.RoomThumbnailImg != null)
                         {
-                            var roomGallery = new RoomGalleryViewModel()
+                            string folder = "room/thumbnail/";
+                            model.Thumbnail = await UploadImage(folder, model.RoomThumbnailImg);
+                        }
+
+                        if (model.RoomGalleryImg != null)
+                        {
+                            string folder = "room/gallery/";
+
+                            model._RoomGallery = new List<RoomGalleryViewModel>();
+
+                            foreach (var file in model.RoomGalleryImg)
                             {
-                                GalleryName = file.FileName,
-                                GalleryUrl = await UploadImage(folder, file)
-                            };
-                            model._RoomGallery.Add(roomGallery);
+                                var roomGallery = new RoomGalleryViewModel()
+                                {
+                                    GalleryName = file.FileName,
+                                    GalleryUrl = await UploadImage(folder, file)
+                                };
+                                model._RoomGallery.Add(roomGallery);
+                            }
                         }
                     }
+                    _roomService.AddRoom(model);
                 }
-                _roomService.AddRoom(model);
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message);
+                }
+
+                TempData["CreateMessage"] = "Added Successfully";
+                return Json(new { success = true, message = "Room creation successful!" });
+            }
+            catch (InvalidDataException ex)
+            {
+                return Json(new { success = false, message = ex.Message });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                return Json(new { success = false, message = Resources.Messages.Errors.ServerError });
             }
-
-            TempData["CreateMessage"] = "Added Successfully";
-            return RedirectToAction("Index");
         }
         #endregion
 
@@ -239,7 +250,7 @@ namespace ASI.Basecode.WebApp.Controllers
                     }   
                     _roomService.DeleteRoom(RoomToBeDeleted);
 
-                    return Json(new { success = true, message = "User deleted successfully!" });
+                    return Json(new { success = true, message = "Room deleted successfully!" });
                 }
                 catch (Exception ex)
                 {
@@ -248,7 +259,7 @@ namespace ASI.Basecode.WebApp.Controllers
             }
             else
             {
-                return Json(new { success = false, message = "User not found." });
+                return Json(new { success = false, message = "Room not found." });
 
             }
         }
