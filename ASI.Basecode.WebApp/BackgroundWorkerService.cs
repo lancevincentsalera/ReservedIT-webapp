@@ -92,7 +92,6 @@ namespace ASI.Basecode.WebApp
                                 _logger.LogError(e, $"An error occurred while updating booking status for booking ID {booking.BookingId}.");
                                 continue;
                             }
-
                         }
                     }
                 } 
@@ -103,7 +102,7 @@ namespace ASI.Basecode.WebApp
                 
                 try
                 {
-                    await Task.Delay(TimeSpan.FromMinutes(5), stoppingToken);
+                    await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
                 }
                 catch (TaskCanceledException ex)
                 {
