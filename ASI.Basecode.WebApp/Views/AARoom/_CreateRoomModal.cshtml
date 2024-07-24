@@ -11,7 +11,7 @@
                 <h5 class="modal-title" id="createRoomModalLabel">Create Room</h5>
             </div>
             <div class="modal-body">
-                <form asp-action="PostCreate" enctype="multipart/form-data" method="post">
+                <form id="createRoomForm" action="#">
                     <div class="firstHalf">
                         <!-- Thumbnail Upload -->
                         <div class="uploadPhoto">
@@ -63,8 +63,13 @@
                         </div>
                         <!-- Buttons -->
                         <div class="button-group">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-custom">Add</button>
+                            <button type="button" class="btn btn-close" data-dismiss="modal">Cancel</button>
+                            <button type="submit"
+                                    class="btn btn-custom"
+                                    id="editUserBtn"
+                                    onclick="displayConfirmationModal('#createRoomForm','#createRoomModal', '#confirmationRoomAddModal')">
+                                Create
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -73,3 +78,4 @@
     </div>
 </div>
 
+@Html.Partial("_ConfirmationModal")

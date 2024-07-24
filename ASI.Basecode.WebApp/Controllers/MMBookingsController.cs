@@ -55,32 +55,36 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <returns></returns>
         public IActionResult FilterBookings(BookingViewModel filter)
         {
-            var model = _bookingService.GetBookings();
+            var data = _bookingService.GetBookings();
             if (filter != null)
             {
                 if (filter.StartDate.HasValue)
-                    model = model.Where(b => b.StartDate.Value == filter.StartDate.Value);
+                    data = data.Where(b => b.StartDate.Value == filter.StartDate.Value);
 
                 if (filter.EndDate.HasValue)
-                    model = model.Where(b => b.EndDate.Value == filter.EndDate.Value);
+                    data = data.Where(b => b.EndDate.Value == filter.EndDate.Value);
 
                 if (!string.IsNullOrEmpty(filter.RoomName))
-                    model = model.Where(b => b.modelRoom.RoomName.Equals(filter.RoomName, StringComparison.OrdinalIgnoreCase));
+                    data = data.Where(b => b.modelRoom.RoomName.Equals(filter.RoomName, StringComparison.OrdinalIgnoreCase));
 
                 if (!string.IsNullOrEmpty(filter.UserName))
-                    model = model.Where(b => b.modelUser.FirstName.Contains(filter.UserName) || b.modelUser.LastName.Contains(filter.UserName));
+                    data = data.Where(b => b.modelUser.FirstName.Contains(filter.UserName) || b.modelUser.LastName.Contains(filter.UserName));
 
                 if (filter.BookingStatus != null)
                 {
                     if (filter.BookingStatus != "All") // No filter
                     {
-                        model = model.Where(b => b.BookingStatus == filter.BookingStatus);
+                        data = data.Where(b => b.BookingStatus == filter.BookingStatus);
                     }
                 }
             }
 
             TempData["SuccessMessage"] = "Filters applied successfully";
-            ViewData["rooms"] = _roomService.RetrieveAll();
+            var model = new BookingViewModel
+            {
+                bookingList = data,
+                roomList = _roomService.RetrieveAll()
+            };
             return View("Index", model);
         }
         #endregion

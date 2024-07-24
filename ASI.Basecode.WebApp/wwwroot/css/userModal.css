@@ -67,7 +67,7 @@ form .user-details .input-box input, select {
     margin-bottom: 5px;
 }
 
-.btn-danger, .btn-custom {
+.btn-close, .btn-custom {
     width: 7vw;
 }
 
@@ -75,6 +75,53 @@ form .user-details .input-box input, select {
     background-color: #B5838E;
     color: white;
 }
+
+    .btn-custom:hover {
+        color:white;
+        background-color: #775965;
+        font-weight: 600;
+    }
+
+.btn-close {
+    color: #b5838e;
+    background-color:none;
+    border-color: #b5838e;
+}
+
+    .btn-close:hover{
+        color:white;
+        background-color:#775965;
+        font-weight:600;
+    }
+
+.btn-secondary, .btn-Conclose{
+    width:5vw;
+}
+
+.btn-secondary {
+    color: white;
+    background-color: #ffb3a3;
+    border-color: #ffb3a3;
+}
+    .btn-secondary:hover {
+        color: white;
+        background-color: #775965;
+        border-color: #775965;;
+        font-weight: 600;
+    }
+
+.btn-Conclose {
+    color: #ffb3a3;
+    background-color: none;
+    border-color: #ffb3a3;
+}
+
+    .btn-Conclose:hover {
+        color: white;
+        background-color: #775965;
+        border-color: #775965;
+        font-weight: 600;
+    }
 
 .modal-footer {
     border-top: none;
