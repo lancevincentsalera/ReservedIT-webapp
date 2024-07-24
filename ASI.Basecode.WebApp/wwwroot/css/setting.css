@@ -1,5 +1,15 @@
-﻿.table-container {
+﻿.main-layout {
+    height: 85%;
+    overflow-y: auto;
+}
+
+
+.table-container {
     height: auto;
+}
+
+body {
+    overflow: hidden;
 }
 
 .table-container .setting {
