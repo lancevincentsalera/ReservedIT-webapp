@@ -130,6 +130,7 @@ h1 {
 
 .status-active {
     padding: 5px;
+    background-color: #775965;
     border-radius: 10px;
     color: white;
 }
