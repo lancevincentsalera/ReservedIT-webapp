@@ -16,8 +16,13 @@
 }
 
 <div class="calendar-header">
-    <h1>Calendar</h1>
-    <div class="month-navigation">
+    <div class="header-row-1">
+        <h1>Calendar</h1>
+        <h2>@startDay.ToString("MMMM")</h2>
+        <div></div>
+    </div>
+
+    <div class="header-row-2">
         <button class="month-button previous"><</button>
         <div>
             <form id="year-month-form">
@@ -52,9 +57,9 @@
                             <div class="bookings">
                                 @foreach (var booking in Model)
                                 {
-                                    @if ( (booking.StartDate == prevMonthStart.AddDays(i * 7 + j) && booking.EndDate == prevMonthStart.AddDays(i * 7 + j))
-                                       || (booking.StartDate <= prevMonthStart.AddDays(i * 7 + j) && booking.EndDate >= prevMonthStart.AddDays(i * 7 + j) && booking.Recurrence.Any(r => r.DayOfWeekId == Convert.ToInt32(prevMonthStart.AddDays(i * 7 + j).DayOfWeek) + 1 ) ) 
-                                        ) // Need to factor recurrence
+                                    @if ((booking.StartDate == prevMonthStart.AddDays(i * 7 + j) && booking.EndDate == prevMonthStart.AddDays(i * 7 + j))
+                                   || (booking.StartDate <= prevMonthStart.AddDays(i * 7 + j) && booking.EndDate >= prevMonthStart.AddDays(i * 7 + j) && booking.Recurrence.Any(r => r.DayOfWeekId == Convert.ToInt32(prevMonthStart.AddDays(i * 7 + j).DayOfWeek) + 1))
+                                   ) // Need to factor recurrence
                                     {
                                         randomNumber = random.Next(1, 6);
                                         <div class="color-@randomNumber">@@@booking.RoomName @booking.TimeFrom.GetValueOrDefault().ToString("hh\\:mm") - @booking.TimeTo.GetValueOrDefault().ToString("hh\\:mm")</div>

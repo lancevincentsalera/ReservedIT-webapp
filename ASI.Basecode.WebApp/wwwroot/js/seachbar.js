@@ -25,8 +25,34 @@
 }
 
 function filterRoom() {
-    console.log("filter room")
+    var input, filter, container, cards, card, i, roomName, roomDescription, roomLocation;
+    input = document.getElementById("searchInput");
+    filter = input.value.toUpperCase();
+    container = document.getElementById("container");
+    cards = container.getElementsByClassName("card");
+
+    for (i = 0; i < cards.length; i++) {
+        card = cards[i];
+        roomName = card.getAttribute("data-room-name");
+        roomDescription = card.getAttribute("data-room-description");
+        roomLocation = card.getAttribute("data-room-location");
+        roomCapacity = card.getAttribute("data-room-capacity");
+        roomEquipments = card.getAttribute("data-room-equipments");
+
+        // Check if any of the room details match the search query
+        if (roomName.toUpperCase().indexOf(filter) > -1 ||
+            roomDescription.toUpperCase().indexOf(filter) > -1 ||
+            roomLocation.toUpperCase().indexOf(filter) > -1 ||
+            roomCapacity.toUpperCase().indexOf(filter) > -1 ||
+            roomEquipments.toUpperCase().indexOf(filter) > -1)
+        {
+            card.style.display = ""; // Show card
+        } else {
+            card.style.display = "none"; // Hide card
+        }
+    }
 }
+
 function filterList() {
     var input, filter, list, li, cells, i, txtValue;
     input = document.getElementById("searchInput");
