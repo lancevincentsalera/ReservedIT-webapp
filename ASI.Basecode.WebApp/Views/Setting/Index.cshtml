@@ -18,12 +18,6 @@
         <div class="table-column">
             <div class="basic-information">
                 <h2>Basic Information</h2>
-                <div class="profile-picture">
-                    <img class="picture" src="~/img/default-profile.png" alt="Profile Picture">
-                    @* <button class="edit-picture-btn">Edit</button> *@
-                    <h5>@HttpContextAccessor.HttpContext.Session.GetString("UserName")</h5>
-
-                </div>
                 <div>
                     <div class="form-outline mb-4">
                         <label class="form-label" for="full-name">Full Name</label>

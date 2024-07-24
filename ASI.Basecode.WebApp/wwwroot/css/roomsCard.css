@@ -1,4 +1,16 @@
 ﻿.room-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#searchbar {
+    position: absolute;
+    left: 5%;
+}
+
+.room-header > .room-title-description {
     text-align: center;
 }
 
@@ -98,7 +110,7 @@ body {
     width: 230px;
     max-height: 40px;
     justify-content: center;
-    margin-bottom:100px;
+    margin-bottom: 100px;
 }
 
 .detail-item {
@@ -185,5 +197,5 @@ body {
     display: flex;
     justify-content: flex-end;
     margin-top: auto; /* Push the button to the bottom of the card */
-    padding:10px;
+    padding: 10px;
 }
