@@ -135,6 +135,10 @@ namespace ASI.Basecode.WebApp.Controllers
         {
             try
             {
+                if (model.BookingStatus.Equals(BookingStatus.APPROVED.ToString()))
+                {
+                    throw new InvalidDataException("Booking is already approved. Edit is restricted");
+                }
                 model.TimeFrom = model.StartDate.Value.TimeOfDay;
                 model.TimeTo = model.EndDate.Value.TimeOfDay;
                 if (model.DayOfTheWeekIds.Count() > 0 && (model.StartDate.Value.Date == model.EndDate.Value.Date))

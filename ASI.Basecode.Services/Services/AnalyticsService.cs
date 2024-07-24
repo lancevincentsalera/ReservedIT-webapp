@@ -67,10 +67,12 @@ namespace ASI.Basecode.Services.Services
 
         public IEnumerable<UserBookingFrequency> GetUserBookingFrequency()
         {
+           
             var bookings = _bookingRepository.GetBookings()
                 .Select(b => new
                 {
-                    b.User.FirstName,
+                    fullname = string.Join(' ', b.User.FirstName, b.User.LastName),
+                    
                     b.CreatedDt,
                     b.TimeFrom,
                     b.TimeTo,
@@ -81,7 +83,7 @@ namespace ASI.Basecode.Services.Services
                 }).ToList();
 
             var data = bookings
-                .GroupBy(s => s.FirstName)
+                .GroupBy(s => s.fullname)
                 .Select(g => new UserBookingFrequency
                 {
                     UserName = g.Key,
