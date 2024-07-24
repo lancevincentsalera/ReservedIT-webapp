@@ -3,6 +3,19 @@
     max-width: 32vw !important;
 }
 
+.modal .modal-body .form-group{
+    display: grid;
+}
+
+#roomName {
+    font-weight: 600;
+    border: none;
+}
+
+.form-control[readonly]{
+    background-color: white;
+}
+
 .modal form {
     display: flex;
     flex-direction: column;
@@ -20,6 +33,7 @@
     justify-content: center;
     gap: 10px;
     margin-bottom: -10px;
+    margin:0;
 }
 
 .modal .modal-body form .custom-recur {
@@ -68,36 +82,82 @@
     }
 
         .modal .modal-body .setRecurrence button:hover {
-            background-color: #B5838E;
+            background-color: #775965;
+            font-weight: 600;
             color: white;
         }
 
         .modal .modal-body .setRecurrence button.active {
-            background-color: #aaa;
+            background-color: #775965;
             color: white;
         }
 
 .modal .modal-body .button-group {
     float: inline-end;
-    margin-top: 12vh;
+    margin-top: 5vh;
     display: flex;
     align-self: self-end;
     gap: 15px;
 }
 
-.modal .btn-danger, .btn-custom {
-    width: 7vw;
-    height: 50px;
-    font-weight: 300;
+/*AYAW IREMOVE ANG SELECTOR DRI PLEASE, SENSITIVE NI SIYA*/
+#createBookingModal .modal .modal-body .button-group .btn-close,
+#createBookingModal .modal .modal-body .button-group .btn-custom {
+    height: 5vh;
 }
 
-        .btn-danger, .btn-custom:hover {
-            color: white;
-            font-weight: 800;
-        }
-
-.modal .btn-custom {
+.btn-custom {
     background-color: #B5838E;
     color: white;
 }
+
+    .btn-custom:hover {
+        color: white;
+        background-color: #775965;
+        font-weight: 600;
+    }
+
+.btn-close {
+    color: #b5838e;
+    background-color: none;
+    border-color: #b5838e;
+}
+
+    .btn-close:hover {
+        color: white;
+        background-color: #775965;
+        font-weight: 600;
+    }
+
+.btn-secondary, .btn-Conclose {
+    width: 5vw;
+}
+
+.btn-secondary {
+    color: white;
+    background-color: #ffb3a3;
+    border-color: #ffb3a3;
+}
+
+    .btn-secondary:hover {
+        color: white;
+        background-color: #775965;
+        border-color: #775965;
+        ;
+        font-weight: 600;
+    }
+
+.btn-Conclose {
+    color: #ffb3a3;
+    background-color: none;
+    border-color: #ffb3a3;
+    overflow: hidden;
+}
+
+    .btn-Conclose:hover {
+        color: white;
+        background-color: #775965;
+        border-color: #775965;
+        font-weight: 600;
+    }
 
