@@ -27,17 +27,18 @@
                 break;
             case UserRoleManager.ROLE_ADMIN:
                 <li>
+                    <a asp-action="Index" asp-controller="AAUser">
+                        <img src="~/img/room-sidebar-logo.png" />
+                        Users
+                    </a>
+                </li>
+
+                <li>
                     <a asp-action="Index" asp-controller="AARoom">
                         <img src="~/img/user-sidebar-logo.png" />
                         Rooms
                     </a>
 
-                </li>
-                <li>
-                    <a asp-action="Index" asp-controller="AAUser">
-                        <img src="~/img/room-sidebar-logo.png" />
-                        Users
-                    </a>
                 </li>
                 break;
             case UserRoleManager.ROLE_MANAGER:
