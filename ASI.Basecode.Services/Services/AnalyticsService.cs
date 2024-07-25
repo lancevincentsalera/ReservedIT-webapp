@@ -1,4 +1,4 @@
-﻿using ASI.Basecode.Data.Interfaces;
+﻿    using ASI.Basecode.Data.Interfaces;
 using ASI.Basecode.Data.Models;
 using ASI.Basecode.Data.Repositories;
 using ASI.Basecode.Services.Interfaces;
@@ -154,40 +154,51 @@ namespace ASI.Basecode.Services.Services
                     RoomName = room.RoomName,
                     TotalBooking = room.Bookings.Count,
                     PeakDay = room.Bookings.GroupBy(b => b.CreatedDt.Value.Date)
-                              .OrderByDescending(g => g.Count())
-                              .FirstOrDefault()?.Key.ToString("yyyy-MM-dd"),
+                                .OrderByDescending(g => g.Count())
+                                .FirstOrDefault()?.Key.ToString("MMM dd, yyyy"),
                     PeakTime = room.Bookings.GroupBy(b => b.TimeFrom.Value)
-                               .OrderByDescending(g => g.Count())
-                               .FirstOrDefault()?.Key.ToString(@"hh\:mm"),
+                                .OrderByDescending(g => g.Count())
+                                .FirstOrDefault()?.Key.ToString(@"hh\:mm"),
+
                     TotalDuration = room.Bookings.Sum(b =>
                     {
                         if (!b.TimeFrom.HasValue || !b.TimeTo.HasValue || !b.StartDate.HasValue || !b.EndDate.HasValue)
                         {
-                          return 0;
+                            return 0;
                         }
 
-                    var durationPerDay = (b.TimeTo.Value - b.TimeFrom.Value).TotalMinutes;
-                    var totalDuration = 0.0;
+                        var durationPerDay = (b.TimeTo.Value - b.TimeFrom.Value).TotalMinutes;
+                        var totalDuration = 0.0;
 
-                    foreach (var dayName in b.RecurrenceDays)
-                    {
-                        var dayOfWeek = GetDayOfWeek(dayName);
-                        var occurrences = CountOccurrences(dayOfWeek, b.StartDate.Value, b.EndDate.Value);
-                        totalDuration += occurrences * durationPerDay;
-                    }
+                        foreach (var dayName in b.RecurrenceDays)
+                        {
+                            var dayOfWeek = GetDayOfWeek(dayName);
+                            var occurrences = CountOccurrences(dayOfWeek, b.StartDate.Value, b.EndDate.Value);
+                            totalDuration += occurrences * durationPerDay;
+                        }
 
-                    if (!b.RecurrenceDays.Any())
-                    {
-                        var totalDays = (b.EndDate.Value - b.StartDate.Value).TotalDays + 1; 
-                        totalDuration = totalDays * durationPerDay;
-                    }
+                        if (!b.RecurrenceDays.Any())
+                        {
+                            var totalDays = (b.EndDate.Value - b.StartDate.Value).TotalDays + 1;
+                            totalDuration = totalDays * durationPerDay;
+                        }
                         var hours = totalDuration / 60;
                         return hours;
                     }).ToString()
                 }).ToList();
 
+            foreach (var summary in roomUsageSummary)
+            {
+                if (TimeSpan.TryParse(summary.PeakTime, out TimeSpan peakTimeSpan))
+                {
+                    var dateTime = DateTime.Today.Add(peakTimeSpan);
+                    summary.PeakTime = dateTime.ToString("hh:mm tt");
+                }
+            }
+
             return roomUsageSummary;
         }
+
         private DayOfWeek GetDayOfWeek(string dayName)
         {
             return dayName switch
@@ -217,8 +228,6 @@ namespace ASI.Basecode.Services.Services
             Console.WriteLine($"Occurrences of {dayOfWeek} between {startDate} and {endDate}: {count}");
             return count;
         }
-
-
 
     }
 }
