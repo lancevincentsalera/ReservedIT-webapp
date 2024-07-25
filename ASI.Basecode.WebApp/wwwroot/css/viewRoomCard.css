@@ -74,7 +74,7 @@
     height: 80px;
     border-radius: 10px;
     padding: 13px; /* Optional: Add padding if needed */
-    gap:0px;
+    gap:3px;
 }
 
     .room-info-item i {
