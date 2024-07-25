@@ -93,7 +93,7 @@
 }
 
 #button-3 .checkbox:active + .knobs:before {
-    width: 74px;
+    width: auto;
     border-radius: 42%;
 }
 
