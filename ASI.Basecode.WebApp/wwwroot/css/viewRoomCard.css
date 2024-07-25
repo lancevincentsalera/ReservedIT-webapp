@@ -36,6 +36,9 @@
     .description-container p {
         text-align: justify;
         font-size: 13px;
+        max-height: 65px;
+        height: 65px;
+        margin-bottom: 10px;
     }
 
     .description-container button {
@@ -58,7 +61,7 @@
     grid-template-columns: 1fr 1fr; /* 2 columns */
     grid-template-rows: auto auto; /* 2 rows */
     gap: 15px; /* Space between items */
-    margin-top: 10px;
+    margin-top: 50px;
 }
 
 .room-info-item {
@@ -68,12 +71,10 @@
     align-items: center;
     justify-items: center; /* Center horizontally within each grid cell */
     text-align: center; /* Center text within each grid cell */
-    border: 2px solid #CACACA;
     height: 80px;
     border-radius: 10px;
     padding: 13px; /* Optional: Add padding if needed */
-    margin-top:20px;
-    gap:2px;
+    gap:0px;
 }
 
     .room-info-item i {

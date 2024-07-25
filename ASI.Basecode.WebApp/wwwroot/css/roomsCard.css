@@ -59,7 +59,7 @@ body {
 }
 
     .card:hover {
-        transform: scale(1.02); /* Enlarge to 110% on hover */
+        transform: scale(1.01); /* Enlarge to 110% on hover */
     }
 
 .card-image {
