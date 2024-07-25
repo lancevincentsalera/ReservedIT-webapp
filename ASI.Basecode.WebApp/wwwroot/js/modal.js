@@ -39,6 +39,7 @@ const getUserDetails = (btnId, modalId, action, controller) => {
         type: 'GET',
         data: { userId : id }, // pass the id to the controller, should be the same variable name or key in the controller parameter
         success: (response) => {
+            console.log("resp", response)
             for (let key in response) {
 
                 // if the key is RoleId, then get the select element with the name RoleId

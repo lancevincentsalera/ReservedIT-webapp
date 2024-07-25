@@ -73,57 +73,29 @@
                     <div class="action-container">
                         <div class="action-col">
                             <form asp-action="ApproveBooking" method="post">
-                                <input type="hidden" name="bookingId" />
+                                <input type="hidden" name="bookingId" value="@item.value.BookingId"/>
                                 <button type="submit" class="btn-status">
-                                    <i class="fas fa-check" style="color: #008B42; font-size: 15px;"></i>
+                                    <i class="fas fa-check" data-toggle="tooltip" title="Approve" style="color: #008B42; font-size: 15px;"></i>
                                 </button>
                             </form>
                             <span> | </span>
                             <form asp-action="RejectBooking" method="post">
-                                <input type="hidden" name="bookingId" />
+                                <input type="hidden" name="bookingId" value="@item.value.BookingId" />
                                 <button type="submit" class="btn-status">
-                                    <i class="fas fa-times" style="color: #FF0000; font-size: 15px;"></i>
+                                    <i class="fas fa-times" data-toggle="tooltip" title="Reject" style="color: #FF0000; font-size: 15px;"></i>
                                 </button>
                             </form>
                             <span> | </span>
-                            <button type="submit" class="btn-status" onclick="displayModal('#confirmationBookingDeleteModal'); passId(this, '#confirmDeleteBtn');">
-                                <i class="fas fa-trash-alt" style="color: #FF0000; font-size: 13px;"></i>
+                            <button type="submit" class="btn-status" data-id="@item.value.BookingId" onclick="displayModal('#confirmationBookingDeleteModal'); passId(this, '#confirmDeleteBtn');">
+                                <i class="fas fa-trash-alt" data-toggle="tooltip" title="Delete" style="color: #FF0000; font-size: 13px;"></i>
                             </button>
+                        </div>
                     </div>
-                    @*<div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.value.BookingId">
-                        <span class="ddicon">&#8942;</span>
-                    </div>*@
                 </div>
             </li>
         }
 
     </ul>
-    <div class="dropdown-action">
-        <ul>
-            <li>
-                <form asp-action="ApproveBooking" method="post">
-                    <input type="hidden" name="bookingId" />
-                    <button type="submit" class="btn-status">
-                        <i class="fas fa-check" style="color: #008B42; font-size: 15px;"></i>
-                    </button>
-                </form>
-            </li>
-            <li>
-                <form asp-action="RejectBooking" method="post">
-                    <input type="hidden" name="bookingId" />
-                    <button type="submit" class="btn-status">
-                        <i class="fas fa-times" style="color: #FF0000; font-size: 15px;"></i>
-                    </button>
-                </form>
-            </li>
-            <li>
-                <button type="button" class="btn-status" onclick="displayModal('#confirmationBookingDeleteModal'); passId(this, '#confirmDeleteBtn');">
-                    <i class="fas fa-trash-alt" style="color: #FF0000; font-size: 13px;"></i>
-                </button>
-            </li>
-        </ul>
-    </div>
-
 </div>
 
 @Html.Partial("_BookingsConfirmationModal")
