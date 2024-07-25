@@ -4,11 +4,14 @@
     ViewData["Title"] = "Reports";
     var barChartData = ViewData["BarChartData"] as List<int>;
     var lineChartData = ViewData["LineChartData"] as List<int>;
-    var userBookingFrequencies = ViewData["UserBookingFrequencies"] as List<UserBookingFrequency>;
-    var roomUsageSummaries = ViewData["RoomUsageSummaries"] as List<RoomUsageSummary>;
+    var userBookingFrequenciesJson = Json.Serialize(ViewData["UserBookingFrequencies"]);
+    var roomUsageSummariesJson = Json.Serialize(ViewData["RoomUsageSummaries"]);
 }
 @section styles {
     <link rel="stylesheet" href="~/css/reportsAndAnalytics.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
 }
 
 <div class="dashboard-header">
@@ -69,7 +72,7 @@
                 <div class="report-cell">Total Duration (Hrs)</div>
             </div>
             <div class="tablereport-body">
-                @foreach (var user in userBookingFrequencies)
+                @foreach (var user in ViewData["UserBookingFrequencies"] as List<UserBookingFrequency>)
                 {
                     <li class="user-row">
                         <div class="user-cell" data-label="User Name">@Html.DisplayFor(modelItem => user.UserName)</div>
@@ -95,31 +98,20 @@
                 <div class="report-cell">Total Duration (Hrs)</div>
             </div>
             <div class="tablereport-body">
-                @foreach (var user in roomUsageSummaries)
+                @foreach (var room in ViewData["RoomUsageSummaries"] as List<RoomUsageSummary>)
                 {
                     <li class="user-row">
-                        <div class="user-cell" data-label="Room Name">@Html.DisplayFor(modelItem => user.RoomName)</div>
-                        <div class="user-cell" data-label="Total No. Bookings">@Html.DisplayFor(modelItem => user.TotalBooking)</div>
-                        <div class="user-cell" data-label="Peak Day">@Html.DisplayFor(modelItem => user.PeakDay)</div>
-                        <div class="user-cell" data-label="Peak Time">@Html.DisplayFor(modelItem => user.PeakTime)</div>
-                        <div class="user-cell" data-label="Total Duration(Hrs)">@Html.DisplayFor(modelItem => user.TotalDuration)</div>
+                        <div class="user-cell" data-label="Room Name">@Html.DisplayFor(modelItem => room.RoomName)</div>
+                        <div class="user-cell" data-label="Total No. Bookings">@Html.DisplayFor(modelItem => room.TotalBooking)</div>
+                        <div class="user-cell" data-label="Peak Day">@Html.DisplayFor(modelItem => room.PeakDay)</div>
+                        <div class="user-cell" data-label="Peak Time">@Html.DisplayFor(modelItem => room.PeakTime)</div>
+                        <div class="user-cell" data-label="Total Duration(Hrs)">@Html.DisplayFor(modelItem => room.TotalDuration)</div>
                     </li>
                 }
-                <div class="detail-table" style="display: none;">
-                    <div class="detail-header">
-                        <h2 style="text-align: center; font-weight: bold; font-size: 15px;">User Activity Detail</h2>
-                    </div>
-                    <div class="tablereport-header" style="font-size:15px;">
-                        <div class="report-cell">User Name</div>
-                        <div class="report-cell">Booking Date</div>
-                        <div class="report-cell">Start Time</div>
-                        <div class="report-cell">End Time</div>
-                        <div class="report-cell">Duration</div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
+        <button id="exportButton" type="button" class="export-button"></i>Export to PDF</button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
@@ -218,7 +210,7 @@
             updateLineChart();
         });
     });
-    
+
     function generateDaysOfMonth() {
         const monthSelector = document.getElementById("monthSelector");
         const selectedMonth = parseInt(monthSelector.value, 10);
@@ -227,7 +219,7 @@
         const currentDate = new Date();
         const year = currentDate.getFullYear();
 
-        const daysInMonth = new Date(year, selectedMonth , 0).getDate();
+        const daysInMonth = new Date(year, selectedMonth, 0).getDate();
 
         for (let day = 1; day <= daysInMonth; day++) {
             days.push(day.toString().padStart(2, '0'));
@@ -260,15 +252,115 @@
                 lineChart.data.labels = daysOfMonth;
                 lineChart.data.datasets[0].data = data;
                 lineChart.update();
-                
+
             })
             .catch(error => {
                 console.error('Error fetching daily bookings:', error);
             });
     }
+
+    document.getElementById('exportButton').addEventListener('click', async function () {
+        const { jsPDF } = window.jspdf;
+
+        if (!jsPDF) {
+            console.error('jsPDF is not loaded correctly.');
+            return;
+        }
+
+        const doc = new jsPDF();
+
+        const exportDate = new Date().toLocaleDateString();
+        doc.text(`Report Date: ${exportDate}`, 10, 10);
+
+        // Capture graphs as images
+        const graphElements = document.querySelectorAll('.graphs canvas');
+
+        const headerColor = [229, 158, 176];
+
+        for (let i = 0; i < graphElements.length; i++) {
+            const canvas = await html2canvas(graphElements[i], { scale: 2 });
+            const imgData = canvas.toDataURL('image/png');
+            const imgWidth = 190; // A4 width minus margins in mm
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+            if (i === 0) {
+                doc.text('Room Booking Overview', 10, 20); 
+                doc.addImage(imgData, 'PNG', 10, 30, imgWidth, imgHeight); 
+            } else if (i === 1) {
+                const monthSelector = document.getElementById('monthSelector');
+                const selectedMonth = monthSelector.options[monthSelector.selectedIndex].text;
+                doc.addPage();
+                doc.text(`Daily Booking Trends (${selectedMonth})`, 10, 10); 
+                doc.addImage(imgData, 'PNG', 10, 20, imgWidth, imgHeight); 
+            }
+
+            // Add table for graph data
+            let graphData;
+            let tableHeader;
+            if (i === 0) {
+                // Bar Chart Data
+                const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                graphData = @Html.Raw(Json.Serialize(barChartData)).$values.map((value, index) => [months[index], value]);
+                tableHeader = [['Month', 'No. of Bookings']];
+                doc.autoTable({
+                    startY: 40 + imgHeight, 
+                    head: tableHeader,
+                    body: graphData,
+                    headStyles: { fillColor: headerColor }, 
+                    styles: { fillColor: [255, 255, 255], textColor: [0, 0, 0] }, 
+                });
+            } else if (i === 1) {
+                // Line Chart Data
+                graphData = @Html.Raw(Json.Serialize(lineChartData)).$values.map((value, index) => [index + 1, value]);
+                tableHeader = [['Day', 'No. of Bookings']];
+                doc.autoTable({
+                    startY: 30 + imgHeight, 
+                    head: tableHeader,
+                    body: graphData,
+                    styles: { fontSize: 8, cellPadding: 1, fillColor: [255, 255, 255], textColor: [0, 0, 0] }, // Adjust font size, cell padding, row color
+                    headStyles: { fillColor: headerColor }, 
+                    margin: { top: 20 }
+                });
+            }
+        }
+
+        // Add User Booking Frequency Table
+        const userBookingFrequencyTable = document.querySelector('.table-userbooking:nth-of-type(1) .tablereport-body');
+        if (userBookingFrequencyTable) {
+            const userBookingFrequencyRows = Array.from(userBookingFrequencyTable.children).map(row => {
+                return Array.from(row.children).map(cell => cell.textContent);
+            });
+            doc.addPage();
+            doc.text('User Booking Frequency', 10, 10); 
+            doc.autoTable({
+                startY: 20, 
+                head: [['User Name', 'No. of Bookings', 'Last Booking Date', 'Most Booked Room', 'Total Duration (Hrs)']],
+                body: userBookingFrequencyRows,
+                headStyles: { fillColor: headerColor }, 
+                styles: { fillColor: [255, 255, 255], textColor: [0, 0, 0] }, 
+            });
+        }
+
+        // Add Room Usage Summary Table
+        const roomUsageSummaryTable = document.querySelector('.table-userbooking:nth-of-type(2) .tablereport-body');
+        if (roomUsageSummaryTable) {
+            const roomUsageSummaryRows = Array.from(roomUsageSummaryTable.children).map(row => {
+                return Array.from(row.children).map(cell => cell.textContent);
+            });
+            doc.addPage();
+            doc.text('Room Usage Summary', 10, 10); 
+            doc.autoTable({
+                startY: 20, 
+                head: [['Room Name', 'Total Booking', 'Peak Day', 'Peak Time', 'Total Duration (Hrs)']],
+                body: roomUsageSummaryRows,
+                headStyles: { fillColor: headerColor }, 
+                styles: { fillColor: [255, 255, 255], textColor: [0, 0, 0] }, 
+            });
+        }
+
+        doc.save('ReportsAndAnalytics.pdf');
+    });
+
+
+
 </script>
-
-
-
-
-
