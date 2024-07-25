@@ -1,5 +1,13 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
+@using static ASI.Basecode.Resources.Constants.Enums
+@{
+    var userRole = HttpContextAccessor.HttpContext.Session.GetString("UserRole");
+    Console.WriteLine("===================================" + userRole);
+    var redirectUrl = (userRole == UserRoleManager.ROLE_SUPER.ToString() || userRole == UserRoleManager.ROLE_ADMIN.ToString())
+        ? "/Setting/AAIndex"
+        : "/Setting/Index";
+}
 <header class="@((ViewBag.LoginView == true) ? "hide-navbar" : "")">
     <div class="logosec">
         @HttpContextAccessor.HttpContext.Session.GetString("UserName")
@@ -7,7 +15,7 @@
             <div class="dp">
                 <img src="~/img/profile-logo.png"
                      class="dpicn hover-pointer"
-                     onclick="location.href='/Setting/Index'"
+                     onclick="location.href='@redirectUrl'"
                      alt="dp">
             </div>
         </div>

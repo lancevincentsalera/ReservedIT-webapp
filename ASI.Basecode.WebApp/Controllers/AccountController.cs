@@ -111,6 +111,7 @@ namespace ASI.Basecode.WebApp.Controllers
                 case LoginResult.Success:
                     await this._signInManager.SignInAsync(user);
                     this._session.SetString("UserName", string.Join(' ', user.FirstName, user.LastName));
+                    this._session.SetString("UserRole", user.Role.RoleName);
                     this._session.SetInt32("UserId", user.UserId);
 
                     return RedirectToEndpointByRole((UserRoleManager)user.RoleId, model.Password==Const.DefaultPassword);
