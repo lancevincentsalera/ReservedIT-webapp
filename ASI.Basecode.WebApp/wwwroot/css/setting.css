@@ -281,3 +281,26 @@ label {
     display: flex;
     justify-content: center;
 }
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+    .password-container .form-control {
+        padding-right: 2.5rem;
+    }
+
+    .password-container .toggle-password {
+        position: absolute;
+        right: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+
+    .password-container .toggle-pic {
+        width: 1.5rem;
+        height: auto;
+    }
