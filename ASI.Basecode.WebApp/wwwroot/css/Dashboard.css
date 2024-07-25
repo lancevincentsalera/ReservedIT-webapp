@@ -139,14 +139,14 @@ h1 {
 }
 
 .status-active {
-    padding: 5px 10px;
+    padding: 5px 21px;
     background-color: #79a67d;
     border-radius: 10px;
     color: #fff;
 }
 
 .status-restricted {
-    padding: 5px 13px;
+    padding: 5px 9px;
     border-radius: 10px;
     background-color: #C90000;
     color: white;
