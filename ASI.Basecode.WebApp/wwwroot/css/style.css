@@ -344,3 +344,6 @@ header {
     border-radius: 4px;
 }
 
+.btn-status:disabled {
+    cursor: not-allowed;
+}

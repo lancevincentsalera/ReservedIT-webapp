@@ -78,8 +78,6 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 try
                 {
-                    if (booking.BookingStatus == BookingStatus.APPROVED.ToString())
-                    {
                         booking.BookingStatus = BookingStatus.CANCELLED.ToString();
                         booking.BookingChangeOnly = true;
                         _bookingService.UpdateBooking(booking);
@@ -89,11 +87,6 @@ namespace ASI.Basecode.WebApp.Controllers
                             _emailService.SendEmail(_bookingService.GetBookings().ToList().Where(b => b.BookingId == booking.BookingId).FirstOrDefault(), "Your booking has been cancelled");
                         
                         return Json(new { success = true, message = "Booking cancelled successfully!" });
-                    }
-                    else
-                    {
-                        return Json(new { success = false, message = "Cannot cancel booking: Only approved bookings can be cancelled." });
-                    }
                 }
                 catch (Exception ex)
                 {

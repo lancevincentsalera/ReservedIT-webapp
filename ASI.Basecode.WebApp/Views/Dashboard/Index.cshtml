@@ -79,7 +79,7 @@
                     <div class="user-cell actions">
                         <div>
                             <div class="action-col">
-                                <button type="button" class="btn-status" data-id="@item.BookingId" onclick="displayModal('#editBookingModal'); getBookingDetails(this, '#editBookingModal', 'GetBookingDetails', 'Dashboard');">
+                                <button type="button" class="btn-status" data-id="@item.BookingId" disabled="@item.BookingStatus.Equals(BookingStatus.APPROVED.ToString())" onclick="displayModal('#editBookingModal'); getBookingDetails(this, '#editBookingModal', 'GetBookingDetails', 'Dashboard');">
                                     <i class="fas fa-edit" style=" color:#775965; font-size: 15px;"></i>
                                 </button>
                                 <span> | </span>

@@ -1,4 +1,5 @@
 ﻿@model ASI.Basecode.Services.ServiceModels.BookingViewModel
+@using static ASI.Basecode.Resources.Constants.Enums;
 @{
     ViewData["Title"] = "Bookings";
 }
@@ -67,24 +68,41 @@
                 </div>
                 <div class="user-cell" data-label="STATUS"><span class="status">@Html.DisplayFor(modelItem => item.value.BookingStatus)</span></div>
                 <div class="user-cell actions">
-                    
+
                     <div class="action-container">
                         <div class="action-col">
+                            <!-- Approve Button -->
                             <form asp-action="ApproveBooking" method="post">
-                                <input type="hidden" name="bookingId" value="@item.value.BookingId"/>
-                                <button type="submit" class="btn-status">
+                                <input type="hidden" name="bookingId" value="@item.value.BookingId" />
+                                <button type="submit" class="btn-status"
+                                        disabled="@(item.value.BookingStatus.Equals(BookingStatus.APPROVED.ToString())
+                               || item.value.BookingStatus.Equals(BookingStatus.CANCELLED.ToString())
+                               || item.value.BookingStatus.Equals(BookingStatus.COMPLETED.ToString()))">
                                     <i class="fas fa-check" style="color: #008B42; font-size: 15px;"></i>
                                 </button>
                             </form>
                             <span> | </span>
+
+                            <!-- Reject Button -->
                             <form asp-action="RejectBooking" method="post">
                                 <input type="hidden" name="bookingId" value="@item.value.BookingId" />
-                                <button type="submit" class="btn-status">
+                                <button type="submit" class="btn-status"
+                                        disabled="@(item.value.BookingStatus.Equals(BookingStatus.REJECTED.ToString())
+                               || item.value.BookingStatus.Equals(BookingStatus.CANCELLED.ToString())
+                               || item.value.BookingStatus.Equals(BookingStatus.COMPLETED.ToString()))">
                                     <i class="fas fa-times" style="color: #FF0000; font-size: 15px;"></i>
                                 </button>
                             </form>
                             <span> | </span>
-                            <button type="submit" class="btn-status" data-id="@item.value.BookingId" onclick="displayModal('#confirmationBookingDeleteModal'); passId(this, '#confirmDeleteBtn');">
+
+                            <!-- Delete Button -->
+                            <button type="button" class="btn-status"
+                                    data-id="@item.value.BookingId"
+                                    disabled="@(item.value.BookingStatus.Equals(BookingStatus.APPROVED.ToString())
+                           || item.value.BookingStatus.Equals(BookingStatus.REJECTED.ToString())
+                           || item.value.BookingStatus.Equals(BookingStatus.COMPLETED.ToString())
+                           || item.value.BookingStatus.Equals(BookingStatus.PENDING.ToString()))"
+                                    onclick="displayModal('#confirmationBookingDeleteModal'); passId(this, '#confirmDeleteBtn');">
                                 <i class="fas fa-trash-alt" style="color: #FF0000; font-size: 13px;"></i>
                             </button>
                         </div>
