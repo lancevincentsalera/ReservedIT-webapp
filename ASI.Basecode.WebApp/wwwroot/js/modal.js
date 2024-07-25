@@ -113,7 +113,6 @@ const getBookingDetails = (btnId, modalId, action, controller) => {
         type: 'GET',
         data: { bookingId: id },
         success: (response) => {
-            console.log(response)
 
             // loop through the response object
             for (let key in response) {
@@ -152,22 +151,31 @@ const getBookingDetails = (btnId, modalId, action, controller) => {
                                     String(date.getMinutes()).padStart(2, '0');
 
 
+                                
                                 // get the current time and add 2 hours to it
                                 // then get the current minute and get the remainder when divided by 15
                                 // if the remainder is not 0, add the difference to the current minute
                                 // then set the minute to the nearest 15 minutes
-                                let currentTime = new Date();
-                                currentTime.setHours(currentTime.getHours() + 2);
-                                let currentMinute = currentTime.getMinutes();
-                                let remainder = currentMinute % 15;
-                                if (remainder !== 0) {
-                                    currentTime.setMinutes(currentMinute + (15 - remainder));
+                                const now = new Date();
+                                let newDate = new Date(now);
+
+                                newDate.setHours(newDate.getHours() + 2);
+
+                                let currentHour = newDate.getHours();
+                                let currentMinute = Math.ceil(newDate.getMinutes() / 15) * 15;
+
+                                if (currentMinute === 60) {
+                                    currentHour = (currentHour + 1) % 24;
+                                    currentMinute = 0;
                                 }
 
-                                // manually format the current time to the format that flatpickr accepts
-                                let minTime = `${String(currentTime.getHours()).padStart(2, '0')}:${String(currentTime.getMinutes()).padStart(2, '0')}`;
+                                // Handle edge case where adding 2 hours crosses midnight
+                                if (newDate.getDate() > now.getDate()) {
+                                    newDate.setHours(currentHour);
+                                    newDate.setMinutes(currentMinute);
+                                }
 
-
+                                const minTime = `${String(currentHour).padStart(2, '0')}:${String(currentMinute).padStart(2, '0')}`;
                                 // initialize the flatpickr instance
                                 // set the altInput to true to display the date in the input field
                                 // set the altFormat to the format that the date will be displayed in the input field
@@ -176,21 +184,23 @@ const getBookingDetails = (btnId, modalId, action, controller) => {
                                 // set time_24hr to false to use the 12-hour format
                                 // set minuteIncrement to 15 to increment the minutes by 15
                                 const flatpickrInstance = $(`${modalId} input[name="${key}"]`).flatpickr({
+                                    enableTime: true,
+                                    dateFormat: "Y-m-d H:i",
                                     altInput: true,
                                     altFormat: "F j, Y (h:i K)",
-                                    dateFormat: "Y-m-d H:i",
-                                    enableTime: true,
-                                    time_24hr: false,
                                     minuteIncrement: 15,
-                                    minDate: "today",
-                                    minTime: new Date(),
+                                    minDate: now,
+                                    minTime: minTime,
+                                    onReady: function (selectedDates, dateStr, instance) {
+                                        instance.set('minDate', newDate);
+                                    },
                                     onChange: function (selectedDates, dateStr, instance) {
 
                                         // get the selected date
                                         // if the selected date is today, set the minTime to the current time
                                         // else, set the minTime to 00:00
                                         const selectedDate = selectedDates[0];
-                                        if (selectedDate && selectedDate.toDateString() === new Date().toDateString()) {
+                                        if (selectedDate && selectedDate.toDateString() === newDate.toDateString()) {
                                             instance.set('minTime', minTime);
                                         } else {
                                             instance.set('minTime', '00:00');
@@ -230,7 +240,6 @@ const getBookingDetails = (btnId, modalId, action, controller) => {
                         // for other input elements
                         $(`${modalId} input[name="${key}"]`).val(response[key]);
                     }
-                    console.log(key, $(`${modalId} input[name="${key}"]`).val() )
                 }
             }
 
