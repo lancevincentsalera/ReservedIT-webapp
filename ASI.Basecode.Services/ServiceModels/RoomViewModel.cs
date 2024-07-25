@@ -32,5 +32,6 @@ namespace ASI.Basecode.Services.ServiceModels
         public List<RoomGalleryViewModel> _RoomGallery { get; set; }
         public IEnumerable<RoomViewModel> roomList { get; set; }
         public BookingViewModel BookingViewModel { get; set; }
+        public int BookingDuration { get; set; }
     }
 }

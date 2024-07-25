@@ -22,11 +22,13 @@ namespace ASI.Basecode.WebApp.Controllers
         private readonly IBookingService _bookingService;
         private readonly IRoomService _roomService;
         private readonly IEmailService _emailService;
-        public MMBookingsController(IEmailService emailService, IRoomService roomService, IBookingService bookingService, IHttpContextAccessor httpContextAccessor, ILoggerFactory loggerFactory, IConfiguration configuration, IMapper mapper = null) : base(httpContextAccessor, loggerFactory, configuration, mapper)
+        private readonly ISettingService _settingService;
+        public MMBookingsController(ISettingService settingService, IEmailService emailService, IRoomService roomService, IBookingService bookingService, IHttpContextAccessor httpContextAccessor, ILoggerFactory loggerFactory, IConfiguration configuration, IMapper mapper = null) : base(httpContextAccessor, loggerFactory, configuration, mapper)
         {
             _bookingService = bookingService;
             _roomService = roomService;
             _emailService = emailService;
+            _settingService = settingService;
         }
 
         #region Bookings Page View
@@ -106,7 +108,10 @@ namespace ASI.Basecode.WebApp.Controllers
                         booking.BookingChangeOnly = true;
                         _bookingService.UpdateBooking(booking);
                         TempData["SuccessMessage"] = "Booking approved successfully!";
-                        _emailService.SendEmail(_bookingService.GetBookings().ToList().Where(b => b.BookingId == bookingId).FirstOrDefault(), "Your booking has been approved!");
+
+                        bool bookingStatusChange = _settingService.GetSetting(UserId).BookingStatusChange.GetValueOrDefault() == 1;
+                        if (bookingStatusChange)
+                            _emailService.SendEmail(_bookingService.GetBookings().ToList().Where(b => b.BookingId == bookingId).FirstOrDefault(), "Your booking has been approved!");
                     }
                     else
                     {
@@ -148,7 +153,10 @@ namespace ASI.Basecode.WebApp.Controllers
                         booking.BookingChangeOnly = true;
                         _bookingService.UpdateBooking(booking);
                         TempData["SuccessMessage"] = "Booking rejected successfully!";
-                        _emailService.SendEmail(_bookingService.GetBookings().ToList().Where(b => b.BookingId == bookingId).FirstOrDefault(), "Your booking has been rejected");
+
+                        bool bookingStatusChange = _settingService.GetSetting(UserId).BookingStatusChange.GetValueOrDefault() == 1;
+                        if (bookingStatusChange)
+                            _emailService.SendEmail(_bookingService.GetBookings().ToList().Where(b => b.BookingId == bookingId).FirstOrDefault(), "Your booking has been rejected");
                     }
                     else
                     {
@@ -186,7 +194,11 @@ namespace ASI.Basecode.WebApp.Controllers
                     {
                         _bookingService.DeleteBooking(bookingToBeDeleted);
                         bookingToBeDeleted.BookingStatus += "(Previous Status)";
-                        _emailService.SendEmail(bookingToBeDeleted, "Your booking has been deleted");
+
+                        bool bookingStatusChange = _settingService.GetSetting(UserId).BookingStatusChange.GetValueOrDefault() == 1;
+                        if (bookingStatusChange)
+                            _emailService.SendEmail(bookingToBeDeleted, "Your booking has been deleted");
+
                         return Json(new { success = true, message = "Booking deleted successfully!" });
                     } 
                     else

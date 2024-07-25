@@ -5,7 +5,7 @@
     DateTime startDay = ViewBag.StartDay;
     DateTime endDay = ViewBag.EndDay;
     DateTime prevMonthStart = startDay.AddDays(-Convert.ToInt32(startDay.DayOfWeek));
-    DateTime nextMonthEnd = endDay.AddDays(6 - Convert.ToInt32(endDay.DayOfWeek));
+    DateTime nextMonthEnd = endDay.AddDays(41 - (endDay - prevMonthStart).TotalDays);
     Random random = new Random();
     int randomNumber = random.Next(1, 6);
 }
@@ -45,7 +45,7 @@
     </div>
 
     <ul class="table-body">
-        @for (int i = 0; i < 5; i++)
+        @for (int i = 0; i < 6; i++)
         {
             <li class="table-row">
                 @for (int j = 0; j < 7; j++)
@@ -78,21 +78,6 @@
                 }
             </li>
         }
-        <li class="table-row">
-            <div class="table-cell">
-                <div class="day">1</div>
-                <div class="bookings">
-                    <div>test</div>
-                    <div>test</div>
-                </div>
-            </div>
-            <div class="table-cell">
-                <div class="day">2</div>
-                <div class="bookings">
-                </div>
-            </div>
-        </li>
-
     </ul>
 </div>
 

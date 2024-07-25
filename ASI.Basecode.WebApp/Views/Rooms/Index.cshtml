@@ -140,6 +140,7 @@
                         instance.set('minTime', '00:00');
                     }
 
+                    setDefaultBookingDuration();
                     checkBookingConflict();
                 }
 
@@ -168,6 +169,45 @@
 
             flatpickr("#startDate", configStart);
             flatpickr("#endDate", configEnd);
-        });  
+        });
+    </script>
+
+    <script>
+        function setDefaultBookingDuration() {
+            // Get the start date value and create a Date object
+            var startDateValue = $('#startDate').val();
+            var defaultEndDate = new Date(startDateValue);
+
+            // Add seconds to the date
+            defaultEndDate.setSeconds(defaultEndDate.getSeconds() + @Model.BookingDuration);
+
+            // Format the date and time
+            var formattedDateTime = formatDateTime(defaultEndDate);
+
+            // Set the value of endDate
+            $('#endDate').val(formattedDateTime);
+
+            // Set text of endDate input
+            $('#createBookingForm .form-row .form-group.col-md-6:nth-of-type(2) input:nth-of-type(2)').val(formattedDateTime);
+        }
+
+        function formatDateTime(date) {
+            // Format date as "YYYY-MM-DD HH:mm"
+            let datePart = date.toISOString().slice(0, 10); // YYYY-MM-DD
+            let timePart = date.toTimeString().slice(0, 5); // HH:mm
+
+            // Create a formatted date string
+            let formattedDate = date.toLocaleDateString('en-US', {
+                year: 'numeric', month: 'long', day: 'numeric'
+            });
+
+            // Create a formatted time string with AM/PM
+            let formattedTime = date.toLocaleTimeString('en-US', {
+                hour: 'numeric', minute: 'numeric', hour12: true
+            });
+
+            // Combine formatted date and time
+            return `${formattedDate} (${formattedTime})`;
+        }
     </script>
 }
