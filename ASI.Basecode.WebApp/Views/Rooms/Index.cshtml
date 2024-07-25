@@ -121,8 +121,25 @@
             });
 
             const now = new Date();
-            var currentHour = now.getHours();
-            var currentMinute = Math.ceil(now.getMinutes() / 15) * 15;
+            let newDate = new Date(now);
+
+            newDate.setHours(newDate.getHours() + 2);
+
+            let currentHour = newDate.getHours();
+            let currentMinute = Math.ceil(newDate.getMinutes() / 15) * 15;
+
+            if (currentMinute === 60) {
+                currentHour = (currentHour + 1) % 24;
+                currentMinute = 0;
+            }
+
+            // Handle edge case where adding 2 hours crosses midnight
+            if (newDate.getDate() > now.getDate()) {
+                newDate.setHours(currentHour);
+                newDate.setMinutes(currentMinute);
+            }
+
+            const minTime = `${String(currentHour).padStart(2, '0')}:${String(currentMinute).padStart(2, '0')}`;
 
             var configStart = {
                 enableTime: true,
@@ -130,12 +147,16 @@
                 altInput: true,
                 altFormat: "F j, Y (h:i K)",
                 minuteIncrement: 15,
-                minDate: new Date(),
-                minTime: `${currentHour}:${currentMinute}`,
+                minDate: newDate,
+                minTime: minTime,
+                onReady: function (selectedDates, dateStr, instance) {
+                    instance.setDate(newDate);
+                    setDefaultBookingDuration();
+                },
                 onChange: function (selectedDates, dateStr, instance) {
                     const selectedDate = selectedDates[0];
-                    if (selectedDate && selectedDate.toDateString() === now.toDateString()) {
-                        instance.set('minTime', `${currentHour}:${currentMinute}`);
+                    if (selectedDate && selectedDate.toDateString() === newDate.toDateString()) {
+                        instance.set('minTime', minTime);
                     } else {
                         instance.set('minTime', '00:00');
                     }
@@ -152,12 +173,12 @@
                 altInput: true,
                 altFormat: "F j, Y (h:i K)",
                 minuteIncrement: 15,
-                minDate: new Date(),
-                minTime: `${currentHour}:${currentMinute}`,
+                minDate: newDate,
+                minTime: minTime,
                 onChange: function (selectedDates, dateStr, instance) {
                     const selectedDate = selectedDates[0];
-                    if (selectedDate && selectedDate.toDateString() === now.toDateString()) {
-                        instance.set('minTime', `${currentHour}:${currentMinute}`);
+                    if (selectedDate && selectedDate.toDateString() === newDate.toDateString()) {
+                        instance.set('minTime', minTime);
                     } else {
                         instance.set('minTime', '00:00');
                     }
@@ -181,11 +202,17 @@
             // Add seconds to the date
             defaultEndDate.setSeconds(defaultEndDate.getSeconds() + @Model.BookingDuration);
 
-            // Format the date and time
+            // Format the date and time into readable string
             var formattedDateTime = formatDateTime(defaultEndDate);
 
+            defaultEndDate = defaultEndDate.getFullYear() + '-' +
+                String(defaultEndDate.getMonth() + 1).padStart(2, '0') + '-' +
+                String(defaultEndDate.getDate()).padStart(2, '0') + 'T' +
+                String(defaultEndDate.getHours()).padStart(2, '0') + ':' +
+                String(defaultEndDate.getMinutes()).padStart(2, '0');
+
             // Set the value of endDate
-            $('#endDate').val(formattedDateTime);
+            $('#endDate').val(defaultEndDate);
 
             // Set text of endDate input
             $('#createBookingForm .form-row .form-group.col-md-6:nth-of-type(2) input:nth-of-type(2)').val(formattedDateTime);

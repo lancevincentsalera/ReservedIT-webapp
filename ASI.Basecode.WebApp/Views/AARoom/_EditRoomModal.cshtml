@@ -43,11 +43,11 @@
 
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" id="name" name="RoomName" placeholder="Enter room name" required />
+                            <input type="text" id="name" name="RoomName" placeholder="Enter room name" required maxlength="30" />
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea id="description" name="Description" rows="4" placeholder="Enter room description" required></textarea>
+                            <textarea id="description" name="Description" rows="4" placeholder="Enter room description" required maxlength="150"></textarea>
                         </div>
                     </div>
 
@@ -56,15 +56,15 @@
                             <label style="font-weight: 600; margin-bottom:20px;">Additional Information</label>
                             <div class="form-group">
                                 <label for="location">Location</label>
-                                <input type="text" id="location" name="Location" placeholder="Enter location" />
+                                <input type="text" id="location" name="Location" placeholder="Enter location" maxlength="45" />
                             </div>
                             <div class="form-group">
                                 <label for="capacity">Capacity</label>
-                                <input type="number" id="capacity" name="Capacity" placeholder="Enter capacity" required />
+                                <input type="number" id="capacity" name="Capacity" placeholder="Enter capacity" required max="9999" />
                             </div>
                             <div class="form-group">
                                 <label for="equipments">Equipments</label>
-                                <textarea id="equipments" name="Equipments" rows="4" placeholder="Enter room equipments" required></textarea>
+                                <textarea id="equipments" name="Equipments" rows="4" placeholder="Enter room equipments" required maxlength="45"></textarea>
                             </div>
 
                         </div>

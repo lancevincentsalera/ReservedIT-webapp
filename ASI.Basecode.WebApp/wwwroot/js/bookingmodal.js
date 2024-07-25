@@ -4,7 +4,6 @@
 // check booking conflict when custom button is clicked
 $(document).ready(function () {
     $('#customButton').on('click', function () {
-        console.log("Custom Button clicked");
         $('.custom-recur').toggle();
         $('#customButton').addClass('active');
         $('#scheduleOnceButton').removeClass('active');
@@ -13,7 +12,6 @@ $(document).ready(function () {
 
     $('#scheduleOnceButton').on('click', function () {
         $(`.checkbox-recur input[type="checkbox"]`).prop('checked', false).trigger('change');
-        console.log("Schedule Once Button clicked");
         $('.custom-recur').hide();
         $('#scheduleOnceButton').addClass('active');
         $('#customButton').removeClass('active');
@@ -24,7 +22,6 @@ $(document).ready(function () {
 
 // check booking conflict when date is changed
 function checkBookingConflict() {
-    console.log("clicked here conflicttt");
     $.ajax({
         url: '/Rooms/CheckBookingConflict', // url to controller action
         type: 'POST',
