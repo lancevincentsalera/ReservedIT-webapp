@@ -4,6 +4,7 @@ using ASI.Basecode.Services.ServiceModels;
 using ASI.Basecode.Services.Services;
 using ASI.Basecode.WebApp.Mvc;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,7 @@ namespace ASI.Basecode.WebApp.Controllers
     /// <summary>
     /// Room Controller
     /// </summary>
+    [Authorize(Policy = "AdminOnly")]
     public class AARoomController : ControllerBase<AARoomController>
     {
         private readonly IRoomService _roomService;
@@ -92,7 +94,7 @@ namespace ASI.Basecode.WebApp.Controllers
                     {
                         TempData["DuplicateErr"] = "Duplicate Data";
                         _logger.LogError($"Duplicate Name: {model.RoomName}");
-                        return RedirectToAction("Create", model);
+                        return Json(new { success = false, message = "Room Name is already taken" });
                     }
                     if (ModelState.IsValid)
                     {
@@ -149,7 +151,7 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 return Json(user);
             }
-            TempData["ErrorMessage"] = "User not found. Unable to retrieve user details.";
+            TempData["ErrorMessage"] = "Room not found. Unable to retrieve room details.";
             return RedirectToAction("Index");
         }
 

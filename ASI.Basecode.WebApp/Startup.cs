@@ -171,10 +171,11 @@ namespace ASI.Basecode.WebApp
             }
             else
             {
-                app.UseExceptionHandler("/Error");
-                app.UseStatusCodePagesWithReExecute("/Error/{0}");
+                app.UseExceptionHandler("/ErrorPage/NotFound");
+                app.UseStatusCodePagesWithReExecute("/ErrorPage/NotFound");
                 app.UseHsts();
             }
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

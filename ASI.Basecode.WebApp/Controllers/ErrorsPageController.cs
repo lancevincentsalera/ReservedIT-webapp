@@ -21,18 +21,15 @@ namespace ASI.Basecode.WebApp.Controllers
 {
     public class ErrorPageController : Controller
     {
-        [Route("Error/Error404")]
         public IActionResult NotFound()
         {
             HttpContext.Items["Error404"] = true;
-            return View("Error404");
+            return View();
         }
-
-        [Route("Error/Error403")]
         public IActionResult Forbidden()
         {
             HttpContext.Items["Error403"] = true;
-            return View("Error403");
+            return View();
         }
     }
 }
