@@ -72,13 +72,19 @@
                 <div class="user-cell actions">
                     <div class="action-container">
                         <div class="action-col">
-                            <button type="submit" class="btn-status">
-                                <i class="fas fa-check" style="color: #008B42; font-size: 15px;"></i>
-                            </button>
+                            <form asp-action="ApproveBooking" method="post">
+                                <input type="hidden" name="bookingId" />
+                                <button type="submit" class="btn-status">
+                                    <i class="fas fa-check" style="color: #008B42; font-size: 15px;"></i>
+                                </button>
+                            </form>
                             <span> | </span>
-                            <button type="submit" class="btn-status">
-                                <i class="fas fa-times" style="color: #FF0000; font-size: 15px;"></i>
-                            </button>
+                            <form asp-action="RejectBooking" method="post">
+                                <input type="hidden" name="bookingId" />
+                                <button type="submit" class="btn-status">
+                                    <i class="fas fa-times" style="color: #FF0000; font-size: 15px;"></i>
+                                </button>
+                            </form>
                             <span> | </span>
                             <button type="submit" class="btn-status" onclick="displayModal('#confirmationBookingDeleteModal'); passId(this, '#confirmDeleteBtn');">
                                 <i class="fas fa-trash-alt" style="color: #FF0000; font-size: 13px;"></i>
@@ -98,7 +104,7 @@
                 <form asp-action="ApproveBooking" method="post">
                     <input type="hidden" name="bookingId" />
                     <button type="submit" class="btn-status">
-                        <i class="fas fa-circle" style="color: #00FF75; font-size: 10px;"></i> Approve
+                        <i class="fas fa-check" style="color: #008B42; font-size: 15px;"></i>
                     </button>
                 </form>
             </li>
@@ -106,13 +112,13 @@
                 <form asp-action="RejectBooking" method="post">
                     <input type="hidden" name="bookingId" />
                     <button type="submit" class="btn-status">
-                        <i class="fas fa-circle" style="color: #FF0000; font-size: 10px;"></i> Reject
+                        <i class="fas fa-times" style="color: #FF0000; font-size: 15px;"></i>
                     </button>
                 </form>
             </li>
             <li>
                 <button type="button" class="btn-status" onclick="displayModal('#confirmationBookingDeleteModal'); passId(this, '#confirmDeleteBtn');">
-                    <i class="fas fa-trash-alt" style="color: #FF0000; font-size: 10px;"></i> Delete
+                    <i class="fas fa-trash-alt" style="color: #FF0000; font-size: 13px;"></i>
                 </button>
             </li>
         </ul>

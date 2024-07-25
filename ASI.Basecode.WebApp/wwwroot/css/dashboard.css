@@ -134,6 +134,8 @@ h1 {
     border-radius: 10px;
     background-color: #E1FCEF;
     color: #14804A;
+    width: 40px;
+    max-width: 40px;
 }
 
 .status-active {
@@ -153,8 +155,8 @@ h1 {
 .status-cancelled {
     padding: 5px;
     border-radius: 10px;
-    background-color: #33F522;
-    color: black;
+    background-color: #DA7186;
+    color: white;
 }
 
 .status-completed {
@@ -186,3 +188,17 @@ h1 {
     height: 24px; /* Adjust to match button height */
     border-left: 2px solid #ccc; /* Color and thickness of the separator line */
 }
+
+.action-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .action-container form,
+    .action-container button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 2px; /* Adjust spacing between icons */
+    }
