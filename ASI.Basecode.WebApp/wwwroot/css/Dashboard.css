@@ -145,15 +145,22 @@ h1 {
     color: #fff;
 }
 
+.status-approved{
+    padding: 5px 10px;
+    background-color: #79a67d;
+    border-radius: 10px;
+    color: #fff;
+}
+
 .status-restricted {
-    padding: 5px 9px;
+    padding: 5px 10px;
     border-radius: 10px;
     background-color: #C90000;
     color: white;
 }
 
 .status-cancelled {
-    padding: 5px 8px;
+    padding: 5px 7px;
     border-radius: 10px;
     background-color: #C90000;
     color: white;

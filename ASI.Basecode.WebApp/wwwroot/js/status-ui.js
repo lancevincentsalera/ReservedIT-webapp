@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded',function () {
 
         switch (statusText) {
             case 'approved':
-                cell.classList.add('status-active');
+                cell.classList.add('status-approved');
                 break;
             case 'rejected':
                 cell.classList.add('status-restricted');
