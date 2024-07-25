@@ -6,7 +6,6 @@
     var lineChartData = ViewData["LineChartData"] as List<int>;
     var userBookingFrequencies = ViewData["UserBookingFrequencies"] as List<UserBookingFrequency>;
     var roomUsageSummaries = ViewData["RoomUsageSummaries"] as List<RoomUsageSummary>;
-    
 }
 @section styles {
     <link rel="stylesheet" href="~/css/reportsAndAnalytics.css" />
@@ -31,19 +30,34 @@
     </div>
     <div class="container-first">
         <div class="graph-header">
-            <div>
+            <div class="graph-header" style="display: flex; justify-content: space-between; align-items: center;">
                 <h2>Daily Booking Trends</h2>
+                <div class="dropdown-container" style="width: 200px;">
+                    <select id="monthSelector" onchange="updateLineChart()" style="width: 100%;">
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="graphs">
-            <canvas id="lineChart"></canvas> <!-- Added line chart canvas -->
+            <canvas id="lineChart"></canvas>
         </div>
     </div>
     <div class="container-first">
         <div class="graph-header">
             <div>
                 <h2>User Booking Frequency</h2>
-                @*Search Bar*@
             </div>
         </div>
         <div class="table-userbooking">
@@ -51,34 +65,27 @@
                 <div class="report-cell">User Name</div>
                 <div class="report-cell">No. of Bookings</div>
                 <div class="report-cell">Last Booking Date</div>
-                <div class="report-cell">Total Duration (Hrs)</div>
                 <div class="report-cell">Most Booked Room</div>
+                <div class="report-cell">Total Duration (Hrs)</div>
             </div>
             <div class="tablereport-body">
-                <!-- Rows will be added here dynamically or later -->
                 @foreach (var user in userBookingFrequencies)
                 {
                     <li class="user-row">
                         <div class="user-cell" data-label="User Name">@Html.DisplayFor(modelItem => user.UserName)</div>
                         <div class="user-cell" data-label="No. of Bookings">@Html.DisplayFor(modelItem => user.NoOfBookings)</div>
-                        <div class="user-cell" data-label="Last Booking Date">@Html.DisplayFor(modelItem => user.LastBookingDate)</div>
-                        <div class="user-cell" data-label="Total Duration(Hrs)">@Html.DisplayFor(modelItem => user.TotalDuration)</div>
+                        <div class="user-cell" data-label="Last Booking Date">@DateTime.Parse(user.LastBookingDate).ToString("MMM dd, yyyy")</div>
                         <div class="user-cell" data-label="Most Booked Room">@Html.DisplayFor(modelItem => user.MostBookedRoom)</div>
+                        <div class="user-cell" data-label="Total Duration(Hrs)">@Html.DisplayFor(modelItem => user.TotalDuration)</div>
                     </li>
                 }
             </div>
         </div>
     </div>
     <div class="first-header">
-        <h1>Room Usage Report</h1>
+        <h1>Room Usage Summary</h1>
     </div>
     <div class="container-first">
-        <div class="graph-header">
-            <div>
-                <h2>Room Usage Summary</h2>
-                @*Search Bar*@
-            </div>
-        </div>
         <div class="table-userbooking">
             <div class="tablereport-header">
                 <div class="report-cell">Room Name</div>
@@ -92,7 +99,7 @@
                 {
                     <li class="user-row">
                         <div class="user-cell" data-label="Room Name">@Html.DisplayFor(modelItem => user.RoomName)</div>
-                        <div class="user-cell" data-label="Total No. Bookingss">@Html.DisplayFor(modelItem => user.TotalBooking)</div>
+                        <div class="user-cell" data-label="Total No. Bookings">@Html.DisplayFor(modelItem => user.TotalBooking)</div>
                         <div class="user-cell" data-label="Peak Day">@Html.DisplayFor(modelItem => user.PeakDay)</div>
                         <div class="user-cell" data-label="Peak Time">@Html.DisplayFor(modelItem => user.PeakTime)</div>
                         <div class="user-cell" data-label="Total Duration(Hrs)">@Html.DisplayFor(modelItem => user.TotalDuration)</div>
@@ -118,28 +125,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script src="~/js/reportsAndAnalytics.js"></script>
 <script>
-
-    function toggleDetail(row) {
-        const detailTable = row.nextElementSibling;
-        if (detailTable.style.display === "none" || detailTable.style.display === "") {
-            detailTable.style.display = "block";
-        } else {
-            detailTable.style.display = "none";
-        }
-    }
+    let lineChart;
 
     document.addEventListener('DOMContentLoaded', function () {
+        const currentMonth = new Date().getMonth() + 1; // getMonth() returns 0-11, so add 1
+        document.getElementById('monthSelector').value = currentMonth;
+
         const ctx = document.getElementById('barChart').getContext('2d');
-        const ctx2 = document.getElementById('lineChart').getContext('2d'); // For the line chart
-        const daysOfMonth = generateDaysOfMonth();
+        const ctx2 = document.getElementById('lineChart').getContext('2d');
 
         const barchart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 datasets: [{
-                    label: 'No. of Bookings', // Set to an empty string to remove the label
-                    data: @Html.Raw(Json.Serialize(barChartData)).$values, // Use the data passed from the controller
+                    label: 'No. of Bookings',
+                    data: @Html.Raw(Json.Serialize(barChartData)).$values,
                     borderColor: 'rgb(229, 158, 176)',
                     backgroundColor: 'rgb(229, 158, 176)',
                     borderWidth: 2,
@@ -149,10 +150,10 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false, // Allow resizing
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: true // Completely hide the legend
+                        display: true
                     }
                 },
                 scales: {
@@ -172,16 +173,14 @@
                 }
             }
         });
-        console.log(@Html.Raw(Json.Serialize(barChartData)).$values);
 
-        // Line chart configuration
-        const lineChart = new Chart(ctx2, {
+        lineChart = new Chart(ctx2, {
             type: 'line',
             data: {
-                labels: daysOfMonth, // Sample numeric x-axis values
+                labels: generateDaysOfMonth(),
                 datasets: [{
-                    label: 'No. of Daily Booking', // Set the label for the line graph
-                    data: @Html.Raw(Json.Serialize(lineChartData)).$values, // Use the data passed from the controller
+                    label: 'No. of Daily Booking',
+                    data: @Html.Raw(Json.Serialize(lineChartData)).$values,
                     borderColor: 'rgb(229, 158, 176)',
                     backgroundColor: 'rgb(229, 158, 176)',
                     borderWidth: 2,
@@ -194,7 +193,7 @@
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: false // Hide the legend if not needed
+                        display: false
                     }
                 },
                 scales: {
@@ -210,53 +209,66 @@
                             text: 'Bookings'
                         },
                         beginAtZero: true
-                            
                     }
                 }
             }
         });
-        setInterval(updateCharts, 60000); // 60000 ms = 1 minute
-    });
 
+        document.getElementById('monthSelector').addEventListener('change', function () {
+            updateLineChart();
+        });
+    });
+    
     function generateDaysOfMonth() {
+        const monthSelector = document.getElementById("monthSelector");
+        const selectedMonth = parseInt(monthSelector.value, 10);
+
         const days = [];
         const currentDate = new Date();
         const year = currentDate.getFullYear();
-        const month = currentDate.getMonth(); // getMonth() returns 0-11
 
-        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        const monthName = monthNames[month];
-
-        // Get the number of days in the current month
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const daysInMonth = new Date(year, selectedMonth , 0).getDate();
 
         for (let day = 1; day <= daysInMonth; day++) {
-            // Format day and month as MM-DD
-            const formattedDay = `${monthName}-${day.toString().padStart(2, '0')}`;
-            days.push(formattedDay);
+            days.push(day.toString().padStart(2, '0'));
         }
 
         return days;
     }
 
-    function updateCharts() {
-        const daysOfMonth = generateDaysOfMonth();
+    function updateLineChart() {
+        const monthSelector = document.getElementById("monthSelector");
+        const selectedMonth = monthSelector.value;
 
-        // Update Bar Chart
-        barChart.data.labels = daysOfMonth;
-        barChart.update();
+        console.log(`Selected month: ${selectedMonth}`);
 
-        // Update Line Chart
-        lineChart.data.labels = daysOfMonth;
-        lineChart.update();
-    }
+        fetch(`/MMAnalytics/GetDailyBookings?month=${selectedMonth}`)
+            .then(response => {
+                console.log('Response received:', response);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Data received:', data);
 
-    function toggleDetail(row) {
-        const detailTable = row.nextElementSibling;
-        if (detailTable.style.display === "none" || detailTable.style.display === "") {
-            detailTable.style.display = "block";
-        } else {
-            detailTable.style.display = "none";
-        }
+                if (data.$values) {
+                    data = data.$values;
+                } else {
+                    console.error('Unexpected data format:', data);
+                    return;
+                }
+                const daysOfMonth = generateDaysOfMonth();
+                lineChart.data.labels = daysOfMonth;
+                lineChart.data.datasets[0].data = data;
+                lineChart.update();
+                
+            })
+            .catch(error => {
+                console.error('Error fetching daily bookings:', error);
+            });
     }
 </script>
+
+
+
+
+

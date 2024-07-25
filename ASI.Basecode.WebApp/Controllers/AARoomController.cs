@@ -129,9 +129,9 @@ namespace ASI.Basecode.WebApp.Controllers
                 }
 
                 TempData["CreateMessage"] = "Added Successfully";
-                return Json(new { success = true, message = "Room creation successful!" });
+                return Json(new { success = true, message = "Room has been created successfully. Applying changes..." });
             }
-            catch (InvalidDataException ex)
+            catch (InvalidDataException ex) 
             {
                 return Json(new { success = false, message = ex.Message });
             }
@@ -205,7 +205,7 @@ namespace ASI.Basecode.WebApp.Controllers
                         }
                     }
                 _roomService.UpdateRoom(model);
-                return Json(new { success = true, message = "Room updated successfully!" });
+                return Json(new { success = true, message = "Room has been updated successfully. Applying changes..." });
             }
             catch (InvalidDataException ex)
             {
@@ -252,7 +252,7 @@ namespace ASI.Basecode.WebApp.Controllers
                     }   
                     _roomService.DeleteRoom(RoomToBeDeleted);
 
-                    return Json(new { success = true, message = "Room deleted successfully!" });
+                    return Json(new { success = true, message = "Room has been deleted successfully. Applying changes..." });
                 }
                 catch (Exception ex)
                 {

@@ -11,7 +11,7 @@ namespace ASI.Basecode.Services.Interfaces
     public interface IAnalyticsService
     {
         List<int> BookingsPerMonth();
-        Dictionary<int, List<Booking>> DailyBookings();
+        Dictionary<int, List<Booking>> DailyBookings(int month);
         IEnumerable<UserBookingFrequency> GetUserBookingFrequency();
         IEnumerable<RoomUsageSummary> GetRoomUsageSummary();
     }
