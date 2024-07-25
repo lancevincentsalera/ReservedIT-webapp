@@ -46,33 +46,17 @@
                 <div class="user-cell" data-label="DESCRIPTION">@Html.DisplayFor(modelItem => item.value.Equipments)</div>
                 <div class="user-cell actions">
                     <div class="action-col">
-                        <button type="button" class="btn-status" onclick="displayModal('#editRoomModal'); getRoomDetails(this, '#editRoomModal', 'GetRoomDetails', 'AARoom');">
+                        <button type="button" class="btn-status" data-id="@item.value.RoomId" onclick="displayModal('#editRoomModal'); getRoomDetails(this, '#editRoomModal', 'GetRoomDetails', 'AARoom');">
                             <i class="fas fa-edit" style="color: #775965; font-size: 15px;"></i>
                         </button>
                         <span> | </span>
-                        <button type="button" class="btn-status" onclick="displayModal('#confirmationRoomDeleteModal'); passId(this, '#confirmDeleteBtn');">
+                        <button type="button" class="btn-status" data-id="@item.value.RoomId" onclick="displayModal('#confirmationRoomDeleteModal'); passId(this, '#confirmDeleteBtn');">
                             <i class="fas fa-trash-alt" style="color: #C90000; font-size: 15px;"></i>
                         </button>
                     </div>
                 </div>
             </li>
         }
-
-    </ul>
-    <div class="dropdown-action">
-        <ul>
-            <li>
-                <button type="button" class="btn-status" onclick="displayModal('#editRoomModal'); getRoomDetails(this, '#editRoomModal', 'GetRoomDetails', 'AARoom');">
-                    <i class="fas fa-edit" style="color: #775965; font-size: 15px;"></i> Edit
-                </button>
-            </li>
-            <li>
-                <button type="button" class="btn-status" onclick="displayModal('#confirmationRoomDeleteModal'); passId(this, '#confirmDeleteBtn');">
-                    <i class="fas fa-trash-alt" style="color: #FF0000; font-size: 15px;"></i> Delete
-                </button>
-            </li>
-        </ul>
-    </div>
 
     </ul>
 </div>
