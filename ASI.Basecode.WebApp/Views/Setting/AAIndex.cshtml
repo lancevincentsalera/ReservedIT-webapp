@@ -1,0 +1,91 @@
+﻿@model ASI.Basecode.Services.ServiceModels.SettingViewModel
+
+@{
+    ViewData["Title"] = "Settings & Preferences";
+}
+
+@section styles {
+    <link rel="stylesheet" href="~/css/admindashboard.css" />
+    <link rel="stylesheet" href="~/css/setting.css" />
+}
+
+<div class="dashboard-header">
+    <h1>Settings & Preferences</h1>
+</div>
+
+<div class="table-container">
+    <div class="setting">
+        <div class="table-column">
+            <div class="basic-information">
+                <h2>Basic Information</h2>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="full-name">Full Name</label>
+                    <input class="form-control" type="text" id="full-name" value="@HttpContextAccessor.HttpContext.Session.GetString("UserName")" disabled>
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-control" type="email" id="email" value="@Html.DisplayFor(model => model.User.Email)" disabled>
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="role">Role</label>
+                    <input class="form-control" type="text" id="role" value="@(Model.User.Role.RoleName.Substring(5, 1).ToUpper() + Model.User.Role.RoleName.Substring(6).ToLower())" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="table-column">
+            <h2 style="visibility: hidden;">Basic Information</h2>
+            <form asp-action="EditUserPassword" method="post" id="user-password-form">
+                <input asp-for="UserId" name="UserId" id="UserId" type="text" value=@Model.UserId hidden>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="Password">Change Password</label>
+                    <div class="password-container">
+                        <input type="password" id="passwordInput" class="form-control"
+                               asp-for="Password" placeholder="Enter password" />
+                        <span class="input-group-text toggle-password" onclick="togglePasswordVisibility('passwordInput', this)">
+                            <img class="toggle-pic" src="@Url.Content("~/img/eye.svg")" />
+                        </span>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="ConfirmPassword">Confirm Password</label>
+                    <div class="password-container">
+                        <input type="password" id="confirmPasswordInput" class="form-control"
+                               asp-for="ConfirmPassword" placeholder="Enter password"/>
+                        <span class="input-group-text toggle-password" onclick="togglePasswordVisibility('confirmPasswordInput', this)">
+                            <img class="toggle-pic" src="@Url.Content("~/img/eye.svg")" />
+                        </span>
+                    </div>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="save-button" style="margin: 10% 0 0 0;">
+                    <button type="submit" class="btn btn-custom" onclick="sendData()">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        function sendData() {
+            const password = document.getElementById('passwordInput').value.trim();
+            const confirmPassword = document.getElementById('confirmPasswordInput').value.trim();
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/;
+
+            return true; // All values are equal
+        }
+
+        if (password && confirmPassword) { // Password Validation
+            if (password != confirmPassword)
+                toastr.error("Password must match!");
+            else if (password == confirmPassword) {
+                if (!passwordRegex.test(password))
+                    toastr.error("Password must contain at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 8 characters long.");
+                else if (passwordRegex.test(password))
+                    document.getElementById("user-password-form").submit();
+            }
+        }
+    </script>
+}

@@ -5,6 +5,7 @@ using ASI.Basecode.Services.ServiceModels;
 using ASI.Basecode.Services.Services;
 using ASI.Basecode.WebApp.Mvc;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,7 @@ using System.Collections.Generic;
 using System.Drawing.Printing;
 using System.IO;
 using System.Security.Claims;
+using static ASI.Basecode.Resources.Constants.Enums;
 
 namespace ASI.Basecode.WebApp.Controllers
 {
@@ -48,6 +50,47 @@ namespace ASI.Basecode.WebApp.Controllers
         /// </summary>
         /// <returns> Setting View </returns>
         public IActionResult Index()
+        {
+            int? userId = UserId;
+
+            if (!userId.HasValue)
+            {
+                TempData["ErrorMessage"] = "User ID not found in session!";
+                return RedirectToAction("SignOutUser", "Account");
+
+            }
+
+            if (!_settingService.SettingExists(userId.GetValueOrDefault()))
+            {
+                var setting = new SettingViewModel
+                {
+                    UserId = userId.GetValueOrDefault(),
+                    BookingSuccess = 1,
+                    BookingStatusChange = 1,
+                    BookingReminder = (int)new TimeSpan(1, 0, 0, 0).TotalSeconds,
+                    BookingDuration = (int)new TimeSpan(1, 0, 0).TotalSeconds
+                };
+                _settingService.Add(setting);
+
+                setting = _settingService.GetSetting(userId.GetValueOrDefault());
+                setting.User = _userService.GetUser(setting.UserId.GetValueOrDefault());
+                setting.User.Role = _settingService.GetRole(setting.User.RoleId.GetValueOrDefault());
+
+                return View(setting);
+            }
+
+            if (_settingService.SettingExists(userId.GetValueOrDefault()))
+            {
+                var setting = _settingService.GetSetting(userId.Value);
+                setting.User = _userService.GetUser(setting.UserId.GetValueOrDefault());
+                setting.User.Role = _settingService.GetRole(setting.User.RoleId.GetValueOrDefault());
+                return View(setting);
+            }
+            return RedirectToAction("SignOutUser", "Account");
+        }
+
+        [Authorize(Policy = "AdminOnly")]
+        public IActionResult AAIndex()
         {
             int? userId = UserId;
 
@@ -146,6 +189,10 @@ namespace ASI.Basecode.WebApp.Controllers
             {
                 TempData["ErrorMessage"] = Resources.Messages.Errors.ServerError;
             }
+            bool isAdmin = _userService.GetUser(UserId).RoleId.GetValueOrDefault() == (int)UserRoleManager.ROLE_SUPER
+                        || _userService.GetUser(UserId).RoleId.GetValueOrDefault() == (int)UserRoleManager.ROLE_ADMIN;
+            if (isAdmin)
+                return RedirectToAction("AAIndex");
             return RedirectToAction("Index");
         }
 
