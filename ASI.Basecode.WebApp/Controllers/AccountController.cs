@@ -173,24 +173,21 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <returns></returns>
         public ActionResult RedirectToEndpointByRole(UserRoleManager userRole, bool isDefaultPassword)
         {
+            if (isDefaultPassword)
+            {
+                TempData["ErrorMessage"] = "Your password is set to default. For security reasons, please update your password before proceeding.";
+                return RedirectToAction("Index", "Setting");
+            }
+
             switch (userRole)
             {
                 case UserRoleManager.ROLE_SUPER:
                 case UserRoleManager.ROLE_ADMIN:
-                    if(isDefaultPassword)
-                        return RedirectToAction("AAIndex", "Setting");
                     return RedirectToAction("Index", "AAUser");
                 case UserRoleManager.ROLE_MANAGER:
-                    if (isDefaultPassword)
-                        return RedirectToAction("Index", "Setting");
-                    return RedirectToAction("Index", "Dashboard");
                 case UserRoleManager.ROLE_REGULAR:
-                    if (isDefaultPassword)
-                        return RedirectToAction("Index", "Setting");
                     return RedirectToAction("Index", "Dashboard");
                 default:
-                    if (isDefaultPassword)
-                        return RedirectToAction("Index", "Setting");
                     return RedirectToAction("Index", "Home");
             }
         }

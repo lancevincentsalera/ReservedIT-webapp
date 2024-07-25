@@ -191,7 +191,7 @@ const getBookingDetails = (btnId, modalId, action, controller) => {
                                     minuteIncrement: 15,
                                     minDate: now,
                                     minTime: minTime,
-                                    onReady: function (selectedDates, dateStr, instance) {
+                                    onOpen: function (selectedDates, dateStr, instance) {
                                         instance.set('minDate', newDate);
                                     },
                                     onChange: function (selectedDates, dateStr, instance) {
