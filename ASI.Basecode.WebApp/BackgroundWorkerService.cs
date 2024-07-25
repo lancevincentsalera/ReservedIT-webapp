@@ -38,6 +38,8 @@ namespace ASI.Basecode.WebApp
                     using (var scope = _serviceProvider.CreateScope())
                     {
                         var bookingService = scope.ServiceProvider.GetRequiredService<IBookingService>();
+                        var settingService = scope.ServiceProvider.GetRequiredService<ISettingService>();
+                        var emailService = scope.ServiceProvider.GetRequiredService<IEmailService>();
 
                         List<BookingViewModel> bookings = new List<BookingViewModel>();
                         try
@@ -93,6 +95,51 @@ namespace ASI.Basecode.WebApp
                                 continue;
                             }
                         }
+
+                        try
+                        {
+                            bookings = bookingService.GetBookings()
+                                .Where(b => b.BookingStatus.Equals(BookingStatus.APPROVED.ToString()))
+                                .ToList();
+                        }
+                        catch (Exception e)
+                        {
+                            _logger.LogError(e, "An error occurred while retrieving bookings.");
+                            continue;
+                        }
+
+                        foreach (var booking in bookings)
+                        {
+                            try
+                            {
+                                DateTime? bookingSendTime = new DateTime();
+                                if (booking.Recurrence.Count == 0)
+                                {
+                                    bookingSendTime = booking.StartDate.GetValueOrDefault().Add(booking.TimeFrom.GetValueOrDefault()).AddSeconds(-settingService.GetSetting(booking.UserId.GetValueOrDefault()).BookingReminder.GetValueOrDefault());
+                                }
+                                else
+                                {
+                                    foreach (var recurrence in booking.Recurrence)
+                                    {
+                                        if ((int)DateTime.Now.DayOfWeek == recurrence.DayOfWeekId - 1) 
+                                        {
+                                            bookingSendTime = DateTime.Now.Date.Add(booking.TimeFrom.GetValueOrDefault());
+                                        }
+                                    }
+                                }
+                                
+                                if (DateTime.Now.AddSeconds(-30) <= bookingSendTime.GetValueOrDefault() && DateTime.Now.AddSeconds(30) >= bookingSendTime.GetValueOrDefault())
+                                {
+                                    emailService.SendEmail(booking, "Reminder: Your Booking Starts Soon!");
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                _logger.LogError(e, $"An error occurred while sending custom email notification for booking ID {booking.BookingId}.");
+                                continue;
+                            }
+                        }
+
                     }
                 } 
                 catch (Exception ex)
