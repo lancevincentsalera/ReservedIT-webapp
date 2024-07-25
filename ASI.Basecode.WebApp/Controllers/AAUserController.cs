@@ -50,68 +50,6 @@ namespace ASI.Basecode.WebApp.Controllers
             return View(userViewModel);
         }
 
-
-        [HttpPost]
-        public IActionResult ActivateUser(int userId)
-        {
-            var user = _userService.GetUsers().Where(u => u.UserId == userId).FirstOrDefault();
-            if (user != null)
-            {
-                try
-                {
-                    if(user.AccountStatus != UserAccountStatus.ACTIVE.ToString())
-                    {
-                        user.AccountStatus = UserAccountStatus.ACTIVE.ToString();
-                        _userService.UpdateUser(user);
-                        TempData["SuccessMessage"] = "User activation successful!";
-                    } else
-                    {
-                        TempData["ErrorMessage"] = "User has already been activated!";
-                    }
-                }
-                catch (Exception ex)
-                {
-                    TempData["ErrorMessage"] = $"An error occurred while activating the user: {ex.Message}";
-                }
-            } 
-            else
-            {
-                TempData["ErrorMessage"] = "User not found.";
-            }
-            return RedirectToAction("Index"); 
-        }
-
-        [HttpPost]
-        public IActionResult RestrictUser(int userId)
-        {
-            var user = _userService.GetUsers().Where(u => u.UserId == userId).FirstOrDefault();
-            if (user != null)
-            {
-                try
-                {
-                    if (user.AccountStatus != UserAccountStatus.RESTRICTED.ToString())
-                    {
-                        user.AccountStatus = UserAccountStatus.RESTRICTED.ToString();
-                        _userService.UpdateUser(user);
-                        TempData["SuccessMessage"] = "User restriction successful!";
-                    }
-                    else
-                    {
-                        TempData["ErrorMessage"] = "User has already been restricted!";
-                    }
-                }
-                catch (Exception ex)
-                {
-                    TempData["ErrorMessage"] = $"An error occurred while restricting the user: {ex.Message}";
-                }
-            }
-            else
-            {
-                TempData["ErrorMessage"] = "User not found.";
-            }
-            return RedirectToAction("Index");
-        }
-
         [HttpPost]
         public IActionResult CreateUserPost([FromForm] UserViewModel model)
         {

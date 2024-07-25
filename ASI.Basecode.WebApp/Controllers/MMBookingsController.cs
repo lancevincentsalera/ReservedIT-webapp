@@ -34,6 +34,7 @@ namespace ASI.Basecode.WebApp.Controllers
         /// Bookings Page View
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
         public IActionResult Index()
         {
             var now = DateTime.Now;
@@ -49,14 +50,14 @@ namespace ASI.Basecode.WebApp.Controllers
         }
         #endregion
 
-
-        #region Filter Bookings
+        #region Filter Bookings (index overload)
         /// <summary>
         /// filter bookings by date, room name, user name, and/or booking status
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IActionResult FilterBookings(BookingViewModel filter)
+        [HttpPost]
+        public IActionResult Index(BookingViewModel filter)
         {
             var now = DateTime.Now;
             var todayAtMidnight = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
@@ -197,7 +198,7 @@ namespace ASI.Basecode.WebApp.Controllers
                         _bookingService.DeleteBooking(bookingToBeDeleted);
                         bookingToBeDeleted.BookingStatus += "(Previous Status)";
                         _emailService.SendEmail(bookingToBeDeleted, "Your booking has been deleted");
-                        return Json(new { success = true, message = "Booking deleted successfully!" });
+                        return Json(new { success = true, message = "Booking has been deleted successfully. Applying changes..." });
                     } 
                     else
                     {

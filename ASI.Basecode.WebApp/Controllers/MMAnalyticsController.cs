@@ -48,9 +48,8 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <returns> Analytics View </returns>
         public IActionResult Index()
         {
-            
-            var bookingsGroupedByDay = _analyticsService.DailyBookings();
-
+            var currentMonth = DateTime.Now.Month;
+            var bookingsGroupedByDay = _analyticsService.DailyBookings(DateTime.Now.Month);
             int daysInMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
             var lineChartData = new List<int>(new int[daysInMonth]);
 
@@ -68,6 +67,23 @@ namespace ASI.Basecode.WebApp.Controllers
             ViewData["UserBookingFrequencies"] = userBookingFrequencies;
             ViewData["RoomUsageSummaries"] = roomUsageSummaries;
             return View();
+        }
+
+        [HttpGet]
+        public JsonResult GetDailyBookings(int month)
+        {
+            var bookingsGroupedByDay = _analyticsService.DailyBookings(month);
+            int daysInMonth = DateTime.DaysInMonth(DateTime.Now.Year, month);
+            var lineChartData = new List<int>(new int[daysInMonth]);
+
+            foreach (var kvp in bookingsGroupedByDay)
+            {
+                lineChartData[kvp.Key - 1] = kvp.Value.Count;
+            }
+
+            Console.WriteLine("Line chart data for month " + month + ": " + string.Join(", ", lineChartData));
+
+            return Json(lineChartData);
         }
 
     }

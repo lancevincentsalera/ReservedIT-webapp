@@ -39,6 +39,7 @@ const getUserDetails = (btnId, modalId, action, controller) => {
         type: 'GET',
         data: { userId : id }, // pass the id to the controller, should be the same variable name or key in the controller parameter
         success: (response) => {
+            console.log("resp", response)
             for (let key in response) {
 
                 // if the key is RoleId, then get the select element with the name RoleId
@@ -49,17 +50,17 @@ const getUserDetails = (btnId, modalId, action, controller) => {
                 if (key === 'RoleId') {
                     $(`${modalId} select[name="RoleId"] option`).each((index, element) => {
                         let $option = $(element);
-                        if ($option.val() === ('' + response[key])) {
-                            console.log("val", typeof $option.val(), "vs", typeof ('' + response[key]));
-                            $option.prop('selected', true);
-                        } else {
-                            $option.prop('selected', false);
-                        }
+                        let isSelected = $option.val() === ('' + response[key])
+                        $option.prop('selected', isSelected);
                     })
                 } else {
-
-                    // if the key is not RoleId, then get the input element with the name of the key
-                    $(`${modalId} input[name="${key}"]`).val(response[key]);
+                    let value = response[key];
+                    if (key === 'AccountStatus') {
+                        let isActive = value === 'RESTRICTED';
+                        $('#statusToggle').prop('checked', isActive);
+                        value = isActive ? 'RESTRICTED' : 'ACTIVE';
+                    }
+                    $(`${modalId} input[name="${key}"]`).val(value);
                 }
                 
             }
@@ -461,4 +462,9 @@ const cancelModal = (btnId, modalId, action, controller) => {
     }
 }
 
-  
+// Account Status Toggle. Activate/Restrict User
+const toggleAccountStatus = (formId, inputId) => {
+    let isChecked = $(inputId).prop('checked') === true;
+    let toggleValue = isChecked ? 'RESTRICTED' : 'ACTIVE';
+    $(`${formId} input[name="AccountStatus"]`).val(toggleValue);
+}

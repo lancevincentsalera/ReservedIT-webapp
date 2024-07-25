@@ -2,6 +2,7 @@
 
 @section styles {
     <link rel="stylesheet" href="~/css/userModal.css" />
+    <link rel="stylesheet" href="~/css/toggle.css" />
 }
 
 <!-- EDIT USER -->
@@ -12,7 +13,11 @@
                 <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
                 <!--ACTIVATE/ RESTRICT TOGGLE-->
                 <div class="ml-auto">
-                    @Html.Partial("_ActivateRestrictToggle")
+                    <div id="button-3" class="button r">
+                        <input id="statusToggle" class="checkbox" type="checkbox" onchange="toggleAccountStatus('#editUserForm', this)">
+                        <div class="knobs"></div>
+                        <div class="layer"></div>
+                    </div>
                 </div>
             </div>
             <div class="modal-body">
