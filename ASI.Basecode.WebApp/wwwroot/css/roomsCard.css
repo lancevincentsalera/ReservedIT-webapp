@@ -136,14 +136,14 @@ body {
         margin: 5px 0;
     }
 
-.book-button {
+.card .btn-book .book-button {
     background-color: #B5838E;
     color: white;
     border: none;
-    padding: 7px;
+    padding: 7px 12px 7px 12px;
     border-radius: 10px;
     cursor: pointer;
-    font-size: 0.6em;
+    font-size: 0.8em;
     text-align: center;
     align-self: flex-end; /* Add this line to align the button to the right */
 }
