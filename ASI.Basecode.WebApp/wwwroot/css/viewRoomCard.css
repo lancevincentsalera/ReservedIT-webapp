@@ -69,21 +69,23 @@
     display: grid;
     grid-template-columns: 1fr 1fr; /* 2 columns */
     grid-template-rows: auto auto; /* 2 rows */
-    gap: 15px; /* Space between items */
+    gap: 20px; /* Space between items */
     margin-top: 50px;
+    justify-content: center;
 }
-
 .room-info-item {
     display: grid;
     grid-template-columns: 1fr; /* 1 column */
     grid-template-rows: auto auto auto; /* 3 rows */
     align-items: center;
     justify-items: center; /* Center horizontally within each grid cell */
-    text-align: center; /* Center text within each grid cell */
+    text-align: justify; /* Justify text within each grid cell */
     height: 80px;
     border-radius: 10px;
     padding: 13px; /* Optional: Add padding if needed */
-    gap:3px;
+    gap: 3px;
+    width: 150px;
+
 }
 
     .room-info-item i {
