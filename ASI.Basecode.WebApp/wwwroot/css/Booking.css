@@ -68,3 +68,7 @@
     background-color: #AB1753;
     color: white;
 }
+
+.actiondash-btn .dashreject-btn {
+    width: 12px;
+}

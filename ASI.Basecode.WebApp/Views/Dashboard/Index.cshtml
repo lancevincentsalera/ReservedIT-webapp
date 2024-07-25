@@ -86,14 +86,14 @@
                     <div class="user-cell actions">
                         <div>
                             <div class="action-col">
-                               <a class="actiondash-btn">
-                                    <img src="~/img/pencil.svg" alt="pencio" class="dashedit-btn" onclick="displayModal('#editBookingModal'); getBookingDetails(this, '#editBookingModal', 'GetBookingDetails', 'Dashboard');">
-                               </a>
-                               <a class="separator"></a>
-                               <a class="actiondash-btn">
-                                    <img src="~/img/ban.png" alt="trashio" class="dashedit-btn" onclick="displayModal('#confirmationBookingCancelModal'); passId(this, '#confirmCancelBtn');">
-                               </a>
-                        </div>
+                                <button type="button" class="btn-status" onclick="displayModal('#editBookingModal'); getBookingDetails(this, '#editBookingModal', 'GetBookingDetails', 'Dashboard');">
+                                    <i class="fas fa-edit" style=" color:#775965; font-size: 15px;"></i>
+                                </button>
+                                <span> | </span>
+                                <button type="button" class="btn-status" onclick="displayModal('#confirmationBookingCancelModal'); passId(this, '#confirmCancelBtn');">
+                                    <i class="fas fa-cancel" style=" color:#FF0000; font-size: 15px;"></i>
+                                </button>
+                            </div>
                         @*<div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.BookingId" data-start="@item.StartDate.Value.Date" data-tfrom="@item.TimeFrom.Value">
                             <span class="ddicon">&#8942;</span>
                         </div>*@

@@ -70,9 +70,23 @@
                 </div>
                 <div class="user-cell" data-label="STATUS"><span class="status">@Html.DisplayFor(modelItem => item.value.BookingStatus)</span></div>
                 <div class="user-cell actions">
-                    <div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.value.BookingId">
-                        <span class="ddicon">&#8942;</span>
+                    <div class="action-container">
+                        <div class="action-col">
+                            <button type="submit" class="btn-status">
+                                <i class="fas fa-check" style="color: #008B42; font-size: 15px;"></i>
+                            </button>
+                            <span> | </span>
+                            <button type="submit" class="btn-status">
+                                <i class="fas fa-times" style="color: #FF0000; font-size: 15px;"></i>
+                            </button>
+                            <span> | </span>
+                            <button type="submit" class="btn-status" onclick="displayModal('#confirmationBookingDeleteModal'); passId(this, '#confirmDeleteBtn');">
+                                <i class="fas fa-trash-alt" style="color: #FF0000; font-size: 13px;"></i>
+                            </button>
                     </div>
+                    @*<div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.value.BookingId">
+                        <span class="ddicon">&#8942;</span>
+                    </div>*@
                 </div>
             </li>
         }

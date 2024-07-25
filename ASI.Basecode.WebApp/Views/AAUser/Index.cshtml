@@ -39,9 +39,18 @@
                 <div class="user-cell" data-label="ROLE">@GetRoleDisplayName((int) item.value.RoleId)</div>
                 <div class="user-cell" data-label="STATUS"><span class="status">@Html.DisplayFor(modelItem => item.value.AccountStatus)</span></div>
                 <div class="user-cell actions">
-                    <div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.value.UserId">
-                        <span class="ddicon">&#8942;</span>
+                    <div class="action-col">
+                        <button type="button" class="btn-status" onclick="displayModal('#editUserModal'); getUserDetails(this, '#editUserModal', 'GetUserDetails', 'AAUser');">
+                            <i class="fas fa-edit" style="color: #775965; font-size: 15px;"></i>
+                        </button>
+                        <span> | </span>
+                        <button type="button" class="btn-status" onclick="displayModal('#confirmationDeleteModal'); passId(this, '#confirmDeleteBtn');">
+                            <i class="fas fa-trash-alt" style="color: #FF0000; font-size: 15px;"></i>
+                        </button>
                     </div>
+                    @* <div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.value.UserId">
+                        <span class="ddicon">&#8942;</span>
+                    </div> *@
                 </div>
             </li>
         }
