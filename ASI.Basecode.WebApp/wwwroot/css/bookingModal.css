@@ -161,3 +161,24 @@
         font-weight: 600;
     }
 
+.help-hover::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s;
+    font-size: 12px;
+}
+
+.help-hover:hover::before {
+    opacity: 1;
+    visibility: visible;
+}

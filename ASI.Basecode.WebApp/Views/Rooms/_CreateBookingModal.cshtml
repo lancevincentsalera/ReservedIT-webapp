@@ -23,13 +23,14 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="startDate">Start</label>
+                            <label for="startDate">Start
+                            </label>
                             <div class="input-group date" id="datepicker">
                                 <input asp-for="StartDate" type="datetime-local" class="form-control" id="startDate" name="StartDate" placeholder="Select Date & Time" required />
                             </div>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="endDate">End</label>
+                            <label for="endDate">End</i></label>
                             <div class="input-group date" id="datepicker">
                                 <input asp-for="EndDate" type="datetime-local" class="form-control" id="endDate" name="EndDate" placeholder="Select Date & Time" required/>
                             </div>
@@ -42,7 +43,7 @@
                         <button type="button" class="btn btn-outline-secondary" id="customButton">Custom</button>
                     </div>
                     <div class="custom-recur">
-                        <label class="custom-recur-title"> Repeat </label>
+                        <label class="custom-recur-title"> Repeat   <i class="fas fa-question-circle"></i></label>
                         <div class="checkbox-recur">
                             @foreach (var day in Model.Days)
                             {
