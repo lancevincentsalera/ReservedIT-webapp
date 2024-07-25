@@ -11,11 +11,9 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
                 <!--ACTIVATE/ RESTRICT TOGGLE-->
-
-                <hr class="custom-line" />
-           @*      <button type="button" style="width: 24px; height: 24px;"class="btn-close" data-dismiss="modal" aria-label="Close">
-                    <span>&times;</span>
-                </button> *@
+                <div class="ml-auto">
+                    @Html.Partial("_ActivateRestrictToggle")
+                </div>
             </div>
             <div class="modal-body">
                 <form id="editUserForm" action="#">
