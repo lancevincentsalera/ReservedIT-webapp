@@ -41,17 +41,26 @@
         margin-bottom: 10px;
     }
 
-    .description-container button {
-        position: absolute; /* Position the button absolutely within the container */
-        bottom: 10px; /* Adjust as needed */
-        right: 10px; /* Align the button to the right side */
+    .description-container .btn-close {
         background: #B5838E;
-        padding: 10px;
+        padding: 20px;
         font-size: 13px;
         font-weight: normal;
+        border-radius: 5px;
+        width: 80px;
+        border: none;
+        top: 120%;
+        height: 30px;
+        color: white;
+        margin-top: 100px;
+        margin-left: 50px;
+        text-align: center;
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
     }
 
-        .description-container button:hover {
+        .description-container .btn-close:hover {
             opacity: 0.75;
             background: #B5838E;
         }
@@ -101,13 +110,19 @@
     padding: 20px;
 }
 
-.btn-secondary {
+/*.btn-close {
     background-color: #6c757d;
     color: white;
     padding: 20px;
     border: none;
     border-radius: 5px;
     width: 80px;
+}*/
+
+.btn-close:hover {
+    background-color: #6c757d;
+    color: white;
+    font-weight: 600;
 }
 
 .carousel-control-prev-icon,
