@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Content Remove="Views\Home\ConfirmationModal.cshtml" />
+    <Content Remove="Views\Shared\_ActivateRestrictToggle.cshtml" />
   
     <Content Remove="wwwroot\css\Index.cshtml" />
     <Content Remove="wwwroot\roomModal.css" />
@@ -18,10 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Shared\_ActivateRestrictToggle.cshtml" />
     <_ContentIncludedByDefault Remove="wwwroot\js\toastr.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Shared\_ActivateRestrictToggle.cshtml" />
     <None Include="wwwroot\js\toastr.js" />
   </ItemGroup>
 
@@ -62,5 +65,9 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Shared\_ActivateRestrictToggle.cshtml" />
   </ItemGroup>
 </Project>

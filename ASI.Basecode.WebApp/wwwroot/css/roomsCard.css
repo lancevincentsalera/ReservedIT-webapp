@@ -148,7 +148,7 @@ body {
         margin: 5px 0;
     }
 
-.book-button {
+.card .btn-book .book-button {
     background-color: #B5838E;
     color: white;
     border: none;
