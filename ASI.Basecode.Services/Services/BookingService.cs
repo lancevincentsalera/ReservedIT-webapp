@@ -238,7 +238,7 @@ namespace ASI.Basecode.Services.Services
         /// <returns></returns>
         public IEnumerable<BookingViewModel> GetBookings()
         {
-            var bookings = _repository.GetBookings();
+            var bookings = _repository.GetBookings().OrderByDescending(b => b.UpdatedDt);
             return bookings.Select(booking => 
             new BookingViewModel
             {
@@ -255,6 +255,8 @@ namespace ASI.Basecode.Services.Services
                 DayOfTheWeekIds = _repository.GetDayOfWeekIdsForBooking(booking.BookingId),
                 modelUser = booking.User,
                 modelRoom = booking.Room,
+                DtCreated = booking.CreatedDt,
+                DtUpdated = booking.UpdatedDt,
             });
         }
 
@@ -269,7 +271,7 @@ namespace ASI.Basecode.Services.Services
         /// <returns></returns>
         public IEnumerable<BookingViewModel> GetBookingsByUser(int userId)
         {
-            var bookings = _repository.GetBookingsByUser(userId);
+            var bookings = _repository.GetBookingsByUser(userId).OrderByDescending(b => b.UpdatedDt);
             return bookings.Select(booking => new BookingViewModel
             {
                 BookingId = booking.BookingId,
@@ -285,6 +287,8 @@ namespace ASI.Basecode.Services.Services
                 DayOfTheWeekIds = _repository.GetDayOfWeekIdsForBooking(booking.BookingId),
                 modelUser = booking.User,
                 modelRoom = booking.Room,
+                DtCreated = booking.CreatedDt,
+                DtUpdated = booking.UpdatedDt,
             });
         }
 

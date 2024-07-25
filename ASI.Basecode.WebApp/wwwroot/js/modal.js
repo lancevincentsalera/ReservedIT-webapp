@@ -373,7 +373,6 @@ const submitForm = (modalId, formId, action, controller) => {
                         window.location.href = `/${controller}/Index`
                     }, toastr.options.timeOut);
                 } else {
-                    $(modalId).modal('hide');
                     toastr.error(response.message);
                 }
             },

@@ -85,7 +85,7 @@ namespace ASI.Basecode.Services.Services
 
         public IEnumerable<UserViewModel> GetUsersByRoleOrDefault(int roleId)
         {
-            var users = _repository.GetUsers().Select(u => new UserViewModel
+            var users = _repository.GetUsers().OrderByDescending(u => u.UpdatedDt).Select(u => new UserViewModel
             {
                 UserId = u.UserId,
                 Email = u.Email,
@@ -109,7 +109,7 @@ namespace ASI.Basecode.Services.Services
 
         public IEnumerable<UserViewModel> GetUsers()
         {
-            var users = _repository.GetUsers().Select(u => new UserViewModel
+            var users = _repository.GetUsers().OrderByDescending(u => u.UpdatedDt).Select(u => new UserViewModel
             {
                 UserId = u.UserId,
                 Email = u.Email,
@@ -132,11 +132,18 @@ namespace ASI.Basecode.Services.Services
             var userToBeUpdated = _repository.GetUsers().Where(u => u.UserId == user.UserId).FirstOrDefault();
             if (userToBeUpdated != null)
             {
-                _mapper.Map(user, userToBeUpdated);
-                userToBeUpdated.UpdatedDt = DateTime.Now;
-                userToBeUpdated.UpdatedBy = System.Environment.UserName;
+                if(userToBeUpdated.Email.Equals(user.Email) || !_repository.UserExists(user.Email))
+                {
+                    _mapper.Map(user, userToBeUpdated);
+                    userToBeUpdated.UpdatedDt = DateTime.Now;
+                    userToBeUpdated.UpdatedBy = System.Environment.UserName;
 
-                _repository.UpdateUser(userToBeUpdated);
+                    _repository.UpdateUser(userToBeUpdated);
+                }
+                else
+                {
+                    throw new InvalidDataException(Resources.Messages.Errors.UserExists);
+                }
             }
         }
 

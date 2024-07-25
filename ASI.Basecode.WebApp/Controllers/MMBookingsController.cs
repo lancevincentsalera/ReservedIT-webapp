@@ -36,7 +36,10 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            var data = _bookingService.GetBookings();
+            var now = DateTime.Now;
+            var todayAtMidnight = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
+            var startDateRange = todayAtMidnight.AddDays(-5);
+            var data = _bookingService.GetBookings().Where(b => b.DtUpdated >= startDateRange);
             var model = new BookingViewModel
             {
                 bookingList = data,
@@ -55,7 +58,10 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <returns></returns>
         public IActionResult FilterBookings(BookingViewModel filter)
         {
-            var data = _bookingService.GetBookings();
+            var now = DateTime.Now;
+            var todayAtMidnight = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
+            var startDateRange = todayAtMidnight.AddDays(-5);
+            var data = _bookingService.GetBookings().Where(b => b.DtUpdated >= startDateRange);
             if (filter != null)
             {
                 if (filter.StartDate.HasValue)

@@ -3,6 +3,10 @@
 
 @{
     ViewData["Title"] = "Dashboard";
+    var now = DateTime.Now;
+    var todayAtMidnight = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
+    var startDateRange = todayAtMidnight.AddDays(-5);
+    var endDateRange = todayAtMidnight.AddDays(5);
 }
 
 @section styles {
@@ -17,7 +21,7 @@
 <div class="table-container">
     <div class="table-header">
         Upcoming Bookings
-    </div>
+    </div>  
     <div class="user-row header">
         <div class="user-cell">Room Name</div>
         <div class="user-cell">Date</div>
@@ -30,8 +34,13 @@
     <ul class="user-list">
         @foreach (var item in Model.bookingList)
         {
+            var combinedDateTime = item.StartDate.HasValue && item.TimeFrom.HasValue
+            ? item.StartDate.Value.Add(item.TimeFrom.Value)
+            : (DateTime?)null;
+            bool isFromNowToFutureFiveDays = combinedDateTime >= todayAtMidnight && combinedDateTime <= endDateRange;
             var date = item.StartDate.Value.ToString("MMM dd, yyyy");
-            if(item.BookingStatus.Equals(BookingStatus.APPROVED.ToString()) || item.BookingStatus.Equals(BookingStatus.PENDING.ToString()))
+            if ((item.BookingStatus.Equals(BookingStatus.APPROVED.ToString()) || item.BookingStatus.Equals(BookingStatus.PENDING.ToString())) &&
+                isFromNowToFutureFiveDays )
             {
                 var timeFrom = new DateTime(item.TimeFrom.Value.Ticks).ToString("h:mm tt").ToUpper();
                 var timeTo = new DateTime(item.TimeTo.Value.Ticks).ToString("h:mm tt").ToUpper();
@@ -111,7 +120,12 @@
     <ul class="user-list">
         @foreach (var item in Model.bookingList)
         {
-            if (item.BookingStatus.Equals(BookingStatus.COMPLETED.ToString()) || item.BookingStatus.Equals(BookingStatus.CANCELLED.ToString()))
+            var combinedDateTime = item.EndDate.HasValue && item.TimeTo.HasValue
+            ? item.EndDate.Value.Add(item.TimeTo.Value)
+            : (DateTime?)null;
+            bool isFromNowToPastFiveDays = combinedDateTime >= startDateRange && combinedDateTime <= todayAtMidnight;
+            if ((item.BookingStatus.Equals(BookingStatus.COMPLETED.ToString()) || item.BookingStatus.Equals(BookingStatus.CANCELLED.ToString())) &&
+            isFromNowToPastFiveDays )
             {
                 var date = item.StartDate.Value.ToString("MMM dd yyyy");
                 var timeFrom = new DateTime(item.TimeFrom.Value.Ticks).ToString("h:mm tt").ToUpper();

@@ -118,7 +118,7 @@ namespace ASI.Basecode.WebApp.Controllers
             try
             {
                 _userService.AddUser(model);
-                return Json(new { success = true, message = "User creation successful!" });
+                return Json(new { success = true, message = "User has been created successfully. Applying changes..." });
             }
             catch (InvalidDataException ex)
             {
@@ -148,7 +148,7 @@ namespace ASI.Basecode.WebApp.Controllers
             try
             {
                 _userService.UpdateUser(model);
-                return Json(new { success = true, message = "User updated successfully!" });
+                return Json(new { success = true, message = "User has been updated successfully. Applying changes..." });
             }
             catch (InvalidDataException ex)
             {
@@ -169,7 +169,7 @@ namespace ASI.Basecode.WebApp.Controllers
                 try
                 {
                     _userService.DeleteUser(userToBeDeleted);
-                    return Json(new { success = true, message = "User deleted successfully!" });
+                    return Json(new { success = true, message = "User deleted successfully. Applying changes..." });
                 } catch (Exception ex)
                 {
                     return Json(new { success = false, message = ex.Message });
