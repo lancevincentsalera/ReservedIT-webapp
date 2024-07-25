@@ -123,7 +123,7 @@
             var combinedDateTime = item.EndDate.HasValue && item.TimeTo.HasValue
             ? item.EndDate.Value.Add(item.TimeTo.Value)
             : (DateTime?)null;
-            bool isFromNowToPastFiveDays = combinedDateTime >= startDateRange && combinedDateTime <= todayAtMidnight;
+            bool isFromNowToPastFiveDays = combinedDateTime >= startDateRange && combinedDateTime <= now;
             if ((item.BookingStatus.Equals(BookingStatus.COMPLETED.ToString()) || item.BookingStatus.Equals(BookingStatus.CANCELLED.ToString())) &&
             isFromNowToPastFiveDays )
             {
