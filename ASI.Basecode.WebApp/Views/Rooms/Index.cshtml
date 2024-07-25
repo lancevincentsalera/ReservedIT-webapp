@@ -181,11 +181,15 @@
             // Add seconds to the date
             defaultEndDate.setSeconds(defaultEndDate.getSeconds() + @Model.BookingDuration);
 
-            // Format the date and time
+            // Format the date and time into readable string
             var formattedDateTime = formatDateTime(defaultEndDate);
 
+            // Format the date and time into data
+            var formattedDateData = formatDateData(defaultEndDate);
+
+            console.log(formattedDateData + "******************")
             // Set the value of endDate
-            $('#endDate').val(formattedDateTime);
+            $('#endDate').val(formattedDateData);
 
             // Set text of endDate input
             $('#createBookingForm .form-row .form-group.col-md-6:nth-of-type(2) input:nth-of-type(2)').val(formattedDateTime);
@@ -208,6 +212,15 @@
 
             // Combine formatted date and time
             return `${formattedDate} (${formattedTime})`;
+        }
+
+        function formatDateData(date) {
+            // Format date as "YYYY-MM-DD HH:mm"
+            let datePart = date.toISOString().slice(0, 10); // YYYY-MM-DD
+            let timePart = date.toTimeString().slice(0, 5); // HH:mm
+
+            // Combine formatted date and time
+            return `${datePart} ${timePart}`;
         }
     </script>
 }
