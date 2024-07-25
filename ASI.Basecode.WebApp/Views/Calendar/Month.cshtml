@@ -16,22 +16,25 @@
 }
 
 <div class="calendar-header">
-    <div class="header-row-1">
-        <h1>Calendar</h1>
-        <h2>@startDay.ToString("MMMM")</h2>
-        <div></div>
-    </div>
-
-    <div class="header-row-2">
-        <button class="month-button previous"><</button>
-        <div>
+    <div class="header-row">
+        <div class="header-column-1">
+            <h1>Calendar</h1>
+            <button class="month-button previous"><</button>
+        </div>
+        <div class="header-column-2">
+            <h2>@startDay.ToString("MMMM")</h2>
             <form id="year-month-form">
                 <input type="date" id="year-month" name="year-month" value="MMMM DD, YYYY">
             </form>
         </div>
-        <button class="month-button next">></button>
+        <div class="header-column-3">
+            <h1 style="visibility: hidden;">Calendar</h1>
+            <button class="month-button next">></button>
+        </div>
     </div>
+
 </div>
+
 
 <div class="table-container">
     <div class="table-header">
