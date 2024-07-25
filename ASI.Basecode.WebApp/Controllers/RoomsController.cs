@@ -147,7 +147,7 @@ namespace ASI.Basecode.WebApp.Controllers
                         {
                             if(dayOfTheWeekIds.Any( d => d < start && d > end))
                             {
-                                return Json(new { isConflict = true, errorMessage = "Txxxxxxhe selected days of the week are outside the range of the start and end dates." });
+                                return Json(new { isConflict = true, errorMessage = "The selected days of the week are outside the range of the start and end dates." });
                             }
                         } 
                     }

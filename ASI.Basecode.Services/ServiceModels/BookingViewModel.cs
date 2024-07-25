@@ -30,6 +30,8 @@ namespace ASI.Basecode.Services.ServiceModels
 
         public TimeSpan? TimeFrom { get; set; }
         public TimeSpan? TimeTo { get; set; }
+        public DateTime? DtCreated { get; set; }
+        public DateTime? DtUpdated { get; set; }
         public string RoomName { get; set; }
         public List<Recurrence> Recurrence { get; set; }
         public string UserName { get; set; }

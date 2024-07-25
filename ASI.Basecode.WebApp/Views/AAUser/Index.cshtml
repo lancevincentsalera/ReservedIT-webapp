@@ -36,7 +36,7 @@
                 <div class="user-cell" data-label="EMAIL">@Html.DisplayFor(modelItem => item.value.Email)</div>
                 <div class="user-cell" data-label="FIRST NAME">@Html.DisplayFor(modelItem => item.value.FirstName)</div>
                 <div class="user-cell" data-label="LAST NAME">@Html.DisplayFor(modelItem => item.value.LastName)</div>
-                <div class="user-cell" data-label="ROLE">@Html.DisplayFor(modelItem => item.value.RoleName)</div>
+                <div class="user-cell" data-label="ROLE">@GetRoleDisplayName((int) item.value.RoleId)</div>
                 <div class="user-cell" data-label="STATUS"><span class="status">@Html.DisplayFor(modelItem => item.value.AccountStatus)</span></div>
                 <div class="user-cell actions">
                     <div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.value.UserId">
@@ -114,4 +114,21 @@
         });
         document.getElementById("searchInput").addEventListener("keyup", filterList);
     </script>
+}
+
+@functions {
+    string GetRoleDisplayName(int roleId)
+    {
+        switch (roleId)
+        {
+            case 1:
+                return "Admin";
+            case 2:
+                return "Regular User";
+            case 3:
+                return "Manager";
+            default:
+                return "";
+        }
+    }
 }

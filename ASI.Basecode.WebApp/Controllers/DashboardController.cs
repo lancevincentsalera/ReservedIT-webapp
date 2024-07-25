@@ -50,6 +50,7 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
+
             var bookings = _bookingService.GetBookingsByUser(UserId);
             var model = new BookingViewModel
             {
