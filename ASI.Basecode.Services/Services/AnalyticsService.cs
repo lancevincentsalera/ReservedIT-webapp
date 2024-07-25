@@ -50,20 +50,20 @@ namespace ASI.Basecode.Services.Services
             return monthlyBookings;
         }
 
-        public Dictionary<int, List<Booking>> DailyBookings()
+        public Dictionary<int, List<Booking>> DailyBookings(int month)
         {
             DateTime now = DateTime.Now;
-            int currentMonth = now.Month;
             int currentYear = now.Year;
 
             var bookings = _bookingRepository.GetBookings()
-                .Where(x => x.CreatedDt.HasValue && x.CreatedDt.Value.Month == currentMonth && x.CreatedDt.Value.Year == currentYear)
+                .Where(x => x.CreatedDt.HasValue && x.CreatedDt.Value.Month == month && x.CreatedDt.Value.Year == currentYear)
                 .AsEnumerable()
                 .GroupBy(x => x.CreatedDt.Value.Day)
                 .ToDictionary(g => g.Key, g => g.ToList());
 
             return bookings;
         }
+
 
         public IEnumerable<UserBookingFrequency> GetUserBookingFrequency()
         {
@@ -225,7 +225,7 @@ namespace ASI.Basecode.Services.Services
                     count++;
                 }
             }
-            Console.WriteLine($"Occurrences of {dayOfWeek} between {startDate} and {endDate}: {count}");
+
             return count;
         }
 

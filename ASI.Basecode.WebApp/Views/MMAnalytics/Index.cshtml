@@ -34,18 +34,18 @@
                 <h2>Daily Booking Trends</h2>
                 <div class="dropdown-container" style="width: 200px;">
                     <select id="monthSelector" onchange="updateLineChart()" style="width: 100%;">
-                        <option value="0">January</option>
-                        <option value="1">February</option>
-                        <option value="2">March</option>
-                        <option value="3">April</option>
-                        <option value="4">May</option>
-                        <option value="5">June</option>
-                        <option value="6">July</option>
-                        <option value="7">August</option>
-                        <option value="8">September</option>
-                        <option value="9">October</option>
-                        <option value="10">November</option>
-                        <option value="11">December</option>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
                     </select>
                 </div>
             </div>
@@ -128,16 +128,19 @@
     let lineChart;
 
     document.addEventListener('DOMContentLoaded', function () {
+        const currentMonth = new Date().getMonth() + 1; // getMonth() returns 0-11, so add 1
+        document.getElementById('monthSelector').value = currentMonth;
+
         const ctx = document.getElementById('barChart').getContext('2d');
-        const ctx2 = document.getElementById('lineChart').getContext('2d'); // For the line chart
+        const ctx2 = document.getElementById('lineChart').getContext('2d');
 
         const barchart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 datasets: [{
-                    label: 'No. of Bookings', // Set to an empty string to remove the label
-                    data: @Html.Raw(Json.Serialize(barChartData)).$values, // Use the data passed from the controller
+                    label: 'No. of Bookings',
+                    data: @Html.Raw(Json.Serialize(barChartData)).$values,
                     borderColor: 'rgb(229, 158, 176)',
                     backgroundColor: 'rgb(229, 158, 176)',
                     borderWidth: 2,
@@ -147,10 +150,10 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false, // Allow resizing
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: true // Completely hide the legend
+                        display: true
                     }
                 },
                 scales: {
@@ -170,16 +173,14 @@
                 }
             }
         });
-        console.log(@Html.Raw(Json.Serialize(barChartData)).$values);
 
-        // Line chart configuration
         lineChart = new Chart(ctx2, {
             type: 'line',
             data: {
-                labels: generateDaysOfMonth(), // Sample numeric x-axis values
+                labels: generateDaysOfMonth(),
                 datasets: [{
-                    label: 'No. of Daily Booking', // Set the label for the line graph
-                    data: getLineChartDataForMonth(), // Use the data passed from the controller
+                    label: 'No. of Daily Booking',
+                    data: @Html.Raw(Json.Serialize(lineChartData)).$values,
                     borderColor: 'rgb(229, 158, 176)',
                     backgroundColor: 'rgb(229, 158, 176)',
                     borderWidth: 2,
@@ -192,7 +193,7 @@
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: false // Hide the legend if not needed
+                        display: false
                     }
                 },
                 scales: {
@@ -216,10 +217,8 @@
         document.getElementById('monthSelector').addEventListener('change', function () {
             updateLineChart();
         });
-
-        setInterval(updateCharts, 60000); // 60000 ms = 1 minute
     });
-
+    
     function generateDaysOfMonth() {
         const monthSelector = document.getElementById("monthSelector");
         const selectedMonth = parseInt(monthSelector.value, 10);
@@ -228,7 +227,7 @@
         const currentDate = new Date();
         const year = currentDate.getFullYear();
 
-        const daysInMonth = new Date(year, selectedMonth + 1, 0).getDate();
+        const daysInMonth = new Date(year, selectedMonth , 0).getDate();
 
         for (let day = 1; day <= daysInMonth; day++) {
             days.push(day.toString().padStart(2, '0'));
@@ -238,16 +237,38 @@
     }
 
     function updateLineChart() {
-        const daysOfMonth = generateDaysOfMonth();
-        const newLineChartData = getLineChartDataForMonth();
+        const monthSelector = document.getElementById("monthSelector");
+        const selectedMonth = monthSelector.value;
 
-        lineChart.data.labels = daysOfMonth;
-        lineChart.data.datasets[0].data = newLineChartData;
-        lineChart.update();
-    }
+        console.log(`Selected month: ${selectedMonth}`);
 
-    function getLineChartDataForMonth() {
-        
-        return @Html.Raw(Json.Serialize(lineChartData)).$values;
+        fetch(`/MMAnalytics/GetDailyBookings?month=${selectedMonth}`)
+            .then(response => {
+                console.log('Response received:', response);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Data received:', data);
+
+                if (data.$values) {
+                    data = data.$values;
+                } else {
+                    console.error('Unexpected data format:', data);
+                    return;
+                }
+                const daysOfMonth = generateDaysOfMonth();
+                lineChart.data.labels = daysOfMonth;
+                lineChart.data.datasets[0].data = data;
+                lineChart.update();
+                
+            })
+            .catch(error => {
+                console.error('Error fetching daily bookings:', error);
+            });
     }
 </script>
+
+
+
+
+
