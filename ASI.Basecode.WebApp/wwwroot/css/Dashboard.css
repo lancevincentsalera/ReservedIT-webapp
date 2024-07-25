@@ -44,6 +44,15 @@ h1 {
     .user-cell.actions {
         text-align: center;
     }
+
+    .user-cell:nth-child(6) {
+        text-align: center;
+        max-width: 80px;
+    }
+
+    .user-cell:nth-child(7) {
+        text-align: center;
+    }
 .user-row:nth-child(even) {
     background-color: #F9FAFC;
 }
@@ -156,3 +165,22 @@ h1 {
     color: black;
 }
 
+.actiondash-btn {
+    cursor: pointer;
+    color: #775965;
+}
+
+    .actiondash-btn .dashedit-btn {
+        width: 12px;
+    }
+
+.action-col span {
+    color: #CACACA;
+    opacity: 70%;
+}
+
+.separator {
+    height: 24px; /* Adjust to match button height */
+    border-left: 2px solid #ccc; /* Color and thickness of the separator line */
+    margin: 0 10px; /* Space around the separator */
+}

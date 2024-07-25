@@ -24,7 +24,8 @@
         <div class="user-cell">Time From</div>
         <div class="user-cell">Time To</div>
         <div class="user-cell">Recurrence</div>
-        <div class="user-cell"></div>
+        <div class="user-cell">Status</div>
+        <div class="user-cell">Actions</div>
     </div>
     <ul class="user-list">
         @foreach (var item in Model.bookingList)
@@ -61,16 +62,31 @@
                         {
                             <text>None</text>
                         }
-
+                    </div>
+                    <div class="user-cell" data-label="Status">
                         @if (item.BookingStatus.Equals(BookingStatus.PENDING.ToString()))
-                            {
-                                <span style="color: #B5838E; font-weight: bold; font-size: 80%">&emsp;—&emsp;PENDING</span>
-                            }
+                        {
+                            <span style="color: #B5838E; font-weight: bold; font-size: 80%">PENDING</span>
+                        }
+                        else
+                            <span style="color: #4CAF50; font-weight: bold; font-size: 80%">APPROVED</span>
+                        }
+
                     </div>
                     <div class="user-cell actions">
-                        <div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.BookingId" data-start="@item.StartDate.Value.Date" data-tfrom="@item.TimeFrom.Value">
-                            <span class="ddicon">&#8942;</span>
+                        <div>
+                            <div class="action-col">
+                               <a class="actiondash-btn">
+                                    <img src="~/img/pencil.svg" alt="pencio" class="dashedit-btn">
+                               </a>
+                               <a class="separator"></a>
+                               <a class="actiondash-btn">
+                                    <img src="~/img/trash.png" alt="trashio" class="dashedit-btn">
+                               </a>
                         </div>
+                        @*<div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.BookingId" data-start="@item.StartDate.Value.Date" data-tfrom="@item.TimeFrom.Value">
+                            <span class="ddicon">&#8942;</span>
+                        </div>*@
                     </div>
                 </li>
             }
