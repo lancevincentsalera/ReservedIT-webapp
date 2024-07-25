@@ -21,11 +21,13 @@ namespace ASI.Basecode.WebApp.Controllers
         private readonly IRoomService _roomService;
         private readonly IBookingService _bookingService;
         private readonly IEmailService _emailService;
-        public RoomsController(IEmailService emailService, IBookingService bookingService,IRoomService roomService,IHttpContextAccessor httpContextAccessor, ILoggerFactory loggerFactory, IConfiguration configuration, IMapper mapper = null) : base(httpContextAccessor, loggerFactory, configuration, mapper)
+        private readonly ISettingService _settingService;
+        public RoomsController(ISettingService settingService, IEmailService emailService, IBookingService bookingService,IRoomService roomService,IHttpContextAccessor httpContextAccessor, ILoggerFactory loggerFactory, IConfiguration configuration, IMapper mapper = null) : base(httpContextAccessor, loggerFactory, configuration, mapper)
         {
             _roomService = roomService;
             _bookingService = bookingService;
             _emailService = emailService;
+            _settingService = settingService;
         }
 
         #region Index
@@ -43,7 +45,8 @@ namespace ASI.Basecode.WebApp.Controllers
                 {
                     Days = _roomService.GetDays().ToList(),
                     roomList = data
-                }
+                },
+                BookingDuration = _settingService.GetSetting(UserId).BookingDuration.GetValueOrDefault(),
             };
             return View(model);
         }
@@ -231,11 +234,13 @@ namespace ASI.Basecode.WebApp.Controllers
                     throw new InvalidDataException("Booking time duration should be valid");
                 }
 
-
                 model.UserId = UserId;
                 int bookingId = _bookingService.AddBooking(model);
                 TempData["SuccessMessage"] = "Booking created successfully";
-                _emailService.SendEmail(_bookingService.GetBookings().ToList().Where(b => b.BookingId == bookingId).FirstOrDefault(), "Your booking has been created!");
+
+                bool bookingSuccess = _settingService.GetSetting(UserId).BookingSuccess.GetValueOrDefault() == 1;
+                if (bookingSuccess)
+                    _emailService.SendEmail(_bookingService.GetBookings().ToList().Where(b => b.BookingId == bookingId).FirstOrDefault(), "Your booking has been created!");
             }
             catch (InvalidDataException ex)
             {

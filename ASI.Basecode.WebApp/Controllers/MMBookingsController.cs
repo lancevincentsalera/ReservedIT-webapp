@@ -22,11 +22,13 @@ namespace ASI.Basecode.WebApp.Controllers
         private readonly IBookingService _bookingService;
         private readonly IRoomService _roomService;
         private readonly IEmailService _emailService;
-        public MMBookingsController(IEmailService emailService, IRoomService roomService, IBookingService bookingService, IHttpContextAccessor httpContextAccessor, ILoggerFactory loggerFactory, IConfiguration configuration, IMapper mapper = null) : base(httpContextAccessor, loggerFactory, configuration, mapper)
+        private readonly ISettingService _settingService;
+        public MMBookingsController(ISettingService settingService, IEmailService emailService, IRoomService roomService, IBookingService bookingService, IHttpContextAccessor httpContextAccessor, ILoggerFactory loggerFactory, IConfiguration configuration, IMapper mapper = null) : base(httpContextAccessor, loggerFactory, configuration, mapper)
         {
             _bookingService = bookingService;
             _roomService = roomService;
             _emailService = emailService;
+            _settingService = settingService;
         }
 
         #region Bookings Page View
@@ -34,13 +36,9 @@ namespace ASI.Basecode.WebApp.Controllers
         /// Bookings Page View
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
         public IActionResult Index()
         {
-            var now = DateTime.Now;
-            var todayAtMidnight = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
-            var startDateRange = todayAtMidnight.AddDays(-5);
-            var data = _bookingService.GetBookings().Where(b => b.DtUpdated >= startDateRange);
+            var data = _bookingService.GetBookings();
             var model = new BookingViewModel
             {
                 bookingList = data,
@@ -50,48 +48,41 @@ namespace ASI.Basecode.WebApp.Controllers
         }
         #endregion
 
-        #region Filter Bookings (index overload)
+
+        #region Filter Bookings
         /// <summary>
         /// filter bookings by date, room name, user name, and/or booking status
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        [HttpPost]
-        public IActionResult Index(BookingViewModel filter)
+        public IActionResult FilterBookings(BookingViewModel filter)
         {
-            var now = DateTime.Now;
-            var todayAtMidnight = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
-            var startDateRange = todayAtMidnight.AddDays(-5);
-            var data = _bookingService.GetBookings().Where(b => b.DtUpdated >= startDateRange);
+            var model = _bookingService.GetBookings();
             if (filter != null)
             {
                 if (filter.StartDate.HasValue)
-                    data = data.Where(b => b.StartDate.Value == filter.StartDate.Value);
+                    model = model.Where(b => b.StartDate.Value == filter.StartDate.Value);
 
                 if (filter.EndDate.HasValue)
-                    data = data.Where(b => b.EndDate.Value == filter.EndDate.Value);
+                    model = model.Where(b => b.EndDate.Value == filter.EndDate.Value);
 
                 if (!string.IsNullOrEmpty(filter.RoomName))
-                    data = data.Where(b => b.modelRoom.RoomName.Equals(filter.RoomName, StringComparison.OrdinalIgnoreCase));
+                    model = model.Where(b => b.modelRoom.RoomName.Equals(filter.RoomName, StringComparison.OrdinalIgnoreCase));
 
                 if (!string.IsNullOrEmpty(filter.UserName))
-                    data = data.Where(b => b.modelUser.FirstName.Contains(filter.UserName) || b.modelUser.LastName.Contains(filter.UserName));
+                    model = model.Where(b => b.modelUser.FirstName.Contains(filter.UserName) || b.modelUser.LastName.Contains(filter.UserName));
 
                 if (filter.BookingStatus != null)
                 {
                     if (filter.BookingStatus != "All") // No filter
                     {
-                        data = data.Where(b => b.BookingStatus == filter.BookingStatus);
+                        model = model.Where(b => b.BookingStatus == filter.BookingStatus);
                     }
                 }
             }
 
             TempData["SuccessMessage"] = "Filters applied successfully";
-            var model = new BookingViewModel
-            {
-                bookingList = data,
-                roomList = _roomService.RetrieveAll()
-            };
+            ViewData["rooms"] = _roomService.RetrieveAll();
             return View("Index", model);
         }
         #endregion
@@ -117,7 +108,10 @@ namespace ASI.Basecode.WebApp.Controllers
                         booking.BookingChangeOnly = true;
                         _bookingService.UpdateBooking(booking);
                         TempData["SuccessMessage"] = "Booking approved successfully!";
-                        _emailService.SendEmail(_bookingService.GetBookings().ToList().Where(b => b.BookingId == bookingId).FirstOrDefault(), "Your booking has been approved!");
+
+                        bool bookingStatusChange = _settingService.GetSetting(UserId).BookingStatusChange.GetValueOrDefault() == 1;
+                        if (bookingStatusChange)
+                            _emailService.SendEmail(_bookingService.GetBookings().ToList().Where(b => b.BookingId == bookingId).FirstOrDefault(), "Your booking has been approved!");
                     }
                     else
                     {
@@ -159,7 +153,10 @@ namespace ASI.Basecode.WebApp.Controllers
                         booking.BookingChangeOnly = true;
                         _bookingService.UpdateBooking(booking);
                         TempData["SuccessMessage"] = "Booking rejected successfully!";
-                        _emailService.SendEmail(_bookingService.GetBookings().ToList().Where(b => b.BookingId == bookingId).FirstOrDefault(), "Your booking has been rejected");
+
+                        bool bookingStatusChange = _settingService.GetSetting(UserId).BookingStatusChange.GetValueOrDefault() == 1;
+                        if (bookingStatusChange)
+                            _emailService.SendEmail(_bookingService.GetBookings().ToList().Where(b => b.BookingId == bookingId).FirstOrDefault(), "Your booking has been rejected");
                     }
                     else
                     {
@@ -197,8 +194,12 @@ namespace ASI.Basecode.WebApp.Controllers
                     {
                         _bookingService.DeleteBooking(bookingToBeDeleted);
                         bookingToBeDeleted.BookingStatus += "(Previous Status)";
-                        _emailService.SendEmail(bookingToBeDeleted, "Your booking has been deleted");
-                        return Json(new { success = true, message = "Booking has been deleted successfully. Applying changes..." });
+
+                        bool bookingStatusChange = _settingService.GetSetting(UserId).BookingStatusChange.GetValueOrDefault() == 1;
+                        if (bookingStatusChange)
+                            _emailService.SendEmail(bookingToBeDeleted, "Your booking has been deleted");
+
+                        return Json(new { success = true, message = "Booking deleted successfully!" });
                     } 
                     else
                     {

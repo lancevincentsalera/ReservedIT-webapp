@@ -23,7 +23,7 @@
                         <img src="~/img/room-sidebar-logo.png" />
                         Users
                     </a>
-                </li> 
+                </li>
                 break;
             case UserRoleManager.ROLE_ADMIN:
                 <li>
@@ -99,18 +99,29 @@
         }
     </ul>
     <div class="list-2">
-        <ul >
+        <ul>
             <li>
-                <a asp-action="Index" asp-controller="Setting">
-                    <img src="~/img/settings-logo.png" />
-                    Settings
-                </a>
-                
+                @switch (role)
+                {
+                    case UserRoleManager.ROLE_SUPER:
+                    case UserRoleManager.ROLE_ADMIN:
+                        <a asp-action="AAIndex" asp-controller="Setting">
+                            <img src="~/img/settings-logo.png" />
+                            Settings
+                        </a>
+                        break;
+                    default:
+                        <a asp-action="Index" asp-controller="Setting">
+                            <img src="~/img/settings-logo.png" />
+                            Settings
+                        </a>
+                        break;
+                }
             </li>
             <li>
                 <a asp-action="SignOutUser" asp-controller="Account"> <img src="~/img/logout-sidebar-logo.png" />Logout</a>
             </li>
-        <ul>
+        </ul>
     </div>
-    
+
 </div>
