@@ -75,11 +75,11 @@
                     <div class="user-cell" data-label="Status">
                         @if (item.BookingStatus.Equals(BookingStatus.PENDING.ToString()))
                         {
-                            <span style="border-radius: 10px; color: #B5838E; background-color: #E1FCEF; font-weight: bold; font-size: 80%; padding:5px;">PENDING</span>
+                            <span style="padding:5px 13px; border-radius: 10px; color: #fff; background-color: #E09100; font-weight: regular; font-size: 80%; padding:5px;">PENDING</span>
                         }
                         else
                         {
-                            <span style="border-radius: 10px;  background-color: #E1FCEF; color: #4CAF50; font-weight: bold; font-size: 80%">APPROVED</span>
+                            <span style="padding:5px 13px; border-radius: 10px;  background-color: #E1FCEF; color: #white; font-weight: bold; font-size: 80%">APPROVED</span>
                         }
 
                     </div>
@@ -91,7 +91,7 @@
                                 </button>
                                 <span> | </span>
                                 <button type="button" class="btn-status" onclick="displayModal('#confirmationBookingCancelModal'); passId(this, '#confirmCancelBtn');">
-                                    <i class="fas fa-cancel" style=" color:#FF0000; font-size: 15px;"></i>
+                                    <i class="fas fa-cancel" style=" color:#C90000; font-size: 15px;"></i>
                                 </button>
                             </div>
                         @*<div class="mr-20 hover-pointer dropdown-trigger" data-id="@item.BookingId" data-start="@item.StartDate.Value.Date" data-tfrom="@item.TimeFrom.Value">

@@ -130,32 +130,32 @@ h1 {
 }
 
 .status-pending {
-    padding: 5px;
+    padding: 5px 13px;
     border-radius: 10px;
-    background-color: #E1FCEF;
-    color: #14804A;
+    background-color: #E09100;
+    color: #fff;
     width: 40px;
     max-width: 40px;
 }
 
 .status-active {
-    padding: 5px;
-    background-color: #775965;
+    padding: 5px 10px;
+    background-color: #79a67d;
     border-radius: 10px;
-    color: white;
+    color: #fff;
 }
 
 .status-restricted {
-    padding: 5px;
+    padding: 5px 13px;
     border-radius: 10px;
-    background-color: #FF4C4C;
+    background-color: #C90000;
     color: white;
 }
 
 .status-cancelled {
     padding: 5px;
     border-radius: 10px;
-    background-color: #DA7186;
+    background-color: #C90000;
     color: white;
 }
 
