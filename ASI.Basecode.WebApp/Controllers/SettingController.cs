@@ -89,6 +89,10 @@ namespace ASI.Basecode.WebApp.Controllers
             return RedirectToAction("SignOutUser", "Account");
         }
 
+        /// <summary>
+        /// Returns the setting view for admins
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Policy = "AdminOnly")]
         public IActionResult AAIndex()
         {
@@ -133,7 +137,7 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <summary>
         /// Edits user setting.
         /// </summary>
-        /// <param name="model">The model.</param>
+        /// <param name="model">SettingViewModel</param>
         /// <returns></returns>
         [HttpPost]
         public IActionResult EditSetting([FromBody] SettingViewModel model)
@@ -159,7 +163,7 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <summary>
         /// Edits the user password.
         /// </summary>
-        /// <param name="model">The model.</param>
+        /// <param name="model">SettingViewModel</param>
         /// <returns></returns>
         [HttpPost]
         public IActionResult EditUserPassword(SettingViewModel model)
