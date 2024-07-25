@@ -75,7 +75,7 @@ namespace ASI.Basecode.WebApp.Controllers
                 this._session.SetString("UserName", nameClaim);
                 if (roleClaim != null && Enum.TryParse<UserRoleManager>(roleClaim.Value, out var userRole))
                 {
-                    return RedirectToEndpointByRole(userRole);
+                    return RedirectToEndpointByRole(userRole, false);
                 }
                 return RedirectToAction("Index", "Home");
             }
@@ -112,7 +112,8 @@ namespace ASI.Basecode.WebApp.Controllers
                     await this._signInManager.SignInAsync(user);
                     this._session.SetString("UserName", string.Join(' ', user.FirstName, user.LastName));
                     this._session.SetInt32("UserId", user.UserId);
-                    return RedirectToEndpointByRole((UserRoleManager)user.RoleId);
+
+                    return RedirectToEndpointByRole((UserRoleManager)user.RoleId, model.Password==Const.DefaultPassword);
                 case LoginResult.Restricted:
                     TempData["ErrorMessage"] = "Your account is restricted. Please contact support.";
                     break;
@@ -170,18 +171,26 @@ namespace ASI.Basecode.WebApp.Controllers
         /// </summary>
         /// <param name="userRole"></param>
         /// <returns></returns>
-        public ActionResult RedirectToEndpointByRole(UserRoleManager userRole)
+        public ActionResult RedirectToEndpointByRole(UserRoleManager userRole, bool isDefaultPassword)
         {
             switch (userRole)
             {
                 case UserRoleManager.ROLE_SUPER:
                 case UserRoleManager.ROLE_ADMIN:
+                    if(isDefaultPassword)
+                        return RedirectToAction("AAIndex", "Setting");
                     return RedirectToAction("Index", "AAUser");
                 case UserRoleManager.ROLE_MANAGER:
+                    if (isDefaultPassword)
+                        return RedirectToAction("Index", "Setting");
                     return RedirectToAction("Index", "Dashboard");
                 case UserRoleManager.ROLE_REGULAR:
+                    if (isDefaultPassword)
+                        return RedirectToAction("Index", "Setting");
                     return RedirectToAction("Index", "Dashboard");
                 default:
+                    if (isDefaultPassword)
+                        return RedirectToAction("Index", "Setting");
                     return RedirectToAction("Index", "Home");
             }
         }
