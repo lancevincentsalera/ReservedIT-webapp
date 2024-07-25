@@ -56,7 +56,7 @@
                             int endHour = (int)Math.Floor(booking.TimeTo.GetValueOrDefault().TotalHours);
                             
                             @* if (i == booking.TimeFrom.GetValueOrDefault().TotalHours) *@
-                            if (startHour <= endHour && i >= startHour && i < endHour)
+                            if (startHour <= endHour && i >= startHour && i <= endHour)
                             {
                                 <div class="booking color-@randomNumber">
                                     <h4>@booking.RoomName</h4>
