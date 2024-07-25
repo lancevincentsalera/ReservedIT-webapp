@@ -33,3 +33,16 @@
 {
     margin-top:20px;
 }
+
+.actiondash-btn {
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #775965;
+}
+
+    .actiondash-btn .dashreject-btn {
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+    }

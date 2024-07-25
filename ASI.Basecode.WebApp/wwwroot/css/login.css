@@ -3,11 +3,11 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    display: inline;
+    display: flex;
     justify-content: center;
     align-items: center;
     background: #FFF2EA;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 .card-container {
@@ -37,10 +37,7 @@ html, body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 100px;
-    padding-bottom: 70px;
+    padding: 100px 20px;
     background-color: #fff3e6;
     height: 100%;
 }
@@ -68,17 +65,17 @@ html, body {
 
 form {
     width: 100%;
-    max-width: 400px; /* Adjust this value to make inputs and button longer */
+    max-width: 400px;
     display: flex;
     flex-direction: column;
 }
-    .contact-info p
-    {
-        margin-top: 20px;
-        text-align: left;
-        font-size: 14px;
-        color: #555;
-    }
+
+.contact-info p {
+    margin-top: 20px;
+    text-align: left;
+    font-size: 14px;
+    color: #555;
+}
 
 label {
     margin-top: 10px;
@@ -88,7 +85,7 @@ label {
 }
 
 .login-btn {
-    padding: 10px 10px 7px 10px; /*top, right, bottom, left*/
+    padding: 10px 10px 7px 10px;
     background-color: #B5838E;
     color: white;
     border: none;
@@ -100,6 +97,8 @@ label {
 
     .login-btn:hover {
         background-color: #775965;
+        color: white;
+        font-weight: 600;
     }
 
 .contact-info {
@@ -124,22 +123,45 @@ label {
     align-items: center;
 }
 
-.password-container .form-control {
-    padding-right: 2.5rem; /* Ensure there's space for the eye icon */
+    .password-container .form-control {
+        padding-right: 2.5rem;
+    }
+
+    .password-container .toggle-password {
+        position: absolute;
+        right: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+
+    .password-container .toggle-pic {
+        width: 1.5rem;
+        height: auto;
+    }
+
+.form-outline {
+    position: relative;
+    padding-bottom: 30px; /* Ensure space for error messages */
+    height: 70px; /* Fixed height to keep spacing consistent */
 }
 
-.password-container .toggle-password {
+.text-danger {
     position: absolute;
-    right: 0.75rem; /* Adjust based on your design */
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
+    margin-top: 1%;
+    left: 0;
+    font-size: 12px;
+    visibility: hidden; /* Hide by default */
 }
 
-.password-container .toggle-pic {
-    width: 1.5rem; /* Adjust based on your design */
-    height: auto;
-}
+    .text-danger:empty {
+        visibility: hidden; /* Ensure hidden if empty */
+    }
+
+    .text-danger:not(:empty) {
+        visibility: visible; /* Unhide if not empty */
+    }
+
 @media (max-width: 768px) {
     .card-container {
         flex-direction: column;
