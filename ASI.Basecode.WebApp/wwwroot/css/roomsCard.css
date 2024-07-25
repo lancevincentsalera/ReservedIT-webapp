@@ -83,7 +83,7 @@ body {
     }
 
     .card-content h1 {
-        margin: 0 0 10px;
+        margin: 5px 0 10px;
         font-size: 0.9em;
         font-weight: bold;
     }
@@ -99,6 +99,8 @@ body {
         overflow: hidden;
         overflow: hidden;
         text-overflow: ellipsis;
+        max-height: 57.6px;
+        height: 57.6px;
     }
 
 .details {
