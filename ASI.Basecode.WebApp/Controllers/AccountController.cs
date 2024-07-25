@@ -176,6 +176,10 @@ namespace ASI.Basecode.WebApp.Controllers
             if (isDefaultPassword)
             {
                 TempData["ErrorMessage"] = "Your password is set to default. For security reasons, please update your password before proceeding.";
+                if (userRole == UserRoleManager.ROLE_SUPER)
+                {
+                    return RedirectToAction("AAIndex", "Setting");
+                }
                 return RedirectToAction("Index", "Setting");
             }
 
