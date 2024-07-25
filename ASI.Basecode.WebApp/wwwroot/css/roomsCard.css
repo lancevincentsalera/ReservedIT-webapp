@@ -162,8 +162,8 @@ body {
     align-self: flex-end; /* Add this line to align the button to the right */
 }
 
-    .book-button:hover {
-        background-color: #E2A3B1;
+    .card .btn-book.book-button:hover {
+        background-color: #B69198;
     }
 
 .carousel-button {
