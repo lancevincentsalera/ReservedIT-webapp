@@ -8,11 +8,10 @@
 }
 
 .user-cell:first-child {
-    text-align: center;
-    flex: 0 0 100px;
+    flex: 0 0 250px;
 }
 
-.user-cell:nth-child(4) {
+.user-cell:nth-child(3) {
     flex: 0 0 250px;
 }
 
