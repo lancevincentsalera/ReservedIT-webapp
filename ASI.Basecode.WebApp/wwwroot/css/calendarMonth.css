@@ -18,29 +18,39 @@ h2 {
     height: auto;
 }
 
-.header-row-1 {
+.header-row {
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     margin: 0 2rem 1rem 2rem;
 }
 
-.header-row-2 {
+.header-column-1 {
+
+}
+.header-column-2 {
     display: flex;
-    justify-content: space-between;
-    margin: 1rem 2rem;
+    flex-direction: column;
+    align-items: center;
+}
+.header-column-3 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
-    .header-row-2 .month-select {
-        width: 11rem;
-    }
+.month-select {
+    width: 11rem;
+}
 
-    .header-row-2 .month-button {
-        white-space: nowrap;
-        font-weight: bold;
-        font-size: 1.1em;
-        text-transform: uppercase;
-        background-color: transparent;
-        border: none;
-    }
+.month-button {
+    white-space: nowrap;
+    font-weight: bold;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    background-color: transparent;
+    border: none;
+}
 
 .table-container {
     height: 85% !important;
@@ -118,6 +128,7 @@ h2 {
 .bookings::-webkit-scrollbar {
     display: none; /* Safari and Chrome */
 }
+
 .bookings > div {
     border-radius: 5px;
     height: auto;
