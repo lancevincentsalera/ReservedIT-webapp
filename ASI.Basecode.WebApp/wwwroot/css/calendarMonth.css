@@ -1,8 +1,13 @@
-﻿.main-layout {
+﻿.main-container {
+    overflow: hidden; /* Hide scrollbars */
+}
+
+.main-layout {
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between !important;
+    justify-content: flex-start !important;
     height: 88%;
+    margin: 0 0 1em 0;
 }
 
 h2 {
@@ -15,21 +20,7 @@ h2 {
 
 .header-row-1 {
     display: flex;
-    margin: 1rem 2rem;
-
-}
-
-@media screen and (max-width: 1280px) {
-    .header-row-1 > h1 {
-        margin: 0 26% 0 0;
-    }
-}
-
-
-@media screen and (max-width: 1980px) {
-    .header-row-1 > h1 {
-        margin: 0 36% 0 0;
-    }
+    margin: 0 2rem 1rem 2rem;
 }
 
 .header-row-2 {
@@ -43,7 +34,6 @@ h2 {
     }
 
     .header-row-2 .month-button {
-        /*width: 5rem;*/
         white-space: nowrap;
         font-weight: bold;
         font-size: 1.1em;
@@ -53,20 +43,20 @@ h2 {
     }
 
 .table-container {
-    height: 70% !important;
+    height: 85% !important;
     display: flex !important;
     flex-direction: column !important;
 }
 
 .table-header {
-    height: 10%;
+    height: auto;
     background-color: #b5838e;
     color: white;
-    padding: .75rem 0rem;
     font-weight: bold;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    align-items: center;
 }
 
     .table-header .table-header-cell {
@@ -81,12 +71,12 @@ h2 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow-y: auto;
+    /*  overflow-y: auto;*/
 }
 
 .table-row {
-    min-height: 20%;
-    max-height: 20%;
+    min-height: 17.66%;
+    max-height: 17.66%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -94,7 +84,7 @@ h2 {
 
 
 .table-cell {
-    width: 14.28%;
+    width: 14.285%;
     border: 1px solid #e6e6e6; /*#cacaca*/
     display: flex;
     flex-direction: column;
@@ -121,9 +111,13 @@ h2 {
         flex-direction: column;
         white-space: nowrap;
         justify-content: flex-start;
-        overflow-y: hidden;
+        /*        overflow-y: hidden;*/
+        overflow-y: scroll;
     }
 
+.bookings::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
 .bookings > div {
     border-radius: 5px;
     height: auto;
@@ -138,9 +132,27 @@ h2 {
     }
 }*/
 
+@media screen and (max-width: 1980px) {
+    .header-row-1 > h1 {
+        margin: 0 35.9% 0 0;
+    }
+
+    .table-header {
+        padding: .5rem 0rem;
+    }
+
+    .table-header-cell {
+        font-size: 1rem;
+    }
+
+    .bookings > div {
+        font-size: .9rem;
+    }
+}
+
 @media screen and (max-width: 1366px) {
     .header-row-1 > h1 {
-        margin: 0 29% 0 0;
+        margin: 0 28.8% 0 0;
     }
 
     .table-header {
@@ -156,13 +168,11 @@ h2 {
     }
 }
 
-[class^="color-"] {
-    /* CSS styles */
+@media screen and (max-width: 1280px) {
+    .header-row-1 > h1 {
+        margin: 0 27.1% 0 0;
+    }
 }
-
-/*    .bookings > div:nth-child(n+30) {
-        display: none;
-    }*/
 
 .color-1 {
     background-color: lightgreen;
