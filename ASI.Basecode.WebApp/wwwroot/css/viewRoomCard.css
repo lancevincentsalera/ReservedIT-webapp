@@ -71,9 +71,9 @@
     border: 2px solid #CACACA;
     height: 80px;
     border-radius: 10px;
-    padding: 5px; /* Optional: Add padding if needed */
+    padding: 13px; /* Optional: Add padding if needed */
     margin-top:20px;
-    gap:0px;
+    gap:2px;
 }
 
     .room-info-item i {
