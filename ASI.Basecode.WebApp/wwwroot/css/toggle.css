@@ -88,7 +88,7 @@
     line-height: 1;
     padding: 9px 9px;
     background-color: #79a67d;
-    border-radius: 42%;
+    border-radius: 20px;
     transition: 0.3s ease all, left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
 }
 

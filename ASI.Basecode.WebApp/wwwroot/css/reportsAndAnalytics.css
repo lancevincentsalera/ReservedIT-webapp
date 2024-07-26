@@ -136,3 +136,14 @@ canvas {
     .user-cell:last-child {
         text-align: center; /* Align the last cell to the right */
     }
+
+
+    .btn-custom{
+        outline-color:#b5838e;
+        color: #fff;
+        padding: 10px 12px 10px 12px;
+        border-radius: 5px;
+        border-color:#b5838e;
+        margin-bottom:3vh;
+   
+    }
